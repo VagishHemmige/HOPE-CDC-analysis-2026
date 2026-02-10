@@ -1,0 +1,2174 @@
+---
+title: "HIV kidney transplant access 2025-10-29"
+author: "Vagish Hemmige"
+date: "2025-10-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r libraries, warning=FALSE}
+library(tidyverse)
+library(stringi)
+library(readxl)
+library(sf)
+library(colorspace)
+library(ggtext)
+library(extrafont)
+library(readr)
+library(janitor)
+library(ggrepel)
+library(tigris)
+library(tidycensus)
+library(tmap)
+library(writexl)
+library(plotly)
+library(htmlwidgets)
+library(haven)
+library(patchwork)
+library(lutz)
+library(mapboxapi)
+library(flextable)
+library(gt)
+library(ggbeeswarm)
+library(ggpubr)
+library(cowplot)
+library(scales)
+library(glue)
+library(sRtr)
+```
+
+
+
+
+```{r setting_director, echo=FALSE}
+
+setwd("C:/Users/katta/Desktop/Einstein research/HOPE CDC kidney analysis")
+
+
+
+```
+
+
+```{r}
+
+#Import State level mapping data
+us_states <- read_sf("cb_2018_us_state_20m/cb_2018_us_state_20m.shp") %>%
+  select(NAME, STUSPS, geometry) %>%
+  filter(!(NAME %in% c("Alaska", "Hawaii", "Puerto Rico"))) %>%
+  rename(State=NAME)
+
+
+
+UNOS_regions <- 
+  #Import Shivank's data from UNOS regions into R
+  read_excel("UNOS regions.xlsx")%>%
+  #Split column that contains Regions and which states they contain
+  separate(Region, c("Region", "B"),sep=":") %>%
+  #Split list of states into 7 separate variables
+  separate(B, c("State1","State2","State3","State4", "State5", "State6", "State7"), sep=",") %>%
+  #Trim leading spaces
+  mutate_at(vars(contains("State")), str_trim) %>%
+  #Change to long format and drop extraneous variable that results
+   pivot_longer(
+   cols = starts_with("State"),
+   names_to = "StateNumber",
+   values_to = "State",
+   values_drop_na = TRUE) 
+```
+
+
+```{r import_data, eval=FALSE }
+
+
+#Import transplant data from UNOS SRTR
+tx_ki <- load_srtr_file("tx_ki")
+donor_deceased <- load_srtr_file("donor_deceased")
+
+
+```
+
+
+```{r}
+
+#Identify active adult kidney centers in 2022
+Active_kidney_tx_centers_2022<-tx_ki%>%
+  filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>% #Adult recipient
+  mutate(year_transplant=year(REC_TX_DT	))%>%
+  filter(year_transplant==2022)%>%
+  group_by(REC_CTR_CD	)%>%
+  count()%>%
+  pull(REC_CTR_CD)
+
+#Identify active adult kidney centers in 2017
+Active_kidney_tx_centers_2017<-tx_ki%>%
+  filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>% #Adult recipient
+  mutate(year_transplant=year(REC_TX_DT	))%>%
+  filter(year_transplant==2017)%>%
+  group_by(REC_CTR_CD	)%>%
+  count()%>%
+  pull(REC_CTR_CD)
+
+#Calculate center level volumes for pts with HIV 2013-2017 for active centers
+HIV_centers_kidney_transplant_2013_2017<-tx_ki%>%
+  filter(REC_HIV_STAT=="P")%>%
+  filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>% #Adult recipient
+  mutate(year_transplant=year(REC_TX_DT	))%>%
+  filter(year_transplant>=2013 & year_transplant<=2017)%>%
+  group_by(REC_CTR_CD	)%>%
+  count()%>%
+  filter(REC_CTR_CD %in% Active_kidney_tx_centers_2017)
+
+#Calculate center level volumes for pts with HIV 2018-2022 for active centers
+HIV_centers_kidney_transplant_2018_2022<-tx_ki%>%
+  filter(REC_HIV_STAT=="P")%>%
+  filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>% #Adult recipient
+  mutate(year_transplant=year(REC_TX_DT	))%>%
+  filter(year_transplant>=2018 & year_transplant<=2022)%>%
+  group_by(REC_CTR_CD	)%>%
+  count()%>%
+  filter(REC_CTR_CD %in% Active_kidney_tx_centers_2022)
+
+#Select variables of interest in deceased donor file
+donor_deceased<-donor_deceased%>%
+  select(DONOR_ID, DON_ANTI_HIV, DON_HIV_NAT)
+
+#Identify HOPE centers 2017
+HOPE_kidney_centers_2017<-tx_ki%>%
+  filter(REC_HIV_STAT=="P")%>%
+  filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>%
+  mutate(year_transplant=year(REC_TX_DT	))%>%
+  filter(year_transplant>=2013 & year_transplant<=2017)%>%
+  left_join(donor_deceased)%>%
+  filter(DON_HIV_NAT=="P"| DON_ANTI_HIV=="P")%>%
+  group_by(REC_CTR_CD	)%>%
+  count()
+
+#Identify HOPE centers 2018-2022
+HOPE_kidney_centers_2022<-tx_ki%>%
+  filter(REC_HIV_STAT=="P")%>%
+  filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>%
+  mutate(year_transplant=year(REC_TX_DT	))%>%
+  filter(year_transplant>=2018 & year_transplant<=2022)%>%
+  left_join(donor_deceased)%>%
+  filter(DON_HIV_NAT=="P"| DON_ANTI_HIV=="P")%>%
+  group_by(REC_CTR_CD	)%>%
+  count()
+
+
+#Convert to state transplant volumes for recipients with HIV
+State_level_kidney_transplant_volumes_2017<-HIV_centers_kidney_transplant_2013_2017%>%
+  mutate(state_code = substr(REC_CTR_CD, 1, 2))%>%
+  group_by(state_code)%>%
+  summarize(total_HIV_transplants=sum(n, na.rm = TRUE))
+
+State_level_kidney_transplant_volumes_2022<-HIV_centers_kidney_transplant_2018_2022%>%
+  mutate(state_code = substr(REC_CTR_CD, 1, 2))%>%
+  group_by(state_code)%>%
+  summarize(total_HIV_transplants=sum(n, na.rm = TRUE))
+```
+
+
+
+
+
+```{r}
+
+#Import UNOS labels
+UNOS_region_labels <- read_excel("UNOS region labels.xlsx")
+
+#All transplant centers from 2018 data imported, then select variables, then keep kidney only, then remove Hawaii and PR centers
+Transplant_centers_all <- read_csv("Transplant centers.csv") %>%
+  filter(State != "PR" & State!= "HI")%>%
+  select(OTCName, OTCCode, OrganTransplantationCenterServiceTypeDescription, Latitude, Longitude) %>%
+  filter(OrganTransplantationCenterServiceTypeDescription=="Kidney")%>%
+  select(-OrganTransplantationCenterServiceTypeDescription)
+
+#Identify new centers missing in the data above
+MissingCenters<-setdiff(Active_kidney_tx_centers_2022, Transplant_centers_all$OTCCode)
+
+#All transplant centers from 2025 data imported, then select variables, then keep kidney only, then remove Hawaii and PR centers
+#Downloaded from https://gisportal.hrsa.gov/server/rest/services/Organs/OrganProcurementAndTransplantation_FS/FeatureServer/1
+#on April 30 2025
+query<-st_read("query.geoJSON")%>%
+  filter(OTC_CD %in% MissingCenters)%>%
+  filter(OPO_STATE_ABBR != "PR" & OPO_STATE_ABBR!= "HI")%>%
+  distinct(OTC_NM, OTC_CD, X, Y)%>%
+  rename(OTCName=OTC_NM, OTCCode=OTC_CD, Latitude=Y, Longitude=X)
+
+#Combine data sets
+Transplant_centers_all<-Transplant_centers_all%>%
+  bind_rows(query)%>%
+#Remove children's hospitals
+  filter(!str_detect(OTCName, regex("children", ignore_case = TRUE)))
+
+#Create DFs for active centers 2017 and 2022
+Transplant_centers_active_2022<-Transplant_centers_all%>%
+  filter(OTCCode %in% Active_kidney_tx_centers_2022)
+
+Transplant_centers_active_2017<-Transplant_centers_all%>%
+  filter(OTCCode %in% Active_kidney_tx_centers_2017)
+
+```
+
+
+#Create SF files for mapping
+```{r}
+MergedStates<-inner_join(UNOS_regions, us_states, by="State") %>%st_as_sf()
+
+UNOS_region_map<-MergedStates%>%  
+  group_by(Region) %>% 
+  summarize(geometry = st_union(geometry))
+
+```
+
+
+
+
+
+```{r}
+
+#Plots UNOS regions in dark lines, and state boundaries in softer lines
+  ggplot()+
+  geom_sf(data=MergedStates, 
+          color="black", 
+          linewidth = 0.25)+
+  geom_sf(data=UNOS_region_map,color="black", fill=NA, linewidth = 1)+
+  theme_void()
+
+
+#Will add transplant centers to map, 2017
+  ggplot()+
+  geom_sf(data=MergedStates, 
+          color="black", 
+          linewidth = 0.25)+
+  geom_sf(data=UNOS_region_map,color="black", fill=NA, linewidth = 1)+
+  geom_jitter(data=Transplant_centers_active_2017, mapping=aes(x=Longitude, y=Latitude), alpha=0.5, 
+                height = 0.3, width = 0.3)+
+  theme_void()
+
+  #Will add transplant centers to map, 2022
+    ggplot()+
+  geom_sf(data=MergedStates, 
+          color="black", 
+          linewidth = 0.25)+
+  geom_sf(data=UNOS_region_map,color="black", fill=NA, linewidth = 1)+
+  geom_jitter(data=Transplant_centers_active_2022, mapping=aes(x=Longitude, y=Latitude), alpha=0.5, 
+                height = 0.3, width = 0.3)+
+  theme_void()
+    
+  #Will add all transplant centers to map with geocoding of high volume transplant states, 2018-2022
+  State_level_plot_2022<-ggplot()+
+  ggtitle("Geography of kidney transplant in recipients with HIV, 2018-2022")+
+  geom_sf(data=left_join(MergedStates, State_level_kidney_transplant_volumes_2022, by=c("STUSPS"="state_code")),
+          color="black",
+          mapping=aes(fill=total_HIV_transplants),
+          size = 0.25)+
+  geom_sf(data=UNOS_region_map,color="black", fill=NA, size = 1)+
+  geom_jitter(data=Transplant_centers_all, mapping=aes(x=Longitude, y=Latitude), 
+              alpha=0.5, 
+              height = 0.3, 
+              width = 0.3,
+              color="red")+
+  labs(fill = "Number of HIV R+ kidney transplants")+
+  scale_fill_gradient(low = "#132B43", high = "#56B1F7", limits = c(0, 250))+
+  theme_void()
+  ggsave("Kidney analysis results/State level HIV kidney transplants 2018-2022.jpg")
+  
+    #Will add all transplant centers to map with geocoding of high volume transplant states, 2013-2017
+  State_level_plot_2017<-ggplot()+
+  ggtitle("Geography of kidney transplant in recipients with HIV, 2013-2017")+
+  geom_sf(data=left_join(MergedStates, State_level_kidney_transplant_volumes_2017, by=c("STUSPS"="state_code")),
+          color="black",
+          mapping=aes(fill=total_HIV_transplants),
+          size = 0.25)+
+  geom_sf(data=UNOS_region_map,color="black", fill=NA, size = 1)+
+  geom_jitter(data=Transplant_centers_all, mapping=aes(x=Longitude, y=Latitude), 
+              alpha=0.5, 
+              height = 0.3, 
+              width = 0.3,
+              color="red")+
+  labs(fill = "Number of HIV R+ kidney transplants")+
+  scale_fill_gradient(low = "#132B43", high = "#56B1F7", limits = c(0, 250))+
+  theme_void()
+  ggsave("Kidney analysis results/State level HIV kidney transplants 2013-2017.jpg")
+  
+
+
+```
+
+
+```{r pull_census_data, eval=FALSE}
+
+#List states which are continental
+continental_fips <- c(
+  "01", "04", "05", "06", "08", "09", "10", "11", "12", "13", "16",
+  "17", "18", "19", "20", "21", "22", "23", "24", "25", "26",
+  "27", "28", "29", "30", "31", "32", "33", "34", "35", "36",
+  "37", "38", "39", "40", "41", "42", "44", "45", "46", "47",
+  "48", "49", "50", "51", "53", "54", "55", "56"
+)
+
+#Pull US Census tract populations
+us_tracts_population_2022<-get_acs(
+  geography = "tract",
+  variables = "B01003_001",
+  year = 2022,
+  survey = "acs5",
+  geometry = TRUE,
+  state = continental_fips
+)%>%
+  mutate(county_fips = substr(GEOID, 1, 5))%>%
+  mutate(GEOID=as.numeric(GEOID))%>%
+  mutate(county_fips=as.numeric(county_fips))%>%
+  select(-variable, -moe)%>%
+  rename(tract_population=estimate)
+
+us_tracts_population_2017<-get_acs(
+  geography = "tract",
+  variables = "B01003_001",
+  year = 2017,
+  survey = "acs5",
+  geometry = TRUE,
+  state = continental_fips
+)%>%
+  mutate(county_fips = substr(GEOID, 1, 5))%>%
+  mutate(GEOID=as.numeric(GEOID))%>%
+  mutate(county_fips=as.numeric(county_fips))%>%
+  select(-variable, -moe)%>%
+  rename(tract_population=estimate)
+
+#Pull US county populations
+us_counties_population_2022<-get_acs(
+  geography = "county",
+  variables = "B01003_001",
+  year = 2022,
+  survey = "acs5",
+  geometry = TRUE,
+  state = continental_fips
+)%>%
+  mutate(GEOID=as.numeric(GEOID))%>%
+  select(-variable, -moe)%>%
+  rename(county_population=estimate)
+
+us_counties_population_2017<-get_acs(
+  geography = "county",
+  variables = "B01003_001",
+  year = 2017,
+  survey = "acs5",
+  geometry = TRUE,
+  state = continental_fips
+)%>%
+  mutate(GEOID=as.numeric(GEOID))%>%
+  select(-variable, -moe)%>%
+  rename(county_population=estimate)
+
+# Load tract variable labels for age/sex values B01001 from the ACS 5-year 2017 dataset
+vars_2017 <- load_variables(2017, "acs5", cache = TRUE) %>%
+  filter(str_detect(name, "B01001_"))%>%
+  mutate(label = str_replace_all(label, "Estimate!!Total!!", ""))%>%
+  mutate(label = str_replace_all(label, "!!", "_"))%>%
+  mutate(label = str_replace_all(label, " ", "_"))
+
+vars_2022 <- load_variables(2022, "acs5", cache = TRUE) %>%
+  filter(str_detect(name, "B01001_"))%>%
+  mutate(label = str_replace_all(label, "Estimate!!Total:!!", ""))%>%
+  mutate(label = str_replace_all(label, "!!", "_"))%>%
+  mutate(label = str_replace_all(label, " ", "_"))
+
+```
+
+
+```{r save_files_as_R_objects, eval=FALSE, echo=FALSE}
+
+# Save as RDS
+saveRDS(us_tracts_population_2022, "Saved R data frames/us_tracts_population_2022.rds")
+saveRDS(us_counties_population_2022, "Saved R data frames/us_counties_population_2022.rds")
+
+saveRDS(us_tracts_population_2017, "Saved R data frames/us_tracts_population_2017.rds")
+saveRDS(us_counties_population_2017, "Saved R data frames/us_counties_population_2017.rds")
+
+
+
+
+
+```
+
+
+```{r open_RDS_files, echo=FALSE}
+
+# Load back the SF objects
+us_tracts_population_2022<-readRDS("Saved R data frames/us_tracts_population_2022.rds")
+us_tracts_population_2017<-readRDS("Saved R data frames/us_tracts_population_2017.rds")
+
+us_counties_population_2022<-readRDS("Saved R data frames/us_counties_population_2022.rds")
+us_counties_population_2017<-readRDS("Saved R data frames/us_counties_population_2017.rds")
+
+
+```
+
+
+County level analysis
+```{r}
+
+#Atlasplus 2022 and 2017 county totals
+AtlasPlusTableData_2022_county_totals <- read_csv("CDC data folder/AtlasPlusTableData 2022 and 2017 county totals.csv", 
+    col_types = cols(Indicator = col_skip(), 
+        Year = col_integer(), FIPS = col_number(), 
+        Cases = col_number(), `Rate per 100000` = col_number()))%>%
+  clean_names()%>%
+  rename(county_cases=cases)%>%
+  rename(geo_id=fips)%>%
+  rename(county_name=geography)%>%
+  mutate(county_cases=if_else(is.na(county_cases),0, county_cases))%>%
+  filter(year==2022)%>%
+  select(-year)
+
+AtlasPlusTableData_2017_county_totals <- read_csv("CDC data folder/AtlasPlusTableData 2022 and 2017 county totals.csv", 
+    col_types = cols(Indicator = col_skip(), 
+        Year = col_integer(), FIPS = col_number(), 
+        Cases = col_number(), `Rate per 100000` = col_number()))%>%
+  clean_names()%>%
+  rename(county_cases=cases)%>%
+  rename(geo_id=fips)%>%
+  rename(county_name=geography)%>%
+  mutate(county_cases=if_else(is.na(county_cases),0, county_cases))%>%
+  filter(year==2017)%>%
+  select(-year)
+
+
+#Convert transplant center data to geographical data
+Transplant_centers_all_sf<-Transplant_centers_all%>%
+  st_as_sf(coords = c("Longitude", "Latitude"),
+           crs = 4326)%>%
+  st_transform(5070)
+
+Transplant_centers_active_2017_SF<-Transplant_centers_active_2017%>%
+  st_as_sf(coords = c("Longitude", "Latitude"),
+           crs = 4326)%>%
+  st_transform(5070)
+
+Transplant_centers_active_2022_SF<-Transplant_centers_active_2022%>%
+  st_as_sf(coords = c("Longitude", "Latitude"),
+           crs = 4326)%>%
+  st_transform(5070)
+
+
+#Geographic file of centers that performed an HIV R+ transplant 2013-2017
+Transplant_centers_kidney_HIV_2017_sf <- Transplant_centers_all_sf%>%
+  filter(OTCCode %in% HIV_centers_kidney_transplant_2013_2017$REC_CTR_CD)
+
+#Geographic file of centers that performed an HIV R+ transplant 2018-2022
+Transplant_centers_kidney_HIV_2022_sf <- Transplant_centers_all_sf%>%
+  filter(OTCCode %in% HIV_centers_kidney_transplant_2018_2022$REC_CTR_CD)
+
+#Geographic file of centers that performed an HIV D+/R+ transplant 2013-2017
+Transplant_centers_kidney_HOPE_2017_sf<-Transplant_centers_all_sf%>%
+  filter(OTCCode %in% HOPE_kidney_centers_2017$REC_CTR_CD)
+
+#Geographic file of centers that performed an HIV D+/R+ transplant 2018-2022
+Transplant_centers_kidney_HOPE_2022_sf<-Transplant_centers_all_sf%>%
+  filter(OTCCode %in% HOPE_kidney_centers_2022$REC_CTR_CD)
+
+#Join county geographical data with CDC data.
+Merged_Counties_2022<-left_join(us_counties_population_2022,
+                                AtlasPlusTableData_2022_county_totals, 
+                                by=join_by(GEOID==geo_id))
+
+Merged_Counties_2017<-left_join(us_counties_population_2017,
+                                AtlasPlusTableData_2017_county_totals, 
+                                by=join_by(GEOID==geo_id))
+
+
+#Drop the geometry to make merges easier
+Merged_Counties_nonSF_2022<-Merged_Counties_2022%>%
+  st_drop_geometry()
+
+Merged_Counties_nonSF_2017<-Merged_Counties_2017%>%
+  st_drop_geometry()
+
+#Merge county data with tracts
+Merged_tracts_2022<-left_join(us_tracts_population_2022, Merged_Counties_nonSF_2022, by=c("county_fips"="GEOID"))%>%
+  select(-NAME.x, -NAME.y)%>%
+  #Estimate census tract HIV population
+  mutate(tract_cases=county_cases*tract_population/county_population)%>%
+  #Estimate HIV-negative population in census tracts
+  mutate(tract_noncases=tract_population-tract_cases)%>%
+  st_transform(5070)
+
+Merged_tracts_2017<-left_join(us_tracts_population_2017, Merged_Counties_nonSF_2017, by=c("county_fips"="GEOID"))%>%
+  select(-NAME.x, -NAME.y)%>%
+  #Estimate census tract HIV population
+  mutate(tract_cases=county_cases*tract_population/county_population)%>%
+  #Estimate HIV-negative population in census tracts
+  mutate(tract_noncases=tract_population-tract_cases)%>%
+  st_transform(5070)
+
+
+
+
+
+
+```
+
+
+Geographical computations for centers
+
+```{r}
+
+#Calculate 50-mile buffers for each the transplant center DFs
+Transplant_center_all_50mile_buffer<-st_buffer(Transplant_centers_all_sf,dist = 80467.2)
+
+Transplant_centers_active_2017_50mile_buffer<-st_buffer(Transplant_centers_active_2017_SF, dist = 80467.2)
+Transplant_centers_active_2022_50mile_buffer<-st_buffer(Transplant_centers_active_2022_SF, dist = 80467.2)
+
+Transplant_centers_kidney_HIV_2017_50mile_buffer<-st_buffer(Transplant_centers_kidney_HIV_2017_sf,dist = 80467.2)
+Transplant_centers_kidney_HIV_2022_50mile_buffer<-st_buffer(Transplant_centers_kidney_HIV_2022_sf,dist = 80467.2)
+
+Transplant_centers_kidney_HOPE_2017_50mile_buffer<-st_buffer(Transplant_centers_kidney_HOPE_2017_sf,dist = 80467.2)
+Transplant_centers_kidney_HOPE_2022_50mile_buffer<-st_buffer(Transplant_centers_kidney_HOPE_2022_sf,dist = 80467.2)
+
+
+#Calculate 100-mile buffers for each the transplant center DFs
+Transplant_center_all_100mile_buffer<-st_buffer(Transplant_centers_all_sf,dist = 160934.4)
+
+Transplant_centers_active_2017_100mile_buffer<-st_buffer(Transplant_centers_active_2017_SF, dist = 160934.4)
+Transplant_centers_active_2022_100mile_buffer<-st_buffer(Transplant_centers_active_2022_SF, dist = 160934.4)
+
+Transplant_centers_kidney_HIV_2017_100mile_buffer<-st_buffer(Transplant_centers_kidney_HIV_2017_sf,dist = 160934.4)
+Transplant_centers_kidney_HIV_2022_100mile_buffer<-st_buffer(Transplant_centers_kidney_HIV_2022_sf,dist = 160934.4)
+
+Transplant_centers_kidney_HOPE_2017_100mile_buffer<-st_buffer(Transplant_centers_kidney_HOPE_2017_sf,dist = 160934.4)
+Transplant_centers_kidney_HOPE_2022_100mile_buffer<-st_buffer(Transplant_centers_kidney_HOPE_2022_sf,dist = 160934.4)
+
+#Calculate 200-mile buffers for each the transplant center DFs
+Transplant_center_all_200mile_buffer<-st_buffer(Transplant_centers_all_sf,dist = 321868)
+
+Transplant_centers_active_2017_200mile_buffer<-st_buffer(Transplant_centers_active_2017_SF, dist = 321868)
+Transplant_centers_active_2022_200mile_buffer<-st_buffer(Transplant_centers_active_2022_SF, dist = 321868)
+
+Transplant_centers_kidney_HIV_2017_200mile_buffer<-st_buffer(Transplant_centers_kidney_HIV_2017_sf,dist = 321868)
+Transplant_centers_kidney_HIV_2022_200mile_buffer<-st_buffer(Transplant_centers_kidney_HIV_2022_sf,dist = 321868)
+
+Transplant_centers_kidney_HOPE_2017_200mile_buffer<-st_buffer(Transplant_centers_kidney_HOPE_2017_sf,dist = 321868)
+Transplant_centers_kidney_HOPE_2022_200mile_buffer<-st_buffer(Transplant_centers_kidney_HOPE_2022_sf,dist = 321868)
+
+```
+
+
+```{r}
+#For isochrone analysis, we need to account for time zones in order to calculate driving time at 7 AM on the specific date
+
+#List US continental time zones
+
+timezones<-c("America/New_York","America/Chicago","America/Denver","America/Los_Angeles","America/Phoenix",
+"America/Indiana/Indianapolis","America/Kentucky/Louisville","America/Detroit")
+
+# Specific date to anchor the time: First Monday in March of both years
+reference_date_2022 <- as.Date("2022-03-07")
+reference_date_2017 <- as.Date("2017-03-06")
+
+converted_times_2022 <- tibble(
+  timezone = timezones
+) %>%
+  mutate(
+    local_time = map2(
+      reference_date_2022, timezone,
+      ~ ymd_hms(paste(.x, "07:00:00"), tz = .y)
+    ),
+    utc_time = map(local_time, ~ with_tz(.x, "UTC"))
+  ) %>%
+  unnest(c(local_time, utc_time))
+
+converted_times_2017 <- tibble(
+  timezone = timezones
+) %>%
+  mutate(
+    local_time = map2(
+      reference_date_2017, timezone,
+      ~ ymd_hms(paste(.x, "07:00:00"), tz = .y)
+    ),
+    utc_time = map(local_time, ~ with_tz(.x, "UTC"))
+  ) %>%
+  unnest(c(local_time, utc_time))
+
+#Define a function that takes an SF data object and returns 60 minute isochrones
+set_60_min_isochrone_at_7AM<-function(SFObject, year) {
+  tempDF<-SFObject%>%
+    mutate(TimeZone=tz_lookup(., method="accurate"))%>%
+    st_transform(4326)
+  
+  FinalDF <- vector("list", length(timezones))
+
+  
+  for(i in 1:length(timezones))
+  {
+    TZ<-case_when(
+      year==2017~converted_times_2017[[i,1]],
+      year==2022~converted_times_2022[[i,1]],
+    )
+      
+    UTCTime<-case_when(
+      year==2017~format(converted_times_2017[[i,3]], "%Y-%m-%dT%H:%M:%SZ"),
+      year==2022~format(converted_times_2022[[i,3]], "%Y-%m-%dT%H:%M:%SZ"))
+    
+    if (nrow(filter(tempDF,TimeZone==TZ))>0)
+       {
+    temp<-tempDF%>%
+      filter(TimeZone==TZ)%>%
+      mb_isochrone(time = 60, 
+                   profile = "driving-traffic",
+                   depart_at = UTCTime,
+                   id_column = "OTCCode")%>%
+      rename(OTCName=id)
+      FinalDF[[i]]<-temp
+    }
+  }
+  
+  FinalDF%>%
+    bind_rows()%>%
+    st_transform(5070)%>%
+    return()
+}
+```
+
+
+
+```{r buffer_mapbox, eval=FALSE}
+#Calculate 60-minute buffers for each of the SFs for transplant centers above
+Transplant_centers_active_2017_60min_buffer<-set_60_min_isochrone_at_7AM(Transplant_centers_active_2017_SF, 2017)
+Transplant_centers_active_2022_60min_buffer<-set_60_min_isochrone_at_7AM(Transplant_centers_active_2022_SF, 2022)
+
+Transplant_centers_kidney_HIV_2017_60min_buffer<-set_60_min_isochrone_at_7AM(Transplant_centers_kidney_HIV_2017_sf, 2017)
+Transplant_centers_kidney_HIV_2022_60min_buffer<-set_60_min_isochrone_at_7AM(Transplant_centers_kidney_HIV_2022_sf, 2022)
+
+Transplant_centers_kidney_HOPE_2017_60min_buffer<-set_60_min_isochrone_at_7AM(Transplant_centers_kidney_HOPE_2017_sf, 2017)
+Transplant_centers_kidney_HOPE_2022_60min_buffer<-set_60_min_isochrone_at_7AM(Transplant_centers_kidney_HOPE_2022_sf, 2022)
+```
+
+
+
+```{r save_files_as_R_objects_2, eval=FALSE, echo=FALSE}
+
+# Save as RDS
+saveRDS(Transplant_centers_active_2017_60min_buffer, "Saved R data frames/Transplant_centers_active_2017_60min_buffer.rds")
+saveRDS(Transplant_centers_active_2022_60min_buffer, "Saved R data frames/Transplant_centers_active_2022_60min_buffer.rds")
+
+saveRDS(Transplant_centers_kidney_HIV_2017_60min_buffer, 
+        "Saved R data frames/Transplant_centers_kidney_HIV_2017_60min_buffer.rds")
+saveRDS(Transplant_centers_kidney_HIV_2022_60min_buffer, 
+        "Saved R data frames/Transplant_centers_kidney_HIV_2022_60min_buffer.rds")
+
+saveRDS(Transplant_centers_kidney_HOPE_2017_60min_buffer, 
+        "Saved R data frames/Transplant_centers_kidney_HOPE_2017_60min_buffer.rds")
+saveRDS(Transplant_centers_kidney_HOPE_2022_60min_buffer, 
+        "Saved R data frames/Transplant_centers_kidney_HOPE_2022_60min_buffer.rds")
+
+
+```
+
+
+
+
+```{r open_mapbox_RDS, echo=FALSE}
+
+Transplant_centers_active_2017_60min_buffer<-readRDS("Saved R data frames/Transplant_centers_active_2017_60min_buffer.rds")
+Transplant_centers_active_2022_60min_buffer<-readRDS("Saved R data frames/Transplant_centers_active_2022_60min_buffer.rds")
+
+Transplant_centers_kidney_HIV_2017_60min_buffer <- readRDS("Saved R data frames/Transplant_centers_kidney_HIV_2017_60min_buffer.rds")
+
+Transplant_centers_kidney_HIV_2022_60min_buffer <- readRDS("Saved R data frames/Transplant_centers_kidney_HIV_2022_60min_buffer.rds")
+
+Transplant_centers_kidney_HOPE_2017_60min_buffer <- readRDS("Saved R data frames/Transplant_centers_kidney_HOPE_2017_60min_buffer.rds")
+
+Transplant_centers_kidney_HOPE_2022_60min_buffer <- readRDS("Saved R data frames/Transplant_centers_kidney_HOPE_2022_60min_buffer.rds")
+
+```
+
+
+```{r}
+
+#Unite for total calculations
+
+Transplant_center_all_50mile_buffer_united<-Transplant_center_all_50mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_active_2017_50mile_buffer_united<-Transplant_centers_active_2017_50mile_buffer%>%
+  summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_active_2022_50mile_buffer_united<-Transplant_centers_active_2022_50mile_buffer%>%
+  summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HIV_2017_50mile_buffer_united<-Transplant_centers_kidney_HIV_2017_50mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HIV_2022_50mile_buffer_united<-Transplant_centers_kidney_HIV_2022_50mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HOPE_2017_50mile_buffer_united<-Transplant_centers_kidney_HOPE_2017_50mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HOPE_2022_50mile_buffer_united<-Transplant_centers_kidney_HOPE_2022_50mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+
+#100 mile
+Transplant_center_all_100mile_buffer_united<-Transplant_center_all_100mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_active_2017_100mile_buffer_united<-Transplant_centers_active_2017_100mile_buffer%>%
+  summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_active_2022_100mile_buffer_united<-Transplant_centers_active_2022_100mile_buffer%>%
+  summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HIV_2017_100mile_buffer_united<-Transplant_centers_kidney_HIV_2017_100mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HIV_2022_100mile_buffer_united<-Transplant_centers_kidney_HIV_2022_100mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HOPE_2017_100mile_buffer_united<-Transplant_centers_kidney_HOPE_2017_100mile_buffer%>%
+    summarize(
+      catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HOPE_2022_100mile_buffer_united<-Transplant_centers_kidney_HOPE_2022_100mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+
+
+#200 miles
+Transplant_center_all_200mile_buffer_united<-Transplant_center_all_200mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_active_2017_200mile_buffer_united<-Transplant_centers_active_2017_200mile_buffer%>%
+  summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_active_2022_200mile_buffer_united<-Transplant_centers_active_2022_200mile_buffer%>%
+  summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HIV_2017_200mile_buffer_united<-Transplant_centers_kidney_HIV_2017_200mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HIV_2022_200mile_buffer_united<-Transplant_centers_kidney_HIV_2022_200mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HOPE_2017_200mile_buffer_united<-Transplant_centers_kidney_HOPE_2017_200mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HOPE_2022_200mile_buffer_united<-Transplant_centers_kidney_HOPE_2022_200mile_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+
+
+#60 min buffer
+Transplant_centers_active_2017_60min_buffer_united<-Transplant_centers_active_2017_60min_buffer%>%
+  summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_active_2022_60min_buffer_united<-Transplant_centers_active_2022_60min_buffer%>%
+  summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HIV_2017_60min_buffer_united<-Transplant_centers_kidney_HIV_2017_60min_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HIV_2022_60min_buffer_united<-Transplant_centers_kidney_HIV_2022_60min_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HOPE_2017_60min_buffer_united<-Transplant_centers_kidney_HOPE_2017_60min_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+Transplant_centers_kidney_HOPE_2022_60min_buffer_united<-Transplant_centers_kidney_HOPE_2022_60min_buffer%>%
+    summarize(
+    catchment_area = "All Centers", 
+    geometry = st_union(geometry)
+  )
+
+
+```
+
+
+
+Analysis of HIV population of catchment areas of different transplant centers
+```{r}
+
+#ST join to individual tracts and transplant centers (this leads to duplication of tracts if they fall in more than one transplant center's catchment area)
+
+#50 mile buffer
+tracts_in_50mile_buffers_active_2017 <- st_join(Merged_tracts_2017, Transplant_centers_active_2017_50mile_buffer, 
+                                             join = st_intersects)
+tracts_in_50mile_buffers_active_2022 <- st_join(Merged_tracts_2022, Transplant_centers_active_2022_50mile_buffer, 
+                                             join = st_intersects)
+
+tracts_in_50mile_buffers_HIV_2017 <- st_join(Merged_tracts_2017, Transplant_centers_kidney_HIV_2017_50mile_buffer, 
+                                             join = st_intersects)
+tracts_in_50mile_buffers_HIV_2022 <- st_join(Merged_tracts_2022, Transplant_centers_kidney_HIV_2022_50mile_buffer, 
+                                             join = st_intersects)
+
+tracts_in_50mile_buffers_HOPE_2017 <- st_join(Merged_tracts_2017, Transplant_centers_kidney_HOPE_2017_50mile_buffer, 
+                                             join = st_intersects)
+tracts_in_50mile_buffers_HOPE_2022 <- st_join(Merged_tracts_2022, Transplant_centers_kidney_HOPE_2022_50mile_buffer, 
+                                             join = st_intersects)
+
+#100 mile buffer
+tracts_in_100mile_buffers_active_2017 <- st_join(Merged_tracts_2017, Transplant_centers_active_2017_100mile_buffer, 
+                                             join = st_intersects)
+tracts_in_100mile_buffers_active_2022 <- st_join(Merged_tracts_2022, Transplant_centers_active_2022_100mile_buffer, 
+                                             join = st_intersects)
+
+tracts_in_100mile_buffers_HIV_2017 <- st_join(Merged_tracts_2017, Transplant_centers_kidney_HIV_2017_100mile_buffer, 
+                                             join = st_intersects)
+tracts_in_100mile_buffers_HIV_2022 <- st_join(Merged_tracts_2022, Transplant_centers_kidney_HIV_2022_100mile_buffer, 
+                                             join = st_intersects)
+
+tracts_in_100mile_buffers_HOPE_2017 <- st_join(Merged_tracts_2017, Transplant_centers_kidney_HOPE_2017_100mile_buffer, 
+                                             join = st_intersects)
+tracts_in_100mile_buffers_HOPE_2022 <- st_join(Merged_tracts_2022, Transplant_centers_kidney_HOPE_2022_50mile_buffer, 
+                                             join = st_intersects)
+
+#200 mile buffer
+tracts_in_200mile_buffers_active_2017 <- st_join(Merged_tracts_2017, Transplant_centers_active_2017_200mile_buffer, 
+                                             join = st_intersects)
+tracts_in_200mile_buffers_active_2022 <- st_join(Merged_tracts_2022, Transplant_centers_active_2022_200mile_buffer, 
+                                             join = st_intersects)
+
+tracts_in_200mile_buffers_HIV_2017 <- st_join(Merged_tracts_2017, Transplant_centers_kidney_HIV_2017_200mile_buffer, 
+                                             join = st_intersects)
+tracts_in_200mile_buffers_HIV_2022 <- st_join(Merged_tracts_2022, Transplant_centers_kidney_HIV_2022_200mile_buffer, 
+                                             join = st_intersects)
+
+tracts_in_200mile_buffers_HOPE_2017 <- st_join(Merged_tracts_2017, Transplant_centers_kidney_HOPE_2017_200mile_buffer, 
+                                             join = st_intersects)
+tracts_in_200mile_buffers_HOPE_2022 <- st_join(Merged_tracts_2022, Transplant_centers_kidney_HOPE_2022_50mile_buffer, 
+                                             join = st_intersects)
+
+
+#Same for 60 minute buffers
+tracts_in_60min_buffers_active_2017 <- st_join(Merged_tracts_2017, Transplant_centers_active_2017_60min_buffer, 
+                                             join = st_intersects)
+tracts_in_60min_buffers_active_2022 <- st_join(Merged_tracts_2022, Transplant_centers_active_2022_60min_buffer, 
+                                             join = st_intersects)
+
+tracts_in_60min_buffers_HIV_2017 <- st_join(Merged_tracts_2017, Transplant_centers_kidney_HIV_2017_60min_buffer, 
+                                             join = st_intersects)
+tracts_in_60min_buffers_HIV_2022 <- st_join(Merged_tracts_2022, Transplant_centers_kidney_HIV_2022_60min_buffer, 
+                                             join = st_intersects)
+
+tracts_in_60min_buffers_HOPE_2017 <- st_join(Merged_tracts_2017, Transplant_centers_kidney_HOPE_2017_60min_buffer, 
+                                             join = st_intersects)
+tracts_in_60min_buffers_HOPE_2022 <- st_join(Merged_tracts_2022, Transplant_centers_kidney_HOPE_2022_60min_buffer, 
+                                             join = st_intersects)
+
+```
+
+
+
+
+```{r}
+#ST join to individual tracts and the united transplant center geography to avoid duplication
+#50 mile buffers
+tracts_in_50mile_buffers_active_2017_united <- st_join(Merged_tracts_2017, 
+                                                       Transplant_centers_active_2017_50mile_buffer_united, 
+                                                       join = st_intersects)
+tracts_in_50mile_buffers_active_2022_united <- st_join(Merged_tracts_2022, 
+                                                       Transplant_centers_active_2022_50mile_buffer_united, 
+                                                       join = st_intersects)
+
+tracts_in_50mile_buffers_HIV_2017_united <- st_join(Merged_tracts_2017, 
+                                                    Transplant_centers_kidney_HIV_2017_50mile_buffer_united, 
+                                                    join = st_intersects)
+tracts_in_50mile_buffers_HIV_2022_united <- st_join(Merged_tracts_2022,
+                                                    Transplant_centers_kidney_HIV_2022_50mile_buffer_united, 
+                                                    join = st_intersects)
+
+tracts_in_50mile_buffers_HOPE_2017_united <- st_join(Merged_tracts_2017, 
+                                              Transplant_centers_kidney_HOPE_2017_50mile_buffer_united, 
+                                             join = st_intersects)
+tracts_in_50mile_buffers_HOPE_2022_united <- st_join(Merged_tracts_2022, 
+                                                     Transplant_centers_kidney_HOPE_2022_50mile_buffer_united, 
+                                                     join = st_intersects)
+
+
+
+#100 mile
+tracts_in_100mile_buffers_active_2017_united <- st_join(Merged_tracts_2017, 
+                                                       Transplant_centers_active_2017_100mile_buffer_united, 
+                                                       join = st_intersects)
+tracts_in_100mile_buffers_active_2022_united <- st_join(Merged_tracts_2022, 
+                                                       Transplant_centers_active_2022_100mile_buffer_united, 
+                                                       join = st_intersects)
+
+tracts_in_100mile_buffers_HIV_2017_united <- st_join(Merged_tracts_2017, 
+                                                    Transplant_centers_kidney_HIV_2017_100mile_buffer_united, 
+                                                    join = st_intersects)
+tracts_in_100mile_buffers_HIV_2022_united <- st_join(Merged_tracts_2022,
+                                                    Transplant_centers_kidney_HIV_2022_100mile_buffer_united, 
+                                                    join = st_intersects)
+
+tracts_in_100mile_buffers_HOPE_2017_united <- st_join(Merged_tracts_2017, 
+                                              Transplant_centers_kidney_HOPE_2017_100mile_buffer_united, 
+                                             join = st_intersects)
+tracts_in_100mile_buffers_HOPE_2022_united <- st_join(Merged_tracts_2022, 
+                                                     Transplant_centers_kidney_HOPE_2022_100mile_buffer_united, 
+                                                     join = st_intersects)
+
+
+#ST join to individual tracts and the united transplant center geography to avoid duplication
+tracts_in_200mile_buffers_active_2017_united <- st_join(Merged_tracts_2017, 
+                                                       Transplant_centers_active_2017_200mile_buffer_united, 
+                                                       join = st_intersects)
+tracts_in_200mile_buffers_active_2022_united <- st_join(Merged_tracts_2022, 
+                                                       Transplant_centers_active_2022_200mile_buffer_united, 
+                                                       join = st_intersects)
+
+tracts_in_200mile_buffers_HIV_2017_united <- st_join(Merged_tracts_2017, 
+                                                    Transplant_centers_kidney_HIV_2017_200mile_buffer_united, 
+                                                    join = st_intersects)
+tracts_in_200mile_buffers_HIV_2022_united <- st_join(Merged_tracts_2022,
+                                                    Transplant_centers_kidney_HIV_2022_200mile_buffer_united, 
+                                                    join = st_intersects)
+
+tracts_in_200mile_buffers_HOPE_2017_united <- st_join(Merged_tracts_2017, 
+                                              Transplant_centers_kidney_HOPE_2017_200mile_buffer_united, 
+                                             join = st_intersects)
+tracts_in_200mile_buffers_HOPE_2022_united <- st_join(Merged_tracts_2022, 
+                                                     Transplant_centers_kidney_HOPE_2022_200mile_buffer_united, 
+                                                     join = st_intersects)
+
+
+
+tracts_in_60min_buffers_active_2017_united <- st_join(Merged_tracts_2017, 
+                                                   Transplant_centers_active_2017_60min_buffer_united, 
+                                             join = st_intersects)
+tracts_in_60min_buffers_active_2022_united <- st_join(Merged_tracts_2022, 
+                                                   Transplant_centers_active_2022_60min_buffer_united, 
+                                             join = st_intersects)
+
+tracts_in_60min_buffers_HIV_2017_united <- st_join(Merged_tracts_2017, 
+                                                   Transplant_centers_kidney_HIV_2017_60min_buffer_united, 
+                                             join = st_intersects)
+tracts_in_60min_buffers_HIV_2022_united <- st_join(Merged_tracts_2022, 
+                                                   Transplant_centers_kidney_HIV_2022_60min_buffer_united, 
+                                             join = st_intersects)
+
+tracts_in_60min_buffers_HOPE_2017_united <- st_join(Merged_tracts_2017, 
+                                                    Transplant_centers_kidney_HOPE_2017_60min_buffer_united, 
+                                             join = st_intersects)
+tracts_in_60min_buffers_HOPE_2022_united <- st_join(Merged_tracts_2022, 
+                                                    Transplant_centers_kidney_HOPE_2022_60min_buffer_united, 
+                                             join = st_intersects)
+```
+
+
+Calculate results for geographic analyses
+```{r}
+
+#Initialize data frames
+Results_HIV_df <- tibble(
+  Characteristic = character(),
+  Numerator = numeric(),
+  Denominator = numeric(),
+  Percentage = numeric(),
+  Year= numeric()
+)
+
+Results_nonHIV_df <- tibble(
+  Characteristic = character(),
+  Numerator = numeric(),
+  Denominator = numeric(),
+  Percentage = numeric(),
+  Year= numeric()
+)
+
+#Calculate the total number of HIV cases assigned to a tract, 2017
+Tract_total_HIV_cases_2017<-Merged_tracts_2017%>%
+  st_drop_geometry()%>%
+  summarize(total_cases=sum(tract_cases, na.rm=TRUE))%>%
+  pull(total_cases)%>%
+  first()
+
+#Calculate the total number of HIV cases assigned to a tract, 2022
+Tract_total_HIV_cases_2022<-Merged_tracts_2022%>%
+  st_drop_geometry()%>%
+  summarize(total_cases=sum(tract_cases, na.rm=TRUE))%>%
+  pull(total_cases)%>%
+  first()
+
+#Calculate the total number of nonHIV cases assigned to a tract, 2017
+Tract_total_nonHIV_cases_2017<-Merged_tracts_2017%>%
+  st_drop_geometry()%>%
+  summarize(total_cases=sum(tract_noncases, na.rm=TRUE))%>%
+  pull(total_cases)%>%
+  first()
+
+#Calculate the total number of nonHIV cases assigned to a tract, 2022
+Tract_total_nonHIV_cases_2022<-Merged_tracts_2022%>%
+  st_drop_geometry()%>%
+  summarize(total_cases=sum(tract_noncases, na.rm=TRUE))%>%
+  pull(total_cases)%>%
+  first()
+
+
+
+#Calculate table for PLWH
+for (range in c("50mile", "100mile", "200mile", "60min")) {
+  for (type in c("active", "HIV", "HOPE")) {
+         for (year in c(2017, 2022)){
+           
+           name_of_df<-paste0("tracts_in_",range,"_buffers_", type, "_", year, "_united")
+           print(name_of_df)
+           
+           
+           temp_Num<-get(name_of_df)%>%
+               st_drop_geometry()%>%
+             group_by(catchment_area)%>%
+             summarize(total_cases=sum(tract_cases, na.rm=TRUE))%>%
+             pull(total_cases)%>%
+             first()
+           
+           temp_Denom<-case_when(
+             year==2017~Tract_total_HIV_cases_2017,
+             year==2022~Tract_total_HIV_cases_2022)
+           
+           
+             Results_HIV_df<-Results_HIV_df%>%
+               add_row(
+                   Characteristic = paste(type, range),
+                   Numerator = round(temp_Num, 0),
+                   Denominator = temp_Denom,
+                   Percentage = round(100*Numerator/Denominator,1),
+                   Year= year
+               )  
+         }
+  }
+}
+
+#Calculate table for non-HIC population
+for (range in c("50mile", "100mile", "200mile", "60min")) {
+  for (type in c("active")) {
+         for (year in c(2017, 2022)){
+
+           name_of_df<-paste0("tracts_in_",range,"_buffers_", type, "_", year, "_united")
+           print(name_of_df)
+           
+           temp_Num<-get(name_of_df)%>%
+               st_drop_geometry()%>%
+             group_by(catchment_area)%>%
+             summarize(total_noncases=sum(tract_noncases, na.rm=TRUE))%>%
+             pull(total_noncases)%>%
+             first()
+           
+           temp_Denom<-case_when(
+             year==2017~Tract_total_nonHIV_cases_2017,
+             year==2022~Tract_total_nonHIV_cases_2022)
+           
+           Results_nonHIV_df<-Results_nonHIV_df%>%
+               add_row(
+                   Characteristic = paste(type, range),
+                   Numerator = round(temp_Num, 0),
+                   Denominator = temp_Denom,
+                   Percentage = round(100*Numerator/Denominator,1),
+                   Year= year)
+  
+         }
+  }
+}
+
+
+
+
+
+```
+Format results and create tables
+```{r}
+
+Results_HIV_df%>%
+  pivot_wider(
+    names_from = Year,
+    values_from = c(Numerator, Denominator, Percentage))%>%
+  select(Characteristic, 
+         Numerator_2017, Denominator_2017, Percentage_2017, 
+         Numerator_2022, Denominator_2022, Percentage_2022)%>%
+  mutate(Characteristic=factor(Characteristic,
+                               levels=c("active 50mile","active 100mile", "active 200mile", "active 60min",
+                                        "HIV 50mile","HIV 100mile", "HIV 200mile", "HIV 60min",
+                                        "HOPE 50mile","HOPE 100mile", "HOPE 200mile", "HOPE 60min"),
+                               labels = c("Active kidney center 50 mile radius",
+                                          "Active kidney center 100 mile radius", 
+                                          "Active kidney center 200 mile radius", 
+                                          "Active kidney center 60 min radius",
+                                          "Active HIV R+ kidney center 50 mile radius",
+                                          "Active HIV R+ kidney center 100 mile radius", 
+                                          "Active HIV R+ kidney center 200 mile radius", 
+                                          "Active HIV R+ kidney center 60 min radius",
+                                          "Active HOPE D+ kidney center 50 mile radius",
+                                          "Active HOPE D+ kidney center 100 mile radius",
+                                          "Active HOPE D+ kidney center 200 mile radius",
+                                          "Active HOPE D+ kidney center 60 min radius"
+                               
+                               
+                               )))%>%
+    arrange(Characteristic)%>%
+  gt() %>%
+  tab_spanner(
+    label = "2017", 
+    columns = vars(Numerator_2017, Denominator_2017, Percentage_2017)
+  ) %>%
+  tab_spanner(
+    label = "2022", 
+    columns = vars(Numerator_2022, Denominator_2022, Percentage_2022)
+  )%>%
+    fmt_number(
+    columns = vars(Numerator_2017, Denominator_2017, 
+                    Numerator_2022, Denominator_2022),
+    decimals = 0,  
+    use_seps = TRUE
+  )%>%
+  tab_header(
+    title = "Access of PLWH to transplant centers in 2017 and 2022"  # Title of your table
+  )%>%
+  cols_label(
+    Characteristic = "Characteristic",
+    Numerator_2017 = "Numerator",
+    Denominator_2017 = "Denominator",
+    Percentage_2017 = "Percentage",
+    Numerator_2022 = "Numerator",
+    Denominator_2022 = "Denominator",
+    Percentage_2022 = "Percentage"
+  )%>%
+  # Style for 2017 columns (data cells)
+  tab_style(
+    style = cell_fill(color = "lightgray"),
+    locations = cells_body(columns = vars(Numerator_2017, Denominator_2017, Percentage_2017))
+  ) %>%
+  # Style for 2022 columns (data cells)
+  tab_style(
+    style = cell_fill(color = "lightblue"),
+    locations = cells_body(columns = vars(Numerator_2022, Denominator_2022, Percentage_2022))
+  ) %>%
+  # Add borders to separate the two groups (2017 and 2022)
+  tab_style(
+    style = cell_borders(sides = c("right"), weight = px(2), color = "black"),
+    locations = cells_body(columns = vars(Numerator_2017, Denominator_2017, Percentage_2017))
+  ) %>%
+  tab_style(
+    style = cell_borders(sides = c("left"), weight = px(2), color = "black"),
+    locations = cells_body(columns = vars(Numerator_2022, Denominator_2022, Percentage_2022))
+  )%>%
+  gtsave("Kidney analysis results/Table 1.docx")
+
+Results_nonHIV_df%>%
+  pivot_wider(
+    names_from = Year,
+    values_from = c(Numerator, Denominator, Percentage))%>%
+  select(Characteristic, 
+         Numerator_2017, Denominator_2017, Percentage_2017, 
+         Numerator_2022, Denominator_2022, Percentage_2022)%>%
+    mutate(Characteristic=factor(Characteristic,
+                               levels=c("active 50mile","active 100mile", "active 200mile", "active 60min",
+                                        "HIV 50mile","HIV 100mile", "HIV 200mile", "HIV 60min",
+                                        "HOPE 50mile","HOPE 100mile", "HOPE 200mile", "HOPE 60min"),
+                               labels = c("Active kidney center 50 mile radius",
+                                          "Active kidney center 100 mile radius", 
+                                          "Active kidney center 200 mile radius", 
+                                          "Active kidney center 60 min radius",
+                                          "Active HIV R+ kidney center 50 mile radius",
+                                          "Active HIV R+ kidney center 100 mile radius", 
+                                          "Active HIV R+ kidney center 200 mile radius", 
+                                          "Active HIV R+ kidney center 60 min radius",
+                                          "Active HOPE D+ kidney center 50 mile radius",
+                                          "Active HOPE D+ kidney center 100 mile radius",
+                                          "Active HOPE D+ kidney center 200 mile radius",
+                                          "Active HOPE D+ kidney center 60 min radius"
+                               
+                               
+                               )))%>%
+    arrange(Characteristic)%>%
+  gt() %>%
+  tab_spanner(
+    label = "2017", 
+    columns = vars(Numerator_2017, Denominator_2017, Percentage_2017)
+  ) %>%
+  tab_spanner(
+    label = "2022", 
+    columns = vars(Numerator_2022, Denominator_2022, Percentage_2022)
+  )%>%
+    fmt_number(
+    columns = vars(Numerator_2017, Denominator_2017, 
+                    Numerator_2022, Denominator_2022),
+    decimals = 0,  
+    use_seps = TRUE
+  )%>%
+  tab_header(
+    title = "Access of people without HIV to transplant centers in 2017 and 2022"  # Title of your table
+  )%>%
+  cols_label(
+    Characteristic = "Characteristic",
+    Numerator_2017 = "Numerator",
+    Denominator_2017 = "Denominator",
+    Percentage_2017 = "Percentage",
+    Numerator_2022 = "Numerator",
+    Denominator_2022 = "Denominator",
+    Percentage_2022 = "Percentage"
+  )%>%
+  # Style for 2017 columns (data cells)
+  tab_style(
+    style = cell_fill(color = "lightgray"),
+    locations = cells_body(columns = vars(Numerator_2017, Denominator_2017, Percentage_2017))
+  ) %>%
+  # Style for 2022 columns (data cells)
+  tab_style(
+    style = cell_fill(color = "lightblue"),
+    locations = cells_body(columns = vars(Numerator_2022, Denominator_2022, Percentage_2022))
+  ) %>%
+  # Add borders to separate the two groups (2017 and 2022)
+  tab_style(
+    style = cell_borders(sides = c("right"), weight = px(2), color = "black"),
+    locations = cells_body(columns = vars(Numerator_2017, Denominator_2017, Percentage_2017))
+  ) %>%
+  tab_style(
+    style = cell_borders(sides = c("left"), weight = px(2), color = "black"),
+    locations = cells_body(columns = vars(Numerator_2022, Denominator_2022, Percentage_2022))
+  )%>%
+  gtsave("Kidney analysis results/Table 2.docx")
+
+
+
+
+```
+
+
+Dot plots
+```{r}
+
+county_dots_2017<-as_dot_density(Merged_Counties_2017, "county_cases", values_per_dot =100)
+
+county_dots_2022<-as_dot_density(Merged_Counties_2022, "county_cases", values_per_dot =100)
+
+#Transform for mapping
+county_dots_2017_transformed<-county_dots_2017%>%
+  st_transform(5070)
+
+county_dots_2022_transformed<-county_dots_2022%>%
+  st_transform(5070)
+
+
+#tract_dots<-as_dot_density(Merged_tracts, "tract_cases", values_per_dot =10)
+
+#Transform us state map
+us_state_transformed<-us_states%>%
+  st_transform(5070)
+
+```
+
+
+Create plots
+```{r}
+
+  
+#Map all transplant centers and a 50-mile catchment area upon the dot map of HIV, 2017
+Active50milemap2017<-ggplot() +
+  geom_sf(data = county_dots_2017_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "Fifty-mile radius around kidney transplant centers, 2017", subtitle = "(1 dot = 100 HIV cases)")+
+  geom_sf(data=Transplant_centers_active_2017_50mile_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+ggsave("Kidney analysis results/Active 50 mile map 2017.svg")
+
+
+#Map all transplant centers and a 50-mile catchment area upon the dot map of HIV, 2022
+Active50milemap2022<-ggplot() +
+  geom_sf(data = county_dots_2022_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "Fifty-mile radius around kidney transplant centers, 2022", subtitle = "(1 dot = 100 HIV cases)")+
+  geom_sf(data=Transplant_centers_active_2022_50mile_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+ggsave("Kidney analysis results/Active 50 mile map 2022.svg")
+
+
+
+
+
+#Map all transplant centers and a 60 minute catchment area upon the dot map of HIV, 2017
+Active60minmap2017<-ggplot() +
+  geom_sf(data = county_dots_2017_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "2013-2017")+
+  geom_sf(data=Transplant_centers_active_2017_60min_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+ggsave("Kidney analysis results/Active 60 minute map 2017.svg")
+
+
+#Map all transplant centers and a 60 minute catchment area upon the dot map of HIV, 20182022
+Active60minmap2022<-ggplot() +
+  geom_sf(data = county_dots_2022_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "2018-2022")+
+  geom_sf(data=Transplant_centers_active_2022_60min_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+ggsave("Kidney analysis results/Active 60 minute map 2022.svg")
+
+
+
+#Map transplant centers with HIV R+ and a 60 minute catchment area upon the dot map of HIV, 2013-2017
+HIV60minmap2017<-ggplot() +
+  geom_sf(data = county_dots_2017_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "2013-2017")+
+  geom_sf(data=Transplant_centers_kidney_HIV_2017_60min_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+ggsave("Kidney analysis results/HIV 60 minute map 2017.svg")
+
+#Map transplant centers with HIV R+ and a 60 minute catchment area upon the dot map of HIV, 2018-2022
+HIV60minmap2022<-ggplot() +
+  geom_sf(data = county_dots_2022_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "2018-2022")+
+  geom_sf(data=Transplant_centers_kidney_HIV_2022_60min_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+ggsave("Kidney analysis results/HIV 60 minute map 2022.svg")
+
+
+
+
+```
+
+Create plots for poster 2025-10-4
+```{r}
+
+
+#First plot:  50-mile radius of all active kidney transplant centers
+#This is the prototype for the loop with functions
+Plot1<-ggplot() +
+  geom_sf(data = county_dots_2017_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2017",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[1,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[1,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[1,3]))}",
+                    ))+
+  geom_sf(data=Transplant_centers_active_2017_50mile_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+Plot2<-ggplot() +
+  geom_sf(data = county_dots_2022_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2022",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[2,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[2,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[2,3]))}",
+                    ))+
+  geom_sf(data=Transplant_centers_active_2022_50mile_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+combined<-cowplot::plot_grid(Plot1, Plot2,
+                   ncol = 2, align = "hv")
+
+final_plot <- ggdraw() +
+  draw_plot(combined) +
+  draw_label(
+    "Active kidney transplant center, 50 miles",
+    x = 0.5, y = 0.9,           # top center
+    hjust = 0.5, vjust = 1,   # anchor to the top edge
+    fontface = 'bold',
+    size = 25
+  )+
+    # 
+  draw_label(
+    "Each blue dot represents 100 people with HIV\nRed outlines represent the catchment area for each transplant center",
+    x = 0.02, y = 0.07,          # left margin position
+    hjust = 0, vjust = 0,        # align text to the left edge
+    size = 14,
+    fontface = "italic"
+  )
+
+
+#Again, but add the HIV negatives to the title
+#First plot:  50-mile radius of all active kidney transplant centers
+Plot1<-ggplot() +
+  geom_sf(data = county_dots_2017_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2017",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[1,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[1,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[1,3]))}",
+                    "<br>",
+                    "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_nonHIV_df[1,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_nonHIV_df[1,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_nonHIV_df[1,3]))}",
+                    ))+
+  geom_sf(data=Transplant_centers_active_2017_50mile_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+Plot2<-ggplot() +
+  geom_sf(data = county_dots_2022_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2022",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                                        "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[2,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[2,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[2,3]))}",
+                    "<br>",
+                    "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_nonHIV_df[2,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_nonHIV_df[2,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_nonHIV_df[2,3]))}",
+                    ))+
+  geom_sf(data=Transplant_centers_active_2022_50mile_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+combined<-cowplot::plot_grid(Plot1, Plot2,
+                   ncol = 2, align = "hv")
+
+final_plot <- ggdraw() +
+  draw_plot(combined) +
+  draw_label(
+    "Active kidney transplant center, 50 miles",
+    x = 0.5, y = .97,           # top center
+    hjust = 0.5, vjust = 1,   # anchor to the top edge
+    fontface = 'bold',
+    size = 25
+  )+
+    # 
+  draw_label(
+    "Each blue dot represents 100 people with HIV\nRed outlines represent the catchment area for each transplant center",
+    x = 0.02, y = 0.01,          # left margin position
+    hjust = 0, vjust = 0,        # align text to the left edge
+    size = 14,
+    fontface = "italic"
+  )
+
+ggsave("Kidney analysis results/ActivekidneyCenterCombinedPlot50mile.svg", 
+       final_plot, width = 12, height = 6, units = "in",
+       bg = "white")
+ggsave("Kidney analysis results/ActivekidneyCenterCombinedPlot50mile.png", 
+       final_plot, width = 12, height = 6, units = "in",
+       dpi = 150,
+       device = ragg::agg_png,
+       bg = "white")
+
+
+
+
+#Subsequent plot:  100-mile radius of all active kidney transplant centers
+Plot1<-ggplot() +
+  geom_sf(data = county_dots_2017_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2017",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[7,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[7,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[7,3]))}",
+                    "<br>",
+                    "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_nonHIV_df[3,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_nonHIV_df[3,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_nonHIV_df[3,3]))}",
+                    ))+
+  geom_sf(data=Transplant_centers_active_2017_100mile_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+Plot2<-ggplot() +
+  geom_sf(data = county_dots_2022_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2022",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                                        "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[8,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[8,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[8,3]))}",
+                    "<br>",
+                    "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_nonHIV_df[4,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_nonHIV_df[4,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_nonHIV_df[4,3]))}",
+                    ))+
+  geom_sf(data=Transplant_centers_active_2022_100mile_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+combined<-cowplot::plot_grid(Plot1, Plot2,
+                   ncol = 2, align = "hv")
+
+final_plot <- ggdraw() +
+  draw_plot(combined) +
+  draw_label(
+    "Active kidney transplant center, 100 miles",
+    x = 0.5, y = .97,           # top center
+    hjust = 0.5, vjust = 1,   # anchor to the top edge
+    fontface = 'bold',
+    size = 25
+  )+
+    # 
+  draw_label(
+    "Each blue dot represents 100 people with HIV\nRed outlines represent the catchment area for each transplant center",
+    x = 0.02, y = 0.01,          # left margin position
+    hjust = 0, vjust = 0,        # align text to the left edge
+    size = 14,
+    fontface = "italic"
+  )
+
+ggsave("Kidney analysis results/ActivekidneyCenterCombinedPlot100mile.svg", 
+       final_plot, width = 12, height = 6, units = "in",
+       bg = "white")
+
+
+#Subsequent plot:  200-mile radius of all active kidney transplant centers
+Plot1<-ggplot() +
+  geom_sf(data = county_dots_2017_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2017",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[13,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[13,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[13,3]))}",
+                    "<br>",
+                    "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_nonHIV_df[5,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_nonHIV_df[5,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_nonHIV_df[5,3]))}",
+                    ))+
+  geom_sf(data=Transplant_centers_active_2017_200mile_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+Plot2<-ggplot() +
+  geom_sf(data = county_dots_2022_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2022",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                                        "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[14,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[14,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[14,3]))}",
+                    "<br>",
+                    "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_nonHIV_df[6,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_nonHIV_df[6,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_nonHIV_df[6,3]))}",
+                    ))+
+  geom_sf(data=Transplant_centers_active_2022_200mile_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+combined<-cowplot::plot_grid(Plot1, Plot2,
+                   ncol = 2, align = "hv")
+
+final_plot <- ggdraw() +
+  draw_plot(combined) +
+  draw_label(
+    "Active kidney transplant center, 200 miles",
+    x = 0.5, y = .97,           # top center
+    hjust = 0.5, vjust = 1,   # anchor to the top edge
+    fontface = 'bold',
+    size = 25
+  )+
+    # 
+  draw_label(
+    "Each blue dot represents 100 people with HIV\nRed outlines represent the catchment area for each transplant center",
+    x = 0.02, y = 0.01,          # left margin position
+    hjust = 0, vjust = 0,        # align text to the left edge
+    size = 14,
+    fontface = "italic"
+  )
+
+ggsave("Kidney analysis results/ActivekidneyCenterCombinedPlot200mile.svg", 
+       final_plot, width = 12, height = 6, units = "in",
+       bg = "white")
+
+
+#Subsequent plot:  60-min radius of all active kidney transplant centers
+Plot1<-ggplot() +
+  geom_sf(data = county_dots_2017_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2017",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[19,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[19,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[19,3]))}",
+                    "<br>",
+                    "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_nonHIV_df[7,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_nonHIV_df[7,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_nonHIV_df[7,3]))}",
+                    ))+
+  geom_sf(data=Transplant_centers_active_2017_60min_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+Plot2<-ggplot() +
+  geom_sf(data = county_dots_2022_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2022",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                                        "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[20,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[20,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[20,3]))}",
+                    "<br>",
+                    "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_nonHIV_df[8,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_nonHIV_df[8,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_nonHIV_df[8,3]))}",
+                    ))+
+  geom_sf(data=Transplant_centers_active_2022_60min_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+combined<-cowplot::plot_grid(Plot1, Plot2,
+                   ncol = 2, align = "hv")
+
+final_plot <- ggdraw() +
+  draw_plot(combined) +
+  draw_label(
+    "Active kidney transplant center, 60 mins",
+    x = 0.5, y = .97,           # top center
+    hjust = 0.5, vjust = 1,   # anchor to the top edge
+    fontface = 'bold',
+    size = 25
+  )+
+    # 
+  draw_label(
+    "Each blue dot represents 100 people with HIV\nRed outlines represent the catchment area for each transplant center",
+    x = 0.02, y = 0.05,          # left margin position
+    hjust = 0, vjust = 0,        # align text to the left edge
+    size = 14,
+    fontface = "italic"
+  )
+
+ggsave("Kidney analysis results/ActivekidneyCenterCombinedPlot60mins.png", 
+       final_plot, width = 12, height = 6, units = "in",
+        dpi = 150,
+       device = ragg::agg_png,
+
+       bg = "white")
+
+# =========================================================
+
+#Write a function to parameterize the above so that it's easier to create the needed plots
+make_plot<-function(startrowdf,
+                    buffer2017,
+                    buffer2022,
+                    plottitle)
+{
+Plot1<-ggplot() +
+  geom_sf(data = county_dots_2017_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2017",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[startrowdf,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[startrowdf,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[startrowdf,3]))}",
+                    ))+
+  geom_sf(data=get(buffer2017), color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+Plot2<-ggplot() +
+  geom_sf(data = county_dots_2022_transformed, size = 0.3, color = "navy", alpha = 0.5) +
+  theme_void() +
+  theme(
+    axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+    plot.title = element_textbox(size = 16, hjust = 0.5,
+                                 halign = 0.5)
+  )+
+  labs(y="2022",
+       title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                    "<span style='font-size:30pt; font-weight:bold;'>",
+                    "{Results_HIV_df[startrowdf+1,4]}%",
+                    "</span>",
+                    "<br>",
+                    "{comma(as.numeric(Results_HIV_df[startrowdf+1,2]))}",
+                    " / ",
+                    "{comma(as.numeric(Results_HIV_df[startrowdf+1,3]))}",
+                    ))+
+  geom_sf(data=get(buffer2022), color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+combined<-cowplot::plot_grid(Plot1, Plot2,
+                   ncol = 2, align = "hv")
+
+final_plot <- ggdraw() +
+  draw_plot(combined) +
+  draw_label(
+    plottitle,
+    x = 0.5, y = 0.9,           # top center
+    hjust = 0.5, vjust = 1,   # anchor to the top edge
+    fontface = 'bold',
+    size = 25
+  )+
+    # 
+  draw_label(
+    "Each blue dot represents 100 people with HIV\nRed outlines represent the catchment area for each transplant center",
+    x = 0.02, y = 0.1,          # left margin position
+    hjust = 0, vjust = 0,        # align text to the left edge
+    size = 14,
+    fontface = "italic"
+  )
+
+ggsave(glue("Kidney analysis results/Combined kidney plot 2025-10-4 {plottitle}.svg"), 
+       final_plot, width = 12, height = 6, units = "in",
+       bg = "white")
+
+ggsave(glue("Kidney analysis results/Combined kidney plot 2025-10-4 {plottitle}.png"), 
+       final_plot, width = 12, height = 6, units = "in",
+        dpi = 150,
+       device = ragg::agg_png,
+       bg = "white")
+
+
+      
+  
+}
+
+#Having defined the function, let's get things plotted
+
+make_plot(startrowdf = 1,
+          buffer2017="Transplant_centers_active_2017_50mile_buffer",
+          buffer2022="Transplant_centers_active_2022_50mile_buffer",
+          plottitle="Active kidney transplant center, 50 miles")
+
+make_plot(startrowdf = 7,
+          buffer2017="Transplant_centers_active_2017_100mile_buffer",
+          buffer2022="Transplant_centers_active_2022_100mile_buffer",
+          plottitle="Active kidney transplant center, 100 miles")
+
+make_plot(startrowdf = 13,
+          buffer2017="Transplant_centers_active_2017_200mile_buffer",
+          buffer2022="Transplant_centers_active_2022_200mile_buffer",
+          plottitle="Active kidney transplant center, 200 miles")
+
+make_plot(startrowdf = 17,
+          buffer2017="Transplant_centers_active_2017_60min_buffer",
+          buffer2022="Transplant_centers_active_2022_60min_buffer",
+          plottitle="Active kidney transplant center, 60 mins")
+
+
+
+make_plot(startrowdf = 3,
+          buffer2017="Transplant_centers_kidney_HIV_2017_50mile_buffer",
+          buffer2022="Transplant_centers_kidney_HIV_2022_50mile_buffer",
+          plottitle="Active HIV R+ kidney transplant center, 50 miles")
+
+make_plot(startrowdf = 9,
+          buffer2017="Transplant_centers_kidney_HIV_2017_100mile_buffer",
+          buffer2022="Transplant_centers_kidney_HIV_2022_100mile_buffer",
+          plottitle="Active HIV R+ kidney transplant center, 100 miles")
+
+make_plot(startrowdf = 15,
+          buffer2017="Transplant_centers_kidney_HIV_2017_200mile_buffer",
+          buffer2022="Transplant_centers_kidney_HIV_2022_200mile_buffer",
+          plottitle="Active HIV R+ kidney transplant center, 200 miles")
+
+make_plot(startrowdf = 21,
+          buffer2017="Transplant_centers_kidney_HIV_2017_60min_buffer",
+          buffer2022="Transplant_centers_kidney_HIV_2022_60min_buffer",
+          plottitle="Active HIV R+ kidney transplant center, 60 mins")
+
+
+
+make_plot(startrowdf = 5,
+          buffer2017="Transplant_centers_kidney_HOPE_2017_50mile_buffer",
+          buffer2022="Transplant_centers_kidney_HOPE_2022_50mile_buffer",
+          plottitle="Active HOPE kidney transplant center, 50 miles")
+
+make_plot(startrowdf = 11,
+          buffer2017="Transplant_centers_kidney_HOPE_2017_100mile_buffer",
+          buffer2022="Transplant_centers_kidney_HOPE_2022_100mile_buffer",
+          plottitle="Active HOPE kidney transplant center, 100 miles")
+
+make_plot(startrowdf = 17,
+          buffer2017="Transplant_centers_kidney_HOPE_2017_200mile_buffer",
+          buffer2022="Transplant_centers_kidney_HOPE_2022_200mile_buffer",
+          plottitle="Active HOPE kidney transplant center, 200 miles")
+
+make_plot(startrowdf = 23,
+          buffer2017="Transplant_centers_kidney_HOPE_2017_60min_buffer",
+          buffer2022="Transplant_centers_kidney_HOPE_2022_60min_buffer",
+          plottitle="Active HOPE kidney transplant center, 60 mins")
+
+
+
+```
+
+
+
+Individual
+```{r}
+
+
+for (range in c("50mile", "100mile", "200mile")) {
+  for (type in c("active")) {
+        
+           temp2017DF<-paste0("tracts_in_",range,"_buffers_", type, "_", 2017)%>%
+             get()%>%
+             st_drop_geometry()%>%
+             group_by(OTCCode)%>%
+             summarize(total_cases=round(sum(tract_cases), 0))%>%
+             mutate(year=2017)%>%
+             mutate(Center_classification=case_when(
+               OTCCode %in% HOPE_kidney_centers_2017$REC_CTR_CD~"HOPE center",
+               OTCCode %in% HIV_centers_kidney_transplant_2013_2017$REC_CTR_CD~"≥1 HIV R+ transplants",
+               OTCCode %in% Active_kidney_tx_centers_2017~"No HIV R+ transplants"
+             ))%>%
+             filter(!is.na(OTCCode))
+             
+           
+           temp2022DF<-paste0("tracts_in_",range,"_buffers_", type, "_", 2022)%>%
+           get()%>%
+             st_drop_geometry()%>%
+             group_by(OTCCode)%>%
+             summarize(total_cases=round(sum(tract_cases), 0))%>%
+             mutate(year=2022)%>%
+             mutate(Center_classification=case_when(
+               OTCCode %in% HOPE_kidney_centers_2022$REC_CTR_CD~"HOPE center",
+               OTCCode %in% HIV_centers_kidney_transplant_2018_2022$REC_CTR_CD~"≥1 HIV R+ transplants",
+               OTCCode %in% Active_kidney_tx_centers_2022~"No HIV R+ transplants"
+             ))%>%
+             filter(!is.na(OTCCode))
+           
+           combined_DF<-bind_rows(temp2017DF, temp2022DF)%>%
+             mutate(Center_classification=factor(Center_classification,
+                                                 levels=c("HOPE center","≥1 HIV R+ transplants", "No HIV R+ transplants"),
+                                                 labels=c("HOPE center","≥1 HIV R+ transplants", "No HIV R+ transplants")
+                                                 ))%>%
+             mutate(Center_classification_color=case_when(
+               OTCCode %in% HOPE_kidney_centers_2017$REC_CTR_CD~"HOPE center",
+               OTCCode %in% HIV_centers_kidney_transplant_2013_2017$REC_CTR_CD~"≥1 HIV R+ transplants",
+               OTCCode %in% Active_kidney_tx_centers_2017~"No HIV R+ transplants",
+               TRUE~"No transplants in 2017"
+             ))
+           
+           combined_DF %>% ggplot()+
+             geom_violin(mapping = aes(x=Center_classification, y=total_cases), color = NA, alpha=0.5,fill = "grey", 
+                         draw_quantiles = 1)+
+             stat_summary(mapping = aes(x=Center_classification, y=total_cases),fun = median, 
+                          fun.min = median, fun.max = median, 
+                          geom = "crossbar", width = 0.9, fatten=1.5)+
+             geom_quasirandom(mapping = aes(x=Center_classification, y=total_cases, color=Center_classification_color), 
+                   cex=2, alpha=0.7)+
+             stat_compare_means(method = "kruskal.test",
+                                  mapping = aes(x = Center_classification, y = total_cases)) +
+               scale_y_continuous(labels = scales::comma)+
+
+               theme_classic()+
+             guides(color = guide_legend(title.position = "top", nrow = 1))+
+             theme(legend.position = "bottom",
+                   legend.title = element_text(hjust = 0.5),  # centers title
+                   legend.box = "horizontal")+
+             theme(axis.text.x = element_text(
+               angle = 45,
+               hjust = 1,
+               vjust = 1))+
+             facet_grid(.~year)+
+             labs(x = "Center HIV R+ volume", y="PLWH in catchment area", color="2017 status")
+           ggsave(paste0("Kidney analysis results/Beeswarm ", range,".png"))
+             
+                                
+            
+}}
+
+for (range in c("60min")) {
+  for (type in c("active")) {
+        
+           temp2017DF<-paste0("tracts_in_",range,"_buffers_", type, "_", 2017)%>%
+             get()%>%
+             st_drop_geometry()%>%
+             rename(OTCCode=OTCName)%>%
+             group_by(OTCCode)%>%
+             summarize(total_cases=round(sum(tract_cases), 0))%>%
+             mutate(year=2017)%>%
+             mutate(Center_classification=case_when(
+               OTCCode %in% HOPE_kidney_centers_2017$REC_CTR_CD~"HOPE center",
+               OTCCode %in% HIV_centers_kidney_transplant_2013_2017$REC_CTR_CD~"≥1 HIV R+ transplants",
+               OTCCode %in% Active_kidney_tx_centers_2017~"No HIV R+ transplants"
+             ))%>%
+             filter(!is.na(OTCCode))
+             
+           
+           temp2022DF<-paste0("tracts_in_",range,"_buffers_", type, "_", 2022)%>%
+           get()%>%
+             st_drop_geometry()%>%
+             rename(OTCCode=OTCName)%>%
+
+             group_by(OTCCode)%>%
+             summarize(total_cases=round(sum(tract_cases), 0))%>%
+             mutate(year=2022)%>%
+             mutate(Center_classification=case_when(
+               OTCCode %in% HOPE_kidney_centers_2022$REC_CTR_CD~"HOPE center",
+               OTCCode %in% HIV_centers_kidney_transplant_2018_2022$REC_CTR_CD~"≥1 HIV R+ transplants",
+               OTCCode %in% Active_kidney_tx_centers_2022~"No HIV R+ transplants"
+             ))%>%
+             filter(!is.na(OTCCode))
+           
+           combined_DF<-bind_rows(temp2017DF, temp2022DF)%>%
+             mutate(Center_classification=factor(Center_classification,
+                                                 levels=c("HOPE center","≥1 HIV R+ transplants", "No HIV R+ transplants"),
+                                                 labels=c("HOPE center","≥1 HIV R+ transplants", "No HIV R+ transplants")
+                                                 ))%>%
+             mutate(Center_classification_color=case_when(
+               OTCCode %in% HOPE_kidney_centers_2017$REC_CTR_CD~"HOPE center",
+               OTCCode %in% HIV_centers_kidney_transplant_2013_2017$REC_CTR_CD~"≥1 HIV R+ transplants",
+               OTCCode %in% Active_kidney_tx_centers_2017~"No HIV R+ transplants",
+               TRUE~"No transplants in 2017"
+             ))
+           
+           combined_DF %>% ggplot()+
+             geom_violin(mapping = aes(x=Center_classification, y=total_cases), color = NA, alpha=0.5,fill = "grey", 
+                         draw_quantiles = 1)+
+             stat_summary(mapping = aes(x=Center_classification, y=total_cases),fun = median, 
+                          fun.min = median, fun.max = median, 
+                          geom = "crossbar", width = 0.9, fatten=1.5)+
+             geom_quasirandom(mapping = aes(x=Center_classification, y=total_cases, color=Center_classification_color), 
+                   cex=2, alpha=0.7)+
+             stat_compare_means(method = "kruskal.test",
+                                  mapping = aes(x = Center_classification, y = total_cases)) +
+               scale_y_continuous(labels = scales::comma)+
+             guides(color = guide_legend(title.position = "top", nrow = 1))+
+             theme_classic()+
+             theme(legend.position = "bottom",
+                  legend.title = element_text(hjust = 0.5),  # centers title
+                  legend.box = "horizontal")+
+             theme(axis.text.x = element_text(
+               angle = 45,
+               hjust = 1,
+               vjust = 1))+
+             facet_grid(.~year)+
+             labs(x = "Center HIV R+ volume", y="PLWH in 60 minute catchment area", color="2017 status")+
+             scale_color_discrete(breaks = c("HOPE center",
+                                             "≥1 HIV R+ transplants", 
+                                             "No HIV R+ transplants",
+                                             "No transplants in 2017")
+)
+           ggsave(paste0("Kidney analysis results/Beeswarm ", range,".png"))
+             
+                                
+            
+}}
+
+
+```
+
+
+```{r mapping, eval=FALSE}
+#Map all transplant centers and a 50-mile catchment area upon the dot map of HIV, color-coded by HOPE status:
+ggplot() +
+  geom_sf(data = county_dots_transformed, size = 0.3, color = "black", alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "Fifty-mile radius of kidney transplant centers", 
+       subtitle = "County-level dot density map of HIV Cases (1 dot = 100 cases)")+
+  geom_sf(data=Transplant_center_nonHOPE_buffer, color="blue", fill=NA)+
+  geom_sf(data=Transplant_center_HOPE_buffer, color="red", fill=NA)+
+  geom_sf(data=us_state_transformed, fill=NA)
+
+
+
+
+```
+

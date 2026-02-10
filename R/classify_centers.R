@@ -7,6 +7,7 @@ Active_tx_centers<-list()
 HIV_center_volumes<-list()
 HOPE_center_volumes<-list()
 State_level_transplant_volumes<-list()
+Transplant_centers_active<-list()
 
 for (organ_loop in organ_list)
 {
@@ -51,6 +52,10 @@ for (organ_loop in organ_list)
       mutate(state_code = substr(REC_CTR_CD, 1, 2))%>%
       group_by(state_code)%>%
       summarize(total_HIV_transplants=sum(n, na.rm = TRUE))
+    
+    #Create DFs for active centers in years of interest
+    Transplant_centers_active[[organ_loop]][[year_loop]]<-Transplant_centers_all[[organ_loop]]%>%
+      filter(OTCCode %in% Active_tx_centers[[organ_loop]][[year_loop]])
     
   }
 }

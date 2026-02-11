@@ -20,7 +20,7 @@ for (organ_loop in organ_list)
     Active_tx_centers[[organ_loop]][[year_loop]]<-tx[[organ_loop]]%>%
       filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>% #Adult recipient
       mutate(year_transplant=year(REC_TX_DT))%>%
-      filter(year_transplant==year_loop)%>%
+      filter(year_transplant==as.numeric(year_loop))%>%
       group_by(REC_CTR_CD)%>%
       count()%>%
       pull(REC_CTR_CD)
@@ -30,7 +30,7 @@ for (organ_loop in organ_list)
       filter(REC_HIV_STAT=="P")%>%
       filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>% #Adult recipient
       mutate(year_transplant=year(REC_TX_DT))%>%
-      filter(year_transplant>=(year_loop-4) & year_transplant<=year_loop)%>%
+      filter(year_transplant>=(as.numeric(year_loop)-4) & year_transplant<=as.numeric(year_loop))%>%
       group_by(REC_CTR_CD)%>%
       count()%>%
       filter(REC_CTR_CD %in% Active_tx_centers[[organ_loop]][[year_loop]])
@@ -41,7 +41,7 @@ for (organ_loop in organ_list)
       filter(REC_HIV_STAT=="P")%>%
       filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>%
       mutate(year_transplant=year(REC_TX_DT	))%>%
-      filter(year_transplant>=(year_loop-4) & year_transplant<=year_loop)%>%
+      filter(year_transplant>=(as.numeric(year_loop)-4) & year_transplant<=as.numeric(year_loop))%>%
       left_join(donor_deceased)%>%
       filter(DON_HIV_NAT=="P"| DON_ANTI_HIV=="P")%>%
       group_by(REC_CTR_CD	)%>%

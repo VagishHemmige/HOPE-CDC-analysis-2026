@@ -33,7 +33,7 @@ Transplant_centers_all<-list()
 for (organ_loop in organ_list)
 {
   
-
+  
   Transplant_centers_all[[organ_loop]]<-sRtr::get_hrsa_transplant_centers()%>%
     filter(OPO_STATE_ABBR != "PR" & OPO_STATE_ABBR!= "HI")%>%
     select(OTC_NM, OTC_CD, Service_Lst, X, Y) %>%
@@ -41,8 +41,7 @@ for (organ_loop in organ_list)
     select(-Service_Lst)%>%
     distinct()%>%
     rename(OTCName=OTC_NM, OTCCode=OTC_CD, Latitude=Y, Longitude=X)
-  
-  
+  Sys.sleep(5)
   
 }
 
@@ -70,7 +69,7 @@ for (year_loop in year_list){
     us_tracts_population[[year_loop]]<-get_acs(
       geography = "tract",
       variables = "B01003_001",
-      year = year_loop,
+      year = as.numeric(year_loop),
       survey = "acs5",
       geometry = TRUE,
       state = continental_fips
@@ -95,7 +94,7 @@ for (year_loop in year_list){
     us_counties_population[[year_loop]]<-get_acs(
       geography = "county",
       variables = "B01003_001",
-      year = year_loop,
+      year = as.numeric(year_loop),
       survey = "acs5",
       geometry = TRUE,
       state = continental_fips
@@ -121,30 +120,25 @@ for (year_loop in year_list){
 
 
 
-#Atlasplus 2022 and 2017 county totals
-
-AtlasPlusTableData_2022_county_totals <- read_csv("CDC data folder/AtlasPlusTableData 2022 and 2017 county totals.csv", 
-                                                  col_types = cols(Indicator = col_skip(), 
-                                                                   Year = col_integer(), FIPS = col_number(), 
-                                                                   Cases = col_number(), `Rate per 100000` = col_number()))%>%
-  clean_names()%>%
-  rename(county_cases=cases)%>%
-  rename(geo_id=fips)%>%
-  rename(county_name=geography)%>%
-  mutate(county_cases=if_else(is.na(county_cases),0, county_cases))%>%
-  filter(year==2022)%>%
-  select(-year)
-
-AtlasPlusTableData_2017_county_totals <- read_csv("CDC data folder/AtlasPlusTableData 2022 and 2017 county totals.csv", 
-                                                  col_types = cols(Indicator = col_skip(), 
-                                                                   Year = col_integer(), FIPS = col_number(), 
-                                                                   Cases = col_number(), `Rate per 100000` = col_number()))%>%
-  clean_names()%>%
-  rename(county_cases=cases)%>%
-  rename(geo_id=fips)%>%
-  rename(county_name=geography)%>%
-  mutate(county_cases=if_else(is.na(county_cases),0, county_cases))%>%
-  filter(year==2017)%>%
-  select(-year)
+#----Atlasplus county totals----
+#This code uses the CDCAtlas package to download county-level HIV prevalence data
 
 
+AtlasPlusTableData_county_totals<-list()
+
+for (year_loop in year_list){
+  
+  AtlasPlusTableData_county_totals[[year_loop]] <-CDCAtlas::get_atlas(disease="hiv",
+                                                                      geography="county",
+                                                                      year=as.numeric(year_loop))%>%
+    clean_names()%>%
+    rename(county_cases=cases)%>%
+    rename(geo_id=fips)%>%
+    rename(county_name=geography)%>%
+    mutate(county_cases=if_else(is.na(county_cases),0, county_cases))%>%
+    mutate(geo_id=as.numeric(geo_id))%>%
+    filter(year==as.numeric(year_loop))%>%
+    select(-year)%>%
+    filter(indicator=="HIV prevalence")
+  
+}

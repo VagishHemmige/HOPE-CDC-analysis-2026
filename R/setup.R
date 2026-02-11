@@ -31,11 +31,13 @@ library(cowplot)
 library(scales)
 library(glue)
 library(sRtr)
+library(CDCAtlas)
 
 # ----Define constants----
 
 organ_list<-c("liver", "kidney", "heart", "lung", "pancreas")
-year_list<-c(2017, 2022)
+year_list<-c("2017", "2022")
+distance_list=c("50mile", "60min", "100mile", "200mile")
 
 #List states which are continental
 continental_fips <- c(

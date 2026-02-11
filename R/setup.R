@@ -47,3 +47,16 @@ continental_fips <- c(
   "37", "38", "39", "40", "41", "42", "44", "45", "46", "47",
   "48", "49", "50", "51", "53", "54", "55", "56"
 )
+
+#For isochrone analysis, we need to account for time zones in order to calculate driving time at 7 AM on the specific date
+
+#List US continental time zones
+
+timezones<-c("America/New_York","America/Chicago","America/Denver","America/Los_Angeles","America/Phoenix",
+             "America/Indiana/Indianapolis","America/Kentucky/Louisville","America/Detroit")
+
+reference_date<-list()
+
+# Specific date to anchor the time: First Monday in March of both years
+reference_date[["2022"]] <- as.Date("2022-03-07")
+reference_date[["2017"]] <- as.Date("2017-03-06")

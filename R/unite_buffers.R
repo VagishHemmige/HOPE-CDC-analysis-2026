@@ -13,7 +13,9 @@ for (organ_loop in organ_list){
       reframe(
         catchment_area = "All Centers", 
         geometry = st_union(geometry)
-      )
+      )%>%
+      st_as_sf()
+    
     
     for (year_loop in year_list){
       
@@ -23,14 +25,17 @@ for (organ_loop in organ_list){
         reframe(
           catchment_area = "All Centers", 
           geometry = st_union(geometry)
-        )
+        )%>%
+        st_as_sf()
       
       Transplant_centers_HIV_buffer_united[[organ_loop]][[distance_loop]][[year_loop]]<-
         Transplant_centers_HIV_buffer[[organ_loop]][[distance_loop]][[year_loop]]%>%
         reframe(
           catchment_area = "All Centers", 
           geometry = st_union(geometry)
-        )
+        )%>%
+        st_as_sf()
+      
       
       
       
@@ -39,7 +44,9 @@ for (organ_loop in organ_list){
         reframe(
           catchment_area = "All Centers", 
           geometry = st_union(geometry)
-        )
+        )%>%
+        st_as_sf()
+      
       
       
       

@@ -2,6 +2,13 @@
 
 #Define a function that takes an SF data object and returns 60 minute isochrones
 set_60_min_isochrone_at_7AM<-function(SFObject, year) {
+  
+  if (nrow(SFObject) == 0) {
+    return(
+      SFObject %>%
+        st_transform(5070)
+    )
+  }else{
   tempDF<-SFObject%>%
     mutate(TimeZone=tz_lookup(., method="accurate"))%>%
     st_transform(4326)
@@ -11,14 +18,9 @@ set_60_min_isochrone_at_7AM<-function(SFObject, year) {
   
   for(i in 1:length(timezones))
   {
-    TZ<-case_when(
-      year==2017~converted_times_2017[[i,1]],
-      year==2022~converted_times_2022[[i,1]],
-    )
+    TZ<-converted_times[[year]][[i,1]]
     
-    UTCTime<-case_when(
-      year==2017~format(converted_times_2017[[i,3]], "%Y-%m-%dT%H:%M:%SZ"),
-      year==2022~format(converted_times_2022[[i,3]], "%Y-%m-%dT%H:%M:%SZ"))
+    UTCTime<-format(converted_times[[year]][[i,3]], "%Y-%m-%dT%H:%M:%SZ")
     
     if (nrow(filter(tempDF,TimeZone==TZ))>0)
     {
@@ -37,4 +39,5 @@ set_60_min_isochrone_at_7AM<-function(SFObject, year) {
     bind_rows()%>%
     st_transform(5070)%>%
     return()
+  }
 }

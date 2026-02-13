@@ -3,7 +3,9 @@
 
 Results_HIV_df<-list()
 Results_nonHIV_df<-list()
-
+Tract_total_HIV_cases<-list()
+Tract_total_nonHIV_cases<-list()
+                      
 for (organ_loop in organ_list)
   
 {

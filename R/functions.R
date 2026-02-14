@@ -41,3 +41,5 @@ set_60_min_isochrone_at_7AM<-function(SFObject, year) {
     return()
   }
 }
+
+#Function that converts results df into a gt format table

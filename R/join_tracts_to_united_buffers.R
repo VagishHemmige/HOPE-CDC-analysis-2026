@@ -31,7 +31,7 @@ for (organ_loop in organ_list){
 
 
 
-for (organ_loop in c("pancreas")){
+for (organ_loop in organ_list{
   for (distance_loop in c("60min", "100mile", "200mile")){
     for (year_loop in year_list){
       
@@ -53,6 +53,6 @@ for (organ_loop in c("pancreas")){
       message("Calculating tracts for HOPE...")
       tracts_in_buffers_HOPE_united[[organ_loop]][[distance_loop]][[year_loop]] <- 
         st_join(Merged_tracts[[year_loop]], 
-                Transplant_centers_active_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], 
+                Transplant_centers_HOPE_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], 
                 join = st_intersects)
     }}}

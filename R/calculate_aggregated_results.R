@@ -26,7 +26,10 @@ for (organ_loop in organ_list)
     Percentage = numeric(),
     Year= numeric()
   )
+}
   
+  for (year_loop in year_list)
+  {
   
   #Calculate the total number of HIV cases assigned to a tract
   Tract_total_HIV_cases[[year_loop]]<-Merged_tracts[[year_loop]]%>%

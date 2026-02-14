@@ -73,8 +73,8 @@ for (organ_loop in organ_list)
             Characteristic = paste(type, distance_loop),
             Numerator = round(temp_Num, 0),
             Denominator = temp_Denom,
-            Percentage = round(100*Numerator/Denominator,1),
-            Year= year_loop
+            Percentage = round(100*temp_Num/temp_Denom,1),
+            Year= as.numeric(year_loop)
           ) 
         
       }
@@ -107,8 +107,8 @@ for (organ_loop in organ_list)
             Characteristic = paste(type, distance_loop),
             Numerator = round(temp_Num, 0),
             Denominator = temp_Denom,
-            Percentage = round(100*Numerator/Denominator,1),
-            Year= year_loop)
+            Percentage = round(100*temp_Num/temp_Denom,1),
+            Year= as.numeric(year_loop))
         
         
         

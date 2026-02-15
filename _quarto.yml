@@ -27,12 +27,31 @@ website:
       - href: index.qmd
         text: Home
 
-      - section: Data & Setup
+      - section: Data Loading & Setup
         contents:
           - href: quarto/setup.qmd
             text: Setup
           - href: quarto/functions.qmd
             text: Functions
+
+      - section: Data Processing
+        contents:
+          - href: quarto/load_data.qmd
+            text: Load data
+          - href: quarto/classify_centers.qmd
+            text: Classify centers
+          - href: quarto/county_geographic_calculations.qmd
+            text: County-level geographic calculations
+          - href: quarto/geographical_computations_for_centers.qmd
+            text: Center-level geographic calculations
+          - href: quarto/set_isochrones.qmd
+            text: Set isochrones
+          - href: quarto/unite_buffers.qmd
+            text: Unite buffers
+          - href: quarto/join_tracts_to_united_buffers.qmd
+            text: Join tracts to united buffers
+          - href: quarto/R/calculate_aggregated_results.qmd
+            text: Calculate aggregated results
 
       - section: Results
         contents:

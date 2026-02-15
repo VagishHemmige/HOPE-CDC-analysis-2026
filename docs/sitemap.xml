@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/index.html</loc>
-    <lastmod>2026-02-15T18:10:07.624Z</lastmod>
+    <lastmod>2026-02-15T20:53:32.108Z</lastmod>
   </url>
   <url>
     <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/tables.html</loc>
@@ -27,5 +27,41 @@
   <url>
     <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/setup.html</loc>
     <lastmod>2026-02-15T18:50:29.179Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/unite_buffers.html</loc>
+    <lastmod>2026-02-15T20:45:34.120Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/sample_methods.html</loc>
+    <lastmod>2026-02-07T01:17:12.801Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/join_tracts_to_united_buffers.html</loc>
+    <lastmod>2026-02-15T20:45:50.203Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/county_geographic_calculations.html</loc>
+    <lastmod>2026-02-15T20:44:47.958Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/calculate_aggregated_results.html</loc>
+    <lastmod>2026-02-15T20:46:03.464Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/classify_centers.html</loc>
+    <lastmod>2026-02-15T20:44:32.156Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/geographical_computations_for_centers.html</loc>
+    <lastmod>2026-02-15T20:45:03.921Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/load_data.html</loc>
+    <lastmod>2026-02-15T20:43:52.232Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/set_isochrones.html</loc>
+    <lastmod>2026-02-15T20:45:20.603Z</lastmod>
   </url>
 </urlset>

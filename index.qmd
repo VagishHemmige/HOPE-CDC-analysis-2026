@@ -12,6 +12,11 @@ This project integrates HIV epidemiologic data with SRTR transplant center data 
 
 ## Methods
 
+This project evaluates geographic access to solid organ transplant centers for people living with HIV in the United States. County-level HIV prevalence data from the CDC NCHHSTP AtlasPlus system were integrated with national transplant center location data. Transplant centers were classified by activity status and HIV program participation (including HOPE Act programs).
+
+Geographic accessibility was estimated using drive-time isochrones generated at standardized morning departure times. Isochrones were unioned across centers and spatially joined to county and tract-level population data to estimate the number and proportion of people living with HIV within defined travel-time thresholds.
+
+All data processing and spatial analyses were conducted in R using reproducible workflows built on sf, tigris, and custom functions documented throughout this site. No spatial smoothing or statistical modeling was applied unless explicitly stated.
 
 ## Results
 
@@ -27,7 +32,7 @@ Pending
 
 
 
-### Reproducibility
+## Reproducibility
 
 All analyses presented on this website are fully reproducible.  
 

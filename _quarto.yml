@@ -1,0 +1,46 @@
+project:
+  type: website
+  output-dir: docs
+
+
+
+website:
+  site-url: https://vagishhemmige.github.io/Cryptococcus-cost-analysis
+  repo-url: https://github.com/VagishHemmige/Cryptococcus-cost-analysis
+  repo-actions: [edit, issue]
+  title: "Cryptococcus post-transplant cost"
+  navbar:
+    left:
+      - href: index.html
+        text: Home
+      - href: quarto/setup.html
+        text: Setup
+      - href: quarto/functions.html
+        text: Functions
+      - href: quarto/create_cohort.html
+        text: 1. Create cohort
+      - href: quarto/execute_matching.html
+        text: 2. Execute matching
+      - href: quarto/postmatch_processing.html
+        text: 3. Post-match processing
+      - href: quarto/modeling.html
+        text: 4. Modeling
+      - href: quarto/tables.html
+        text: 5. Tables
+      - href: quarto/figures.html
+        text: 6. Figures
+      - href: quarto/about.html
+        text: About
+        
+    right:
+      - icon: github
+        href: https://github.com/VagishHemmige/Cryptococcus-cost-analysis
+        aria-label: GitHub repository
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+    code-tools: true
+    page-layout: full

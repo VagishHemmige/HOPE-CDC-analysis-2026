@@ -1,9 +1,9 @@
 #Join tracts to united buffers
 
 
-tracts_in__buffers_active_united<-list()
-tracts_in__buffers_HIV_united<-list()
-tracts_in__buffers_HOPE_united<-list()
+tracts_in_buffers_active_united<-list()
+tracts_in_buffers_HIV_united<-list()
+tracts_in_buffers_HOPE_united<-list()
 
 for (organ_loop in organ_list){
   for (distance_loop in distance_list){

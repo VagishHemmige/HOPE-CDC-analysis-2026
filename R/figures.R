@@ -1,21 +1,24 @@
 # Figures
 
+
+
+#----Create dot plot sf data frames----
+
 county_dots<-list()
 county_dots_transformed<-list()
 
 
-#----Create dot plot sf data frames----
 for (year_loop in year_list)
   
 {
-
-county_dots[[year_loop]]<-as_dot_density(Merged_Counties[[year_loop]], 
-                                         "county_cases", 
-                                         values_per_dot =100)
-
-county_dots_transformed[[year_loop]]<-county_dots[[year_loop]]%>%
-  st_transform(5070)
-
+  
+  county_dots[[year_loop]]<-as_dot_density(Merged_Counties[[year_loop]], 
+                                           "county_cases", 
+                                           values_per_dot =100)
+  
+  county_dots_transformed[[year_loop]]<-county_dots[[year_loop]]%>%
+    st_transform(5070)
+  
 }
 
 #Transform us state map
@@ -23,7 +26,7 @@ states_sf_transformed<-states_sf%>%
   st_transform(5070)
 
 
-#----Maps----
+#----Maps of active transplant centers----
 Activemap<-list()
 HIV_map<-list()
 
@@ -40,7 +43,7 @@ for (organ_loop in organ_list) {
         geom_sf(data=Transplant_centers_active_buffer[[organ_loop]][[distance_loop]][[year_loop]], color="red", fill=NA)+
         geom_sf(data=states_sf_transformed, fill=NA)
       ggsave(paste0("figures/",organ_loop,"/Active ", organ_loop," ",distance_loop," map", year_loop,".svg"))
-     
+      
       
       
       #Map transplant centers with HIV R+ and a 60 minute catchment area upon the dot map of HIV, 2013-2017
@@ -52,13 +55,13 @@ for (organ_loop in organ_list) {
         geom_sf(data=states_sf_transformed, fill=NA)
       ggsave(paste0("figures/",organ_loop,"/HIV ", organ_loop," ",distance_loop," map", year_loop,".svg"))
       
-
+      
     }
   }
 }
 
 
-#----Paired plots----
+#----Paired plots for PLWH comparing years----
 
 for (organ_loop in organ_list) {
   for (distance_loop in distance_list){
@@ -75,13 +78,13 @@ for (organ_loop in organ_list) {
     
     
     #Create paired plot for active
-    paired_plot<-make_paired_plot(organ=organ_loop,
-                                  distance=distance_loop,
-                                  outcome="active",
-                                  buffer_list=Transplant_centers_active_buffer,
-                                  year1="2017",
-                                  year2="2022",
-                                  plottitle=glue::glue("Active {organ_loop} transplant center, {distance_label}")
+    paired_plot<-make_paired_plot_HIV(organ=organ_loop,
+                                      distance=distance_loop,
+                                      outcome="active",
+                                      buffer_list=Transplant_centers_active_buffer,
+                                      year1="2017",
+                                      year2="2022",
+                                      plottitle=glue::glue("Active {organ_loop} transplant center, {distance_label}")
     )
     
     
@@ -101,13 +104,13 @@ for (organ_loop in organ_list) {
     
     
     #Create paired plot
-    paired_plot<-make_paired_plot(organ=organ_loop,
-                                  distance=distance_loop,
-                                  outcome="HIV",
-                                  buffer_list=Transplant_centers_HIV_buffer,
-                                  year1="2017",
-                                  year2="2022",
-                                  plottitle=glue::glue("Active HIV R+ {organ_loop} transplant center, {distance_label}"))
+    paired_plot<-make_paired_plot_HIV(organ=organ_loop,
+                                      distance=distance_loop,
+                                      outcome="HIV",
+                                      buffer_list=Transplant_centers_HIV_buffer,
+                                      year1="2017",
+                                      year2="2022",
+                                      plottitle=glue::glue("Active HIV R+ {organ_loop} transplant center, {distance_label}"))
     
     
     
@@ -126,13 +129,13 @@ for (organ_loop in organ_list) {
     
     
     #Create paired plot
-    paired_plot<-make_paired_plot(organ=organ_loop,
-                                  distance=distance_loop,
-                                  outcome="HOPE",
-                                  buffer_list=Transplant_centers_HOPE_buffer,
-                                  year1="2017",
-                                  year2="2022",
-                                  plottitle=glue::glue("Active HOPE D+/R+ {organ_loop} transplant center, {distance_label}"))
+    paired_plot<-make_paired_plot_HIV(organ=organ_loop,
+                                      distance=distance_loop,
+                                      outcome="HOPE",
+                                      buffer_list=Transplant_centers_HOPE_buffer,
+                                      year1="2017",
+                                      year2="2022",
+                                      plottitle=glue::glue("Active HOPE D+/R+ {organ_loop} transplant center, {distance_label}"))
     
     
     

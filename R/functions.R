@@ -154,13 +154,13 @@ convert_resultsdf_to_table<-function(resultsdf,
 
 
 #Write a function to parameterize the above so that it's easier to create the needed plots
-make_paired_plot<-function(organ,
-                           distance,
-                           outcome,
-                           buffer_list,
-                           year1="2017",
-                           year2="2022",
-                           plottitle)
+make_paired_plot_HIV<-function(organ,
+                               distance,
+                               outcome,
+                               buffer_list,
+                               year1="2017",
+                               year2="2022",
+                               plottitle)
 {
   
   #Errors
@@ -193,10 +193,10 @@ make_paired_plot<-function(organ,
   summary_df_HIV<-Results_HIV_df[[organ]]%>%
     filter(str_detect(Characteristic, outcome))%>%
     filter(str_detect(Characteristic, distance))
-    
-    
-    #Left graph
-    Plot1<-ggplot() +
+  
+  
+  #Left graph
+  Plot1<-ggplot() +
     geom_sf(data = county_dots_transformed[[year1]], size = 0.3, color = "navy", alpha = 0.5) +
     theme_void() +
     theme(

@@ -202,12 +202,46 @@ make_paired_plot<-function(organ,
     filter(str_detect(Characteristic, outcome))%>%
     filter(str_detect(Characteristic, distance))
   
+  #Keep only elements of Results_nonHIV_df necessary for plot, if even needed in the first place
   if (include_nonHIV)
   {
     summary_df_nonHIV<-Results_nonHIV_df[[organ]]%>%
       filter(str_detect(Characteristic, outcome))%>%
       filter(str_detect(Characteristic, distance))
   }
+  
+  #Creates text for nonHIV (is NULL if )
+  title_text_nonHIV<-list()
+  
+  if (include_nonHIV==TRUE) {
+  title_text_nonHIV[[year1]]<-
+    glue("<br>",
+         "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+         "<span style='font-size:30pt; font-weight:bold;'>",
+         "{summary_df_nonHIV$Percentage[summary_df_nonHIV$Year == as.numeric(year1)]}%",
+         "</span>",
+         "<br>",
+         "{comma(summary_df_nonHIV$Numerator[summary_df_nonHIV$Year == as.numeric(year1)])}",
+         " / ",
+         "{comma(summary_df_nonHIV$Denominator[summary_df_nonHIV$Year == as.numeric(year1)])}")
+  
+  title_text_nonHIV[[year2]]<-
+    glue("<br>",
+         "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+         "<span style='font-size:30pt; font-weight:bold;'>",
+         "{summary_df_nonHIV$Percentage[summary_df_nonHIV$Year == as.numeric(year2)]}%",
+         "</span>",
+         "<br>",
+         "{comma(summary_df_nonHIV$Numerator[summary_df_nonHIV$Year == as.numeric(year2)])}",
+         " / ",
+         "{comma(summary_df_nonHIV$Denominator[summary_df_nonHIV$Year == as.numeric(year2)])}")
+  }
+  else {
+    title_text_nonHIV[[year1]]<-NULL
+    title_text_nonHIV[[year2]]<-NULL
+  }
+  
+
   
   #Left graph
   Plot1<-ggplot() +
@@ -227,6 +261,7 @@ make_paired_plot<-function(organ,
                       "{comma(summary_df_HIV$Numerator[summary_df_HIV$Year == as.numeric(year1)])}",
                       " / ",
                       "{comma(summary_df_HIV$Denominator[summary_df_HIV$Year == as.numeric(year1)])}",
+                      title_text_nonHIV[[year1]]
          ))+
     geom_sf(data=buffer_list[[organ]][[distance]][[year1]], color="red", fill=NA)+
     geom_sf(data=states_sf_transformed, fill=NA)
@@ -250,6 +285,7 @@ make_paired_plot<-function(organ,
                       "{comma(summary_df_HIV$Numerator[summary_df_HIV$Year == as.numeric(year2)])}",
                       " / ",
                       "{comma(summary_df_HIV$Denominator[summary_df_HIV$Year == as.numeric(year2)])}",
+                      title_text_nonHIV[[year2]]
          ))+
     geom_sf(data=buffer_list[[organ]][[distance]][[year2]], color="red", fill=NA)+
     geom_sf(data=states_sf_transformed, fill=NA)

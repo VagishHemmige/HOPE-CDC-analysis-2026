@@ -80,13 +80,13 @@ for (organ_loop in organ_list) {
     
     
     #Create paired plot for active
-    paired_plot<-make_paired_plot_HIV(organ=organ_loop,
-                                      distance=distance_loop,
-                                      outcome="active",
-                                      buffer_list=Transplant_centers_active_buffer,
-                                      year1="2017",
-                                      year2="2022",
-                                      plottitle=glue::glue("Active {organ_loop} transplant center, {distance_label}")
+    paired_plot<-make_paired_plot(organ=organ_loop,
+                                  distance=distance_loop,
+                                  outcome="active",
+                                  buffer_list=Transplant_centers_active_buffer,
+                                  year1="2017",
+                                  year2="2022",
+                                  plottitle=glue::glue("Active {organ_loop} transplant center, {distance_label}")
     )
     
     
@@ -106,13 +106,13 @@ for (organ_loop in organ_list) {
     
     
     #Create paired plot
-    paired_plot<-make_paired_plot_HIV(organ=organ_loop,
-                                      distance=distance_loop,
-                                      outcome="HIV",
-                                      buffer_list=Transplant_centers_HIV_buffer,
-                                      year1="2017",
-                                      year2="2022",
-                                      plottitle=glue::glue("Active HIV R+ {organ_loop} transplant center, {distance_label}"))
+    paired_plot<-make_paired_plot(organ=organ_loop,
+                                  distance=distance_loop,
+                                  outcome="HIV",
+                                  buffer_list=Transplant_centers_HIV_buffer,
+                                  year1="2017",
+                                  year2="2022",
+                                  plottitle=glue::glue("Active HIV R+ {organ_loop} transplant center, {distance_label}"))
     
     
     
@@ -131,13 +131,13 @@ for (organ_loop in organ_list) {
     
     
     #Create paired plot
-    paired_plot<-make_paired_plot_HIV(organ=organ_loop,
-                                      distance=distance_loop,
-                                      outcome="HOPE",
-                                      buffer_list=Transplant_centers_HOPE_buffer,
-                                      year1="2017",
-                                      year2="2022",
-                                      plottitle=glue::glue("Active HOPE D+/R+ {organ_loop} transplant center, {distance_label}"))
+    paired_plot<-make_paired_plot(organ=organ_loop,
+                                  distance=distance_loop,
+                                  outcome="HOPE",
+                                  buffer_list=Transplant_centers_HOPE_buffer,
+                                  year1="2017",
+                                  year2="2022",
+                                  plottitle=glue::glue("Active HOPE D+/R+ {organ_loop} transplant center, {distance_label}"))
     
     
     

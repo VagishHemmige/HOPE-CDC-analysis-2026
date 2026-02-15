@@ -1,6 +1,18 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - index.qmd
+    - quarto/**
+    
+    
+author:
+  - name: Vagish Hemmige
+    affiliations:
+      - Montefiore Medical Center/ Albert Einstein College of Medicine
+    email: vahemmig@montefiore.org
+
+
 
 website:
   site-url: https://vagishhemmige.github.io/HOPE-CDC-analysis-2026

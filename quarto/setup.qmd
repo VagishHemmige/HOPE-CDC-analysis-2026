@@ -15,12 +15,12 @@ library(gt)
 ```
 
 
-::: callout-note
+::: callout-code
 ### Source code
 
 The full R script is available at:
 
--   [`R/setup.R`](https://github.com/VagishHemmige/Cryptococcus-cost_analysis/blob/master/R/setup.R)
+-   [`R/setup.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/setup.R)
 
 :::
 
@@ -1001,10 +1001,6 @@ comorbidity_ICD_list%>%
 ## Other portions of the analysis
 
 -   [**Functions**](functions.qmd): Reusable helper functions for cohort construction, matching, costing, and modeling.
--   [**Create cohort**](create_cohort.qmd): Constructs the initial time-varying cohort of kidney transplant recipients, defining cohort entry, follow-up structure, and case/control eligibility prior to matching.
--   [**Execute matching**](execute_matching.qmd): Implements risk-set–based greedy matching without replacement to construct the analytic cohort.
--   [**Post-match processing**](postmatch_processing.qmd): Derives analytic variables, time-aligned cost windows, and follow-up structure after matching.
--   [**Modeling**](modeling.qmd): Fits prespecified cost and outcome models using the matched cohort.
 -   [**Tables**](tables.qmd): Summary tables and regression outputs generated from the final models.
 -   [**Figures**](figures.qmd):Visualizations of costs, risks, and model-based estimates.
 -   [**About**](about.qmd): methods, assumptions, and disclosures

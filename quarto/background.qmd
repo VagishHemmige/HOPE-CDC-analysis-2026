@@ -1,0 +1,131 @@
+---
+title: "Clinical background"
+editor: source
+---
+
+## Overview
+
+Solid organ transplantation has transformed survival for patients with end-stage organ disease. For people living with HIV (PLWH), access to transplantation has historically been limited by medical uncertainty, regulatory restrictions, and stigma. Over the past two decades, durable viral suppression with modern antiretroviral therapy (ART) and accumulated transplant experience have reshaped the clinical landscape.
+
+This project integrates HIV epidemiologic data with SRTR transplant center information to examine geographic access to HIV-experienced transplant programs across the United States.
+
+---
+
+## HIV epidemiology and geography in the United States
+
+National HIV surveillance in the United States is maintained through CDC’s HIV data systems, with regularly updated public data products and technical resources:
+- CDC HIV Data (landing page): https://www.cdc.gov/hiv-data/index.html  
+- About HIV Surveillance and Monitoring: https://www.cdc.gov/hiv-data/about/index.html  
+
+To support geographic analyses, CDC’s NCHHSTP AtlasPlus provides interactive tools to visualize and extract data (tables/maps/charts) for HIV and related conditions:
+- About AtlasPlus: https://www.cdc.gov/nchhstp/about/atlasplus.html  
+- AtlasPlus (main): https://gis.cdc.gov/grasp/nchhstpatlas/main.html  
+- AtlasPlus Tables: https://gis.cdc.gov/grasp/nchhstpatlas/tables.html  
+- AtlasPlus Maps: https://gis.cdc.gov/grasp/nchhstpatlas/maps.html  
+
+Because HIV burden is geographically heterogeneous, comparing HIV prevalence patterns with the distribution of transplant programs is a clinically meaningful way to assess structural access.
+
+---
+
+## Solid organ transplantation in people with HIV
+
+In the early HIV era, transplantation was often viewed as contraindicated due to concerns about opportunistic infections, drug–drug interactions, and poor outcomes. In the modern ART era, multiple cohorts and registry analyses support transplantation for carefully selected candidates living with HIV.
+
+---
+
+## Kidney transplantation
+
+Kidney transplantation outcomes in carefully selected recipients living with HIV have been demonstrated in multicenter prospective work in the ART era.
+
+Seminal multicenter trial:
+- Stock et al., *New England Journal of Medicine* (2010): https://www.nejm.org/doi/full/10.1056/NEJMoa1001197  
+- PubMed record: https://pubmed.ncbi.nlm.nih.gov/21083386/  
+
+---
+
+## Liver transplantation
+
+Liver transplantation for people living with HIV (including HCV coinfection) has been evaluated in prospective multicenter U.S. cohorts.
+
+Terrault et al., *Liver Transplantation* (2012):
+- Full text: https://onlinelibrary.wiley.com/doi/full/10.1002/lt.23411  
+- PubMed record: https://pubmed.ncbi.nlm.nih.gov/22328294/  
+- Open-access PMC version: https://pmc.ncbi.nlm.nih.gov/articles/PMC3358510/  
+
+---
+
+## Heart transplantation
+
+Registry-based analyses suggest that heart transplantation in people living with HIV can achieve acceptable outcomes in carefully selected patients with well-controlled HIV, though numbers remain relatively small and center experience is concentrated.
+
+Examples:
+- Madan et al., *American Journal of Transplantation* (2019) full text: https://www.amjtransplant.org/article/S1600-6135%2822%2909086-4/fulltext  
+- PubMed record: https://pubmed.ncbi.nlm.nih.gov/30614612/  
+- SRTR-based comparison study (open access, PMC): https://pmc.ncbi.nlm.nih.gov/articles/PMC6452439/  
+
+---
+
+## Lung transplantation
+
+Lung transplantation in people living with HIV has historically been uncommon, but cohort-level experience suggests feasibility in carefully selected patients with controlled HIV, while emphasizing careful attention to rejection risk and medication interactions.
+
+Key cohort experience (open access, PMC):
+- Kern et al., *Annals of the American Thoracic Society* (2014): https://pmc.ncbi.nlm.nih.gov/articles/PMC4213997/  
+- PubMed record: https://pubmed.ncbi.nlm.nih.gov/24964265/  
+
+---
+
+## Pancreas and simultaneous pancreas–kidney (SPK) transplantation
+
+Pancreas transplantation and SPK in people living with HIV remain rare and concentrated in a limited number of programs, but case reports and small series support feasibility in highly selected candidates.
+
+Examples:
+- Akhtar et al. (SPK case report), PubMed: https://pubmed.ncbi.nlm.nih.gov/22172869/  
+- Miro et al. (SPK experience/literature), PubMed: https://pubmed.ncbi.nlm.nih.gov/21094878/  
+- Grossi et al. (SPK series), PubMed: https://pubmed.ncbi.nlm.nih.gov/22221659/  
+
+---
+
+## The HOPE Act and evolving U.S. policy
+
+Until 2013, federal law prohibited transplantation of organs from donors with HIV. The HIV Organ Policy Equity (HOPE) Act (Public Law 113–51) created a pathway to allow transplantation of organs from donors with HIV into recipients living with HIV under specified safeguards.
+
+- HOPE Act statute PDF (Congress.gov): https://www.congress.gov/113/statute/STATUTE-127/STATUTE-127-Pg579.pdf  
+
+In late 2024, HHS finalized changes determining that **kidney and liver HOPE transplants no longer require participation in IRB-approved research protocols** (i.e., removing the “research-only” requirement for these organs):
+- HHS Final Rule (Federal Register, Nov 27, 2024): https://www.federalregister.gov/documents/2024/11/27/2024-27410/organ-procurement-and-transplantation-implementation-of-the-hiv-organ-policy-equity-hope-act  
+- NIH Final Notice (Federal Register, Dec 30, 2024): https://www.federalregister.gov/documents/2024/12/30/2024-31265/final-revised-human-immunodeficiency-virus-hiv-organ-policy-equity-act-safeguards-and-research  
+
+OPTN/HRSA maintains a central HOPE Act resource page and notes the current status of the OPTN open variance:
+- HRSA HOPE Act resource page: https://www.hrsa.gov/optn/professionals/resources/hope-act  
+
+---
+
+## Why geographic analysis matters
+
+HIV burden is geographically uneven, while transplant centers are clustered in metropolitan and academic hubs. For organs with fewer programs overall (heart, lung, pancreas/SPK), geographic access constraints may be amplified.
+
+Mapping HIV burden alongside transplant program locations and travel-time catchments (e.g., 30/60/120 minutes) supports evaluation of structural access and potential regional inequities.
+
+---
+
+## Data sources used in this project
+
+**HIV epidemiology (CDC)**
+- CDC HIV Data: https://www.cdc.gov/hiv-data/index.html  
+- CDC AtlasPlus: https://www.cdc.gov/nchhstp/about/atlasplus.html  
+
+**Transplant program reporting (SRTR)**
+- SRTR home: https://www.srtr.org/  
+- Program-Specific Reports: https://www.srtr.org/reports/program-specific-reports/  
+- About SRTR reports: https://www.srtr.org/reports/about-srtr-reports/  
+
+---
+
+## Clinical framing of this analysis
+
+This analysis does not adjudicate clinical outcomes. Instead, it addresses a structural access question:
+
+> Does the geographic distribution of HIV-experienced transplant programs align with the geographic burden of HIV disease?
+
+Understanding this alignment informs health equity efforts, referral networks, and transplant policy implementation.

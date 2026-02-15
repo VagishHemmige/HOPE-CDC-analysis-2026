@@ -2,32 +2,37 @@ project:
   type: website
   output-dir: docs
 
-
-
 website:
   site-url: https://vagishhemmige.github.io/HOPE-CDC-analysis-2026
   repo-url: https://github.com/VagishHemmige/HOPE-CDC-analysis-2026
   repo-actions: [edit, issue]
-  title: "Geographic access of people living with HIV to solid organ transplant"
-  navbar:
-    left:
-      - href: index.html
+  title: "Geographic Access of People Living with HIV to Solid Organ Transplant"
+
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - href: index.qmd
         text: Home
-      - href: quarto/setup.html
-        text: Setup
-      - href: quarto/functions.html
-        text: Functions
-      - href: quarto/tables.html
-        text: 5. Tables
-      - href: quarto/figures.html
-        text: 6. Figures
-      - href: quarto/about.html
+
+      - section: Data & Setup
+        contents:
+          - href: quarto/setup.qmd
+            text: Setup
+          - href: quarto/functions.qmd
+            text: Functions
+
+      - section: Results
+        contents:
+          - href: quarto/tables.qmd
+            text: Tables
+          - href: quarto/figures.qmd
+            text: Figures
+
+      - href: quarto/about.qmd
         text: About
-        
-    right:
-      - icon: github
-        href: https://github.com/VagishHemmige/HOPE-CDC-analysis-2026
-        aria-label: GitHub repository
+
+  page-navigation: true
 
 format:
   html:

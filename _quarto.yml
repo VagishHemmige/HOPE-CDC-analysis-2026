@@ -46,6 +46,15 @@ website:
 
   page-navigation: true
 
+custom-callout:
+  Rcode:
+    icon: true
+    icon-symbol: "💻 "
+    color: "pink"
+
+filters:
+- custom-callout
+
 format:
   html:
     theme: cosmo

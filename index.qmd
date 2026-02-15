@@ -12,23 +12,6 @@ This project integrates HIV epidemiologic data with SRTR transplant center data 
 
 ## Methods
 
-We selected cryptococcus cases based on the following inclusion criteria:
-
-- Age 18 or greater
-- Prior kidney transplant
-- ICD9 or ICD10 codes for cryptococcus (2 outpatient or 1 inpatient)
-- One year of Medicare primary coverage lead-in
-
-Controls were matched 2:1 to cases based on risk-set sampling on the following:
-
-- Time since transplant
-- Diabetes
-- HIV/AIDS
-- Age within 10 years
-- Sampling date for control within 3 years of sampling date for case
-
-Institutional claims data were abstracted as well as Physician/Supplier line-item data.
-
 
 ## Results
 
@@ -55,3 +38,8 @@ The complete source code used to perform the full analysis and generate the tabl
 
 This analysis has yet to be published to date.
 
+Abstracts have been presented or will be presented at:
+
+- IDWeek 2025
+- International Society of Heart and Lung Transplantation 2026
+- American Transplant Congress 2026

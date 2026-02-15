@@ -150,3 +150,119 @@ convert_resultsdf_to_table<-function(resultsdf,
   
   
 }
+
+
+
+#Write a function to parameterize the above so that it's easier to create the needed plots
+make_paired_plot<-function(organ,
+                           distance,
+                           outcome,
+                           buffer_list,
+                           year1="2017",
+                           year2="2022",
+                           plottitle)
+{
+  
+  #Errors
+  #Access name of object passed to `buffer_list`
+  buffer_name <- deparse(substitute(buffer_list))
+  
+  #Make sure name of outcome matches buffer_list
+  if (!stringr::str_detect(
+    stringr::str_to_lower(buffer_name),
+    stringr::str_to_lower(outcome)
+  )) {
+    warning(glue::glue(
+      "Buffer object ('{buffer_name}') may not match outcome '{outcome}'."
+    ))
+  }
+  
+  if (!year1 %in% year_list) {
+    stop(glue::glue("year1 ({year1}) is not in year_list."))
+  }
+  
+  if (!year2 %in% year_list) {
+    stop(glue::glue("year2 ({year2}) is not in year_list."))
+  }
+  
+  if (!outcome %in% c("active", "HIV", "HOPE")) {
+    stop(glue::glue("outcome ({outcome}) is not in c('active', 'HIV', 'HOPE')."))
+  }
+  
+  #Keep only elements of Results_HIV_df necessary for plot
+  summary_df_HIV<-Results_HIV_df[[organ]]%>%
+    filter(str_detect(Characteristic, outcome))%>%
+    filter(str_detect(Characteristic, distance))
+    
+    
+    #Left graph
+    Plot1<-ggplot() +
+    geom_sf(data = county_dots_transformed[[year1]], size = 0.3, color = "navy", alpha = 0.5) +
+    theme_void() +
+    theme(
+      axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+      plot.title = element_textbox(size = 16, hjust = 0.5,
+                                   halign = 0.5)
+    )+
+    labs(y=year1,
+         title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                      "<span style='font-size:30pt; font-weight:bold;'>",
+                      "{summary_df_HIV[summary_df_HIV$Year == as.numeric(year1),4]}%",
+                      "</span>",
+                      "<br>",
+                      "{comma(summary_df_HIV$Numerator[summary_df_HIV$Year == as.numeric(year1)])}",
+                      " / ",
+                      "{comma(summary_df_HIV$Denominator[summary_df_HIV$Year == as.numeric(year1)])}",
+         ))+
+    geom_sf(data=buffer_list[[organ]][[distance]][[year1]], color="red", fill=NA)+
+    geom_sf(data=states_sf_transformed, fill=NA)
+  
+  
+  #Right plot
+  Plot2<-ggplot() +
+    geom_sf(data = county_dots_transformed[[year2]], size = 0.3, color = "navy", alpha = 0.5) +
+    theme_void() +
+    theme(
+      axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),
+      plot.title = element_textbox(size = 16, hjust = 0.5,
+                                   halign = 0.5)
+    )+
+    labs(y=year2,
+         title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
+                      "<span style='font-size:30pt; font-weight:bold;'>",
+                      "{summary_df_HIV[summary_df_HIV$Year == as.numeric(year2),4]}%",
+                      "</span>",
+                      "<br>",
+                      "{comma(summary_df_HIV$Numerator[summary_df_HIV$Year == as.numeric(year2)])}",
+                      " / ",
+                      "{comma(summary_df_HIV$Denominator[summary_df_HIV$Year == as.numeric(year2)])}",
+         ))+
+    geom_sf(data=buffer_list[[organ]][[distance]][[year2]], color="red", fill=NA)+
+    geom_sf(data=states_sf_transformed, fill=NA)
+  
+  #Combine plots
+  combined<-cowplot::plot_grid(Plot1, Plot2,
+                               ncol = 2, align = "hv")
+  
+  final_plot <- ggdraw() +
+    draw_plot(combined) +
+    draw_label(
+      plottitle,
+      x = 0.5, y = 0.9,           # top center
+      hjust = 0.5, vjust = 1,   # anchor to the top edge
+      fontface = 'bold',
+      size = 25
+    )+
+    # 
+    draw_label(
+      "Each blue dot represents 100 people with HIV\nRed outlines represent the catchment area for each transplant center",
+      x = 0.02, y = 0.1,          # left margin position
+      hjust = 0, vjust = 0,        # align text to the left edge
+      size = 14,
+      fontface = "italic"
+    )
+  
+  return(final_plot)
+  
+}
+

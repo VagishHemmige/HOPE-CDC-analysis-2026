@@ -1,13 +1,15 @@
 #Loads data
 
 # ----Load US state maps from census----
-states_sf <- tigris::states(cb = FALSE, year = 2022)%>%
+states_sf <- tigris::states(cb = TRUE, year = 2022)%>%
   select(NAME, STUSPS, geometry) %>%
   filter(!(NAME %in% c("Alaska", 
                        "Hawaii", 
                        "Puerto Rico", 
                        "United States Virgin Islands",
-                       "Commonwealth of the Northern Mariana Islands"))) %>%
+                       "Commonwealth of the Northern Mariana Islands",
+                       "Guam",
+                       "American Samoa"))) %>%
   rename(State=NAME)
 
 

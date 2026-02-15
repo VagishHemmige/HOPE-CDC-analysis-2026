@@ -43,7 +43,8 @@ for (organ_loop in organ_list)
       mutate(year_transplant=year(REC_TX_DT	))%>%
       filter(year_transplant>=(as.numeric(year_loop)-4) & year_transplant<=as.numeric(year_loop))%>%
       left_join(donor_deceased)%>%
-      filter(DON_HIV_NAT=="P"| DON_ANTI_HIV=="P")%>%
+      filter(DON_HIV_NAT %in% c("P", "P: Positive")| 
+               DON_ANTI_HIV %in% c("P", "P: Positive"))%>%
       group_by(REC_CTR_CD	)%>%
       count()
     

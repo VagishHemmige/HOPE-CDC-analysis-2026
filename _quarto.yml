@@ -5,10 +5,10 @@ project:
 
 
 website:
-  site-url: https://vagishhemmige.github.io/Cryptococcus-cost-analysis
-  repo-url: https://github.com/VagishHemmige/Cryptococcus-cost-analysis
+  site-url: https://vagishhemmige.github.io/HOPE-CDC-analysis-2026
+  repo-url: https://github.com/VagishHemmige/HOPE-CDC-analysis-2026
   repo-actions: [edit, issue]
-  title: "Cryptococcus post-transplant cost"
+  title: "Geographic access of people living with HIV to solid organ transplant"
   navbar:
     left:
       - href: index.html
@@ -17,14 +17,6 @@ website:
         text: Setup
       - href: quarto/functions.html
         text: Functions
-      - href: quarto/create_cohort.html
-        text: 1. Create cohort
-      - href: quarto/execute_matching.html
-        text: 2. Execute matching
-      - href: quarto/postmatch_processing.html
-        text: 3. Post-match processing
-      - href: quarto/modeling.html
-        text: 4. Modeling
       - href: quarto/tables.html
         text: 5. Tables
       - href: quarto/figures.html
@@ -34,12 +26,13 @@ website:
         
     right:
       - icon: github
-        href: https://github.com/VagishHemmige/Cryptococcus-cost-analysis
+        href: https://github.com/VagishHemmige/HOPE-CDC-analysis-2026
         aria-label: GitHub repository
 
 format:
   html:
     theme: cosmo
+    css: styles.scss
     toc: true
     code-fold: true
     code-tools: true

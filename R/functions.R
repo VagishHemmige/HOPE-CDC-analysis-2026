@@ -154,16 +154,24 @@ convert_resultsdf_to_table<-function(resultsdf,
 
 
 #Write a function to parameterize the above so that it's easier to create the needed plots
-make_paired_plot_HIV<-function(organ,
-                               distance,
-                               outcome,
-                               buffer_list,
-                               year1="2017",
-                               year2="2022",
-                               plottitle)
+make_paired_plot<-function(organ,
+                           distance,
+                           outcome,
+                           buffer_list,
+                           year1="2017",
+                           year2="2022",
+                           plottitle,
+                           include_nonHIV=FALSE)
 {
   
-  #Errors
+  # ----Error checking
+  
+  # Validate include_nonHIV
+  if (!is.logical(include_nonHIV) || length(include_nonHIV) != 1 || is.na(include_nonHIV)) {
+    stop("include_nonHIV must be a single TRUE or FALSE value.")
+  }
+  
+  
   #Access name of object passed to `buffer_list`
   buffer_name <- deparse(substitute(buffer_list))
   
@@ -194,6 +202,12 @@ make_paired_plot_HIV<-function(organ,
     filter(str_detect(Characteristic, outcome))%>%
     filter(str_detect(Characteristic, distance))
   
+  if (include_nonHIV)
+  {
+    summary_df_nonHIV<-Results_nonHIV_df[[organ]]%>%
+      filter(str_detect(Characteristic, outcome))%>%
+      filter(str_detect(Characteristic, distance))
+  }
   
   #Left graph
   Plot1<-ggplot() +
@@ -207,7 +221,7 @@ make_paired_plot_HIV<-function(organ,
     labs(y=year1,
          title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
                       "<span style='font-size:30pt; font-weight:bold;'>",
-                      "{summary_df_HIV[summary_df_HIV$Year == as.numeric(year1),4]}%",
+                      "{summary_df_HIV$Percentage[summary_df_HIV$Year == as.numeric(year1)]}%",
                       "</span>",
                       "<br>",
                       "{comma(summary_df_HIV$Numerator[summary_df_HIV$Year == as.numeric(year1)])}",
@@ -230,7 +244,7 @@ make_paired_plot_HIV<-function(organ,
     labs(y=year2,
          title = glue("<span style='font-size:30pt; font-weight:normal;'>PLWH:</span> ",
                       "<span style='font-size:30pt; font-weight:bold;'>",
-                      "{summary_df_HIV[summary_df_HIV$Year == as.numeric(year2),4]}%",
+                      "{summary_df_HIV$Percentage[summary_df_HIV$Year == as.numeric(year2)]}%",
                       "</span>",
                       "<br>",
                       "{comma(summary_df_HIV$Numerator[summary_df_HIV$Year == as.numeric(year2)])}",

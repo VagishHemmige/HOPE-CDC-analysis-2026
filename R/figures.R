@@ -184,3 +184,10 @@ for (organ_loop in organ_list) {
     
   }
 }
+
+
+plot_center_HIV_catchment(organ="kidney",
+                                    distance="50mile",
+                                    buffer_list=tracts_in_buffers_active[["kidney"]][["50mile"]],
+                                    year1="2017",
+                                    year2="2022")

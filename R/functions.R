@@ -30,7 +30,7 @@ set_60_min_isochrone_at_7AM<-function(SFObject, year) {
                        profile = "driving-traffic",
                        depart_at = UTCTime,
                        id_column = "OTCCode")%>%
-          rename(OTCName=id)
+          rename(OTCCode=id)
         FinalDF[[i]]<-temp
       }
     }
@@ -334,7 +334,6 @@ make_paired_plot<-function(organ,
 
 plot_center_HIV_catchment<-function(organ,
                                     distance,
-                                    outcome,
                                     buffer_list,
                                     year1="2017",
                                     year2="2022"){
@@ -345,16 +344,6 @@ plot_center_HIV_catchment<-function(organ,
   
   #Access name of object passed to `buffer_list`
   buffer_name <- deparse(substitute(buffer_list))
-  
-  #Make sure name of outcome matches buffer_list
-  if (!stringr::str_detect(
-    stringr::str_to_lower(buffer_name),
-    stringr::str_to_lower(outcome)
-  )) {
-    warning(glue::glue(
-      "Buffer object ('{buffer_name}') may not match outcome '{outcome}'."
-    ))
-  }
   
   if (!year1 %in% year_list) {
     stop(glue::glue("year1 ({year1}) is not in year_list."))
@@ -371,7 +360,6 @@ plot_center_HIV_catchment<-function(organ,
   temp_DF[[year1]]<-buffer_list%>%
     pluck(year1)%>%
     st_drop_geometry()%>%
-    rename(OTCCode=OTCName)%>%
     group_by(OTCCode)%>%
     summarize(total_cases=round(sum(tract_cases), 0))%>%
     mutate(year=as.numeric(year1))%>%
@@ -386,8 +374,6 @@ plot_center_HIV_catchment<-function(organ,
   temp_DF[[year2]]<-buffer_list%>%
     pluck(year2)%>%
     st_drop_geometry()%>%
-    rename(OTCCode=OTCName)%>%
-    
     group_by(OTCCode)%>%
     summarize(total_cases=round(sum(tract_cases), 0))%>%
     mutate(year=as.numeric(year2))%>%

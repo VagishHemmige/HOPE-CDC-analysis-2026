@@ -1,9 +1,9 @@
 #ST join to individual tracts and transplant centers
 
 
-tracts_in__buffers_active<-list()
-tracts_in__buffers_HIV<-list()
-tracts_in__buffers_HOPE<-list()
+tracts_in_buffers_active<-list()
+tracts_in_buffers_HIV<-list()
+tracts_in_buffers_HOPE<-list()
 
 
 

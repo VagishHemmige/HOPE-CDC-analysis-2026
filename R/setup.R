@@ -5,33 +5,46 @@
 # Data management
 library(tidyverse)
 library(stringi)
+library(glue)
+
+#Core library for the SRTR
+library(sRtr)
+
+#Data import libraries
 library(readxl)
-library(sf)
-library(colorspace)
-library(ggtext)
-library(extrafont)
 library(readr)
-library(janitor)
-library(ggrepel)
+library(haven)
+library(mapboxapi)
+library(CDCAtlas)
+
+#Geographic libraries
+library(sf)
 library(tigris)
 library(tidycensus)
 library(tmap)
+library(lutz)
+
+#Table libraries
+library(flextable)
+library(gt)
+
+#Plotting
+library(colorspace)
+library(ggtext)
+library(extrafont)
+library(janitor)
+library(ggrepel)
 library(writexl)
 library(plotly)
 library(htmlwidgets)
-library(haven)
 library(patchwork)
-library(lutz)
-library(mapboxapi)
-library(flextable)
-library(gt)
 library(ggbeeswarm)
 library(ggpubr)
 library(cowplot)
 library(scales)
-library(glue)
-library(sRtr)
-library(CDCAtlas)
+
+
+
 
 # ----Define constants----
 

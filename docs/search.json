@@ -174,7 +174,7 @@
     "href": "quarto/functions.html#other-portions-of-the-analysis",
     "title": "Functions",
     "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nCreate cohort: Constructs the initial time-varying cohort of kidney transplant recipients, defining cohort entry, follow-up structure, and case/control eligibility prior to matching.\nExecute matching: Implements risk-set–based greedy matching without replacement to construct the analytic cohort.\nPost-match processing: Derives analytic variables, time-aligned cost windows, and follow-up structure after matching.\nModeling: Fits prespecified cost and outcome models using the matched cohort.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
+    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
       "Data Loading & Setup",
       "Functions"
@@ -1046,6 +1046,17 @@
     "crumbs": [
       "Data Processing",
       "Set isochrones"
+    ]
+  },
+  {
+    "objectID": "quarto/functions.html#drawing-60-minute-isocrhones-around-each-transplant-center",
+    "href": "quarto/functions.html#drawing-60-minute-isocrhones-around-each-transplant-center",
+    "title": "Functions",
+    "section": "Drawing 60 minute isocrhones around each transplant center",
+    "text": "Drawing 60 minute isocrhones around each transplant center\nThe following function uses the mapboxapi package to calculate 60-minute travel isochrones around each transplant center.\nThe function assumes the that you have an API token configured in R. For details of how to do this, see the package documentation.\nIts inputs are as follows:\n\nSFObject: This is an object of class sf that contains the location of each transplant center\nyear: year as a character. Must be a year in yearlist defined in R/setup.R.\n\n\n\nCode\n#Define a function that takes an SF data object and returns 60 minute isochrones\nset_60_min_isochrone_at_7AM&lt;-function(SFObject, year) {\n  \n  if (nrow(SFObject) == 0) {\n    return(\n      SFObject %&gt;%\n        st_transform(5070)\n    )\n  }else{\n    tempDF&lt;-SFObject%&gt;%\n      mutate(TimeZone=tz_lookup(., method=\"accurate\"))%&gt;%\n      st_transform(4326)\n    \n    FinalDF &lt;- vector(\"list\", length(timezones))\n    \n    \n    for(i in 1:length(timezones))\n    {\n      TZ&lt;-converted_times[[year]][[i,1]]\n      \n      UTCTime&lt;-format(converted_times[[year]][[i,3]], \"%Y-%m-%dT%H:%M:%SZ\")\n      \n      if (nrow(filter(tempDF,TimeZone==TZ))&gt;0)\n      {\n        temp&lt;-tempDF%&gt;%\n          filter(TimeZone==TZ)%&gt;%\n          mb_isochrone(time = 60, \n                       profile = \"driving-traffic\",\n                       depart_at = UTCTime,\n                       id_column = \"OTCCode\")%&gt;%\n          rename(OTCCode=id)\n        FinalDF[[i]]&lt;-temp\n      }\n    }\n    \n    FinalDF%&gt;%\n      bind_rows()%&gt;%\n      st_transform(5070)%&gt;%\n      return()\n  }\n}",
+    "crumbs": [
+      "Data Loading & Setup",
+      "Functions"
     ]
   }
 ]

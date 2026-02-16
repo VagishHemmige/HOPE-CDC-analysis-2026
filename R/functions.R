@@ -237,8 +237,8 @@ make_paired_plot<-function(organ,
          "{comma(summary_df_nonHIV$Denominator[summary_df_nonHIV$Year == as.numeric(year2)])}")
   }
   else {
-    title_text_nonHIV[[year1]]<-NULL
-    title_text_nonHIV[[year2]]<-NULL
+    title_text_nonHIV[[year1]]<-""
+    title_text_nonHIV[[year2]]<-""
   }
   
 

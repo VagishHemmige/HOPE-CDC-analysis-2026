@@ -60,8 +60,6 @@ for (organ_loop in organ_list) {
   }
 }
 
-#----Paired plots for access to any transplant center cmparing people with and without HIV----
-
 
 #----Paired plots for PLWH comparing years----
 
@@ -79,7 +77,7 @@ for (organ_loop in organ_list) {
     )
     
     
-    #Create paired plot for active
+    #Create paired plot for active, no HIV
     paired_plot<-make_paired_plot(organ=organ_loop,
                                   distance=distance_loop,
                                   outcome="active",
@@ -103,9 +101,37 @@ for (organ_loop in organ_list) {
            dpi = 150,
            device = ragg::agg_png,
            bg = "white")
+
+    
+    #Create paired plot for active, comparing HIV to non-HIV
+    paired_plot<-make_paired_plot(organ=organ_loop,
+                                  distance=distance_loop,
+                                  outcome="active",
+                                  buffer_list=Transplant_centers_active_buffer,
+                                  year1="2017",
+                                  year2="2022",
+                                  plottitle=glue::glue("Active {organ_loop} transplant center, {distance_label}"),
+                                  include_nonHIV = TRUE
+    )
     
     
-    #Create paired plot
+    
+    
+    ggsave(glue("figures/{organ_loop}/Active{organ_loop}CenterCombinedPlot{distance_loop}.svg"), 
+           paired_plot, 
+           width = 12, height = 6, units = "in",
+           bg = "white")
+    
+    ggsave(glue("figures/{organ_loop}/Active{organ_loop}CenterCombinedPlot{distance_loop}.png"), 
+           paired_plot, 
+           width = 12, height = 6, units = "in",
+           dpi = 150,
+           device = ragg::agg_png,
+           bg = "white")
+    
+    
+    
+    #Create paired plot for HIV
     paired_plot<-make_paired_plot(organ=organ_loop,
                                   distance=distance_loop,
                                   outcome="HIV",

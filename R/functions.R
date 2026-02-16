@@ -164,7 +164,7 @@ make_paired_plot<-function(organ,
                            include_nonHIV=FALSE)
 {
   
-  # ----Error checking
+  # ----Error checking----
   
   # Validate include_nonHIV
   if (!is.logical(include_nonHIV) || length(include_nonHIV) != 1 || is.na(include_nonHIV)) {
@@ -197,10 +197,24 @@ make_paired_plot<-function(organ,
     stop(glue::glue("outcome ({outcome}) is not in c('active', 'HIV', 'HOPE')."))
   }
   
+  # ----Main function----
+  
   #Keep only elements of Results_HIV_df necessary for plot
   summary_df_HIV<-Results_HIV_df[[organ]]%>%
     filter(str_detect(Characteristic, outcome))%>%
     filter(str_detect(Characteristic, distance))
+  
+  #parameters of plot assigned
+  parameter_plot<-list()
+  parameter_plot$y_title<-0.9
+  parameter_plot$y_footnote<-0.1
+  
+  if (include_nonHIV)
+  {
+    parameter_plot$y_title<-0.97
+    parameter_plot$y_footnote<-0.01
+  }
+  
   
   #Keep only elements of Results_nonHIV_df necessary for plot, if even needed in the first place
   if (include_nonHIV)
@@ -214,34 +228,34 @@ make_paired_plot<-function(organ,
   title_text_nonHIV<-list()
   
   if (include_nonHIV==TRUE) {
-  title_text_nonHIV[[year1]]<-
-    glue("<br>",
-         "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
-         "<span style='font-size:30pt; font-weight:bold;'>",
-         "{summary_df_nonHIV$Percentage[summary_df_nonHIV$Year == as.numeric(year1)]}%",
-         "</span>",
-         "<br>",
-         "{comma(summary_df_nonHIV$Numerator[summary_df_nonHIV$Year == as.numeric(year1)])}",
-         " / ",
-         "{comma(summary_df_nonHIV$Denominator[summary_df_nonHIV$Year == as.numeric(year1)])}")
-  
-  title_text_nonHIV[[year2]]<-
-    glue("<br>",
-         "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
-         "<span style='font-size:30pt; font-weight:bold;'>",
-         "{summary_df_nonHIV$Percentage[summary_df_nonHIV$Year == as.numeric(year2)]}%",
-         "</span>",
-         "<br>",
-         "{comma(summary_df_nonHIV$Numerator[summary_df_nonHIV$Year == as.numeric(year2)])}",
-         " / ",
-         "{comma(summary_df_nonHIV$Denominator[summary_df_nonHIV$Year == as.numeric(year2)])}")
+    title_text_nonHIV[[year1]]<-
+      glue("<br>",
+           "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+           "<span style='font-size:30pt; font-weight:bold;'>",
+           "{summary_df_nonHIV$Percentage[summary_df_nonHIV$Year == as.numeric(year1)]}%",
+           "</span>",
+           "<br>",
+           "{comma(summary_df_nonHIV$Numerator[summary_df_nonHIV$Year == as.numeric(year1)])}",
+           " / ",
+           "{comma(summary_df_nonHIV$Denominator[summary_df_nonHIV$Year == as.numeric(year1)])}")
+    
+    title_text_nonHIV[[year2]]<-
+      glue("<br>",
+           "<span style='font-size:30pt; font-weight:normal;'>HIV negative:</span> ",
+           "<span style='font-size:30pt; font-weight:bold;'>",
+           "{summary_df_nonHIV$Percentage[summary_df_nonHIV$Year == as.numeric(year2)]}%",
+           "</span>",
+           "<br>",
+           "{comma(summary_df_nonHIV$Numerator[summary_df_nonHIV$Year == as.numeric(year2)])}",
+           " / ",
+           "{comma(summary_df_nonHIV$Denominator[summary_df_nonHIV$Year == as.numeric(year2)])}")
   }
   else {
     title_text_nonHIV[[year1]]<-""
     title_text_nonHIV[[year2]]<-""
   }
   
-
+  
   
   #Left graph
   Plot1<-ggplot() +
@@ -298,7 +312,7 @@ make_paired_plot<-function(organ,
     draw_plot(combined) +
     draw_label(
       plottitle,
-      x = 0.5, y = 0.9,           # top center
+      x = 0.5, y = parameter_plot$y_title,   # top center
       hjust = 0.5, vjust = 1,   # anchor to the top edge
       fontface = 'bold',
       size = 25
@@ -306,7 +320,7 @@ make_paired_plot<-function(organ,
     # 
     draw_label(
       "Each blue dot represents 100 people with HIV\nRed outlines represent the catchment area for each transplant center",
-      x = 0.02, y = 0.1,          # left margin position
+      x = 0.02, y = parameter_plot$y_footnote,          # left margin position
       hjust = 0, vjust = 0,        # align text to the left edge
       size = 14,
       fontface = "italic"
@@ -316,3 +330,114 @@ make_paired_plot<-function(organ,
   
 }
 
+
+
+plot_center_HIV_catchment<-function(organ,
+                                    distance,
+                                    outcome,
+                                    buffer_list,
+                                    year1="2017",
+                                    year2="2022"){
+  
+  
+  
+  # ----Error checking----
+  
+  #Access name of object passed to `buffer_list`
+  buffer_name <- deparse(substitute(buffer_list))
+  
+  #Make sure name of outcome matches buffer_list
+  if (!stringr::str_detect(
+    stringr::str_to_lower(buffer_name),
+    stringr::str_to_lower(outcome)
+  )) {
+    warning(glue::glue(
+      "Buffer object ('{buffer_name}') may not match outcome '{outcome}'."
+    ))
+  }
+  
+  if (!year1 %in% year_list) {
+    stop(glue::glue("year1 ({year1}) is not in year_list."))
+  }
+  
+  if (!year2 %in% year_list) {
+    stop(glue::glue("year2 ({year2}) is not in year_list."))
+  }
+  
+  
+  
+  temp_DF<-list()
+  
+  temp_DF[[year1]]<-buffer_list%>%
+    pluck(year1)%>%
+    st_drop_geometry()%>%
+    rename(OTCCode=OTCName)%>%
+    group_by(OTCCode)%>%
+    summarize(total_cases=round(sum(tract_cases), 0))%>%
+    mutate(year=as.numeric(year1))%>%
+    mutate(Center_classification=case_when(
+      OTCCode %in% HOPE_center_volumes[[organ]][[year1]]$REC_CTR_CD~"HOPE center",
+      OTCCode %in% HIV__center_volumes[[organ]][[year1]]$REC_CTR_CD~"≥1 HIV R+ transplants",
+      OTCCode %in% Active_tx_centers[[organ]][[year1]]~"No HIV R+ transplants"
+    ))%>%
+    filter(!is.na(OTCCode))
+  
+  
+  temp_DF[[year2]]<-buffer_list%>%
+    pluck(year2)%>%
+    st_drop_geometry()%>%
+    rename(OTCCode=OTCName)%>%
+    
+    group_by(OTCCode)%>%
+    summarize(total_cases=round(sum(tract_cases), 0))%>%
+    mutate(year=as.numeric(year2))%>%
+    mutate(Center_classification=case_when(
+      OTCCode %in% HOPE_center_volumes[[organ]][[year2]]$REC_CTR_CD~"HOPE center",
+      OTCCode %in% HIV__center_volumes[[organ]][[year2]]$REC_CTR_CD~"≥1 HIV R+ transplants",
+      OTCCode %in% Active_tx_centers[[organ]][[year2]]~"No HIV R+ transplants"
+    ))%>%
+    filter(!is.na(OTCCode))
+  
+  combined_DF<-bind_rows(temp_DF)%>%
+    mutate(Center_classification=factor(Center_classification,
+                                        levels=c("HOPE center","≥1 HIV R+ transplants", "No HIV R+ transplants"),
+                                        labels=c("HOPE center","≥1 HIV R+ transplants", "No HIV R+ transplants")
+    ))%>%
+    mutate(Center_classification_color=case_when(
+      OTCCode %in% HOPE_center_volumes[[organ]][[year1]]$REC_CTR_CD~"HOPE center",
+      OTCCode %in% HIV__center_volumes[[organ]][[year1]]$REC_CTR_CD~"≥1 HIV R+ transplants",
+      OTCCode %in% Active_tx_centers[[organ]][[year1]]~"No HIV R+ transplants",
+      TRUE~glue("No transplants in {year1}")
+    ))
+  
+  combined_DF %>% ggplot()+
+    geom_violin(mapping = aes(x=Center_classification, y=total_cases), color = NA, alpha=0.5,fill = "grey", 
+                draw_quantiles = 1)+
+    stat_summary(mapping = aes(x=Center_classification, y=total_cases),fun = median, 
+                 fun.min = median, fun.max = median, 
+                 geom = "crossbar", width = 0.9, fatten=1.5)+
+    geom_quasirandom(mapping = aes(x=Center_classification, y=total_cases, color=Center_classification_color), 
+                     cex=2, alpha=0.7)+
+    stat_compare_means(method = "kruskal.test",
+                       mapping = aes(x = Center_classification, y = total_cases)) +
+    scale_y_continuous(labels = scales::comma)+
+    guides(color = guide_legend(title.position = "top", nrow = 1))+
+    theme_classic()+
+    theme(legend.position = "bottom",
+          legend.title = element_text(hjust = 0.5),  # centers title
+          legend.box = "horizontal")+
+    theme(axis.text.x = element_text(
+      angle = 45,
+      hjust = 1,
+      vjust = 1))+
+    facet_grid(.~year)+
+    labs(x = "Center HIV R+ volume", y="PLWH in catchment area", color=glue("{year1} status"))+
+    scale_color_discrete(breaks = c("HOPE center",
+                                    "≥1 HIV R+ transplants", 
+                                    "No HIV R+ transplants",
+                                    glue("No transplants in {year1}"))
+    )
+  
+  
+  
+}

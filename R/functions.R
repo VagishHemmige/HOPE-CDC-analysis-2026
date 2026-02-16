@@ -153,7 +153,7 @@ convert_resultsdf_to_table<-function(resultsdf,
 
 
 
-#Write a function to parameterize the above so that it's easier to create the needed plots
+# Function that creates paired plots of maps with percentages in the plot
 make_paired_plot<-function(organ,
                            distance,
                            outcome,

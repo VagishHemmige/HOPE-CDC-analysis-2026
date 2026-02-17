@@ -414,9 +414,9 @@
   {
     "objectID": "quarto/unite_buffers.html",
     "href": "quarto/unite_buffers.html",
-    "title": "Create cohort",
+    "title": "Unite buffers",
     "section": "",
-    "text": "The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.",
+    "text": "This script combines individual transplant center buffers into unified, organ-level catchment areas.\nEarlier steps created buffers (either distance-based or 60-minute travel-time isochrones) around each transplant center.\nHere, those individual polygons are merged into a single combined service area for each organ, distance, and year.",
     "crumbs": [
       "Data Processing",
       "Unite buffers"
@@ -480,9 +480,9 @@
   {
     "objectID": "quarto/unite_buffers.html#other-portions-of-the-analysis",
     "href": "quarto/unite_buffers.html#other-portions-of-the-analysis",
-    "title": "Create cohort",
+    "title": "Unite buffers",
     "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nExecute matching: Implements risk-set–based greedy matching without replacement to construct the analytic cohort.\nPost-match processing: Derives analytic variables, time-aligned cost windows, and follow-up structure after matching.\nModeling: Fits prespecified cost and outcome models using the matched cohort.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
+    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
       "Data Processing",
       "Unite buffers"
@@ -1255,6 +1255,61 @@
     "crumbs": [
       "Data Processing",
       "Set isochrones"
+    ]
+  },
+  {
+    "objectID": "quarto/unite_buffers.html#why-unite-buffers",
+    "href": "quarto/unite_buffers.html#why-unite-buffers",
+    "title": "Unite buffers",
+    "section": "Why “Unite” Buffers?",
+    "text": "Why “Unite” Buffers?\nWhen buffers are created around multiple centers, they often:\n\nOverlap geographically\n\nCover adjacent regions\n\nShare common areas\n\nIf we simply summed tract populations within each individual buffer, overlapping areas would be double-counted.\nTo prevent this, we:\n\nCombine (union) all individual center buffers\nCreate a single, continuous polygon representing the total catchment area\nEnsure that each geographic area is counted only once",
+    "crumbs": [
+      "Data Processing",
+      "Unite buffers"
+    ]
+  },
+  {
+    "objectID": "quarto/unite_buffers.html#objects-created",
+    "href": "quarto/unite_buffers.html#objects-created",
+    "title": "Unite buffers",
+    "section": "Objects Created",
+    "text": "Objects Created\nFour parallel objects are constructed:\n\nTransplant_center_all_buffer_united\nTransplant_centers_active_buffer_united\nTransplant_centers_HIV_buffer_united\nTransplant_centers_HOPE_buffer_united\n\nEach object is indexed by:\n\nOrgan\n\nDistance\n\nYear (when applicable)",
+    "crumbs": [
+      "Data Processing",
+      "Unite buffers"
+    ]
+  },
+  {
+    "objectID": "quarto/unite_buffers.html#how-the-union-works",
+    "href": "quarto/unite_buffers.html#how-the-union-works",
+    "title": "Unite buffers",
+    "section": "How the Union Works",
+    "text": "How the Union Works\nFor each:\n\nOrgan\nDistance\n(And year, when relevant)\n\nThe script:\n\nTakes the set of individual buffer polygons\nApplies st_union(geometry)\n\nCollapses them into one merged geometry\nConverts the result back into an sf object\n\nThe resulting dataset contains a single row labeled:\ncatchment_area = “All Centers”\nThis label clarifies that the polygon represents the combined service area of all centers in that category.",
+    "crumbs": [
+      "Data Processing",
+      "Unite buffers"
+    ]
+  },
+  {
+    "objectID": "quarto/unite_buffers.html#structure-of-the-result",
+    "href": "quarto/unite_buffers.html#structure-of-the-result",
+    "title": "Unite buffers",
+    "section": "Structure of the Result",
+    "text": "Structure of the Result\nAfter processing, the structure is:\n\nTransplant_center_all_buffer_united[[organ]][[distance]]\nTransplant_centers_active_buffer_united[[organ]][[distance]][[year]]\nTransplant_centers_HIV_buffer_united[[organ]][[distance]][[year]]\nTransplant_centers_HOPE_buffer_united[[organ]][[distance]][[year]]\n\nEach object is a single merged polygon representing the total geographic coverage of that center group.",
+    "crumbs": [
+      "Data Processing",
+      "Unite buffers"
+    ]
+  },
+  {
+    "objectID": "quarto/unite_buffers.html#why-this-step-matters",
+    "href": "quarto/unite_buffers.html#why-this-step-matters",
+    "title": "Unite buffers",
+    "section": "Why This Step Matters",
+    "text": "Why This Step Matters\nUniting buffers allows accurate calculation of:\n\nTotal population within service areas\nTotal number of people living with HIV within reach\nChanges in geographic access between years\nComparisons across center categories (Active vs HIV vs HOPE)\n\nWithout uniting overlapping buffers, population totals would be inflated and geographic access overstated.\n\n\n\nClick to show/hide R Code\n#Unite for total calculations\n\nTransplant_center_all_buffer_united&lt;-list()\nTransplant_centers_active_buffer_united&lt;-list()\nTransplant_centers_HIV_buffer_united&lt;-list()\nTransplant_centers_HOPE_buffer_united&lt;-list()\n\nfor (organ_loop in organ_list){\n  for (distance_loop in distance_list){\n    \n    Transplant_center_all_buffer_united[[organ_loop]][[distance_loop]]&lt;-\n      Transplant_center_all_buffer[[organ_loop]][[distance_loop]]%&gt;%\n      reframe(\n        catchment_area = \"All Centers\", \n        geometry = st_union(geometry)\n      )%&gt;%\n      st_as_sf()\n    \n    \n    for (year_loop in year_list){\n      \n      \n      Transplant_centers_active_buffer_united[[organ_loop]][[distance_loop]][[year_loop]]&lt;-\n        Transplant_centers_active_buffer[[organ_loop]][[distance_loop]][[year_loop]]%&gt;%\n        reframe(\n          catchment_area = \"All Centers\", \n          geometry = st_union(geometry)\n        )%&gt;%\n        st_as_sf()\n      \n      Transplant_centers_HIV_buffer_united[[organ_loop]][[distance_loop]][[year_loop]]&lt;-\n        Transplant_centers_HIV_buffer[[organ_loop]][[distance_loop]][[year_loop]]%&gt;%\n        reframe(\n          catchment_area = \"All Centers\", \n          geometry = st_union(geometry)\n        )%&gt;%\n        st_as_sf()\n      \n      \n      \n      \n      Transplant_centers_HOPE_buffer_united[[organ_loop]][[distance_loop]][[year_loop]]&lt;-\n        Transplant_centers_HOPE_buffer[[organ_loop]][[distance_loop]][[year_loop]]%&gt;%\n        reframe(\n          catchment_area = \"All Centers\", \n          geometry = st_union(geometry)\n        )%&gt;%\n        st_as_sf()\n      \n      \n      \n      \n    }\n    \n  }\n}",
+    "crumbs": [
+      "Data Processing",
+      "Unite buffers"
     ]
   }
 ]

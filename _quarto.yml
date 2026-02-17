@@ -48,6 +48,8 @@ website:
             text: Set isochrones
           - href: quarto/unite_buffers.qmd
             text: Unite buffers
+          - href: quarto/join_tracts_to_buffers.qmd
+            text: Join tracts to buffers
           - href: quarto/join_tracts_to_united_buffers.qmd
             text: Join tracts to united buffers
           - href: quarto/R/calculate_aggregated_results.qmd

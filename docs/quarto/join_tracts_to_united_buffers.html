@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../quarto/R/calculate_aggregated_results.qmd" rel="next">
-<link href="../quarto/unite_buffers.html" rel="prev">
+<link href="../quarto/join_tracts_to_buffers.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -231,6 +231,12 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../quarto/join_tracts_to_buffers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Join tracts to buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../quarto/join_tracts_to_united_buffers.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Join tracts to united buffers</span></a>
   </div>
@@ -360,7 +366,7 @@ Source code
 <p>The code below loads and merges transplant records across multiple UNOS-derived files, constructs a cumulative transplant count per patient, and reshapes the data into a time-varying format that tracks graft status over time.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import core demographics from "patients" file</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>patients_raw<span class="ot">&lt;-</span>usRds<span class="sc">::</span><span class="fu">load_usrds_file</span>(<span class="st">"patients"</span>)<span class="sc">%&gt;%</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ZIPCODE) <span class="co">#This is ZIP code at time of USRDS initiation, but we want at time of crypto dx</span></span>
@@ -415,7 +421,7 @@ Source code
 <p>The code below initializes a flowchart-aware cohort object and applies sequential eligibility filters, retaining both inclusion counts and labeled exclusion steps for downstream reporting.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Initialize a flowchart cohort</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>patients_clean<span class="ot">&lt;-</span>patients_raw<span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_fc</span>(<span class="at">label=</span><span class="st">"Patients in USRDS"</span>)<span class="sc">%&gt;%</span></span>
@@ -446,7 +452,7 @@ Source code
 <p>Finally, we separate cryptococcus diagnosis dates from other comorbidities for a separate list, given the key nature of the date of cryptococcus diagnosis for subsequent analyses.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create list of USRDS ids for patients who have undergone transplant</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>transplant_id_list<span class="ot">&lt;-</span>patients_clean<span class="sc">$</span>data<span class="sc">%&gt;%</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(USRDS_ID)</span>
@@ -505,7 +511,7 @@ Source code
 <p>These steps culminate in the final case and control cohorts, with all inclusion and exclusion decisions explicitly tracked and visualized in the updated STROBE flow diagram.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Join cryptococcus date to fc cohort</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>patients_clean<span class="sc">$</span>data<span class="ot">&lt;-</span><span class="fu">left_join</span>(patients_clean<span class="sc">$</span>data, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                               cryptococcus_df)<span class="sc">%&gt;%</span></span>
@@ -580,7 +586,7 @@ Source code
 <p>“Time since transplant” resets after each new transplant.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Now we need to construct the time-varying data set</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Ungroup</span></span>
@@ -1176,8 +1182,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../quarto/unite_buffers.html" class="pagination-link" aria-label="Unite buffers">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Unite buffers</span>
+      <a href="../quarto/join_tracts_to_buffers.html" class="pagination-link" aria-label="Join tracts to buffers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Join tracts to buffers</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

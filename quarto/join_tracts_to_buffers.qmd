@@ -1,0 +1,170 @@
+---
+title: "Join tracts to buffers"
+format: html
+---
+
+This section identifies which census tracts fall within transplant center catchment areas.
+
+Earlier steps created:
+
+- Census tract–level HIV population estimates (`Merged_tracts`)
+- Distance-based or travel-time buffers around transplant centers
+
+Here, we determine which tracts intersect each center’s catchment area using spatial joins.
+
+
+::: {.Rcode title="Source code"}
+
+The full R script is available at:
+
+-   [`R/join_tracts_to_buffers.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/join_tracts_to_buffers.R)
+
+This R script file is itself reliant on the following helper files:
+
+-   [`R/setup.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/functions.R)
+:::
+
+---
+
+## Linking Census Tracts to Transplant Center Catchment Areas
+
+This code performs **spatial intersection joins** between:
+
+- Census tract–level data (`Merged_tracts`)
+- Transplant center buffer polygons
+
+The goal is to determine which tracts are geographically reachable from transplant centers under each scenario.
+
+---
+
+## Objects Created
+
+Three nested list objects are generated:
+
+- `tracts_in_buffers_active`
+- `tracts_in_buffers_HIV`
+- `tracts_in_buffers_HOPE`
+
+Each is indexed by:
+
+1. Organ  
+2. Distance  
+3. Year  
+
+---
+
+## What the Spatial Join Does
+
+For each:
+
+- Organ  
+- Distance  
+- Year  
+
+The script performs:
+
+st_join(..., join = st_intersects)
+
+
+This means:
+
+> A census tract is included if its geometry intersects the transplant center buffer polygon.
+
+In practical terms:
+
+- If any part of a tract lies within a center’s catchment area,
+- That tract is considered geographically accessible to that center.
+
+---
+
+## Important Note on Duplication
+
+Because this join is performed **against individual center buffers**, a tract can appear multiple times if:
+
+- It falls within the catchment area of more than one transplant center.
+
+This duplication is intentional at this stage because:
+
+- It preserves center-level relationships.
+- It allows downstream analyses of overlap and multi-center accessibility.
+
+Later steps that use *united* buffers eliminate this duplication when calculating total population coverage.
+
+---
+
+## Why This Step Matters
+
+This spatial join enables calculation of:
+
+- Number of people living with HIV within reach of transplant centers
+- Differences in geographic access between:
+  - Active centers
+  - HIV R+ centers
+  - HOPE centers
+- Changes over time (e.g., 2017 vs 2022)
+
+By linking tract-level population data to center catchment areas, the analysis translates geography into measurable access.
+
+---
+
+```{r, eval=FALSE}
+
+#ST join to individual tracts and transplant centers
+
+
+tracts_in_buffers_active<-list()
+tracts_in_buffers_HIV<-list()
+tracts_in_buffers_HOPE<-list()
+
+
+
+
+for (organ_loop in organ_list){
+  for (distance_loop in distance_list){
+    for (year_loop in year_list){
+
+      message(paste("Currently on:", organ_loop, "", distance_loop, "for year:", year_loop))
+      message("Calculating tracts for active...")
+      
+      #This leads to duplication of tracts if they fall in more than one transplant center's catchment area)      
+      tracts_in_buffers_active[[organ_loop]][[distance_loop]][[year_loop]] <- 
+        st_join(Merged_tracts[[year_loop]], 
+                Transplant_centers_active_buffer[[organ_loop]][[distance_loop]][[year_loop]], 
+                join = st_intersects)
+      
+      
+      message("Calculating tracts for HIV...")
+      
+      tracts_in_buffers_HIV[[organ_loop]][[distance_loop]][[year_loop]] <- 
+        st_join(Merged_tracts[[year_loop]], 
+                Transplant_centers_HIV_buffer[[organ_loop]][[distance_loop]][[year_loop]], 
+                join = st_intersects)
+      
+      message("Calculating tracts for HOPE...")
+      
+      tracts_in_buffers_HOPE[[organ_loop]][[distance_loop]][[year_loop]] <- 
+        st_join(Merged_tracts[[year_loop]], 
+                Transplant_centers_HOPE_buffer[[organ_loop]][[distance_loop]][[year_loop]], 
+                join = st_intersects)
+
+
+      
+            
+    }
+  }
+}
+
+
+
+
+```
+
+
+## Other portions of the analysis
+
+-   [**Setup**](setup.qmd): Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.
+-   [**Functions**](functions.qmd): Reusable helper functions for cohort construction, matching, costing, and modeling.
+-   [**Tables**](tables.qmd): Summary tables and regression outputs generated from the final models.
+-   [**Figures**](figures.qmd):Visualizations of costs, risks, and model-based estimates.
+-   [**About**](about.qmd): methods, assumptions, and disclosures

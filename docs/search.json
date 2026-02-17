@@ -743,7 +743,7 @@
   {
     "objectID": "quarto/classify_centers.html",
     "href": "quarto/classify_centers.html",
-    "title": "Create cohort",
+    "title": "Classify centers",
     "section": "",
     "text": "The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.",
     "crumbs": [
@@ -809,9 +809,9 @@
   {
     "objectID": "quarto/classify_centers.html#other-portions-of-the-analysis",
     "href": "quarto/classify_centers.html#other-portions-of-the-analysis",
-    "title": "Create cohort",
+    "title": "Classify centers",
     "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nExecute matching: Implements risk-set–based greedy matching without replacement to construct the analytic cohort.\nPost-match processing: Derives analytic variables, time-aligned cost windows, and follow-up structure after matching.\nModeling: Fits prespecified cost and outcome models using the matched cohort.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
+    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
       "Data Processing",
       "Classify centers"
@@ -1156,6 +1156,17 @@
     "crumbs": [
       "Data Loading & Setup",
       "Functions"
+    ]
+  },
+  {
+    "objectID": "quarto/classify_centers.html#initialize-lists",
+    "href": "quarto/classify_centers.html#initialize-lists",
+    "title": "Classify centers",
+    "section": "Initialize lists",
+    "text": "Initialize lists\nThis portion of the code initializes lists to classify transplant centers by activity status and HIV transplant volume for each organ and year of interest. These classifications are used downstream for geographic access analyses, state-level summaries, and figure generation.\nFor example, the nested list HOPE_center_volumes can be used to identify the number of HIV D+/R+ transplants performed at each transplant center for each organ and each time period.\nHOPE_center_volume[[\"kidney]][[\"2017\"]] will yield a data frame of HOPE kidney volumes for centers that performed at least one HOPE adult transplant in the 2013-2017 time period.\nKey lists created:\n\nActive_tx_centers: any adult transplant in the year defined by the inner list\nHIV_center_volumes: any HIV R+ transplant in the five-year period\nHOPE_center_volumes: any HIV D+/R+ transplant in the five-year period\nState_level_transplant_volumes: HIV R+ volumes by state\nTransplant_centers_active: similar to the first list active_tx_centers but with different variable composition\n\n\n\nCode\nfor (organ_loop in organ_list)\n{\n  \n  for (year_loop in year_list)\n    \n    \n  {\n    \n    Active_tx_centers[[organ_loop]][[year_loop]]&lt;-tx[[organ_loop]]%&gt;%\n      filter(REC_AGE_IN_MONTHS_AT_TX&gt;=216)%&gt;% #Adult recipient\n      mutate(year_transplant=year(REC_TX_DT))%&gt;%\n      filter(year_transplant==as.numeric(year_loop))%&gt;%\n      group_by(REC_CTR_CD)%&gt;%\n      count()%&gt;%\n      pull(REC_CTR_CD)\n    \n    #Calculate center level volumes for pts with HIV in five-year period ending in year for active centers\n    HIV_center_volumes[[organ_loop]][[year_loop]]&lt;-tx[[organ_loop]]%&gt;%\n      filter(REC_HIV_STAT==\"P\")%&gt;%\n      filter(REC_AGE_IN_MONTHS_AT_TX&gt;=216)%&gt;% #Adult recipient\n      mutate(year_transplant=year(REC_TX_DT))%&gt;%\n      filter(year_transplant&gt;=(as.numeric(year_loop)-4) & year_transplant&lt;=as.numeric(year_loop))%&gt;%\n      group_by(REC_CTR_CD)%&gt;%\n      count()%&gt;%\n      filter(REC_CTR_CD %in% Active_tx_centers[[organ_loop]][[year_loop]])\n    \n    \n    #Identify HOPE centers in years of interest\n    HOPE_center_volumes[[organ_loop]][[year_loop]]&lt;-tx[[organ_loop]]%&gt;%\n      filter(REC_HIV_STAT==\"P\")%&gt;%\n      filter(REC_AGE_IN_MONTHS_AT_TX&gt;=216)%&gt;%\n      mutate(year_transplant=year(REC_TX_DT ))%&gt;%\n      filter(year_transplant&gt;=(as.numeric(year_loop)-4) & year_transplant&lt;=as.numeric(year_loop))%&gt;%\n      left_join(donor_deceased)%&gt;%\n      filter(DON_HIV_NAT %in% c(\"P\", \"P: Positive\")| \n               DON_ANTI_HIV %in% c(\"P\", \"P: Positive\"))%&gt;%\n      group_by(REC_CTR_CD   )%&gt;%\n      count()\n    \n    #Convert to state transplant volumes for recipients with HIV\n    State_level_transplant_volumes[[organ_loop]][[year_loop]]&lt;-HIV_center_volumes[[organ_loop]][[year_loop]]%&gt;%\n      mutate(state_code = substr(REC_CTR_CD, 1, 2))%&gt;%\n      group_by(state_code)%&gt;%\n      summarize(total_HIV_transplants=sum(n, na.rm = TRUE))\n    \n    #Create DFs for active centers in years of interest\n    Transplant_centers_active[[organ_loop]][[year_loop]]&lt;-Transplant_centers_all[[organ_loop]]%&gt;%\n      filter(OTCCode %in% Active_tx_centers[[organ_loop]][[year_loop]])\n    \n  }\n}",
+    "crumbs": [
+      "Data Processing",
+      "Classify centers"
     ]
   }
 ]

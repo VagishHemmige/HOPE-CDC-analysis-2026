@@ -185,9 +185,30 @@ for (organ_loop in organ_list) {
   }
 }
 
+# ---- Plot the number of people with HIV in the catchment area of each transplant center----
 
-plot_center_HIV_catchment(organ="kidney",
-                                    distance="50mile",
-                                    buffer_list=tracts_in_buffers_active[["kidney"]][["50mile"]],
-                                    year1="2017",
-                                    year2="2022")
+for (organ_loop in organ_list) {
+  for (distance_loop in distance_list){
+    
+    
+    catchment_plot<-plot_center_HIV_catchment(organ=organ_loop,
+                              distance=distance_loop,
+                              buffer_list=tracts_in_buffers_active[[organ_loop]][[distance_loop]],
+                              year1="2017",
+                              year2="2022")
+    
+    
+    
+    ggsave(glue("figures/{organ_loop}/Beeswarm {organ_loop} plot 2026-2-14 {distance_loop}.svg"), 
+           catchment_plot, 
+   #        width = 12, height = 6, units = "in",
+           bg = "white")
+    
+    ggsave(glue("figures/{organ_loop}/Beeswarm {organ_loop} plot 2026-2-14 {distance_loop}.png"), 
+           catchment_plot, 
+  #         width = 12, height = 6, units = "in",
+           dpi = 150,
+           device = ragg::agg_png,
+           bg = "white")
+  }
+}

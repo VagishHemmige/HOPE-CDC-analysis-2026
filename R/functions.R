@@ -365,7 +365,7 @@ plot_center_HIV_catchment<-function(organ,
     mutate(year=as.numeric(year1))%>%
     mutate(Center_classification=case_when(
       OTCCode %in% HOPE_center_volumes[[organ]][[year1]]$REC_CTR_CD~"HOPE center",
-      OTCCode %in% HIV__center_volumes[[organ]][[year1]]$REC_CTR_CD~"≥1 HIV R+ transplants",
+      OTCCode %in% HIV_center_volumes[[organ]][[year1]]$REC_CTR_CD~"≥1 HIV R+ transplants",
       OTCCode %in% Active_tx_centers[[organ]][[year1]]~"No HIV R+ transplants"
     ))%>%
     filter(!is.na(OTCCode))
@@ -379,7 +379,7 @@ plot_center_HIV_catchment<-function(organ,
     mutate(year=as.numeric(year2))%>%
     mutate(Center_classification=case_when(
       OTCCode %in% HOPE_center_volumes[[organ]][[year2]]$REC_CTR_CD~"HOPE center",
-      OTCCode %in% HIV__center_volumes[[organ]][[year2]]$REC_CTR_CD~"≥1 HIV R+ transplants",
+      OTCCode %in% HIV_center_volumes[[organ]][[year2]]$REC_CTR_CD~"≥1 HIV R+ transplants",
       OTCCode %in% Active_tx_centers[[organ]][[year2]]~"No HIV R+ transplants"
     ))%>%
     filter(!is.na(OTCCode))
@@ -391,7 +391,7 @@ plot_center_HIV_catchment<-function(organ,
     ))%>%
     mutate(Center_classification_color=case_when(
       OTCCode %in% HOPE_center_volumes[[organ]][[year1]]$REC_CTR_CD~"HOPE center",
-      OTCCode %in% HIV__center_volumes[[organ]][[year1]]$REC_CTR_CD~"≥1 HIV R+ transplants",
+      OTCCode %in% HIV_center_volumes[[organ]][[year1]]$REC_CTR_CD~"≥1 HIV R+ transplants",
       OTCCode %in% Active_tx_centers[[organ]][[year1]]~"No HIV R+ transplants",
       TRUE~glue("No transplants in {year1}")
     ))

@@ -1,8 +1,9 @@
 #Tables
 
 
-
-
+# Initialize lists of gt objects
+Results_HIV_gt<-list()
+Results_nonHIV_gt<-list()
 
 #Create tables as docx
 
@@ -13,7 +14,8 @@ for (organ_loop in organ_list)
   file_path<-list()
   file_path[["Table 1"]][[".docx"]]<-paste0("tables/", organ_loop,"/",organ_loop, " analysis results Table 1.docx")
   file_path[["Table 2"]][[".docx"]]<-paste0("tables/", organ_loop,"/",organ_loop, " analysis results Table 2.docx")
-
+  file_path[["Table 1"]][[".png"]]<-paste0("tables/", organ_loop,"/",organ_loop, " analysis results Table 1.png")
+  file_path[["Table 2"]][[".png"]]<-paste0("tables/", organ_loop,"/",organ_loop, " analysis results Table 2.png")
   
   #Define table with labels based on values in distance_list and types of outcomes
   
@@ -38,7 +40,7 @@ for (organ_loop in organ_list)
         )
       )
     )
-    
+  
   #Remove .docx files if they exist
   if (file.exists(file_path[["Table 1"]][[".docx"]])) {
     file.remove(file_path[["Table 1"]][[".docx"]])
@@ -48,20 +50,27 @@ for (organ_loop in organ_list)
     file.remove(file_path[["Table 2"]][[".docx"]])
   }
   
-  #Create tables
-  Results_HIV_gt<-Results_HIV_df[[organ_loop]]%>%
+  #Create tables and save results as .docx and PNG
+  Results_HIV_gt[[organ_loop]]<-Results_HIV_df[[organ_loop]]%>%
     convert_resultsdf_to_table(year_list_fn=year_list,
                                row_values = table_factor_values$value,
                                row_labels = table_factor_values$label,
                                table_title= "Access to transplant in PLWH")
-    gtsave(Results_HIV_gt, file_path[["Table 1"]][[".docx"]])
+  gtsave(Results_HIV_gt[[organ_loop]], file_path[["Table 1"]][[".docx"]])
+  gtsave(Results_HIV_gt[[organ_loop]], file_path[["Table 1"]][[".png"]])
   
-  Results_nonHIV_df[[organ_loop]]%>%
+  Results_nonHIV_gt[[organ_loop]]<-Results_nonHIV_df[[organ_loop]]%>%
     convert_resultsdf_to_table(year_list_fn=year_list,
                                row_values = table_factor_values$value,
                                row_labels = table_factor_values$label,
                                table_title= "Access to transplant in people without HIV")
-    gtsave(Results_HIV_gt, file_path[["Table 2"]][[".docx"]])
+  gtsave(Results_nonHIV_gt[[organ_loop]], file_path[["Table 2"]][[".docx"]])
+  gtsave(Results_nonHIV_gt[[organ_loop]], file_path[["Table 2"]][[".png"]])
+  
   
   
 }
+
+#Save table objects as .RDS so they can be accessed by Quarto
+saveRDS(Results_HIV_gt, "cache/Results_HIV_gt.rds")
+saveRDS(Results_nonHIV_gt, "cache/Results_nonHIV_gt.rds")

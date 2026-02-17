@@ -5,16 +5,16 @@ format: html
 
 The code in this script generates tables for the manuscript.
 
-::: Rcode
-### Source code
+::: {.Rcode title="Source code"}
+
 
 The full R script is available at:
 
--   [`R/functions.R`](https://github.com/VagishHemmige/OPE-CDC-analysis-2026/blob/master/R/functions.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/functions.R)
 
 This R script file is itself reliant on the following helper files:
 
--   [`R/setup.R`](https://github.com/VagishHemmige/OPE-CDC-analysis-2026/blob/master/R/setup.R)
+-   [`R/setup.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/setup.R)
 :::
 
 ## Drawing 60 minute isocrhones around each transplant center

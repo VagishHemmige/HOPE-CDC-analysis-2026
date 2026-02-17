@@ -10,12 +10,12 @@ The code in this script loads the data needed for other scripts from multiple so
 
 The full R script is available at:
 
--   [`R/create_cohort.R`](https://github.com/VagishHemmige/OPE-CDC-analysis-2026/blob/master/R/load_data.R)
+-   [`R/load_data.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/load_data.R)
 
 This R script file is itself reliant on the following helper files:
 
--   [`R/setup.R`](https://github.com/VagishHemmige/OPE-CDC-analysis-2026/blob/master/R/setup.R)
--   [`R/functions.R`](https://github.com/VagishHemmige/OPE-CDC-analysis-2026/blob/master/R/functions.R)
+-   [`R/setup.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/functions.R)
 :::
 
 

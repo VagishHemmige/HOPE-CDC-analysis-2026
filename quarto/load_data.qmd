@@ -1,21 +1,21 @@
 ---
-title: "Create cohort"
+title: "Load data"
 format: html
 ---
 
-The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.
+The code in this script loads the data needed for other scripts from multiple sources, as explained in detail below.
 
-::: callout-note
-### Source code
+::: {.Rcode title="Source code"}
+
 
 The full R script is available at:
 
--   [`R/create_cohort.R`](https://github.com/VagishHemmige/Cryptococcus-cost_analysis/blob/master/R/create_cohort.R)
+-   [`R/create_cohort.R`](https://github.com/VagishHemmige/OPE-CDC-analysis-2026/blob/master/R/load_data.R)
 
 This R script file is itself reliant on the following helper files:
 
--   [`R/setup.R`](https://github.com/VagishHemmige/Cryptococcus-cost_analysis/blob/master/R/setup.R)
--   [`R/functions.R`](https://github.com/VagishHemmige/Cryptococcus-cost_analysis/blob/master/R/functions.R)
+-   [`R/setup.R`](https://github.com/VagishHemmige/OPE-CDC-analysis-2026/blob/master/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/OPE-CDC-analysis-2026/blob/master/R/functions.R)
 :::
 
 
@@ -378,7 +378,6 @@ prematching_cohort<-create_usrds_cohort(df=initial_cohort,
 
 ```
 
-The analysis then proceeds on to the [execute_matching](execute_matching.qmd) component.
 
 ## Other portions of the analysis
 

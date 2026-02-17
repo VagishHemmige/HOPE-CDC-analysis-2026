@@ -974,9 +974,9 @@
   {
     "objectID": "quarto/set_isochrones.html",
     "href": "quarto/set_isochrones.html",
-    "title": "Create cohort",
+    "title": "Set isochrones",
     "section": "",
-    "text": "The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.",
+    "text": "The code in this script creates 60-minute driving catchment areas around transplant centers.\nThese catchment areas are later used to estimate how many people living with HIV reside within a realistic travel time of transplant programs.",
     "crumbs": [
       "Data Processing",
       "Set isochrones"
@@ -1040,9 +1040,9 @@
   {
     "objectID": "quarto/set_isochrones.html#other-portions-of-the-analysis",
     "href": "quarto/set_isochrones.html#other-portions-of-the-analysis",
-    "title": "Create cohort",
+    "title": "Set isochrones",
     "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nExecute matching: Implements risk-set–based greedy matching without replacement to construct the analytic cohort.\nPost-match processing: Derives analytic variables, time-aligned cost windows, and follow-up structure after matching.\nModeling: Fits prespecified cost and outcome models using the matched cohort.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
+    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
       "Data Processing",
       "Set isochrones"
@@ -1200,6 +1200,61 @@
     "crumbs": [
       "Data Processing",
       "Center-level geographic calculations"
+    ]
+  },
+  {
+    "objectID": "quarto/set_isochrones.html#creating-60-minute-driving-catchment-areas",
+    "href": "quarto/set_isochrones.html#creating-60-minute-driving-catchment-areas",
+    "title": "Set isochrones",
+    "section": "Creating 60-Minute Driving Catchment Areas",
+    "text": "Creating 60-Minute Driving Catchment Areas\nThis section generates travel-time–based service areas for transplant centers.\nUnlike simple radius buffers (e.g., 50 miles in every direction), these service areas reflect actual road travel time, accounting for highways, traffic patterns, and geography.\n\nWhat is an Isochrone?\nAn isochrone is a geographic area showing how far someone can travel within a specified amount of time.\nIn this analysis:\n\nA 60-minute isochrone represents all locations that can be reached within 60 minutes of driving from a transplant center.\nThis provides a more realistic measure of geographic access than straight-line (circular) buffers.\n\nIsochrones are generated using the mapboxapi R package, which interfaces with the Mapbox routing API:\n\nhttps://walker-data.com/mapboxapi/\nCRAN: https://cran.r-project.org/package=mapboxapi",
+    "crumbs": [
+      "Data Processing",
+      "Set isochrones"
+    ]
+  },
+  {
+    "objectID": "quarto/set_isochrones.html#standardizing-time-why-700-am",
+    "href": "quarto/set_isochrones.html#standardizing-time-why-700-am",
+    "title": "Set isochrones",
+    "section": "Standardizing Time: Why 7:00 AM?",
+    "text": "Standardizing Time: Why 7:00 AM?\nTravel time varies depending on traffic conditions.\nTo ensure consistency:\n\nIsochrones are calculated assuming departure at 7:00 AM local time.\nThis approximates peak commuting conditions.\nUsing a fixed time improves comparability across regions.\n\nBecause Mapbox requires time in UTC, the script:\n\nCreates a 7:00 AM timestamp for each U.S. time zone\nConverts that time to UTC using with_tz()\nStores these converted times in converted_times\n\nThis ensures that each transplant center’s isochrone is calculated at the correct local time.",
+    "crumbs": [
+      "Data Processing",
+      "Set isochrones"
+    ]
+  },
+  {
+    "objectID": "quarto/set_isochrones.html#caching-isochrone-results",
+    "href": "quarto/set_isochrones.html#caching-isochrone-results",
+    "title": "Set isochrones",
+    "section": "Caching Isochrone Results",
+    "text": "Caching Isochrone Results\nGenerating isochrones requires external API calls and can be computationally expensive.\nTo avoid recomputing them repeatedly:\n\nThe script checks whether a cached .RDS file already exists.\nIf it exists → it loads the file.\nIf not → it generates the isochrone and saves it to the cache/ directory.\n\nThis dramatically speeds up Quarto re-rendering and ensures reproducibility.",
+    "crumbs": [
+      "Data Processing",
+      "Set isochrones"
+    ]
+  },
+  {
+    "objectID": "quarto/set_isochrones.html#isochrones-created",
+    "href": "quarto/set_isochrones.html#isochrones-created",
+    "title": "Set isochrones",
+    "section": "Isochrones Created",
+    "text": "Isochrones Created\nFor each:\n\nOrgan type\n\nYear\n\nCenter category\n\nThe script creates 60-minute isochrones for:\n\nAll transplant centers\n\nActive transplant centers\n\nHIV R+ transplant centers\n\nHOPE (HIV D+/R+) transplant centers\n\nThe resulting structure is:\n\nTransplant_center_all_buffer[[organ]][[\"60min\"]]\nTransplant_centers_active_buffer[[organ]][[\"60min\"]][[year]]\nTransplant_centers_HIV_buffer[[organ]][[\"60min\"]][[year]]\nTransplant_centers_HOPE_buffer[[organ]][[\"60min\"]][[year]]\n\nEach object is an sf polygon representing the area reachable within 60 minutes of driving from the center.",
+    "crumbs": [
+      "Data Processing",
+      "Set isochrones"
+    ]
+  },
+  {
+    "objectID": "quarto/set_isochrones.html#why-travel-time-instead-of-miles",
+    "href": "quarto/set_isochrones.html#why-travel-time-instead-of-miles",
+    "title": "Set isochrones",
+    "section": "Why Travel Time Instead of Miles?",
+    "text": "Why Travel Time Instead of Miles?\nStraight-line distance (e.g., 50 miles) does not account for:\n\nRoad networks\n\nTraffic congestion\n\nGeographic barriers (mountains, water)\n\nTravel-time–based service areas better approximate real-world access to transplant care.\nThese 60-minute isochrones are later intersected with census tract–level HIV population data to quantify access to transplant services.\n\n\n\nClick to show/hide R Code\n#set isochrones\n\n\n#Convert 7 AM local time to UTC time for every time zone in the US, using the with_tz function\n\nconverted_times&lt;-list()\n\nfor (year_loop in year_list){\n  \n  \n  #Create list for each year that converts the time zones\n  converted_times[[year_loop]] &lt;- tibble(\n    timezone = timezones\n  ) %&gt;%\n    mutate(\n      local_time = map2(\n        reference_date[[year_loop]], timezone,\n        ~ ymd_hms(paste(.x, \"07:00:00\"), tz = .y)\n      ),\n      utc_time = map(local_time, ~ with_tz(.x, \"UTC\"))\n    ) %&gt;%\n    unnest(c(local_time, utc_time))\n}\n  \n  #Create isochrone objects for transplant centersusing the mapboxapi package if results not already cached\n  for (organ_loop in organ_list){\n\n    \n    all_center_path&lt;-paste0(\"cache/Transplant_center_all_60min_buffer_\",organ_loop, \".RDS\")\n    if (file.exists(all_center_path)) {\n      Transplant_center_all_buffer[[organ_loop]][[\"60min\"]] &lt;- \n        readRDS(all_center_path)\n    }else {\n      \n      Transplant_center_all_buffer[[organ_loop]][[\"60min\"]]&lt;-\n        set_60_min_isochrone_at_7AM(Transplant_centers_all_sf[[organ_loop]], \"2017\")\n      saveRDS(Transplant_center_all_buffer[[organ_loop]][[\"60min\"]],\n              all_center_path)\n    } \n    \n    for (year_loop in year_list){\n    \n       \n    \n    active_center_path&lt;-paste0(\"cache/Transplant_centers_active_60min_buffer_\",organ_loop, \"_\", year_loop,\".RDS\")\n    if (file.exists(active_center_path)) {\n      Transplant_centers_active_buffer[[organ_loop]][[\"60min\"]][[year_loop]] &lt;- \n        readRDS(active_center_path)\n    }else {\n      \n    Transplant_centers_active_buffer[[organ_loop]][[\"60min\"]][[year_loop]]&lt;-\n      set_60_min_isochrone_at_7AM(Transplant_centers_active_SF[[organ_loop]][[year_loop]], year_loop)\n    saveRDS(Transplant_centers_active_buffer[[organ_loop]][[\"60min\"]][[year_loop]],\n            active_center_path)\n    }\n    \n    HIV_center_path&lt;-paste0(\"cache/Transplant_centers_HIV_60min_buffer_\",organ_loop, \"_\", year_loop,\".RDS\")\n    if (file.exists(HIV_center_path)) {\n      Transplant_centers_HIV_buffer[[organ_loop]][[\"60min\"]][[year_loop]]&lt;-\n        readRDS(HIV_center_path)\n    } else {\n      Transplant_centers_HIV_buffer[[organ_loop]][[\"60min\"]][[year_loop]]&lt;-\n        set_60_min_isochrone_at_7AM(Transplant_centers_HIV_sf[[organ_loop]][[year_loop]], year_loop)\n      saveRDS(Transplant_centers_HIV_buffer[[organ_loop]][[\"60min\"]][[year_loop]],\n              HIV_center_path)\n    }\n      \n\n    HOPE_center_path&lt;-paste0(\"cache/Transplant_centers_HOPE_60min_buffer_\",organ_loop, \"_\", year_loop,\".RDS\")\n    if (file.exists(HOPE_center_path)) {\n      Transplant_centers_HOPE_buffer[[organ_loop]][[\"60min\"]][[year_loop]]&lt;-\n        readRDS(HOPE_center_path)\n    } else {\n      Transplant_centers_HOPE_buffer[[organ_loop]][[\"60min\"]][[year_loop]]&lt;-\n        set_60_min_isochrone_at_7AM(Transplant_centers_HOPE_sf[[organ_loop]][[year_loop]], year_loop)\n      saveRDS(Transplant_centers_HOPE_buffer[[organ_loop]][[\"60min\"]][[year_loop]],\n              HOPE_center_path)\n    }\n  }\n}",
+    "crumbs": [
+      "Data Processing",
+      "Set isochrones"
     ]
   }
 ]

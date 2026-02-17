@@ -3,7 +3,6 @@ title: "Center-level geographic calculations"
 format: html
 ---
 
-The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.
 
 ::: {.Rcode title="Source code"}
 

@@ -1,21 +1,20 @@
 ---
-title: "Create cohort"
+title: "County-level geographic calculations"
 format: html
 ---
 
 The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.
 
-::: callout-note
-### Source code
+::: {.Rcode title="Source code"}
 
 The full R script is available at:
 
--   [`R/create_cohort.R`](https://github.com/VagishHemmige/Cryptococcus-cost_analysis/blob/master/R/create_cohort.R)
+-   [`R/county_geographic_calculations.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/county_geographic_calculations.R)
 
 This R script file is itself reliant on the following helper files:
 
--   [`R/setup.R`](https://github.com/VagishHemmige/Cryptococcus-cost_analysis/blob/master/R/setup.R)
--   [`R/functions.R`](https://github.com/VagishHemmige/Cryptococcus-cost_analysis/blob/master/R/functions.R)
+-   [`R/setup.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/setup.R)
+-   [`R/functions.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/functions.R)
 :::
 
 

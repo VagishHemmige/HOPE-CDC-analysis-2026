@@ -82,3 +82,4 @@ format:
     code-fold: true
     code-tools: true
     page-layout: full
+    code-summary: "Click to show/hide R Code"

@@ -17,7 +17,7 @@ This R script file is itself reliant on the following helper files:
 -   [`R/setup.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/setup.R)
 :::
 
-## Drawing 60 minute isocrhones around each transplant center
+## Drawing 60 minute isochrones around each transplant center
 
 The following function uses the [`mapboxapi` package](https://walker-data.com/mapboxapi/) to calculate 60-minute travel isochrones around each
 transplant center.

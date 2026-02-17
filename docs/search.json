@@ -897,9 +897,9 @@
   {
     "objectID": "quarto/load_data.html",
     "href": "quarto/load_data.html",
-    "title": "Create cohort",
+    "title": "Load data",
     "section": "",
-    "text": "The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.",
+    "text": "The code in this script loads the data needed for other scripts from multiple sources, as explained in detail below.",
     "crumbs": [
       "Data Processing",
       "Load data"
@@ -963,9 +963,9 @@
   {
     "objectID": "quarto/load_data.html#other-portions-of-the-analysis",
     "href": "quarto/load_data.html#other-portions-of-the-analysis",
-    "title": "Create cohort",
+    "title": "Load data",
     "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nExecute matching: Implements risk-set–based greedy matching without replacement to construct the analytic cohort.\nPost-match processing: Derives analytic variables, time-aligned cost windows, and follow-up structure after matching.\nModeling: Fits prespecified cost and outcome models using the matched cohort.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
+    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
       "Data Processing",
       "Load data"
@@ -1090,6 +1090,61 @@
     "crumbs": [
       "Data Loading & Setup",
       "Functions"
+    ]
+  },
+  {
+    "objectID": "quarto/load_data.html#load-us-state-maps-from-census",
+    "href": "quarto/load_data.html#load-us-state-maps-from-census",
+    "title": "Load data",
+    "section": "Load US state maps from census",
+    "text": "Load US state maps from census\nWe import U.S. state boundary shapefiles using the tigris package.\nThe tigris::states() function retrieves state-level shapefiles from the U.S. Census Bureau’s TIGER/Line products.\n\nColumn Selection\nWe retain only:\n\nNAME → full state name\nSTUSPS → two-letter state abbreviation\ngeometry → polygon boundaries\n\nThis reduces memory overhead and keeps the object lightweight for downstream joins and plotting.\n\n\nExclusions\nWe remove:\n\nAlaska and Hawaii (to avoid projection distortion in contiguous U.S. maps)\nU.S. territories (not included in SRTR transplant center analyses)\n\nThis ensures that visualizations align with the contiguous U.S. study population.\n\n\nOutput\nThe resulting object, states_sf, is an sf object containing polygon geometries for the 48 contiguous U.S. states,\n\n\nCode\nstates_sf &lt;- tigris::states(cb = TRUE, year = 2022)%&gt;%\n  select(NAME, STUSPS, geometry) %&gt;%\n  filter(!(NAME %in% c(\"Alaska\", \n                       \"Hawaii\", \n                       \"Puerto Rico\", \n                       \"United States Virgin Islands\",\n                       \"Commonwealth of the Northern Mariana Islands\",\n                       \"Guam\",\n                       \"American Samoa\"))) %&gt;%\n  rename(State=NAME)",
+    "crumbs": [
+      "Data Processing",
+      "Load data"
+    ]
+  },
+  {
+    "objectID": "quarto/load_data.html#import-transplant-data-from-unos-srtr",
+    "href": "quarto/load_data.html#import-transplant-data-from-unos-srtr",
+    "title": "Load data",
+    "section": "Import transplant data from UNOS SRTR",
+    "text": "Import transplant data from UNOS SRTR\nTo identify active transplant centers and characterize transplant activity by organ type, we import transplant recipient-level and donor-level data from the Scientific Registry of Transplant Recipients (SRTR).\nThese datasets are accessed using a custom helper function, load_srtr_file(), which standardizes file loading, variable labeling, and preprocessing across SRTR tables.\n\n\nCode\ntx&lt;-list()\n\ntx[[\"kidney\"]] &lt;- load_srtr_file(\"tx_ki\")\ntx[[\"liver\"]] &lt;- load_srtr_file(\"tx_li\")\ntx[[\"heart\"]] &lt;- load_srtr_file(\"tx_hr\")\ntx[[\"lung\"]] &lt;- load_srtr_file(\"tx_lu\")\ntx[[\"pancreas\"]] &lt;- load_srtr_file(\"tx_kp\")\n\n\n\ndonor_deceased &lt;- load_srtr_file(\"donor_deceased\")%&gt;%\n  select(DONOR_ID, DON_ANTI_HIV, DON_HIV_NAT)",
+    "crumbs": [
+      "Data Processing",
+      "Load data"
+    ]
+  },
+  {
+    "objectID": "quarto/load_data.html#load-transplant-center-data-from-srtr-package",
+    "href": "quarto/load_data.html#load-transplant-center-data-from-srtr-package",
+    "title": "Load data",
+    "section": "Load transplant center data from SRTR package",
+    "text": "Load transplant center data from SRTR package\nTo map transplant center locations and define geographic catchment areas, we retrieve center-level data from the Health Resources and Services Administration (HRSA) using the sRtr package.\nThe get_hrsa_transplant_centers() function accesses HRSA transplant center metadata, including center identifiers and geographic coordinates.\nSubsequent steps:\n\nRemove Hawaii and Puerto Rico\nKeep the following variables:\n\nOTC_NM: transplant center name\nOTC_CD: transplant center 4-letter UNOS code\nService_Lst: list of organs transplanted at that center\nX, Y: longitude and latitude of transplant center\n\nKeep transplant centers whose organ corresponds with the organ defined in the organ_loop variable for each loop\nRemoves duplicates with the distinct() command\nRenames variables for convenience\nPauses for five seconds between iterations to avoid overloading the HRSA website\n\n\n\nCode\nTransplant_centers_all&lt;-list()\n\nfor (organ_loop in organ_list)\n{\n  \n  \n  Transplant_centers_all[[organ_loop]]&lt;-sRtr::get_hrsa_transplant_centers()%&gt;%\n    filter(OPO_STATE_ABBR != \"PR\" & OPO_STATE_ABBR!= \"HI\")%&gt;%\n    select(OTC_NM, OTC_CD, Service_Lst, X, Y) %&gt;%\n    filter(str_detect(Service_Lst, str_to_sentence(organ_loop)))%&gt;%\n    select(-Service_Lst)%&gt;%\n    distinct()%&gt;%\n    rename(OTCName=OTC_NM, OTCCode=OTC_CD, Latitude=Y, Longitude=X)\n  Sys.sleep(5)\n  \n}",
+    "crumbs": [
+      "Data Processing",
+      "Load data"
+    ]
+  },
+  {
+    "objectID": "quarto/load_data.html#load-census-data",
+    "href": "quarto/load_data.html#load-census-data",
+    "title": "Load data",
+    "section": "Load census data",
+    "text": "Load census data\nTo estimate catchment populations for transplant centers, we retrieve tract- and county-level population data from the American Community Survey (ACS) 5-year files. Because these data are large and slow to download, we implement a caching strategy to avoid repeated API calls during iterative renders.\n\nOverview\nFor each year in year_list, this code:\n\nRetrieves tract-level total population\nRetrieves county-level total population\nCaches results locally as .rds files\n\nThis structure ensures reproducibility while dramatically improving performance during Quarto re-rendering.\n\n\nTract-Level Population Data\nWe obtain tract-level total population using ACS variable:\n\nB01003_001 — Total population\n\nIf a cached file already exists (cache/us_tracts_population_YEAR.rds), it is loaded directly. Otherwise:\n\nData are downloaded using get_acs()\nGeometry is included (geometry = TRUE) for spatial joins\nCounty FIPS codes are derived from the first five digits of the tract GEOID\nIdentifier fields are converted to numeric for efficient joins\nOnly necessary variables are retained\nThe cleaned dataset is saved locally for future use\n\n\nWhy include geometry?\nIncluding tract geometry allows direct spatial intersection with:\n\n50-mile buffers\n60-minute isochrones\nUnited catchment areas\n\nThis avoids needing a second shapefile join later.\n\n\n\nCounty-Level Population Data\nCounty-level total population is retrieved using the same ACS variable (B01003_001), with geometry retained.\nCounty data are used for:\n\nCounty-level HIV prevalence overlays\nAggregated catchment summaries\nValidation checks against tract-level totals\n\nAs with tract data, results are cached locally to prevent redundant API calls.\n\n\nAge and Sex Variable Labels (B01001)\nThe ACS table B01001 contains detailed age- and sex-specific population counts. Rather than downloading these counts directly in this step, we load the variable metadata using:\n\n\nCode\nus_tracts_population&lt;-list()\nus_counties_population&lt;-list()\nvars&lt;-list()\n\nfor (year_loop in year_list){\n  \n  \n  tracts_path&lt;-paste0(\"cache/us_tracts_population_\",year_loop,\".rds\")\n  counties_path&lt;-paste0(\"cache/us_counties_population_\",year_loop,\".rds\")\n  \n  #Pull US Census tract populations if cache file doesn't already exist\n  \n  if (file.exists(tracts_path)) {\n    us_tracts_population[[year_loop]] &lt;- readRDS(tracts_path)\n  } else {\n    \n    us_tracts_population[[year_loop]]&lt;-get_acs(\n      geography = \"tract\",\n      variables = \"B01003_001\",\n      year = as.numeric(year_loop),\n      survey = \"acs5\",\n      geometry = TRUE,\n      state = continental_fips\n    )%&gt;%\n      mutate(county_fips = substr(GEOID, 1, 5))%&gt;%\n      mutate(GEOID=as.numeric(GEOID))%&gt;%\n      mutate(county_fips=as.numeric(county_fips))%&gt;%\n      select(-variable, -moe)%&gt;%\n      rename(tract_population=estimate)\n    \n    saveRDS(us_tracts_population[[year_loop]], \n            tracts_path)\n    \n  }\n  \n  #Pull US Census counties populations if cache file doesn't already exist\n  \n  if (file.exists(counties_path)) {\n    us_counties_population[[year_loop]] &lt;- readRDS(counties_path)\n  } else {\n    \n    us_counties_population[[year_loop]]&lt;-get_acs(\n      geography = \"county\",\n      variables = \"B01003_001\",\n      year = as.numeric(year_loop),\n      survey = \"acs5\",\n      geometry = TRUE,\n      state = continental_fips\n    )%&gt;%\n      mutate(GEOID=as.numeric(GEOID))%&gt;%\n      select(-variable, -moe)%&gt;%\n      rename(county_population=estimate)\n    \n    saveRDS(us_counties_population[[year_loop]], \n            counties_path)\n    \n    \n  }\n  \n  # Load tract variable labels for age/sex values B01001 from the ACS 5-year 2017 dataset\n  vars[[year_loop]] &lt;- load_variables(year_loop, \"acs5\", cache = TRUE) %&gt;%\n    filter(str_detect(name, \"B01001_\"))%&gt;%\n    mutate(label = str_replace_all(label, \"Estimate!!Total!!\", \"\"))%&gt;%\n    mutate(label = str_replace_all(label, \"!!\", \"_\"))%&gt;%\n    mutate(label = str_replace_all(label, \" \", \"_\"))\n  \n}",
+    "crumbs": [
+      "Data Processing",
+      "Load data"
+    ]
+  },
+  {
+    "objectID": "quarto/load_data.html#atlasplus-county-level-hiv-data",
+    "href": "quarto/load_data.html#atlasplus-county-level-hiv-data",
+    "title": "Load data",
+    "section": "AtlasPlus county-level HIV data",
+    "text": "AtlasPlus county-level HIV data\nThis code uses the CDCAtlas package to download county-level HIV prevalence data for the years defined in year_list.\n\n\nCode\nAtlasPlusTableData_county_totals&lt;-list()\n\nfor (year_loop in year_list){\n  \n  AtlasPlusTableData_county_totals[[year_loop]] &lt;-CDCAtlas::get_atlas(disease=\"hiv\",\n                                                                      geography=\"county\",\n                                                                      year=as.numeric(year_loop))%&gt;%\n    clean_names()%&gt;%\n    rename(county_cases=cases)%&gt;%\n    rename(geo_id=fips)%&gt;%\n    rename(county_name=geography)%&gt;%\n    mutate(county_cases=if_else(is.na(county_cases),0, county_cases))%&gt;%\n    mutate(geo_id=as.numeric(geo_id))%&gt;%\n    filter(year==as.numeric(year_loop))%&gt;%\n    select(-year)%&gt;%\n    filter(indicator==\"HIV prevalence\")\n  \n}",
+    "crumbs": [
+      "Data Processing",
+      "Load data"
     ]
   }
 ]

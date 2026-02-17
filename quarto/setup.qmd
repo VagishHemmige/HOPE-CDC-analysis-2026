@@ -15,8 +15,8 @@ library(gt)
 ```
 
 
-::: Rcode
-### Source code
+::: {.Rcode title="Source code"}
+
 
 The full R script is available at:
 

@@ -540,9 +540,9 @@
   {
     "objectID": "quarto/join_tracts_to_united_buffers.html",
     "href": "quarto/join_tracts_to_united_buffers.html",
-    "title": "Create cohort",
+    "title": "Join tracts to united buffers",
     "section": "",
-    "text": "The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.",
+    "text": "This section performs spatial joins between census tracts and the united (merged) transplant center buffers.\nUnlike the earlier version—where tracts were joined to individual center buffers—this approach joins tracts to a single merged catchment polygon for each organ, distance, and year.\nThis prevents duplication and ensures accurate population totals.\n\n\n\n\n\n\nSource code\n\n\n\nThe full R script is available at:\n\nR/join_tracts_to_united_buffers.R\n\nThis R script file is itself reliant on the following helper files:\n\nR/setup.R\nR/functions.R",
     "crumbs": [
       "Data Processing",
       "Join tracts to united buffers"
@@ -606,9 +606,9 @@
   {
     "objectID": "quarto/join_tracts_to_united_buffers.html#other-portions-of-the-analysis",
     "href": "quarto/join_tracts_to_united_buffers.html#other-portions-of-the-analysis",
-    "title": "Create cohort",
+    "title": "Join tracts to united buffers",
     "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nExecute matching: Implements risk-set–based greedy matching without replacement to construct the analytic cohort.\nPost-match processing: Derives analytic variables, time-aligned cost windows, and follow-up structure after matching.\nModeling: Fits prespecified cost and outcome models using the matched cohort.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
+    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
       "Data Processing",
       "Join tracts to united buffers"
@@ -1387,6 +1387,72 @@
     "crumbs": [
       "Data Processing",
       "Join tracts to buffers"
+    ]
+  },
+  {
+    "objectID": "quarto/join_tracts_to_united_buffers.html#linking-census-tracts-to-united-catchment-areas",
+    "href": "quarto/join_tracts_to_united_buffers.html#linking-census-tracts-to-united-catchment-areas",
+    "title": "Join tracts to united buffers",
+    "section": "",
+    "text": "This section performs spatial joins between census tracts and the united (merged) transplant center buffers.\nUnlike the earlier version—where tracts were joined to individual center buffers—this approach joins tracts to a single merged catchment polygon for each organ, distance, and year.\nThis prevents duplication and ensures accurate population totals.\n\n\n\n\n\n\nSource code\n\n\n\nThe full R script is available at:\n\nR/join_tracts_to_united_buffers.R\n\nThis R script file is itself reliant on the following helper files:\n\nR/setup.R\nR/functions.R",
+    "crumbs": [
+      "Data Processing",
+      "Join tracts to united buffers"
+    ]
+  },
+  {
+    "objectID": "quarto/join_tracts_to_united_buffers.html#why-use-united-buffers",
+    "href": "quarto/join_tracts_to_united_buffers.html#why-use-united-buffers",
+    "title": "Join tracts to united buffers",
+    "section": "Why Use United Buffers?",
+    "text": "Why Use United Buffers?\nWhen joining tracts to individual center buffers:\n\nA tract can intersect multiple centers\nThat tract would appear multiple times\nPopulation totals would be inflated unless deduplicated later\n\nBy first uniting buffers using st_union() and then joining:\n\nEach tract appears at most once\nPopulation counts reflect total geographic coverage\nOverlapping service areas are handled correctly\n\nThis is essential for valid total-access calculations.",
+    "crumbs": [
+      "Data Processing",
+      "Join tracts to united buffers"
+    ]
+  },
+  {
+    "objectID": "quarto/join_tracts_to_united_buffers.html#objects-created",
+    "href": "quarto/join_tracts_to_united_buffers.html#objects-created",
+    "title": "Join tracts to united buffers",
+    "section": "Objects Created",
+    "text": "Objects Created\nThree nested list objects are generated:\n\ntracts_in_buffers_active_united\ntracts_in_buffers_HIV_united\ntracts_in_buffers_HOPE_united\n\nEach object is indexed by:\n\nOrgan\n\nDistance\n\nYear",
+    "crumbs": [
+      "Data Processing",
+      "Join tracts to united buffers"
+    ]
+  },
+  {
+    "objectID": "quarto/join_tracts_to_united_buffers.html#what-the-spatial-join-does",
+    "href": "quarto/join_tracts_to_united_buffers.html#what-the-spatial-join-does",
+    "title": "Join tracts to united buffers",
+    "section": "What the Spatial Join Does",
+    "text": "What the Spatial Join Does\nFor each:\n\nOrgan\n\nDistance\n\nYear\n\nThe script performs:\nst_join(..., join = st_intersects)\nThis means:\n\nA census tract is included if it intersects the combined catchment area of that transplant center group.\n\nBecause the buffer has already been united:\n\nEach tract can match only once per category\nNo duplication occurs due to overlapping center service areas",
+    "crumbs": [
+      "Data Processing",
+      "Join tracts to united buffers"
+    ]
+  },
+  {
+    "objectID": "quarto/join_tracts_to_united_buffers.html#resulting-structure",
+    "href": "quarto/join_tracts_to_united_buffers.html#resulting-structure",
+    "title": "Join tracts to united buffers",
+    "section": "Resulting Structure",
+    "text": "Resulting Structure\nAfter the loops complete:\n\ntracts_in_buffers_active_united[[organ]][[distance]][[year]]\ntracts_in_buffers_HIV_united[[organ]][[distance]][[year]]\ntracts_in_buffers_HOPE_united[[organ]][[distance]][[year]]\n\nEach object contains tract-level population and HIV case estimates for tracts located within the total geographic service area of that center category.",
+    "crumbs": [
+      "Data Processing",
+      "Join tracts to united buffers"
+    ]
+  },
+  {
+    "objectID": "quarto/join_tracts_to_united_buffers.html#why-this-step-matters",
+    "href": "quarto/join_tracts_to_united_buffers.html#why-this-step-matters",
+    "title": "Join tracts to united buffers",
+    "section": "Why This Step Matters",
+    "text": "Why This Step Matters\nThis unified join enables accurate calculation of:\n\nTotal population within reach of transplant services\n\nTotal number of people living with HIV within those catchment areas\n\nChanges in geographic access across years\n\nComparisons between Active, HIV R+, and HOPE centers\n\nBy eliminating overlap-driven duplication, this approach ensures that access estimates reflect true geographic coverage, not inflated counts.\n\n\n\nClick to show/hide R Code\n#Join tracts to united buffers\n\n\ntracts_in_buffers_active_united&lt;-list()\ntracts_in_buffers_HIV_united&lt;-list()\ntracts_in_buffers_HOPE_united&lt;-list()\n\nfor (organ_loop in organ_list){\n  for (distance_loop in distance_list){\n    for (year_loop in year_list){\n      \n      message(paste(\"Currently on:\", organ_loop, \"\", distance_loop, \"for year:\", year_loop))\n      message(\"Calculating tracts for active...\")\n      \n      #ST join to individual tracts and the united transplant center geography to avoid duplication\n      tracts_in_buffers_active_united[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_active_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n      \n      message(\"Calculating tracts for HIV...\")\n      tracts_in_buffers_HIV_united[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_HIV_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n      \n      message(\"Calculating tracts for HOPE...\")\n      tracts_in_buffers_HOPE_united[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_HOPE_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n    }}}",
+    "crumbs": [
+      "Data Processing",
+      "Join tracts to united buffers"
     ]
   }
 ]

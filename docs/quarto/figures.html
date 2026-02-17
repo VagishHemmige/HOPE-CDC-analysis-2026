@@ -103,6 +103,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<style>
+div.callout-Rcode.callout {
+  border-left-color: pink;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgb(from pink r g b / 13%);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
+  background-image: none;
+}
+</style>
 
 
 <link rel="stylesheet" href="../styles.scss">
@@ -151,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Data &amp; Setup</span></a>
+ <span class="menu-text">Data Loading &amp; Setup</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -174,12 +187,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Results</span></a>
+ <span class="menu-text">Data Processing</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/load_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Load data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/classify_centers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classify centers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/county_geographic_calculations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">County-level geographic calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/geographical_computations_for_centers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Center-level geographic calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/set_isochrones.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Set isochrones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/unite_buffers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Unite buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/join_tracts_to_buffers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Join tracts to buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/join_tracts_to_united_buffers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Join tracts to united buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/R/calculate_aggregated_results.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calculate aggregated results</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Results</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../quarto/tables.html" class="sidebar-item-text sidebar-link">
@@ -279,7 +357,7 @@ Source code
 <p>The following code uses the <code>flowchart</code> package to create a STROBE flowchart for the study.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Final STROBE flowchart</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>patients_fc_matched<span class="sc">%&gt;%</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fc_draw</span>()<span class="sc">%&gt;%</span></span>
@@ -294,7 +372,7 @@ Source code
 <p>The following code uses the <code>ggbeeswarm</code> add-on to <code>ggplot2</code> to compare cases and controls in terms of total inflated costs post-index. No attempt is made to adjust for censoring or death.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#GGplot that is beeswarm of adjusted total costs</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cost_inflated<span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">IN_CLM_365d_cost_adjusted_total=</span><span class="fu">ifelse</span>(IN_CLM_365d_cost_adjusted_total<span class="sc">==</span><span class="dv">0</span>, <span class="dv">1</span>, IN_CLM_365d_cost_adjusted_total))<span class="sc">%&gt;%</span></span>
@@ -310,7 +388,7 @@ Source code
 <p>In order to plot monthly costs predicted from the longitudinal models generated in the <code>R/models.R</code> script, we use the <code>plot_mean_monthly_costs()</code> function from the <code>R/functions.R</code> script to create the ggplot objects, and then save as <code>.svg</code> files.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loop that plots the different outcomes longitudinally</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (outcome <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"grand_total_cost_month"</span>, <span class="st">"IN_CLM_month_total"</span>, <span class="st">"PS_REV_month_total"</span>, <span class="st">"IN_CLM_month_groupedHomeHealth"</span>,</span>

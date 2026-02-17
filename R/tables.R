@@ -5,7 +5,7 @@
 Results_HIV_gt<-list()
 Results_nonHIV_gt<-list()
 
-#Create tables as docx
+#Create tables as docx and PNG
 
 for (organ_loop in organ_list)
 {

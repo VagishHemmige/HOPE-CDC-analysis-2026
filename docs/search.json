@@ -64,7 +64,7 @@
     "href": "quarto/tables.html",
     "title": "Tables",
     "section": "",
-    "text": "The code in this script generates tables for the manuscript.",
+    "text": "This section formats the aggregated results into publication-ready tables using the gt package.\nEarlier steps produced:\n\nResults_HIV_df — coverage results for people living with HIV (PLWH)\nResults_nonHIV_df — coverage results for people without HIV\n\nHere, those summary data frames are transformed into formatted tables and exported for manuscript use.\n\n\n\n\n\n\n\nSource code\n\n\n\nThe full R script is available at:\n\nR/tables.R\n\nThis R script file is itself reliant on the following helper files:\n\nR/setup.R\nR/functions.R",
     "crumbs": [
       "Results",
       "Tables"
@@ -119,7 +119,7 @@
     "href": "quarto/tables.html#other-portions-of-the-analysis",
     "title": "Tables",
     "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nCreate cohort: Constructs the initial time-varying cohort of kidney transplant recipients, defining cohort entry, follow-up structure, and case/control eligibility prior to matching.\nExecute matching: Implements risk-set–based greedy matching without replacement to construct the analytic cohort.\nPost-match processing: Derives analytic variables, time-aligned cost windows, and follow-up structure after matching.\nModeling: Fits prespecified cost and outcome models using the matched cohort.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
+    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
       "Results",
       "Tables"
@@ -307,7 +307,7 @@
     "href": "quarto/figures.html#final-flowchart",
     "title": "Figures",
     "section": "Final flowchart",
-    "text": "Final flowchart\nThe following code uses the flowchart package to create a STROBE flowchart for the study.\n\n\nCode\n#Final STROBE flowchart\npatients_fc_matched%&gt;%\n  fc_draw()%&gt;%\n  fc_export(\"figures/flowchart.svg\",\n            width=20,\n            height=10)",
+    "text": "Final flowchart\nThe following code uses the flowchart package to create a STROBE flowchart for the study.\n\n\nClick to show/hide R Code\n#Final STROBE flowchart\npatients_fc_matched%&gt;%\n  fc_draw()%&gt;%\n  fc_export(\"figures/flowchart.svg\",\n            width=20,\n            height=10)",
     "crumbs": [
       "Results",
       "Figures"
@@ -318,7 +318,7 @@
     "href": "quarto/figures.html#beeswarm-plot-of-total-inflated-costs",
     "title": "Figures",
     "section": "Beeswarm plot of total inflated costs",
-    "text": "Beeswarm plot of total inflated costs\nThe following code uses the ggbeeswarm add-on to ggplot2 to compare cases and controls in terms of total inflated costs post-index. No attempt is made to adjust for censoring or death.\n\n\nCode\n#GGplot that is beeswarm of adjusted total costs\ncost_inflated%&gt;%\n  mutate(IN_CLM_365d_cost_adjusted_total=ifelse(IN_CLM_365d_cost_adjusted_total==0, 1, IN_CLM_365d_cost_adjusted_total))%&gt;%\n  ggplot()+\n  geom_quasirandom(mapping=aes(x=patient_type, y=IN_CLM_365d_cost_adjusted_total), alpha=0.1)+\n  scale_y_log10()+\n  theme_classic()",
+    "text": "Beeswarm plot of total inflated costs\nThe following code uses the ggbeeswarm add-on to ggplot2 to compare cases and controls in terms of total inflated costs post-index. No attempt is made to adjust for censoring or death.\n\n\nClick to show/hide R Code\n#GGplot that is beeswarm of adjusted total costs\ncost_inflated%&gt;%\n  mutate(IN_CLM_365d_cost_adjusted_total=ifelse(IN_CLM_365d_cost_adjusted_total==0, 1, IN_CLM_365d_cost_adjusted_total))%&gt;%\n  ggplot()+\n  geom_quasirandom(mapping=aes(x=patient_type, y=IN_CLM_365d_cost_adjusted_total), alpha=0.1)+\n  scale_y_log10()+\n  theme_classic()",
     "crumbs": [
       "Results",
       "Figures"
@@ -329,7 +329,7 @@
     "href": "quarto/figures.html#month-by-month-plots",
     "title": "Figures",
     "section": "Month-by-month plots",
-    "text": "Month-by-month plots\nIn order to plot monthly costs predicted from the longitudinal models generated in the R/models.R script, we use the plot_mean_monthly_costs() function from the R/functions.R script to create the ggplot objects, and then save as .svg files.\n\n\nCode\n#Loop that plots the different outcomes longitudinally\n\nfor (outcome in c(\"grand_total_cost_month\", \"IN_CLM_month_total\", \"PS_REV_month_total\", \"IN_CLM_month_groupedHomeHealth\",\n                  \"IN_CLM_month_groupedHospice\",\"IN_CLM_month_groupedNonclaimauxiliary\",\"IN_CLM_month_groupedDialysis\",\n                  \"IN_CLM_month_groupedOutpatient\",\"IN_CLM_month_groupedInpatient\",\"IN_CLM_month_groupedSkilledNursingFacility\")){\n  \n  \n  plot_mean_monthly_costs(fit[[outcome]][[\"glmmTMB\"]][[\"tweedie\"]])\n  ggsave(filename = paste0(\"figures/Longitudinal \", outcome,\" glmmTMB\", \" \", \"tweedie.svg\"),\n         width=14,\n         height=7\n         )\n  \n  plot_mean_monthly_costs(fit[[outcome]][[\"glmmTMB\"]][[\"linear\"]])\n  ggsave(filename = paste0(\"figures/Longitudinal \", outcome,\" glmmTMB\", \" \", \"linear.svg\"),\n         width=14,\n         height=7\n  )\n  \n  \n  plot_mean_monthly_costs(fit[[outcome]][[\"gee\"]][[\"linear\"]])\n  ggsave(filename = paste0(\"figures/Longitudinal \", outcome,\" gee\", \" \", \"linear.svg\"),\n         width=14,\n         height=7\n  )\n  \n  \n  plot_mean_monthly_costs(fit[[outcome]][[\"glmmTMB\"]][[\"log\"]])\n  ggsave(filename = paste0(\"figures/Longitudinal \", outcome,\" glmmTMB\", \" \", \"log.svg\"),\n         width=14,\n         height=7\n  )\n  \n  \n  plot_mean_monthly_costs(fit[[outcome]][[\"gee\"]][[\"log\"]])\n  ggsave(filename = paste0(\"figures/Longitudinal \", outcome,\" gee\", \" \", \"log.svg\"),\n         width=14,\n         height=7\n  )\n  \n  \n}",
+    "text": "Month-by-month plots\nIn order to plot monthly costs predicted from the longitudinal models generated in the R/models.R script, we use the plot_mean_monthly_costs() function from the R/functions.R script to create the ggplot objects, and then save as .svg files.\n\n\nClick to show/hide R Code\n#Loop that plots the different outcomes longitudinally\n\nfor (outcome in c(\"grand_total_cost_month\", \"IN_CLM_month_total\", \"PS_REV_month_total\", \"IN_CLM_month_groupedHomeHealth\",\n                  \"IN_CLM_month_groupedHospice\",\"IN_CLM_month_groupedNonclaimauxiliary\",\"IN_CLM_month_groupedDialysis\",\n                  \"IN_CLM_month_groupedOutpatient\",\"IN_CLM_month_groupedInpatient\",\"IN_CLM_month_groupedSkilledNursingFacility\")){\n  \n  \n  plot_mean_monthly_costs(fit[[outcome]][[\"glmmTMB\"]][[\"tweedie\"]])\n  ggsave(filename = paste0(\"figures/Longitudinal \", outcome,\" glmmTMB\", \" \", \"tweedie.svg\"),\n         width=14,\n         height=7\n         )\n  \n  plot_mean_monthly_costs(fit[[outcome]][[\"glmmTMB\"]][[\"linear\"]])\n  ggsave(filename = paste0(\"figures/Longitudinal \", outcome,\" glmmTMB\", \" \", \"linear.svg\"),\n         width=14,\n         height=7\n  )\n  \n  \n  plot_mean_monthly_costs(fit[[outcome]][[\"gee\"]][[\"linear\"]])\n  ggsave(filename = paste0(\"figures/Longitudinal \", outcome,\" gee\", \" \", \"linear.svg\"),\n         width=14,\n         height=7\n  )\n  \n  \n  plot_mean_monthly_costs(fit[[outcome]][[\"glmmTMB\"]][[\"log\"]])\n  ggsave(filename = paste0(\"figures/Longitudinal \", outcome,\" glmmTMB\", \" \", \"log.svg\"),\n         width=14,\n         height=7\n  )\n  \n  \n  plot_mean_monthly_costs(fit[[outcome]][[\"gee\"]][[\"log\"]])\n  ggsave(filename = paste0(\"figures/Longitudinal \", outcome,\" gee\", \" \", \"log.svg\"),\n         width=14,\n         height=7\n  )\n  \n  \n}",
     "crumbs": [
       "Results",
       "Figures"
@@ -1475,5 +1475,82 @@
     "title": "Calculate aggregated results",
     "section": "Aggregate Coverage Results for People Without HIV",
     "text": "Aggregate Coverage Results for People Without HIV\nThis final section calculates geographic coverage for the population without HIV.\nThe structure mirrors the PLWH calculation but uses:\n\ntract_noncases instead of tract_cases\nTract_total_nonHIV_cases as the denominator\n\n\nWhat Is Being Calculated?\nFor each:\n\nOrgan\n\nDistance\n\nYear\n\nthe script computes:\n\nThe numerator: total estimated non-HIV population within the united active-center catchment area\n\nThe denominator: total estimated non-HIV population across all census tracts for that year\n\nThe percentage: share of the non-HIV population within geographic reach\n\n\n\nWhy Only Active Centers?\nIn this implementation, non-HIV coverage is calculated for active transplant centers only.\nThis provides a general population access benchmark that can be compared against:\n\nCoverage for people living with HIV\n\nCoverage within HIV-performing or HOPE-performing center categories\n\n\n\nHow It Works\nFor each organ, distance, and year:\n\nThe united active-center tract object is selected.\nGeometry is dropped for efficient aggregation.\ntract_noncases is summed within the catchment area.\nThe total is divided by the national non-HIV population estimate for that year.\nA new row is appended to Results_nonHIV_df[[organ]].\n\n\nThese results allow comparison between:\n\nGeographic access for people living with HIV\n\nGeographic access for the general population\n\nChanges over time\n\nDifferences across organ types and service-area definitions\n\nTogether, the PLWH and non-HIV tables provide the quantitative foundation for the manuscript’s access comparisons.\n\n\nClick to show/hide R Code\n#Calculate tract-level results for people without HIV\nfor (organ_loop in organ_list)\n{\n  for (distance_loop in distance_list){\n    for (year_loop in year_list){\n      for (type in c(\"active\")) {\n        \n        name_of_df&lt;-paste0(\"tracts_in_buffers_\", type, \"_united\")\n        print(name_of_df)\n        \n        temp_Num&lt;-get(name_of_df)[[organ_loop]][[distance_loop]][[year_loop]]%&gt;%\n          st_drop_geometry()%&gt;%\n          group_by(catchment_area)%&gt;%\n          summarize(total_noncases=sum(tract_noncases, na.rm=TRUE))%&gt;%\n          pull(total_noncases)%&gt;%\n          first()\n        \n        temp_Denom&lt;-Tract_total_nonHIV_cases[[year_loop]]\n        \n        Results_nonHIV_df[[organ_loop]]&lt;-Results_nonHIV_df[[organ_loop]]%&gt;%\n          add_row(\n            Characteristic = paste(type, distance_loop),\n            Numerator = round(temp_Num, 0),\n            Denominator = temp_Denom,\n            Percentage = round(100*temp_Num/temp_Denom,1),\n            Year= as.numeric(year_loop))\n        \n        \n        \n      }\n    }\n  }\n  \n}"
+  },
+  {
+    "objectID": "quarto/tables.html#table-1-and-table-2-generating-manuscript-ready-tables",
+    "href": "quarto/tables.html#table-1-and-table-2-generating-manuscript-ready-tables",
+    "title": "Tables",
+    "section": "",
+    "text": "This section formats the aggregated results into publication-ready tables using the gt package.\nEarlier steps produced:\n\nResults_HIV_df — coverage results for people living with HIV (PLWH)\nResults_nonHIV_df — coverage results for people without HIV\n\nHere, those summary data frames are transformed into formatted tables and exported for manuscript use.\n\n\n\n\n\n\n\nSource code\n\n\n\nThe full R script is available at:\n\nR/tables.R\n\nThis R script file is itself reliant on the following helper files:\n\nR/setup.R\nR/functions.R",
+    "crumbs": [
+      "Results",
+      "Tables"
+    ]
+  },
+  {
+    "objectID": "quarto/tables.html#what-this-section-does",
+    "href": "quarto/tables.html#what-this-section-does",
+    "title": "Tables",
+    "section": "What This Section Does",
+    "text": "What This Section Does\nFor each organ:\n\nConstructs descriptive row labels (e.g., “Active kidney center, 60 min radius”).\nConverts the results data frame into a formatted gt table.\nSaves the tables as:\n\n.docx (for manuscript editing)\n.png (for quick sharing or embedding)\n\nCaches the final gt objects as .rds files for reuse in Quarto.",
+    "crumbs": [
+      "Results",
+      "Tables"
+    ]
+  },
+  {
+    "objectID": "quarto/tables.html#step-1-define-output-file-paths",
+    "href": "quarto/tables.html#step-1-define-output-file-paths",
+    "title": "Tables",
+    "section": "Step 1: Define Output File Paths",
+    "text": "Step 1: Define Output File Paths\nFor each organ, file paths are dynamically generated for:\n\nTable 1 (PLWH results)\nTable 2 (Non-HIV population results)\n\nEach table is saved in both:\n\nWord format (.docx)\nImage format (.png)\n\nExisting .docx files are removed first to avoid overwrite conflicts.",
+    "crumbs": [
+      "Results",
+      "Tables"
+    ]
+  },
+  {
+    "objectID": "quarto/tables.html#step-2-create-descriptive-row-labels",
+    "href": "quarto/tables.html#step-2-create-descriptive-row-labels",
+    "title": "Tables",
+    "section": "Step 2: Create Descriptive Row Labels",
+    "text": "Step 2: Create Descriptive Row Labels\nThe script builds a lookup table (table_factor_values) that:\n\nCombines center type (active, HIV, HOPE)\nCombines distance definitions (e.g., 50mile, 60min)\nConverts internal codes into human-readable labels\n\nExamples:\n\nactive 60min → “Active kidney center 60 min radius”\nHIV 50mile → “Active HIV R+ kidney center 50 mile radius”\n\nThis ensures consistent, manuscript-friendly labeling.",
+    "crumbs": [
+      "Results",
+      "Tables"
+    ]
+  },
+  {
+    "objectID": "quarto/tables.html#step-3-convert-results-to-gt-tables",
+    "href": "quarto/tables.html#step-3-convert-results-to-gt-tables",
+    "title": "Tables",
+    "section": "Step 3: Convert Results to gt Tables",
+    "text": "Step 3: Convert Results to gt Tables\nThe helper function convert_resultsdf_to_table():\n\nOrders rows consistently\nFormats percentages\nApplies table titles\nStructures the output by year\n\nTwo tables are created per organ:\n\nTable 1: Access to transplant in PLWH\n\nTable 2: Access to transplant in people without HIV",
+    "crumbs": [
+      "Results",
+      "Tables"
+    ]
+  },
+  {
+    "objectID": "quarto/tables.html#step-4-export-and-cache",
+    "href": "quarto/tables.html#step-4-export-and-cache",
+    "title": "Tables",
+    "section": "Step 4: Export and Cache",
+    "text": "Step 4: Export and Cache\nEach table is:\n\nSaved as .docx (for manuscript submission workflows)\nSaved as .png (for presentations or embedding)\nStored as an .rds object in the cache/ directory\n\nCaching the gt objects allows Quarto pages to load the formatted tables directly without regenerating them.",
+    "crumbs": [
+      "Results",
+      "Tables"
+    ]
+  },
+  {
+    "objectID": "quarto/tables.html#why-this-matters",
+    "href": "quarto/tables.html#why-this-matters",
+    "title": "Tables",
+    "section": "Why This Matters",
+    "text": "Why This Matters\nThis step translates analytic outputs into:\n\nClean, interpretable manuscript tables\nReproducible formatted results\nFiles ready for journal submission\n\nIt represents the final transformation from geographic modeling to publication-ready evidence.\n\n\nClick to show/hide R Code\n#Tables\n\n\n# Initialize lists of gt objects\nResults_HIV_gt&lt;-list()\nResults_nonHIV_gt&lt;-list()\n\n#Create tables as docx and PNG\n\nfor (organ_loop in organ_list)\n{\n  \n  #Initialize file_path\n  file_path&lt;-list()\n  file_path[[\"Table 1\"]][[\".docx\"]]&lt;-paste0(\"tables/\", organ_loop,\"/\",organ_loop, \" analysis results Table 1.docx\")\n  file_path[[\"Table 2\"]][[\".docx\"]]&lt;-paste0(\"tables/\", organ_loop,\"/\",organ_loop, \" analysis results Table 2.docx\")\n  file_path[[\"Table 1\"]][[\".png\"]]&lt;-paste0(\"tables/\", organ_loop,\"/\",organ_loop, \" analysis results Table 1.png\")\n  file_path[[\"Table 2\"]][[\".png\"]]&lt;-paste0(\"tables/\", organ_loop,\"/\",organ_loop, \" analysis results Table 2.png\")\n  \n  #Define table with labels based on values in distance_list and types of outcomes\n  \n  table_factor_values&lt;-expand.grid(\n    Type = c(\"active\", \"HIV\", \"HOPE\"),\n    Distance = distance_list,\n    stringsAsFactors = FALSE)%&gt;%\n    mutate(value=paste(Type, Distance))%&gt;%\n    mutate(\n      label = paste(\n        recode(Type,\n               active = paste(\"Active\", organ_loop, \"center\"),\n               HIV    = paste(\"Active HIV R+\", organ_loop, \"center\"),\n               HOPE   = paste(\"Active HOPE D+\", organ_loop, \"center\")\n        ),\n        case_when(\n          stringr::str_detect(Distance, \"mile$\") ~ \n            stringr::str_replace(Distance, \"mile$\", \" mile radius\"),\n          stringr::str_detect(Distance, \"min$\")  ~ \n            stringr::str_replace(Distance, \"min$\", \" min radius\"),\n          TRUE ~ Distance\n        )\n      )\n    )\n  \n  #Remove .docx files if they exist\n  if (file.exists(file_path[[\"Table 1\"]][[\".docx\"]])) {\n    file.remove(file_path[[\"Table 1\"]][[\".docx\"]])\n  }\n  \n  if (file.exists(file_path[[\"Table 2\"]][[\".docx\"]])) {\n    file.remove(file_path[[\"Table 2\"]][[\".docx\"]])\n  }\n  \n  #Create tables and save results as .docx and PNG\n  Results_HIV_gt[[organ_loop]]&lt;-Results_HIV_df[[organ_loop]]%&gt;%\n    convert_resultsdf_to_table(year_list_fn=year_list,\n                               row_values = table_factor_values$value,\n                               row_labels = table_factor_values$label,\n                               table_title= \"Access to transplant in PLWH\")\n  gtsave(Results_HIV_gt[[organ_loop]], file_path[[\"Table 1\"]][[\".docx\"]])\n  gtsave(Results_HIV_gt[[organ_loop]], file_path[[\"Table 1\"]][[\".png\"]])\n  \n  Results_nonHIV_gt[[organ_loop]]&lt;-Results_nonHIV_df[[organ_loop]]%&gt;%\n    convert_resultsdf_to_table(year_list_fn=year_list,\n                               row_values = table_factor_values$value,\n                               row_labels = table_factor_values$label,\n                               table_title= \"Access to transplant in people without HIV\")\n  gtsave(Results_nonHIV_gt[[organ_loop]], file_path[[\"Table 2\"]][[\".docx\"]])\n  gtsave(Results_nonHIV_gt[[organ_loop]], file_path[[\"Table 2\"]][[\".png\"]])\n  \n  \n  \n}\n\n#Save table objects as .RDS so they can be accessed by Quarto\nsaveRDS(Results_HIV_gt, \"cache/Results_HIV_gt.rds\")\nsaveRDS(Results_nonHIV_gt, \"cache/Results_nonHIV_gt.rds\")",
+    "crumbs": [
+      "Results",
+      "Tables"
+    ]
   }
 ]

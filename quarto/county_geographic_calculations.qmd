@@ -18,374 +18,215 @@ This R script file is itself reliant on the following helper files:
 :::
 
 
-## Initial data loading and preprocessing of USRDS core and transplant files
+## Preparing transplant-center `sf` objects
 
-This portion of the code imports files from the USRDS data set necessary for the cryptococcus analysis.  This portion makes use of the `load_usrds_data()` 
-function from the `usRds` package as well as several tidyverse cleaning functions.
+This code converts multiple transplant-center datasets into geographic (`sf`) objects and organizes them in nested lists by **organ** and **year**. The end result is four parallel list objects that can be used downstream for buffering, distance calculations, and map overlays.
 
-Key files used:
+### What gets created
 
-- `patients`: This is a part of the `Core` data set of the USRDS and contains key patient demographics.
-- `tx`: Also a part of the `Core` data set of the USRDS and contains summary information about kidney transplants from UNOS.
-- `txunos_trr_ki` and `txunos_trr_kp`: Part of the `transplant` data set of the USRDS, these files contain more detailed information
-derived from UNOS that is part of the Scientific Registry of Transplant Recipients.
+- `Transplant_centers_all_sf`  
+  Spatial (`sf`) version of **all** transplant centers, by organ.
 
-The code below loads and merges transplant records across multiple UNOS-derived files, constructs a cumulative transplant count per patient, and reshapes the data into a time-varying format that tracks graft status over time.
+- `Transplant_centers_active_SF`  
+  Spatial (`sf`) version of **active** transplant centers, by organ *and* year.
 
+- `Transplant_centers_HIV_sf`  
+  Spatial (`sf`) subset of centers that performed an **HIV R+** transplant at the given time point, by organ and year.
 
-```{r, eval=FALSE}
+- `Transplant_centers_HOPE_sf`  
+  Spatial (`sf`) subset of centers that performed an **HOPE (HIV D+/R+)** transplant at the given time point, by organ and year.
 
-#Import core demographics from "patients" file
-patients_raw<-usRds::load_usrds_file("patients")%>%
-  select(-ZIPCODE) #This is ZIP code at time of USRDS initiation, but we want at time of crypto dx
+### Step 1: initialize empty containers
 
-#Import key information about the transplants from the TX and UNOS databases
-tx_raw<-usRds::load_usrds_file("tx")%>%
-  select(USRDS_ID, TDATE, FAILDATE, TRR_ID_CODE)
+We start by creating empty lists. These will be filled inside the loops:
 
-ki_raw<-usRds::load_usrds_file("txunos_trr_ki")%>%
-  select(USRDS_ID, ORGTYP, HRTX, LUTX, INTX, LITX,PITX,BMTX, TRR_ID_CODE)
+- the **outer list** is keyed by `organ_loop` (from `organ_list`)
+- for year-specific objects, there is an **inner list** keyed by `year_loop` (from `year_list`)
 
-kp_raw<-usRds::load_usrds_file("txunos_trr_kp")%>%
-  select(USRDS_ID, ORGTYP, HRTX, LUTX, INTX, LITX,PITX,BMTX, TRR_ID_CODE)
+### Step 2: Loop Over Organ Types
 
-#This combines the three datasets
-tx_clean<-tx_raw%>%
-  left_join(bind_rows(ki_raw,
-                      kp_raw))%>%
-  arrange(USRDS_ID, TDATE)%>%
-  
-  group_by(USRDS_ID)%>%
-  mutate(cumulative_transplant_total=row_number())%>%
-  ungroup
+For each organ in `organ_list`:
 
-#Create a time-varying dataset that can be used to track whether a pt has an active or inactive graft and the cumulative number of txs
-tx_status<-tx_clean%>%
-  select(USRDS_ID, TDATE, FAILDATE, cumulative_transplant_total)%>%
-  pivot_longer(
-    cols = c(TDATE, FAILDATE),
-    names_to = "event_type",
-    values_to = "event_date"
-  ) %>%
-  filter(!is.na(event_date)) %>%
-  mutate(
-    graft_status = case_when(
-      event_type == "TDATE" ~ "Active",
-      event_type == "FAILDATE" ~ "Failed"
-    )
-  ) %>%
-  select(-event_type)%>%
-  arrange(USRDS_ID, cumulative_transplant_total, event_date, graft_status)
+1. The dataset of all transplant centers for that organ is converted to an `sf` object.
+2. The coordinate reference system is transformed to **EPSG:5070 (NAD83 / Conus Albers)**.
 
+This projection is used because it is well-suited for U.S. spatial analyses and provides consistent units for distance-based calculations.
 
-```
+---
 
-## Initialize flowchart
+### Step 3: Loop Over Years Within Each Organ
 
-The next component makes use of the `flowchart` package.  This package combines two key processes in an epidemiologic analysis:
+For each `year` in `year_list`, three organ-year–specific spatial datasets are created:
 
-- **Dataset preparation:** Sequential application of eligibility criteria to define the analytic cohort, with explicit tracking of excluded records at each step.
-- **[STROBE](https://www.strobe-statement.org/) diagram preparation:**  [STrengthening the Reporting of OBservational studies in Epidemiology ](https://www.strobe-statement.org/) diagrams visually depict the process of including/excluding patients in an observational study and grouping them into cohorts.  Many journals require these as a standard Figure 1.
+#### A) Active Centers
 
-The code below initializes a flowchart-aware cohort object and applies sequential eligibility filters, retaining both inclusion counts and labeled exclusion steps for downstream reporting.
+The year-specific dataset of active transplant centers is converted to `sf` and projected to EPSG:5070.
+
+#### B) HIV R+ Centers
+
+From the full set of centers for that organ, centers are filtered to retain only those whose `OTCCode` appears in the HIV center volume file for that organ and year.
+
+This identifies centers that performed at least one HIV R+ transplant at that time point.
+
+#### C) HOPE (HIV D+/R+) Centers
+
+Similarly, the full center list is filtered using the HOPE center volume file to identify centers that performed HIV D+/R+ transplants during that year.
+
+---
+
+### Final Structure
+
+After the loops complete, the resulting structure is:
+
+- `Transplant_centers_all_sf[[organ]]`
+- `Transplant_centers_active_SF[[organ]][[year]]`
+- `Transplant_centers_HIV_sf[[organ]][[year]]`
+- `Transplant_centers_HOPE_sf[[organ]][[year]]`
+
+This consistent nested design allows downstream functions to iterate cleanly across organ types and years when generating maps, buffers, and catchment-area analyses.
 
 ```{r, eval=FALSE}
 
-#Initialize a flowchart cohort
-patients_clean<-patients_raw%>%
-  as_fc(label="Patients in USRDS")%>%
+
+
+
+Transplant_centers_all_sf<-list()
+Transplant_centers_active_SF<-list()
+Transplant_centers_HIV_sf<-list()
+Transplant_centers_HOPE_sf<-list()
+
+for (organ_loop in organ_list)
+  
+{
+
+  #Convert transplant center data to geographical data
+  Transplant_centers_all_sf[[organ_loop]]<-Transplant_centers_all[[organ_loop]]%>%
+    st_transform(5070)  
   
   
-  fc_filter(TOTTX>0, 
-            label="Prior transplant", 
-            label_exc = "Excluded: No prior transplant", 
-            show_exc = TRUE)%>%
   
-  fc_filter(TX1DATE<as.Date("2021-01-01"), 
-            label="Transplant prior to 2021", 
-            label_exc = "Excluded: Transplant 2021 or later", 
-            show_exc = TRUE)
+  for (year_loop in year_list) {
+    
 
+    Transplant_centers_active_SF[[organ_loop]][[year_loop]]<-Transplant_centers_active[[organ_loop]][[year_loop]]%>%
+      st_transform(5070)
+    
 
-```
-
-## Identification of comorbidities and confirmation of Medicare coverage continuity
-
-This component identifies baseline comorbidities among transplant recipients using diagnosis codes derived from Medicare Institutional (Part A) and physician/supplier (Part B) claims. Diagnosis code lists defined in `R/setup.R` are applied uniformly across claims files to establish the presence and timing of comorbid conditions.  
-
-This portion makes use of the `get_IN_ICD()` and `get_PS_ICD()` functions from the `usRds` package to obtain dates that specific ICD codes are used for patients with a history of at least one kidney transplant in the study period.
-
-The `establish_dx_date()` function from the `usRds` package uses the results of this analysis to ascertain the date when comorbidities meet the criteria for a formal diagnosis:
-
-- **Two** outpatient encounters
-or
-- **One** inpatient encounter
-
-In parallel, Medicare coverage history is retrieved for all transplant recipients from the `payhist` file, which is part of the Core dataest.  These data will be used to confirm continuous enrollment during the analytic period. We verify the absence of gaps indicating missing data, noting that every subsequent period in the dataset for a patient starts the day after the previous period ends and thereby supporting valid longitudinal assessment of diagnoses and downstream cost analyses. 
-
-Finally, we separate cryptococcus diagnosis dates from other comorbidities for a separate list, given the key nature of the date of cryptococcus diagnosis for subsequent analyses.
-
-```{r, eval=FALSE}
-
-#Create list of USRDS ids for patients who have undergone transplant
-transplant_id_list<-patients_clean$data%>%
-  pull(USRDS_ID)
-
-# We now seek to determine comorbidities by using diagnosis codes from the setup.R file
-
-comorbidity_diagnosis_date<-list()
-
-# Combine all ICD codes from all comorbidities into one list 
-comorbidity_ICD_combined_list<-unlist(comorbidity_ICD_list, use.names=FALSE)
-
-#Scrape files for any comorbidity claim
-comorbidity_claims_df<-bind_rows(get_IN_ICD(icd_codes = comorbidity_ICD_combined_list, 
-                                            years = 2006:2021, 
-                                            usrds_ids = transplant_id_list ),
-                                 get_PS_ICD(icd_codes = comorbidity_ICD_combined_list, 
-                                            years = 2006:2021, 
-                                            usrds_ids = transplant_id_list )%>%rename(CODE=DIAG))%>%
-  arrange(USRDS_ID, CLM_FROM)
-
-#Create comorbidity_diagnosis_date data frame
-for (comorbidity in names(comorbidity_ICD_list)){
+    #Geographic file of centers that performed an HIV HIV R+ transplant at the designated time point
+    Transplant_centers_HIV_sf[[organ_loop]][[year_loop]] <- Transplant_centers_all_sf[[organ_loop]]%>%
+      filter(OTCCode %in% HIV_center_volumes[[organ_loop]][[year_loop]]$REC_CTR_CD)
+    
+    #Geographic file of centers that performed an HIV D+/R+ transplant at the designated time point
+    Transplant_centers_HOPE_sf[[organ_loop]][[year_loop]] <- Transplant_centers_all_sf[[organ_loop]]%>%
+      filter(OTCCode %in% HOPE_center_volumes[[organ_loop]][[year_loop]]$REC_CTR_CD)
+    
+    
+    
+    
+  }
   
-  comorbidity_diagnosis_date[[comorbidity]]<-comorbidity_claims_df%>%
-    filter(CODE %in% comorbidity_ICD_list[[comorbidity]])%>%
-    establish_dx_date(diagnosis_established = comorbidity)
-}
-
-#Load Medicare coverage history for all patients with transplant
-medicare_history<-load_usrds_file("payhist",
-                                  usrds_ids = transplant_id_list)%>%
-  arrange(USRDS_ID, BEGDATE)%>%
-  group_by(USRDS_ID)%>%
-  mutate(lag_ENDDATE=lag(ENDDATE))%>%
-  mutate(gap=as.numeric(BEGDATE-lag_ENDDATE))%>%
-  arrange(desc(gap))
-
-#Confirm no gaps (gap should always be 1 or missing)
-if (any(!is.na(medicare_history$gap) & medicare_history$gap != 1)) {
-  stop("Gap assumption violated: `gap` contains values other than 1 or NA.")
+  
 }
 
 
-#Format a df with the cryptococcus dx
-cryptococcus_df<-comorbidity_diagnosis_date$cryptococcus%>%
-  select(-diagnosis)%>%
-  rename(cryptococcus_dx_date=date_established)
-
 
 
 ```
 
-## Further development of the STROBE flowchart
 
-Subsequently, key diagnosis dates, including the date of cryptococcosis diagnosis, are merged into the analytic patient dataset.
+## Merging CDC HIV Data with County and Tract Geography
 
-This code block then extends the STROBE flowchart by integrating diagnosis timing, eligibility criteria, and coverage requirements to finalize the analytic cohorts. Patients are classified as cryptococcosis cases or potential controls based on the presence and timing of diagnosis, and sequential exclusion criteria are applied to ensure incident disease, adult status at diagnosis, and appropriate calendar-time eligibility. 
+This section joins CDC Atlas HIV surveillance data to U.S. county and census tract population files, then derives tract-level HIV estimates for downstream spatial analysis.
 
-The `verify_medicare_primary()` function from the `usrds` package is used to confirm that patients with a cryptococcus diagnosis have Medicare primary coverage for at least 365 days prior to the cryptococcus diagnosis date to ensure that the diagnosis is new and not a carryover from an unobserved period.
+Three list objects are created:
 
-These steps culminate in the final case and control cohorts, with all inclusion and exclusion decisions explicitly tracked and visualized in the updated STROBE flow diagram.
+- `Merged_Counties`  
+  County-level spatial data merged with CDC HIV totals.
+
+- `Merged_Counties_nonSF`  
+  County-level data with geometry removed (used for attribute joins).
+
+- `Merged_tracts`  
+  Census tract–level spatial data with estimated HIV-positive and HIV-negative populations.
+
+Each object is indexed by `year`.
+
+---
+
+### Step 1: Initialize Storage Lists
+
+Empty lists are created to store year-specific merged datasets.
+
+Each list will ultimately contain one entry per year in `year_list`.
+
+---
+
+### Step 2: Loop Over Years
+
+For each `year`:
+
+---
+
+### A) Merge County Population Data with CDC Atlas Data
+
+County geographic population files are joined with CDC Atlas HIV totals.
+
+- The join matches `GEOID` (county FIPS) from the population file
+- To `geo_id` from the CDC Atlas dataset
+- A `left_join()` ensures that all counties remain in the dataset
+
+The result is a spatial (`sf`) object containing:
+
+- County geometry
+- County population
+- County HIV case counts and rates
+
+This object is stored in:
+
+
 
 ```{r, eval=FALSE}
 
+Merged_Counties<-list()
+Merged_Counties_nonSF<-list()
+Merged_tracts<-list()
 
+for (year_loop in year_list) {
 
-#Join cryptococcus date to fc cohort
-patients_clean$data<-left_join(patients_clean$data, 
-                               cryptococcus_df)%>%
-  mutate(cryptococcus_case=ifelse(is.na(cryptococcus_dx_date), "Potential control", "Case"))
-
-#Continue to create analytic cohort
-patients_merged<-patients_clean%>%
+  #Join county geographical data with CDC data.
+  Merged_Counties[[year_loop]]<-left_join(us_counties_population[[year_loop]],
+                                          AtlasPlusTableData_county_totals[[year_loop]], 
+                                          by=join_by(GEOID==geo_id))
   
-  #Remove patients with a diagnosis of cryptococcus prior to transplant
-  fc_filter(cryptococcus_dx_date>TX1DATE | is.na(cryptococcus_dx_date), 
-            label="No cryptococcus dx prior to transplant", 
-            label_exc = "Excluded: cryptococcus dx prior to transplant", 
-            show_exc = TRUE)%>%
+  Merged_Counties_nonSF[[year_loop]]<-Merged_Counties[[year_loop]]%>%
+    st_drop_geometry()
   
-  fc_filter((time_length(interval(BORN, cryptococcus_dx_date), "years") >= 18) | is.na(cryptococcus_dx_date),
-            label="Age 18+ at time of cryptococcus if cryptococcus patient", 
-            label_exc = "Excluded: First cryptococcus prior to age 18", 
-            show_exc = TRUE)%>%
-  
-  fc_filter((year(cryptococcus_dx_date)>=2007 & year(cryptococcus_dx_date)<=2020) | is.na(cryptococcus_dx_date),
-            label="Incident cryptococcus between 1/1/2007 and 12/31/2020", 
-            label_exc = "Incident cryptococcus outside of specified date range", 
-            show_exc = TRUE)%>%
-  
-  #Split cohorts
-  fc_split(cryptococcus_case)
-  
-  #Check Medicare coverage for 365-day lookback period from day of first episode of cryptococcus
-patients_merged$data<-patients_merged$data%>%
-  verify_medicare_primary(index_date = "cryptococcus_dx_date",
-                          lookback_days = 365,
-                          coverage_start_variable = "coverage_start_date",
-                          coverage_end_variable = "coverage_end_date"
-                          )%>%
-  mutate(medicare_primary_TF=ifelse(cryptococcus_case=="Potential control", TRUE, medicare_primary_TF))
-  
-patients_merged2<-patients_merged%>%
-  
-  fc_filter(medicare_primary_TF==TRUE, 
-            label = "365+ days of Medicare primary coverage\nprior to first cryptococcus claim", 
-            label_exc = "Excluded: Fewer than 365 days of coverage",
-            show_exc = TRUE)
-
-patients_merged2$data<-patients_merged2$data%>%
-  select(-medicare_primary_TF)%>%
-  
-  #Prepare data for cohort initialization
-  mutate(terminal_date=coalesce(coverage_end_date, censor_date))
-
-patients_merged2<-patients_merged2%>%
-  fc_filter((terminal_date - cryptococcus_dx_date >=minimum_followup) | is.na(cryptococcus_dx_date), 
-            label = "Minimum followup exceeded", 
-            label_exc= "Excluded: Minimum follow-up threshold not met",
-            show_exc = TRUE)
 
   
-patients_merged2%>%
-  fc_draw()
+  #Merge county data with tracts
+  Merged_tracts[[year_loop]]<-left_join(us_tracts_population[[year_loop]], 
+                                Merged_Counties_nonSF[[year_loop]], 
+                                by=c("county_fips"="GEOID"))%>%
+    select(-NAME.x, -NAME.y)%>%
+    #Estimate census tract HIV population
+    mutate(tract_cases=county_cases*tract_population/county_population)%>%
+    #Estimate HIV-negative population in census tracts
+    mutate(tract_noncases=tract_population-tract_cases)%>%
+    st_transform(5070)
+  
+  
+}
 
-```
 
-## Creation of a time-varying cohort
-
-We use several functions from the `usRds` package:
-
-- `create_usrds_cohort()`
-- `add_cohort_covariate()`
-- `finalize_usrds_cohort()`
-
-These functions split each patient into multiple rows, with each row describing a discrete period of time.
-This captures that patients will have time-varying status for covariates such as cirrhosis status, etc.
-
-Patients with cryptococcus infection join the cohort on the date of cryptococcosis diagnosis, while patients without cryptococcus (potential controls) join on the date of their first kidney transplant.
-
-"Time since transplant" resets after each new transplant.
-
-```{r eval=FALSE}
-
-#Now we need to construct the time-varying data set
-
-#Ungroup
-initial_cohort<-patients_merged2$data%>%
-  ungroup()%>%
-
-#Cases join when they experience cryptococcus
-#Controls start on date of first transplant
-  mutate(
-    cohort_join_date = coalesce(
-      as.Date(cryptococcus_dx_date),
-      as.Date(TX1DATE)
-    )
-  )
-
-#Initialize cohort
-prematching_cohort<-create_usrds_cohort(df=initial_cohort,
-                            start_date = "cohort_join_date",
-                            end_date = "terminal_date")%>%
-  
-  # Add cirrhosis
-  add_cohort_covariate(covariate_data_frame=comorbidity_diagnosis_date[["cirrhosis"]],
-                       covariate_date="date_established",
-                       covariate_variable_name="cirrhosis")%>%
-  
-  # Add CMV
-  add_cohort_covariate(covariate_data_frame=comorbidity_diagnosis_date[["CMV"]],
-                       covariate_date="date_established",
-                       covariate_variable_name="CMV")%>%
-  
-  # Add diabetes
-  add_cohort_covariate(covariate_data_frame=comorbidity_diagnosis_date[["Diabetes"]],
-                       covariate_date="date_established",
-                       covariate_variable_name="diabetes")%>%
-  
-  # Add HIV
-  add_cohort_covariate(covariate_data_frame=comorbidity_diagnosis_date[["HIV"]],
-                       covariate_date="date_established",
-                       covariate_variable_name="HIV")%>%
-  
-  # Add liver transplant
-  add_cohort_covariate(covariate_data_frame=comorbidity_diagnosis_date[["Liver transplant"]],
-                       covariate_date="date_established",
-                       covariate_variable_name="liver_transplant")%>%
-  
-  # Add lung transplant
-  add_cohort_covariate(covariate_data_frame=comorbidity_diagnosis_date[["Lung transplant"]],
-                       covariate_date="date_established",
-                       covariate_variable_name="lung_transplant")%>%
-  
-  # Add heart transplant
-  add_cohort_covariate(covariate_data_frame=comorbidity_diagnosis_date[["Heart transplant"]],
-                       covariate_date="date_established",
-                       covariate_variable_name="heart_transplant")%>%
-  
-  # Add pancreas transplant
-  add_cohort_covariate(covariate_data_frame=comorbidity_diagnosis_date[["Pancreas transplant"]],
-                       covariate_date="date_established",
-                       covariate_variable_name="pancreas_transplant")%>%
-  
-  # Add heart-lung transplant
-  add_cohort_covariate(covariate_data_frame=comorbidity_diagnosis_date[["Heart-lung transplant"]],
-                       covariate_date="date_established",
-                       covariate_variable_name="heartlung_transplant")%>%
-  
-  # Add intestinal transplant
-  add_cohort_covariate(covariate_data_frame=comorbidity_diagnosis_date[["Intestinal transplant"]],
-                       covariate_date="date_established",
-                       covariate_variable_name="intestinal_transplant")%>%
-  
-  #Add time-varying information about transplant status
-  add_cohort_covariate(covariate_data_frame=tx_status,
-                       covariate_date="event_date",
-                       covariate_variable_name="cumulative_transplant_total",
-                       covariate_value = "cumulative_transplant_total")%>%
-  
-  #Add time-varying information about transplant status (whether current graft is active or failed)
-  add_cohort_covariate(covariate_data_frame=tx_status,
-                       covariate_date="event_date",
-                       covariate_variable_name="current_graft_status",
-                       covariate_value = "graft_status")%>%
-  
-  #Add time-varying information about transplant status (date of most recent transplant)
-  add_cohort_covariate(covariate_data_frame=tx_status%>%filter(graft_status=="Active"),
-                       covariate_date="event_date",
-                       covariate_variable_name="most_recent_transplant_date",
-                       covariate_value = "event_date")%>%
-  
-  #Add time-varying information about transplant status (date of most recent graft failure)
-  add_cohort_covariate(covariate_data_frame=tx_status%>%filter(graft_status=="Failed"),
-                       covariate_date="event_date",
-                       covariate_variable_name="most_recent_failure_date",
-                       covariate_value = "event_date")%>%
-  
-  # Add Medicare current coverage
-  add_cohort_covariate(covariate_data_frame=medicare_history,
-                       covariate_date="BEGDATE",
-                       covariate_variable_name="current_medicare_coverage",
-                       covariate_value = "PAYER"
-                       )%>%
-  
-  finalize_usrds_cohort(baseline_date_variable = "most_recent_transplant_date")
 
 
 ```
 
-The analysis then proceeds on to the [execute_matching](execute_matching.qmd) component.
 
 ## Other portions of the analysis
 
 -   [**Setup**](setup.qmd): Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.
 -   [**Functions**](functions.qmd): Reusable helper functions for cohort construction, matching, costing, and modeling.
--   [**Execute matching**](execute_matching.qmd): Implements risk-set–based greedy matching without replacement to construct the analytic cohort.
--   [**Post-match processing**](postmatch_processing.qmd): Derives analytic variables, time-aligned cost windows, and follow-up structure after matching.
--   [**Modeling**](modeling.qmd): Fits prespecified cost and outcome models using the matched cohort.
 -   [**Tables**](tables.qmd): Summary tables and regression outputs generated from the final models.
 -   [**Figures**](figures.qmd):Visualizations of costs, risks, and model-based estimates.
 -   [**About**](about.qmd): methods, assumptions, and disclosures

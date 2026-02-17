@@ -199,7 +199,6 @@ saveRDS(Results_nonHIV_gt, "cache/Results_nonHIV_gt.rds")
 
 -   [**Setup**](setup.qmd): Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.
 -   [**Functions**](functions.qmd): Reusable helper functions for cohort construction, matching, costing, and modeling.
--   [**Tables**](tables.qmd): Summary tables and regression outputs generated from the final models.
 -   [**Figures**](figures.qmd):Visualizations of costs, risks, and model-based estimates.
 -   [**About**](about.qmd): methods, assumptions, and disclosures
 

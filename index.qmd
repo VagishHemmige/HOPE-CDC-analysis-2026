@@ -20,16 +20,7 @@ All data processing and spatial analyses were conducted in R using reproducible 
 
 ## Results
 
-Pending
-
-## Site navigation
-
--   [**Setup**](quarto/setup.qmd): Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.
--   [**Functions**](quarto/functions.qmd): Reusable helper functions for cohort construction, matching, costing, and modeling.
--   [**Tables**](quarto/tables.qmd): Summary tables and regression outputs generated from the final models.
--   [**Figures**](quarto/figures.qmd):Visualizations of costs, risks, and model-based estimates.
--   [**About**](quarto/about.qmd): methods, assumptions, and disclosures
-
+See the detailed results pages linked via the left sidebar.
 
 
 ## Reproducibility
@@ -45,6 +36,6 @@ This analysis has yet to be published to date.
 
 Abstracts have been presented or will be presented at:
 
-- IDWeek 2025
+- IDWeek 2025 (click below to enlarge) [![](figures/liver/IDWeek 2025.png)](figures/liver/IDWeek 2025.png)
 - International Society of Heart and Lung Transplantation 2026
 - American Transplant Congress 2026

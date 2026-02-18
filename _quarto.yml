@@ -52,15 +52,29 @@ website:
             text: Join tracts to buffers
           - href: quarto/join_tracts_to_united_buffers.qmd
             text: Join tracts to united buffers
-          - href: quarto/R/calculate_aggregated_results.qmd
+          - href: quarto/calculate_aggregated_results.qmd
             text: Calculate aggregated results
 
-      - section: Results
+      - section: Code to create tables and figures
         contents:
           - href: quarto/tables.qmd
             text: Tables
           - href: quarto/figures.qmd
             text: Figures
+
+      - section: Results, separated by organ
+        contents:
+          - href: quarto/results_kidney.qmd
+            text: Kidney
+          - href: quarto/results_liver.qmd
+            text: Liver
+          - href: quarto/results_heart.qmd
+            text: Heart
+          - href: quarto/results_lung.qmd
+            text: Lung
+          - href: quarto/results_pancreas.qmd
+            text: Pancreas
+
 
       - href: quarto/about.qmd
         text: About

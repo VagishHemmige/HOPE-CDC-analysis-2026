@@ -231,13 +231,19 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../quarto/join_tracts_to_buffers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Join tracts to buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../quarto/join_tracts_to_united_buffers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Join tracts to united buffers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/R/calculate_aggregated_results.qmd" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/calculate_aggregated_results.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Calculate aggregated results</span></a>
   </div>
 </li>
@@ -246,7 +252,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Results</span></a>
+ <span class="menu-text">Code to create tables and figures</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -262,6 +268,47 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <div class="sidebar-item-container"> 
   <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Figures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Results, separated by organ</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_kidney.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kidney</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_liver.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Liver</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_heart.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Heart</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_lung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_pancreas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pancreas</span></a>
   </div>
 </li>
       </ul>
@@ -387,7 +434,7 @@ Source code
 <p>The resulting object, <code>states_sf</code>, is an <code>sf</code> object containing polygon geometries for the 48 contiguous U.S. states,</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>states_sf <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">states</span>(<span class="at">cb =</span> <span class="cn">TRUE</span>, <span class="at">year =</span> <span class="dv">2022</span>)<span class="sc">%&gt;%</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NAME, STUSPS, geometry) <span class="sc">%&gt;%</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(NAME <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Alaska"</span>, </span>
@@ -408,7 +455,7 @@ Source code
 <p>These datasets are accessed using a custom helper function, <code>load_srtr_file()</code>, which standardizes file loading, variable labeling, and preprocessing across SRTR tables.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tx<span class="ot">&lt;-</span><span class="fu">list</span>()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>tx[[<span class="st">"kidney"</span>]] <span class="ot">&lt;-</span> <span class="fu">load_srtr_file</span>(<span class="st">"tx_ki"</span>)</span>
@@ -445,7 +492,7 @@ Source code
 </ul>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Transplant_centers_all<span class="ot">&lt;-</span><span class="fu">list</span>()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (organ_loop <span class="cf">in</span> organ_list)</span>
@@ -520,7 +567,7 @@ Source code
 <p>The ACS table <code>B01001</code> contains detailed age- and sex-specific population counts. Rather than downloading these counts directly in this step, we load the variable metadata using:</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>us_tracts_population<span class="ot">&lt;-</span><span class="fu">list</span>()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>us_counties_population<span class="ot">&lt;-</span><span class="fu">list</span>()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>vars<span class="ot">&lt;-</span><span class="fu">list</span>()</span>
@@ -597,7 +644,7 @@ Source code
 <p>This code uses the <code>CDCAtlas</code> package to download county-level HIV prevalence data for the years defined in <code>year_list</code>.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>AtlasPlusTableData_county_totals<span class="ot">&lt;-</span><span class="fu">list</span>()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (year_loop <span class="cf">in</span> year_list){</span>

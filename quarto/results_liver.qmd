@@ -1,0 +1,164 @@
+---
+title: "Results: kidney"
+format: html
+---
+
+## Table 1 and Table 2: Summary results in PLWH and without HIV
+
+
+```{r, include=FALSE}
+
+#This code prepares the .qmd environent for analysis
+
+organ<-"liver"
+
+Results_HIV_gt    <- readRDS("../cache/Results_HIV_gt.rds")
+Results_nonHIV_gt <- readRDS("../cache/Results_nonHIV_gt.rds")
+
+source("../R/setup.R")
+
+
+```
+
+
+
+### Table 1: People Living With HIV (PLWH)
+
+This table summarizes the number and proportion of people living with HIV who reside within defined catchment areas of:
+
+- Active transplant centers  
+- HIV R+ transplant centers  
+- HOPE Act D+ centers  
+
+Catchment areas are defined by:
+
+- 50-mile radius  
+- 60-minute driving time  
+- 100-mile radius  
+- 200-mile radius  
+
+Results are shown for 2017 and 2022.
+
+---
+
+```{r, echo=FALSE}
+
+Results_HIV_gt[[organ]]
+
+```
+
+### Table 2: Individuals Without HIV
+
+This table presents the same catchment analysis for individuals without HIV.  
+
+It allows direct comparison of geographic access between:
+
+- PLWH  
+- Individuals without HIV  
+
+---
+
+```{r, echo=FALSE}
+
+
+Results_nonHIV_gt[[organ]]
+
+```
+
+
+
+## Figures
+
+Figures are grouped into three sections.
+
+---
+
+### Compare PLWH and non-HIV
+
+These figures compare geographic access between PLWH and individuals without HIV within each catchment definition.
+
+Each panel corresponds to a distance-based definition:
+
+- 50 miles  
+- 60 minutes  
+- 100 miles  
+- 200 miles  
+
+These figures highlight disparities in access by HIV status.
+
+---
+
+```{r, echo=FALSE}
+
+
+list.files(
+  glue::glue("../figures/{organ}"),
+  pattern = "Combined.*\\.png$",
+  full.names = TRUE
+)%>%
+  str_subset("Active")%>%
+  {
+    .[order(as.numeric(stringr::str_extract(., "\\d+(?=(mile|min))")))]
+  } %>%
+  knitr::include_graphics()
+
+```
+
+---
+
+### Compare PLWH Between Years
+
+These figures evaluate changes in geographic access among PLWH between 2017 and 2022.
+
+For each catchment definition, results are shown for:
+
+- Active centers  
+- HIV R+ centers  
+- HOPE Act D+ centers  
+
+This section highlights temporal changes in transplant center availability.
+
+---
+
+
+```{r, echo=FALSE}
+
+
+list.files(
+  glue::glue("../figures/{organ}"),
+  pattern = "Combined.*\\.png$",
+  full.names = TRUE
+)%>%
+  str_subset("Active", negate=TRUE)%>%
+  {
+    .[order(as.numeric(stringr::str_extract(., "\\d+(?=(mile|min))")))]
+  } %>%
+  knitr::include_graphics()
+
+```
+
+---
+
+### Beeswarm Plots
+
+Beeswarm plots display the distribution of catchment-level population proportions across centers.
+
+Each point represents a transplant center, with the distribution shown for each distance definition.
+
+These plots illustrate variability in geographic access across centers rather than only aggregate proportions.
+
+```{r, echo=FALSE}
+
+
+list.files(
+  glue::glue("../figures/{organ}"),
+  pattern = "Beeswarm.*\\.png$",
+  full.names = TRUE
+)%>%
+  {
+    .[order(as.numeric(stringr::str_extract(., "\\d+(?=(mile|min))")))]
+  } %>%
+  knitr::include_graphics()
+
+```
+

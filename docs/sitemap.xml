@@ -1,44 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/index.html</loc>
-    <lastmod>2026-02-15T20:53:32.108Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/tables.html</loc>
-    <lastmod>2026-02-17T21:47:34.487Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/functions.html</loc>
-    <lastmod>2026-02-17T02:58:20.678Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/background.html</loc>
-    <lastmod>2026-02-15T17:51:09.768Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/about.html</loc>
-    <lastmod>2026-02-07T00:53:52.658Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/figures.html</loc>
-    <lastmod>2026-02-17T22:31:52.593Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/setup.html</loc>
-    <lastmod>2026-02-17T02:59:31.418Z</lastmod>
-  </url>
-  <url>
     <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/unite_buffers.html</loc>
     <lastmod>2026-02-17T19:46:57.012Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/set_isochrones.html</loc>
+    <lastmod>2026-02-17T19:38:44.442Z</lastmod>
   </url>
   <url>
     <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/sample_methods.html</loc>
     <lastmod>2026-02-07T01:17:12.801Z</lastmod>
   </url>
   <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/join_tracts_to_united_buffers.html</loc>
-    <lastmod>2026-02-17T20:15:00.968Z</lastmod>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/results_lung.html</loc>
+    <lastmod>2026-02-18T00:36:08.338Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/results_kidney.html</loc>
+    <lastmod>2026-02-18T00:33:33.874Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/load_data.html</loc>
+    <lastmod>2026-02-17T02:52:01.558Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/join_tracts_to_buffers.html</loc>
+    <lastmod>2026-02-17T20:09:21.656Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/functions.html</loc>
+    <lastmod>2026-02-17T02:58:20.678Z</lastmod>
   </url>
   <url>
     <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/county_geographic_calculations.html</loc>
@@ -49,23 +41,51 @@
     <lastmod>2026-02-17T20:57:15.358Z</lastmod>
   </url>
   <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/about.html</loc>
+    <lastmod>2026-02-18T00:44:08.242Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/index.html</loc>
+    <lastmod>2026-02-15T20:53:32.108Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/background.html</loc>
+    <lastmod>2026-02-15T17:51:09.768Z</lastmod>
+  </url>
+  <url>
     <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/classify_centers.html</loc>
     <lastmod>2026-02-17T15:35:12.407Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/figures.html</loc>
+    <lastmod>2026-02-17T22:31:52.593Z</lastmod>
   </url>
   <url>
     <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/geographical_computations_for_centers.html</loc>
     <lastmod>2026-02-17T18:54:15.603Z</lastmod>
   </url>
   <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/load_data.html</loc>
-    <lastmod>2026-02-17T02:52:01.558Z</lastmod>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/join_tracts_to_united_buffers.html</loc>
+    <lastmod>2026-02-17T20:15:00.968Z</lastmod>
   </url>
   <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/set_isochrones.html</loc>
-    <lastmod>2026-02-17T19:38:44.442Z</lastmod>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/results_heart.html</loc>
+    <lastmod>2026-02-18T00:35:49.172Z</lastmod>
   </url>
   <url>
-    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/join_tracts_to_buffers.html</loc>
-    <lastmod>2026-02-17T20:09:21.656Z</lastmod>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/results_liver.html</loc>
+    <lastmod>2026-02-18T00:35:34.143Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/results_pancreas.html</loc>
+    <lastmod>2026-02-18T00:36:27.083Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/setup.html</loc>
+    <lastmod>2026-02-17T02:59:31.418Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vagishhemmige.github.io/HOPE-CDC-analysis-2026/quarto/tables.html</loc>
+    <lastmod>2026-02-17T21:47:34.487Z</lastmod>
   </url>
 </urlset>

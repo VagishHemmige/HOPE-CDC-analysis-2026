@@ -231,13 +231,19 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../quarto/join_tracts_to_buffers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Join tracts to buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../quarto/join_tracts_to_united_buffers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Join tracts to united buffers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../quarto/R/calculate_aggregated_results.qmd" class="sidebar-item-text sidebar-link">
+  <a href="../quarto/calculate_aggregated_results.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Calculate aggregated results</span></a>
   </div>
 </li>
@@ -246,7 +252,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Results</span></a>
+ <span class="menu-text">Code to create tables and figures</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -262,6 +268,47 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <div class="sidebar-item-container"> 
   <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Figures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Results, separated by organ</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_kidney.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kidney</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_liver.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Liver</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_heart.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Heart</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_lung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_pancreas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pancreas</span></a>
   </div>
 </li>
       </ul>
@@ -357,7 +404,7 @@ Source code
 </ul>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Define a function that takes an SF data object and returns 60 minute isochrones</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>set_60_min_isochrone_at_7AM<span class="ot">&lt;-</span><span class="cf">function</span>(SFObject, year) {</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -407,7 +454,7 @@ Source code
 <p>Inset LLM text here</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>convert_resultsdf_to_table<span class="ot">&lt;-</span><span class="cf">function</span>(resultsdf, </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">year_list_fn=</span>year_list,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                     row_values,</span>
@@ -525,7 +572,7 @@ Source code
 <p>LLM text</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>make_paired_plot<span class="ot">&lt;-</span><span class="cf">function</span>(organ,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                           distance,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                           outcome,</span>
@@ -709,7 +756,7 @@ Source code
 <p>This function uses the <code>ggbeeswarm</code> package to make GraphPad Prism-type plots comparing the number of people living with HIV in the catchment area of each transplant center in the years specified.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Click to show/hide R Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plot_center_HIV_catchment<span class="ot">&lt;-</span><span class="cf">function</span>(organ,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                                    distance,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                    buffer_list,</span>

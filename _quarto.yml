@@ -34,14 +34,14 @@ website:
           - href: quarto/analysis_methods.qmd
             text: Description of R analysis methods
 
-      - section: Data Loading & Setup
+      - section: Setup and helper functions
         contents:
           - href: quarto/setup.qmd
             text: Setup
           - href: quarto/functions.qmd
             text: Functions
 
-      - section: Data Processing
+      - section: Data loading and processing
         contents:
           - href: quarto/load_data.qmd
             text: Load data

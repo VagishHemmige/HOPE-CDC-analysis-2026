@@ -6,7 +6,7 @@
     "section": "",
     "text": "This script combines individual transplant center buffers into unified, organ-level catchment areas.\nEarlier steps created buffers (either distance-based or 60-minute travel-time isochrones) around each transplant center.\nHere, those individual polygons are merged into a single combined service area for each organ, distance, and year.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Unite buffers"
     ]
   },
@@ -17,7 +17,7 @@
     "section": "Why “Unite” Buffers?",
     "text": "Why “Unite” Buffers?\nWhen buffers are created around multiple centers, they often:\n\nOverlap geographically\n\nCover adjacent regions\n\nShare common areas\n\nIf we simply summed tract populations within each individual buffer, overlapping areas would be double-counted.\nTo prevent this, we:\n\nCombine (union) all individual center buffers\nCreate a single, continuous polygon representing the total catchment area\nEnsure that each geographic area is counted only once",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Unite buffers"
     ]
   },
@@ -28,7 +28,7 @@
     "section": "Objects Created",
     "text": "Objects Created\nFour parallel objects are constructed:\n\nTransplant_center_all_buffer_united\nTransplant_centers_active_buffer_united\nTransplant_centers_HIV_buffer_united\nTransplant_centers_HOPE_buffer_united\n\nEach object is indexed by:\n\nOrgan\n\nDistance\n\nYear (when applicable)",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Unite buffers"
     ]
   },
@@ -39,7 +39,7 @@
     "section": "How the Union Works",
     "text": "How the Union Works\nFor each:\n\nOrgan\nDistance\n(And year, when relevant)\n\nThe script:\n\nTakes the set of individual buffer polygons\nApplies st_union(geometry)\n\nCollapses them into one merged geometry\nConverts the result back into an sf object\n\nThe resulting dataset contains a single row labeled:\ncatchment_area = “All Centers”\nThis label clarifies that the polygon represents the combined service area of all centers in that category.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Unite buffers"
     ]
   },
@@ -50,7 +50,7 @@
     "section": "Structure of the Result",
     "text": "Structure of the Result\nAfter processing, the structure is:\n\nTransplant_center_all_buffer_united[[organ]][[distance]]\nTransplant_centers_active_buffer_united[[organ]][[distance]][[year]]\nTransplant_centers_HIV_buffer_united[[organ]][[distance]][[year]]\nTransplant_centers_HOPE_buffer_united[[organ]][[distance]][[year]]\n\nEach object is a single merged polygon representing the total geographic coverage of that center group.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Unite buffers"
     ]
   },
@@ -61,7 +61,7 @@
     "section": "Why This Step Matters",
     "text": "Why This Step Matters\nUniting buffers allows accurate calculation of:\n\nTotal population within service areas\nTotal number of people living with HIV within reach\nChanges in geographic access between years\nComparisons across center categories (Active vs HIV vs HOPE)\n\nWithout uniting overlapping buffers, population totals would be inflated and geographic access overstated.\n\n\n\nClick to show/hide R Code\n#Unite for total calculations\n\nTransplant_center_all_buffer_united&lt;-list()\nTransplant_centers_active_buffer_united&lt;-list()\nTransplant_centers_HIV_buffer_united&lt;-list()\nTransplant_centers_HOPE_buffer_united&lt;-list()\n\nfor (organ_loop in organ_list){\n  for (distance_loop in distance_list){\n    \n    Transplant_center_all_buffer_united[[organ_loop]][[distance_loop]]&lt;-\n      Transplant_center_all_buffer[[organ_loop]][[distance_loop]]%&gt;%\n      reframe(\n        catchment_area = \"All Centers\", \n        geometry = st_union(geometry)\n      )%&gt;%\n      st_as_sf()\n    \n    \n    for (year_loop in year_list){\n      \n      \n      Transplant_centers_active_buffer_united[[organ_loop]][[distance_loop]][[year_loop]]&lt;-\n        Transplant_centers_active_buffer[[organ_loop]][[distance_loop]][[year_loop]]%&gt;%\n        reframe(\n          catchment_area = \"All Centers\", \n          geometry = st_union(geometry)\n        )%&gt;%\n        st_as_sf()\n      \n      Transplant_centers_HIV_buffer_united[[organ_loop]][[distance_loop]][[year_loop]]&lt;-\n        Transplant_centers_HIV_buffer[[organ_loop]][[distance_loop]][[year_loop]]%&gt;%\n        reframe(\n          catchment_area = \"All Centers\", \n          geometry = st_union(geometry)\n        )%&gt;%\n        st_as_sf()\n      \n      \n      \n      \n      Transplant_centers_HOPE_buffer_united[[organ_loop]][[distance_loop]][[year_loop]]&lt;-\n        Transplant_centers_HOPE_buffer[[organ_loop]][[distance_loop]][[year_loop]]%&gt;%\n        reframe(\n          catchment_area = \"All Centers\", \n          geometry = st_union(geometry)\n        )%&gt;%\n        st_as_sf()\n      \n      \n      \n      \n    }\n    \n  }\n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Unite buffers"
     ]
   },
@@ -72,7 +72,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Unite buffers"
     ]
   },
@@ -83,7 +83,7 @@
     "section": "",
     "text": "The code in this script creates 60-minute driving catchment areas around transplant centers.\nThese catchment areas are later used to estimate how many people living with HIV reside within a realistic travel time of transplant programs.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Set isochrones"
     ]
   },
@@ -94,7 +94,7 @@
     "section": "Creating 60-Minute Driving Catchment Areas",
     "text": "Creating 60-Minute Driving Catchment Areas\nThis section generates travel-time–based service areas for transplant centers.\nUnlike simple radius buffers (e.g., 50 miles in every direction), these service areas reflect actual road travel time, accounting for highways, traffic patterns, and geography.\n\nWhat is an Isochrone?\nAn isochrone is a geographic area showing how far someone can travel within a specified amount of time.\nIn this analysis:\n\nA 60-minute isochrone represents all locations that can be reached within 60 minutes of driving from a transplant center.\nThis provides a more realistic measure of geographic access than straight-line (circular) buffers.\n\nIsochrones are generated using the mapboxapi R package, which interfaces with the Mapbox routing API:\n\nhttps://walker-data.com/mapboxapi/\nCRAN: https://cran.r-project.org/package=mapboxapi",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Set isochrones"
     ]
   },
@@ -105,7 +105,7 @@
     "section": "Standardizing Time: Why 7:00 AM?",
     "text": "Standardizing Time: Why 7:00 AM?\nTravel time varies depending on traffic conditions.\nTo ensure consistency:\n\nIsochrones are calculated assuming departure at 7:00 AM local time.\nThis approximates peak commuting conditions.\nUsing a fixed time improves comparability across regions.\n\nBecause Mapbox requires time in UTC, the script:\n\nCreates a 7:00 AM timestamp for each U.S. time zone\nConverts that time to UTC using with_tz()\nStores these converted times in converted_times\n\nThis ensures that each transplant center’s isochrone is calculated at the correct local time.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Set isochrones"
     ]
   },
@@ -116,7 +116,7 @@
     "section": "Caching Isochrone Results",
     "text": "Caching Isochrone Results\nGenerating isochrones requires external API calls and can be computationally expensive.\nTo avoid recomputing them repeatedly:\n\nThe script checks whether a cached .RDS file already exists.\nIf it exists → it loads the file.\nIf not → it generates the isochrone and saves it to the cache/ directory.\n\nThis dramatically speeds up Quarto re-rendering and ensures reproducibility.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Set isochrones"
     ]
   },
@@ -127,7 +127,7 @@
     "section": "Isochrones Created",
     "text": "Isochrones Created\nFor each:\n\nOrgan type\n\nYear\n\nCenter category\n\nThe script creates 60-minute isochrones for:\n\nAll transplant centers\n\nActive transplant centers\n\nHIV R+ transplant centers\n\nHOPE (HIV D+/R+) transplant centers\n\nThe resulting structure is:\n\nTransplant_center_all_buffer[[organ]][[\"60min\"]]\nTransplant_centers_active_buffer[[organ]][[\"60min\"]][[year]]\nTransplant_centers_HIV_buffer[[organ]][[\"60min\"]][[year]]\nTransplant_centers_HOPE_buffer[[organ]][[\"60min\"]][[year]]\n\nEach object is an sf polygon representing the area reachable within 60 minutes of driving from the center.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Set isochrones"
     ]
   },
@@ -138,7 +138,7 @@
     "section": "Why Travel Time Instead of Miles?",
     "text": "Why Travel Time Instead of Miles?\nStraight-line distance (e.g., 50 miles) does not account for:\n\nRoad networks\n\nTraffic congestion\n\nGeographic barriers (mountains, water)\n\nTravel-time–based service areas better approximate real-world access to transplant care.\nThese 60-minute isochrones are later intersected with census tract–level HIV population data to quantify access to transplant services.\n\n\n\nClick to show/hide R Code\n#set isochrones\n\n\n#Convert 7 AM local time to UTC time for every time zone in the US, using the with_tz function\n\nconverted_times&lt;-list()\n\nfor (year_loop in year_list){\n  \n  \n  #Create list for each year that converts the time zones\n  converted_times[[year_loop]] &lt;- tibble(\n    timezone = timezones\n  ) %&gt;%\n    mutate(\n      local_time = map2(\n        reference_date[[year_loop]], timezone,\n        ~ ymd_hms(paste(.x, \"07:00:00\"), tz = .y)\n      ),\n      utc_time = map(local_time, ~ with_tz(.x, \"UTC\"))\n    ) %&gt;%\n    unnest(c(local_time, utc_time))\n}\n  \n  #Create isochrone objects for transplant centersusing the mapboxapi package if results not already cached\n  for (organ_loop in organ_list){\n\n    \n    all_center_path&lt;-paste0(\"cache/Transplant_center_all_60min_buffer_\",organ_loop, \".RDS\")\n    if (file.exists(all_center_path)) {\n      Transplant_center_all_buffer[[organ_loop]][[\"60min\"]] &lt;- \n        readRDS(all_center_path)\n    }else {\n      \n      Transplant_center_all_buffer[[organ_loop]][[\"60min\"]]&lt;-\n        set_60_min_isochrone_at_7AM(Transplant_centers_all_sf[[organ_loop]], \"2017\")\n      saveRDS(Transplant_center_all_buffer[[organ_loop]][[\"60min\"]],\n              all_center_path)\n    } \n    \n    for (year_loop in year_list){\n    \n       \n    \n    active_center_path&lt;-paste0(\"cache/Transplant_centers_active_60min_buffer_\",organ_loop, \"_\", year_loop,\".RDS\")\n    if (file.exists(active_center_path)) {\n      Transplant_centers_active_buffer[[organ_loop]][[\"60min\"]][[year_loop]] &lt;- \n        readRDS(active_center_path)\n    }else {\n      \n    Transplant_centers_active_buffer[[organ_loop]][[\"60min\"]][[year_loop]]&lt;-\n      set_60_min_isochrone_at_7AM(Transplant_centers_active_SF[[organ_loop]][[year_loop]], year_loop)\n    saveRDS(Transplant_centers_active_buffer[[organ_loop]][[\"60min\"]][[year_loop]],\n            active_center_path)\n    }\n    \n    HIV_center_path&lt;-paste0(\"cache/Transplant_centers_HIV_60min_buffer_\",organ_loop, \"_\", year_loop,\".RDS\")\n    if (file.exists(HIV_center_path)) {\n      Transplant_centers_HIV_buffer[[organ_loop]][[\"60min\"]][[year_loop]]&lt;-\n        readRDS(HIV_center_path)\n    } else {\n      Transplant_centers_HIV_buffer[[organ_loop]][[\"60min\"]][[year_loop]]&lt;-\n        set_60_min_isochrone_at_7AM(Transplant_centers_HIV_sf[[organ_loop]][[year_loop]], year_loop)\n      saveRDS(Transplant_centers_HIV_buffer[[organ_loop]][[\"60min\"]][[year_loop]],\n              HIV_center_path)\n    }\n      \n\n    HOPE_center_path&lt;-paste0(\"cache/Transplant_centers_HOPE_60min_buffer_\",organ_loop, \"_\", year_loop,\".RDS\")\n    if (file.exists(HOPE_center_path)) {\n      Transplant_centers_HOPE_buffer[[organ_loop]][[\"60min\"]][[year_loop]]&lt;-\n        readRDS(HOPE_center_path)\n    } else {\n      Transplant_centers_HOPE_buffer[[organ_loop]][[\"60min\"]][[year_loop]]&lt;-\n        set_60_min_isochrone_at_7AM(Transplant_centers_HOPE_sf[[organ_loop]][[year_loop]], year_loop)\n      saveRDS(Transplant_centers_HOPE_buffer[[organ_loop]][[\"60min\"]][[year_loop]],\n              HOPE_center_path)\n    }\n  }\n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Set isochrones"
     ]
   },
@@ -149,7 +149,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Set isochrones"
     ]
   },
@@ -259,7 +259,7 @@
     "section": "",
     "text": "This section performs spatial joins between census tracts and the united (merged) transplant center buffers.\nUnlike the earlier version—where tracts were joined to individual center buffers—this approach joins tracts to a single merged catchment polygon for each organ, distance, and year.\nThis prevents duplication and ensures accurate population totals.\n\n\n\n\n\n\nSource code\n\n\n\nThe full R script is available at:\n\nR/join_tracts_to_united_buffers.R\n\nThis R script file is itself reliant on the following helper files:\n\nR/setup.R\nR/functions.R",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to united buffers"
     ]
   },
@@ -270,7 +270,7 @@
     "section": "",
     "text": "This section performs spatial joins between census tracts and the united (merged) transplant center buffers.\nUnlike the earlier version—where tracts were joined to individual center buffers—this approach joins tracts to a single merged catchment polygon for each organ, distance, and year.\nThis prevents duplication and ensures accurate population totals.\n\n\n\n\n\n\nSource code\n\n\n\nThe full R script is available at:\n\nR/join_tracts_to_united_buffers.R\n\nThis R script file is itself reliant on the following helper files:\n\nR/setup.R\nR/functions.R",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to united buffers"
     ]
   },
@@ -281,7 +281,7 @@
     "section": "Why Use United Buffers?",
     "text": "Why Use United Buffers?\nWhen joining tracts to individual center buffers:\n\nA tract can intersect multiple centers\nThat tract would appear multiple times\nPopulation totals would be inflated unless deduplicated later\n\nBy first uniting buffers using st_union() and then joining:\n\nEach tract appears at most once\nPopulation counts reflect total geographic coverage\nOverlapping service areas are handled correctly\n\nThis is essential for valid total-access calculations.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to united buffers"
     ]
   },
@@ -292,7 +292,7 @@
     "section": "Objects Created",
     "text": "Objects Created\nThree nested list objects are generated:\n\ntracts_in_buffers_active_united\ntracts_in_buffers_HIV_united\ntracts_in_buffers_HOPE_united\n\nEach object is indexed by:\n\nOrgan\n\nDistance\n\nYear",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to united buffers"
     ]
   },
@@ -303,7 +303,7 @@
     "section": "What the Spatial Join Does",
     "text": "What the Spatial Join Does\nFor each:\n\nOrgan\n\nDistance\n\nYear\n\nThe script performs:\nst_join(..., join = st_intersects)\nThis means:\n\nA census tract is included if it intersects the combined catchment area of that transplant center group.\n\nBecause the buffer has already been united:\n\nEach tract can match only once per category\nNo duplication occurs due to overlapping center service areas",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to united buffers"
     ]
   },
@@ -314,7 +314,7 @@
     "section": "Resulting Structure",
     "text": "Resulting Structure\nAfter the loops complete:\n\ntracts_in_buffers_active_united[[organ]][[distance]][[year]]\ntracts_in_buffers_HIV_united[[organ]][[distance]][[year]]\ntracts_in_buffers_HOPE_united[[organ]][[distance]][[year]]\n\nEach object contains tract-level population and HIV case estimates for tracts located within the total geographic service area of that center category.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to united buffers"
     ]
   },
@@ -325,7 +325,7 @@
     "section": "Why This Step Matters",
     "text": "Why This Step Matters\nThis unified join enables accurate calculation of:\n\nTotal population within reach of transplant services\n\nTotal number of people living with HIV within those catchment areas\n\nChanges in geographic access across years\n\nComparisons between Active, HIV R+, and HOPE centers\n\nBy eliminating overlap-driven duplication, this approach ensures that access estimates reflect true geographic coverage, not inflated counts.\n\n\n\nClick to show/hide R Code\n#Join tracts to united buffers\n\n\ntracts_in_buffers_active_united&lt;-list()\ntracts_in_buffers_HIV_united&lt;-list()\ntracts_in_buffers_HOPE_united&lt;-list()\n\nfor (organ_loop in organ_list){\n  for (distance_loop in distance_list){\n    for (year_loop in year_list){\n      \n      message(paste(\"Currently on:\", organ_loop, \"\", distance_loop, \"for year:\", year_loop))\n      message(\"Calculating tracts for active...\")\n      \n      #ST join to individual tracts and the united transplant center geography to avoid duplication\n      tracts_in_buffers_active_united[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_active_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n      \n      message(\"Calculating tracts for HIV...\")\n      tracts_in_buffers_HIV_united[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_HIV_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n      \n      message(\"Calculating tracts for HOPE...\")\n      tracts_in_buffers_HOPE_united[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_HOPE_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n    }}}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to united buffers"
     ]
   },
@@ -336,7 +336,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to united buffers"
     ]
   },
@@ -347,7 +347,7 @@
     "section": "",
     "text": "Source code\n\n\n\nThe full R script is available at:\n\nR/geographical_computations_for_centers.R\n\nThis R script file is itself reliant on the following helper files:\n\nR/setup.R\nR/functions.R",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Center-level geographic calculations"
     ]
   },
@@ -358,7 +358,7 @@
     "section": "Creating Distance-Based Buffers Around Transplant Centers",
     "text": "Creating Distance-Based Buffers Around Transplant Centers\nThis section generates geographic buffers around transplant centers at predefined distances (e.g., 50, 100, 200 miles).\nFour buffer objects are created:\n\nTransplant_center_all_buffer\nTransplant_centers_active_buffer\nTransplant_centers_HIV_buffer\nTransplant_centers_HOPE_buffer\n\nEach object is organized hierarchically by:\n\nOrgan type\nDistance\nYear (when applicable)\n\nThis nested structure allows consistent iteration across organs, time points, and buffer distances in later analyses.\n\n\nStep 1: Initialize Empty Buffer Lists\nEmpty lists are created to store buffered sf objects.\nThese will hold polygon geometries representing the catchment area around each transplant center.\n\n\n\nStep 2: Loop Over Organs and Distances\nFor each organ in organ_list\nand each distance in distance_list:\n\nOnly distances expressed in miles are processed in this block.\nMile distances are converted to meters, since the spatial data are projected in EPSG:5070 (which uses meters).\n\nDistance conversions:\n\n50 miles → 80,467.2 meters\n\n100 miles → 160,934.4 meters\n\n200 miles → 321,868 meters\n\n\n\n\nStep 3: Create Buffers for All Centers\nFor each organ and distance:\n\nst_buffer() generates circular buffer polygons around each center.\nThe result represents the geographic area within the specified radius of the center.\n\nThese are stored as:\nTransplant_center_all_buffer[[organ]][[distance]]\n\n\n\nStep 4: Create Year-Specific Buffers\nWithin each organ–distance combination, the code then loops over year_list and generates buffers for:\n\nActive transplant centers\n\nHIV R+ transplant centers\n\nHOPE (HIV D+/R+) transplant centers\n\nEach of these is buffered using the same distance in meters to ensure comparability.\nThe resulting structure is:\n\nTransplant_centers_active_buffer[[organ]][[distance]][[year]]\nTransplant_centers_HIV_buffer[[organ]][[distance]][[year]]\nTransplant_centers_HOPE_buffer[[organ]][[distance]][[year]]\n\n\n\n\nWhy This Structure Matters\nThis approach ensures:\n\nConsistent geometry projection (EPSG:5070)\nIdentical buffer distances across center categories\nA clean, iterable nested structure for downstream population overlays\nStraightforward generation of paired comparisons (e.g., 2017 vs 2022)\n\nThese buffered polygons are later intersected with census tract–level HIV population estimates to quantify geographic access to transplant programs.\n\n\nClick to show/hide R Code\n# Create buffer objects for transplant centers based on distance\n\nTransplant_center_all_buffer&lt;-list()\nTransplant_centers_active_buffer&lt;-list()\nTransplant_centers_HIV_buffer&lt;-list()\nTransplant_centers_HOPE_buffer&lt;-list()\n\n\nfor (organ_loop in organ_list){\n  for (distance_loop in distance_list){\n    \n    if (str_detect(distance_loop, \"mile\"))\n    {\n      \n      distance&lt;-case_when(\n        distance_loop==\"50mile\" ~ 80467.2,\n        distance_loop==\"100mile\" ~ 160934.4,\n        distance_loop==\"200mile\" ~ 321868\n      )\n      \n      Transplant_center_all_buffer[[organ_loop]][[distance_loop]]&lt;-st_buffer(Transplant_centers_all_sf [[organ_loop]],dist = distance)\n      \n      for (year_loop in year_list)\n      {\n        \n        Transplant_centers_active_buffer[[organ_loop]][[distance_loop]][[year_loop]]&lt;-\n          st_buffer(Transplant_centers_active_SF[[organ_loop]][[year_loop]], \n                    dist = distance)\n        \n        Transplant_centers_HIV_buffer[[organ_loop]][[distance_loop]][[year_loop]]&lt;-\n          st_buffer(Transplant_centers_HIV_sf[[organ_loop]][[year_loop]], \n                    dist = distance)\n        \n        Transplant_centers_HOPE_buffer[[organ_loop]][[distance_loop]][[year_loop]]&lt;-\n          st_buffer(Transplant_centers_HOPE_sf[[organ_loop]][[year_loop]], \n                    dist = distance)\n        \n      }\n      \n      \n    }\n    \n  }\n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Center-level geographic calculations"
     ]
   },
@@ -369,7 +369,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Center-level geographic calculations"
     ]
   },
@@ -446,7 +446,7 @@
     "section": "",
     "text": "The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Classify centers"
     ]
   },
@@ -457,7 +457,7 @@
     "section": "Initialize lists",
     "text": "Initialize lists\nThis portion of the code initializes lists to classify transplant centers by activity status and HIV transplant volume for each organ and year of interest. These classifications are used downstream for geographic access analyses, state-level summaries, and figure generation.\nFor example, the nested list HOPE_center_volumes can be used to identify the number of HIV D+/R+ transplants performed at each transplant center for each organ and each time period.\nHOPE_center_volume[[\"kidney]][[\"2017\"]] will yield a data frame of HOPE kidney volumes for centers that performed at least one HOPE adult transplant in the 2013-2017 time period.\nKey lists created:\n\nActive_tx_centers: any adult transplant in the year defined by the inner list\nHIV_center_volumes: any HIV R+ transplant in the five-year period\nHOPE_center_volumes: any HIV D+/R+ transplant in the five-year period\nState_level_transplant_volumes: HIV R+ volumes by state\nTransplant_centers_active: similar to the first list active_tx_centers but with different variable composition\n\n\n\nClick to show/hide R Code\nfor (organ_loop in organ_list)\n{\n  \n  for (year_loop in year_list)\n    \n    \n  {\n    \n    Active_tx_centers[[organ_loop]][[year_loop]]&lt;-tx[[organ_loop]]%&gt;%\n      filter(REC_AGE_IN_MONTHS_AT_TX&gt;=216)%&gt;% #Adult recipient\n      mutate(year_transplant=year(REC_TX_DT))%&gt;%\n      filter(year_transplant==as.numeric(year_loop))%&gt;%\n      group_by(REC_CTR_CD)%&gt;%\n      count()%&gt;%\n      pull(REC_CTR_CD)\n    \n    #Calculate center level volumes for pts with HIV in five-year period ending in year for active centers\n    HIV_center_volumes[[organ_loop]][[year_loop]]&lt;-tx[[organ_loop]]%&gt;%\n      filter(REC_HIV_STAT==\"P\")%&gt;%\n      filter(REC_AGE_IN_MONTHS_AT_TX&gt;=216)%&gt;% #Adult recipient\n      mutate(year_transplant=year(REC_TX_DT))%&gt;%\n      filter(year_transplant&gt;=(as.numeric(year_loop)-4) & year_transplant&lt;=as.numeric(year_loop))%&gt;%\n      group_by(REC_CTR_CD)%&gt;%\n      count()%&gt;%\n      filter(REC_CTR_CD %in% Active_tx_centers[[organ_loop]][[year_loop]])\n    \n    \n    #Identify HOPE centers in years of interest\n    HOPE_center_volumes[[organ_loop]][[year_loop]]&lt;-tx[[organ_loop]]%&gt;%\n      filter(REC_HIV_STAT==\"P\")%&gt;%\n      filter(REC_AGE_IN_MONTHS_AT_TX&gt;=216)%&gt;%\n      mutate(year_transplant=year(REC_TX_DT ))%&gt;%\n      filter(year_transplant&gt;=(as.numeric(year_loop)-4) & year_transplant&lt;=as.numeric(year_loop))%&gt;%\n      left_join(donor_deceased)%&gt;%\n      filter(DON_HIV_NAT %in% c(\"P\", \"P: Positive\")| \n               DON_ANTI_HIV %in% c(\"P\", \"P: Positive\"))%&gt;%\n      group_by(REC_CTR_CD   )%&gt;%\n      count()\n    \n    #Convert to state transplant volumes for recipients with HIV\n    State_level_transplant_volumes[[organ_loop]][[year_loop]]&lt;-HIV_center_volumes[[organ_loop]][[year_loop]]%&gt;%\n      mutate(state_code = substr(REC_CTR_CD, 1, 2))%&gt;%\n      group_by(state_code)%&gt;%\n      summarize(total_HIV_transplants=sum(n, na.rm = TRUE))\n    \n    #Create DFs for active centers in years of interest\n    Transplant_centers_active[[organ_loop]][[year_loop]]&lt;-Transplant_centers_all[[organ_loop]]%&gt;%\n      filter(OTCCode %in% Active_tx_centers[[organ_loop]][[year_loop]])\n    \n  }\n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Classify centers"
     ]
   },
@@ -468,7 +468,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Classify centers"
     ]
   },
@@ -735,7 +735,7 @@
     "section": "",
     "text": "This script aggregates tract-level geographic results into organ-level summary tables.\nEarlier steps:\nHere, we translate those geographic intersections into interpretable population coverage statistics.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Calculate aggregated results"
     ]
   },
@@ -746,7 +746,7 @@
     "section": "Initialize Result Containers and Baseline Totals",
     "text": "Initialize Result Containers and Baseline Totals\nThis first section prepares the data structures that will store aggregated coverage results and calculates the population baselines used as denominators.\n\nStep 1: Create Empty Results Tables\nFor each organ, two empty result tables are initialized:\n\nResults_HIV_df — for people living with HIV (PLWH)\nResults_nonHIV_df — for people without HIV\n\nEach table is structured to store:\n\nCharacteristic — the center category and distance (e.g., active 60min)\nNumerator — population within the catchment area\nDenominator — total population nationwide (for that year)\nPercentage — share of the total population within reach\nYear — analysis year\n\nThese tables will be filled in later sections of the script.\n\n\n\nStep 2: Calculate Total Population Denominators\nBefore computing coverage percentages, we calculate the total estimated population counts across all census tracts.\nFor each year:\n\nThe total number of estimated HIV cases (tract_cases) is summed across all tracts.\nThe total estimated HIV-negative population (tract_noncases) is summed across all tracts.\nGeometry is dropped before summarizing to improve computational efficiency.\n\nThese totals are stored in:\n\nTract_total_HIV_cases[[year]]\nTract_total_nonHIV_cases[[year]]\n\nThese values serve as the denominators for all subsequent percentage calculations.\n\n\nClick to show/hide R Code\nResults_HIV_df&lt;-list()\nResults_nonHIV_df&lt;-list()\nTract_total_HIV_cases&lt;-list()\nTract_total_nonHIV_cases&lt;-list()\n                      \nfor (organ_loop in organ_list)\n  \n{\n  \n  #Initialize data frames\n  Results_HIV_df[[organ_loop]] &lt;- tibble(\n    Characteristic = character(),\n    Numerator = numeric(),\n    Denominator = numeric(),\n    Percentage = numeric(),\n    Year= numeric()\n  )\n  \n  Results_nonHIV_df[[organ_loop]] &lt;- tibble(\n    Characteristic = character(),\n    Numerator = numeric(),\n    Denominator = numeric(),\n    Percentage = numeric(),\n    Year= numeric()\n  )\n}\n  \n  for (year_loop in year_list)\n  {\n  \n  #Calculate the total number of HIV cases assigned to a tract\n  Tract_total_HIV_cases[[year_loop]]&lt;-Merged_tracts[[year_loop]]%&gt;%\n    st_drop_geometry()%&gt;%\n    summarize(total_cases=sum(tract_cases, na.rm=TRUE))%&gt;%\n    pull(total_cases)%&gt;%\n    first()\n  \n  #Calculate the total number of nonHIV cases (i.e. people without HIV) assigned to a tract\n  Tract_total_nonHIV_cases[[year_loop]]&lt;-Merged_tracts[[year_loop]]%&gt;%\n    st_drop_geometry()%&gt;%\n    summarize(total_cases=sum(tract_noncases, na.rm=TRUE))%&gt;%\n    pull(total_cases)%&gt;%\n    first()\n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Calculate aggregated results"
     ]
   },
@@ -757,7 +757,7 @@
     "section": "Aggregate Coverage Results for People Living with HIV (PLWH)",
     "text": "Aggregate Coverage Results for People Living with HIV (PLWH)\nThis section calculates the proportion of people living with HIV who reside within transplant center catchment areas.\nFor each:\n\nOrgan\n\nDistance (e.g., 50 miles, 60 minutes)\n\nYear\n\nCenter category (active, HIV, HOPE)\n\nthe script computes:\n\nThe numerator: total estimated HIV cases (tract_cases) located within the united catchment area\n\nThe denominator: total estimated HIV cases across all census tracts for that year\n\nThe percentage: share of PLWH within geographic reach\n\n\nHow It Works\nFor each combination of organ, distance, year, and center type:\n\nThe appropriate united tract-buffer object is dynamically selected.\nGeometry is dropped to improve efficiency.\nTract-level HIV cases are summed within the catchment area.\nThat sum is divided by the national total for the year.\nA new row is appended to Results_HIV_df[[organ]].\n\nThe resulting table quantifies geographic access to transplant services for people living with HIV and enables comparison:\n\nAcross organs\n\nAcross distances\n\nAcross center categories\n\nAcross time (e.g., 2017 vs 2022)\n\n\n\nClick to show/hide R Code\n#Calculate table for PLWH\n\n\nfor (organ_loop in organ_list)\n{\n  for (distance_loop in distance_list){\n    for (year_loop in year_list){\n      for (type in c(\"active\", \"HIV\", \"HOPE\")) {\n        \n        name_of_df&lt;-paste0(\"tracts_in_buffers_\", type, \"_united\")\n        print(name_of_df)\n        \n        temp_Num&lt;-get(name_of_df)[[organ_loop]][[distance_loop]][[year_loop]]%&gt;%\n          st_drop_geometry()%&gt;%\n          group_by(catchment_area)%&gt;%\n          summarize(total_cases=sum(tract_cases, na.rm=TRUE))%&gt;%\n          pull(total_cases)%&gt;%\n          first()\n        \n        temp_Denom&lt;-Tract_total_HIV_cases[[year_loop]]\n        \n        \n        Results_HIV_df[[organ_loop]]&lt;-Results_HIV_df[[organ_loop]]%&gt;%\n          add_row(\n            Characteristic = paste(type, distance_loop),\n            Numerator = round(temp_Num, 0),\n            Denominator = temp_Denom,\n            Percentage = round(100*temp_Num/temp_Denom,1),\n            Year= as.numeric(year_loop)\n          ) \n        \n      }\n    }\n  }\n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Calculate aggregated results"
     ]
   },
@@ -768,7 +768,7 @@
     "section": "Aggregate Coverage Results for People Without HIV",
     "text": "Aggregate Coverage Results for People Without HIV\nThis final section calculates geographic coverage for the population without HIV.\nThe structure mirrors the PLWH calculation but uses:\n\ntract_noncases instead of tract_cases\nTract_total_nonHIV_cases as the denominator\n\n\nWhat Is Being Calculated?\nFor each:\n\nOrgan\n\nDistance\n\nYear\n\nthe script computes:\n\nThe numerator: total estimated non-HIV population within the united active-center catchment area\n\nThe denominator: total estimated non-HIV population across all census tracts for that year\n\nThe percentage: share of the non-HIV population within geographic reach\n\n\n\nWhy Only Active Centers?\nIn this implementation, non-HIV coverage is calculated for active transplant centers only.\nThis provides a general population access benchmark that can be compared against:\n\nCoverage for people living with HIV\n\nCoverage within HIV-performing or HOPE-performing center categories\n\n\n\nHow It Works\nFor each organ, distance, and year:\n\nThe united active-center tract object is selected.\nGeometry is dropped for efficient aggregation.\ntract_noncases is summed within the catchment area.\nThe total is divided by the national non-HIV population estimate for that year.\nA new row is appended to Results_nonHIV_df[[organ]].\n\n\nThese results allow comparison between:\n\nGeographic access for people living with HIV\n\nGeographic access for the general population\n\nChanges over time\n\nDifferences across organ types and service-area definitions\n\nTogether, the PLWH and non-HIV tables provide the quantitative foundation for the manuscript’s access comparisons.\n\n\nClick to show/hide R Code\n#Calculate tract-level results for people without HIV\nfor (organ_loop in organ_list)\n{\n  for (distance_loop in distance_list){\n    for (year_loop in year_list){\n      for (type in c(\"active\")) {\n        \n        name_of_df&lt;-paste0(\"tracts_in_buffers_\", type, \"_united\")\n        print(name_of_df)\n        \n        temp_Num&lt;-get(name_of_df)[[organ_loop]][[distance_loop]][[year_loop]]%&gt;%\n          st_drop_geometry()%&gt;%\n          group_by(catchment_area)%&gt;%\n          summarize(total_noncases=sum(tract_noncases, na.rm=TRUE))%&gt;%\n          pull(total_noncases)%&gt;%\n          first()\n        \n        temp_Denom&lt;-Tract_total_nonHIV_cases[[year_loop]]\n        \n        Results_nonHIV_df[[organ_loop]]&lt;-Results_nonHIV_df[[organ_loop]]%&gt;%\n          add_row(\n            Characteristic = paste(type, distance_loop),\n            Numerator = round(temp_Num, 0),\n            Denominator = temp_Denom,\n            Percentage = round(100*temp_Num/temp_Denom,1),\n            Year= as.numeric(year_loop))\n        \n        \n        \n      }\n    }\n  }\n  \n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Calculate aggregated results"
     ]
   },
@@ -779,7 +779,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Calculate aggregated results"
     ]
   },
@@ -790,7 +790,7 @@
     "section": "",
     "text": "The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "County-level geographic calculations"
     ]
   },
@@ -801,7 +801,7 @@
     "section": "Preparing transplant-center sf objects",
     "text": "Preparing transplant-center sf objects\nThis code converts multiple transplant-center datasets into geographic (sf) objects and organizes them in nested lists by organ and year. The end result is four parallel list objects that can be used downstream for buffering, distance calculations, and map overlays.\n\nWhat gets created\n\nTransplant_centers_all_sf\nSpatial (sf) version of all transplant centers, by organ.\nTransplant_centers_active_SF\nSpatial (sf) version of active transplant centers, by organ and year.\nTransplant_centers_HIV_sf\nSpatial (sf) subset of centers that performed an HIV R+ transplant at the given time point, by organ and year.\nTransplant_centers_HOPE_sf\nSpatial (sf) subset of centers that performed an HOPE (HIV D+/R+) transplant at the given time point, by organ and year.\n\n\n\nStep 1: initialize empty containers\nWe start by creating empty lists. These will be filled inside the loops:\n\nthe outer list is keyed by organ_loop (from organ_list)\nfor year-specific objects, there is an inner list keyed by year_loop (from year_list)\n\n\n\nStep 2: Loop Over Organ Types\nFor each organ in organ_list:\n\nThe dataset of all transplant centers for that organ is converted to an sf object.\nThe coordinate reference system is transformed to EPSG:5070 (NAD83 / Conus Albers).\n\nThis projection is used because it is well-suited for U.S. spatial analyses and provides consistent units for distance-based calculations.\n\n\n\nStep 3: Loop Over Years Within Each Organ\nFor each year in year_list, three organ-year–specific spatial datasets are created:\n\nA) Active Centers\nThe year-specific dataset of active transplant centers is converted to sf and projected to EPSG:5070.\n\n\nB) HIV R+ Centers\nFrom the full set of centers for that organ, centers are filtered to retain only those whose OTCCode appears in the HIV center volume file for that organ and year.\nThis identifies centers that performed at least one HIV R+ transplant at that time point.\n\n\nC) HOPE (HIV D+/R+) Centers\nSimilarly, the full center list is filtered using the HOPE center volume file to identify centers that performed HIV D+/R+ transplants during that year.\n\n\n\n\nFinal Structure\nAfter the loops complete, the resulting structure is:\n\nTransplant_centers_all_sf[[organ]]\nTransplant_centers_active_SF[[organ]][[year]]\nTransplant_centers_HIV_sf[[organ]][[year]]\nTransplant_centers_HOPE_sf[[organ]][[year]]\n\nThis consistent nested design allows downstream functions to iterate cleanly across organ types and years when generating maps, buffers, and catchment-area analyses.\n\n\nClick to show/hide R Code\nTransplant_centers_all_sf&lt;-list()\nTransplant_centers_active_SF&lt;-list()\nTransplant_centers_HIV_sf&lt;-list()\nTransplant_centers_HOPE_sf&lt;-list()\n\nfor (organ_loop in organ_list)\n  \n{\n\n  #Convert transplant center data to geographical data\n  Transplant_centers_all_sf[[organ_loop]]&lt;-Transplant_centers_all[[organ_loop]]%&gt;%\n    st_transform(5070)  \n  \n  \n  \n  for (year_loop in year_list) {\n    \n\n    Transplant_centers_active_SF[[organ_loop]][[year_loop]]&lt;-Transplant_centers_active[[organ_loop]][[year_loop]]%&gt;%\n      st_transform(5070)\n    \n\n    #Geographic file of centers that performed an HIV HIV R+ transplant at the designated time point\n    Transplant_centers_HIV_sf[[organ_loop]][[year_loop]] &lt;- Transplant_centers_all_sf[[organ_loop]]%&gt;%\n      filter(OTCCode %in% HIV_center_volumes[[organ_loop]][[year_loop]]$REC_CTR_CD)\n    \n    #Geographic file of centers that performed an HIV D+/R+ transplant at the designated time point\n    Transplant_centers_HOPE_sf[[organ_loop]][[year_loop]] &lt;- Transplant_centers_all_sf[[organ_loop]]%&gt;%\n      filter(OTCCode %in% HOPE_center_volumes[[organ_loop]][[year_loop]]$REC_CTR_CD)\n    \n    \n    \n    \n  }\n  \n  \n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "County-level geographic calculations"
     ]
   },
@@ -812,7 +812,7 @@
     "section": "Merging CDC HIV Data with County and Tract Geography",
     "text": "Merging CDC HIV Data with County and Tract Geography\nThis section joins CDC Atlas HIV surveillance data to U.S. county and census tract population files, then derives tract-level HIV estimates for downstream spatial analysis.\nThree list objects are created:\n\nMerged_Counties\nCounty-level spatial data merged with CDC HIV totals.\nMerged_Counties_nonSF\nCounty-level data with geometry removed (used for attribute joins).\nMerged_tracts\nCensus tract–level spatial data with estimated HIV-positive and HIV-negative populations.\n\nEach object is indexed by year.\n\n\nStep 1: Initialize Storage Lists\nEmpty lists are created to store year-specific merged datasets.\nEach list will ultimately contain one entry per year in year_list.\n\n\n\nStep 2: Loop Over Years\nFor each year:\n\n\n\nA) Merge County Population Data with CDC Atlas Data\nCounty geographic population files are joined with CDC Atlas HIV totals.\n\nThe join matches GEOID (county FIPS) from the population file\nTo geo_id from the CDC Atlas dataset\nA left_join() ensures that all counties remain in the dataset\n\nThe result is a spatial (sf) object containing:\n\nCounty geometry\nCounty population\nCounty HIV case counts and rates\n\nThis object is stored in:\n\n\nClick to show/hide R Code\nMerged_Counties&lt;-list()\nMerged_Counties_nonSF&lt;-list()\nMerged_tracts&lt;-list()\n\nfor (year_loop in year_list) {\n\n  #Join county geographical data with CDC data.\n  Merged_Counties[[year_loop]]&lt;-left_join(us_counties_population[[year_loop]],\n                                          AtlasPlusTableData_county_totals[[year_loop]], \n                                          by=join_by(GEOID==geo_id))\n  \n  Merged_Counties_nonSF[[year_loop]]&lt;-Merged_Counties[[year_loop]]%&gt;%\n    st_drop_geometry()\n  \n\n  \n  #Merge county data with tracts\n  Merged_tracts[[year_loop]]&lt;-left_join(us_tracts_population[[year_loop]], \n                                Merged_Counties_nonSF[[year_loop]], \n                                by=c(\"county_fips\"=\"GEOID\"))%&gt;%\n    select(-NAME.x, -NAME.y)%&gt;%\n    #Estimate census tract HIV population\n    mutate(tract_cases=county_cases*tract_population/county_population)%&gt;%\n    #Estimate HIV-negative population in census tracts\n    mutate(tract_noncases=tract_population-tract_cases)%&gt;%\n    st_transform(5070)\n  \n  \n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "County-level geographic calculations"
     ]
   },
@@ -823,7 +823,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "County-level geographic calculations"
     ]
   },
@@ -834,7 +834,7 @@
     "section": "",
     "text": "The code in this script generates tables for the manuscript.",
     "crumbs": [
-      "Data Loading & Setup",
+      "Setup and helper functions",
       "Functions"
     ]
   },
@@ -845,7 +845,7 @@
     "section": "Drawing 60 minute isochrones around each transplant center",
     "text": "Drawing 60 minute isochrones around each transplant center\nThe following function uses the mapboxapi package to calculate 60-minute travel isochrones around each transplant center.\nThe function assumes the that you have an API token configured in R. For details of how to do this, see the package documentation.\nIts inputs are as follows:\n\nSFObject: This is an object of class sf that contains the location of each transplant center\nyear: year as a character. Must be a year in yearlist defined in R/setup.R.\n\n\n\nClick to show/hide R Code\n#Define a function that takes an SF data object and returns 60 minute isochrones\nset_60_min_isochrone_at_7AM&lt;-function(SFObject, year) {\n  \n  if (nrow(SFObject) == 0) {\n    return(\n      SFObject %&gt;%\n        st_transform(5070)\n    )\n  }else{\n    tempDF&lt;-SFObject%&gt;%\n      mutate(TimeZone=tz_lookup(., method=\"accurate\"))%&gt;%\n      st_transform(4326)\n    \n    FinalDF &lt;- vector(\"list\", length(timezones))\n    \n    \n    for(i in 1:length(timezones))\n    {\n      TZ&lt;-converted_times[[year]][[i,1]]\n      \n      UTCTime&lt;-format(converted_times[[year]][[i,3]], \"%Y-%m-%dT%H:%M:%SZ\")\n      \n      if (nrow(filter(tempDF,TimeZone==TZ))&gt;0)\n      {\n        temp&lt;-tempDF%&gt;%\n          filter(TimeZone==TZ)%&gt;%\n          mb_isochrone(time = 60, \n                       profile = \"driving-traffic\",\n                       depart_at = UTCTime,\n                       id_column = \"OTCCode\")%&gt;%\n          rename(OTCCode=id)\n        FinalDF[[i]]&lt;-temp\n      }\n    }\n    \n    FinalDF%&gt;%\n      bind_rows()%&gt;%\n      st_transform(5070)%&gt;%\n      return()\n  }\n}",
     "crumbs": [
-      "Data Loading & Setup",
+      "Setup and helper functions",
       "Functions"
     ]
   },
@@ -856,7 +856,7 @@
     "section": "converting data frame of summary results into a gt format table",
     "text": "converting data frame of summary results into a gt format table\nInset LLM text here\n\n\nClick to show/hide R Code\nconvert_resultsdf_to_table&lt;-function(resultsdf, \n                                     year_list_fn=year_list,\n                                     row_values,\n                                     row_labels,\n                                     table_title){\n  \n  \n  resultsdf%&gt;%\n    \n    #Reshape data set\n    pivot_wider(\n      names_from = Year,\n      values_from = c(Numerator, Denominator, Percentage),\n      names_vary = \"slowest\"\n    )%&gt;%\n    \n    #Use the table defined above to turn Characteristic into a factor variable\n    mutate(Characteristic=factor(Characteristic,\n                                 levels = row_values,\n                                 labels = row_labels))%&gt;%\n    arrange(Characteristic)%&gt;%\n    \n    #Convert to a gt format table\n    gt()%&gt;%\n    \n    #Groups columns by year with a spanner label\n    {\n      purrr::reduce(\n        year_list_fn,\n        ~ .x %&gt;%\n          tab_spanner(\n            label = .y,\n            columns = matches(paste0(\"_\", .y, \"$\"))\n          ),\n        .init = .\n      )\n    } %&gt;%\n    \n    #Sets coluns to round to 0 decimal places for numbers and 1 decimal place for percentages\n    fmt_number(\n      columns = matches(paste0(\"Numerator_|Denominator_\")),\n      decimals = 0,\n      use_seps = TRUE\n    ) %&gt;%\n    fmt_number(\n      columns = matches(\"Percentage_\"),\n      decimals = 1\n    )%&gt;%tab_header(\n      title = table_title\n    )%&gt;%\n    \n    #Removes \"_year\" from columns\n    cols_label_with(~ \"Numerator\",   columns = matches(\"^Numerator_\")) %&gt;%\n    cols_label_with(~ \"Denominator\", columns = matches(\"^Denominator_\")) %&gt;%\n    cols_label_with(~ \"Percentage\",  columns = matches(\"^Percentage_\"))%&gt;%\n    \n    #Shades columns by year for easier reading\n    \n    {\n      purrr::reduce(\n        seq_along(year_list_fn),\n        ~ .x %&gt;%\n          tab_style(\n            style = cell_fill(\n              color = colorRampPalette(c(\"lightgray\",\"lightblue\"))(\n                length(year_list_fn)\n              )[.y]            ),\n            locations = cells_body(\n              columns = matches(paste0(\"_\", year_list_fn[.y], \"$\"))\n            )\n          ),\n        .init = .\n      )\n    }%&gt;%\n    \n    #Add separators between years\n    {\n      purrr::reduce(\n        seq_len(length(year_list_fn) - 1),\n        ~ .x %&gt;%\n          tab_style(\n            style = cell_borders(\n              sides = \"right\",\n              weight = px(2),\n              color = \"black\"\n            ),\n            locations = cells_body(\n              columns = matches(paste0(\"Percentage_\", year_list_fn[.y], \"$\"))\n            )\n          ) %&gt;%\n          tab_style(\n            style = cell_borders(\n              sides = \"left\",\n              weight = px(2),\n              color = \"black\"\n            ),\n            locations = cells_body(\n              columns = matches(paste0(\"Numerator_\", year_list_fn[.y + 1], \"$\"))\n            )\n          ),\n        .init = .\n      )\n    }\n  \n  \n}\n\n\n}",
     "crumbs": [
-      "Data Loading & Setup",
+      "Setup and helper functions",
       "Functions"
     ]
   },
@@ -867,7 +867,7 @@
     "section": "Creates paired plots of maps with percentages in the plot",
     "text": "Creates paired plots of maps with percentages in the plot\nLLM text\n\n\nClick to show/hide R Code\nmake_paired_plot&lt;-function(organ,\n                           distance,\n                           outcome,\n                           buffer_list,\n                           year1=\"2017\",\n                           year2=\"2022\",\n                           plottitle,\n                           include_nonHIV=FALSE)\n{\n  \n  # ----Error checking----\n  \n  # Validate include_nonHIV\n  if (!is.logical(include_nonHIV) || length(include_nonHIV) != 1 || is.na(include_nonHIV)) {\n    stop(\"include_nonHIV must be a single TRUE or FALSE value.\")\n  }\n  \n  \n  #Access name of object passed to `buffer_list`\n  buffer_name &lt;- deparse(substitute(buffer_list))\n  \n  #Make sure name of outcome matches buffer_list\n  if (!stringr::str_detect(\n    stringr::str_to_lower(buffer_name),\n    stringr::str_to_lower(outcome)\n  )) {\n    warning(glue::glue(\n      \"Buffer object ('{buffer_name}') may not match outcome '{outcome}'.\"\n    ))\n  }\n  \n  if (!year1 %in% year_list) {\n    stop(glue::glue(\"year1 ({year1}) is not in year_list.\"))\n  }\n  \n  if (!year2 %in% year_list) {\n    stop(glue::glue(\"year2 ({year2}) is not in year_list.\"))\n  }\n  \n  if (!outcome %in% c(\"active\", \"HIV\", \"HOPE\")) {\n    stop(glue::glue(\"outcome ({outcome}) is not in c('active', 'HIV', 'HOPE').\"))\n  }\n  \n  # ----Main function----\n  \n  #Keep only elements of Results_HIV_df necessary for plot\n  summary_df_HIV&lt;-Results_HIV_df[[organ]]%&gt;%\n    filter(str_detect(Characteristic, outcome))%&gt;%\n    filter(str_detect(Characteristic, distance))\n  \n  #parameters of plot assigned\n  parameter_plot&lt;-list()\n  parameter_plot$y_title&lt;-0.9\n  parameter_plot$y_footnote&lt;-0.1\n  \n  if (include_nonHIV)\n  {\n    parameter_plot$y_title&lt;-0.97\n    parameter_plot$y_footnote&lt;-0.01\n  }\n  \n  \n  #Keep only elements of Results_nonHIV_df necessary for plot, if even needed in the first place\n  if (include_nonHIV)\n  {\n    summary_df_nonHIV&lt;-Results_nonHIV_df[[organ]]%&gt;%\n      filter(str_detect(Characteristic, outcome))%&gt;%\n      filter(str_detect(Characteristic, distance))\n  }\n  \n  #Creates text for nonHIV (is NULL if )\n  title_text_nonHIV&lt;-list()\n  \n  if (include_nonHIV==TRUE) {\n    title_text_nonHIV[[year1]]&lt;-\n      glue(\"&lt;br&gt;\",\n           \"&lt;span style='font-size:30pt; font-weight:normal;'&gt;HIV negative:&lt;/span&gt; \",\n           \"&lt;span style='font-size:30pt; font-weight:bold;'&gt;\",\n           \"{summary_df_nonHIV$Percentage[summary_df_nonHIV$Year == as.numeric(year1)]}%\",\n           \"&lt;/span&gt;\",\n           \"&lt;br&gt;\",\n           \"{comma(summary_df_nonHIV$Numerator[summary_df_nonHIV$Year == as.numeric(year1)])}\",\n           \" / \",\n           \"{comma(summary_df_nonHIV$Denominator[summary_df_nonHIV$Year == as.numeric(year1)])}\")\n    \n    title_text_nonHIV[[year2]]&lt;-\n      glue(\"&lt;br&gt;\",\n           \"&lt;span style='font-size:30pt; font-weight:normal;'&gt;HIV negative:&lt;/span&gt; \",\n           \"&lt;span style='font-size:30pt; font-weight:bold;'&gt;\",\n           \"{summary_df_nonHIV$Percentage[summary_df_nonHIV$Year == as.numeric(year2)]}%\",\n           \"&lt;/span&gt;\",\n           \"&lt;br&gt;\",\n           \"{comma(summary_df_nonHIV$Numerator[summary_df_nonHIV$Year == as.numeric(year2)])}\",\n           \" / \",\n           \"{comma(summary_df_nonHIV$Denominator[summary_df_nonHIV$Year == as.numeric(year2)])}\")\n  }\n  else {\n    title_text_nonHIV[[year1]]&lt;-\"\"\n    title_text_nonHIV[[year2]]&lt;-\"\"\n  }\n  \n  \n  \n  #Left graph\n  Plot1&lt;-ggplot() +\n    geom_sf(data = county_dots_transformed[[year1]], size = 0.3, color = \"navy\", alpha = 0.5) +\n    theme_void() +\n    theme(\n      axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),\n      plot.title = element_textbox(size = 16, hjust = 0.5,\n                                   halign = 0.5)\n    )+\n    labs(y=year1,\n         title = glue(\"&lt;span style='font-size:30pt; font-weight:normal;'&gt;PLWH:&lt;/span&gt; \",\n                      \"&lt;span style='font-size:30pt; font-weight:bold;'&gt;\",\n                      \"{summary_df_HIV$Percentage[summary_df_HIV$Year == as.numeric(year1)]}%\",\n                      \"&lt;/span&gt;\",\n                      \"&lt;br&gt;\",\n                      \"{comma(summary_df_HIV$Numerator[summary_df_HIV$Year == as.numeric(year1)])}\",\n                      \" / \",\n                      \"{comma(summary_df_HIV$Denominator[summary_df_HIV$Year == as.numeric(year1)])}\",\n                      title_text_nonHIV[[year1]]\n         ))+\n    geom_sf(data=buffer_list[[organ]][[distance]][[year1]], color=\"red\", fill=NA)+\n    geom_sf(data=states_sf_transformed, fill=NA)\n  \n  \n  #Right plot\n  Plot2&lt;-ggplot() +\n    geom_sf(data = county_dots_transformed[[year2]], size = 0.3, color = \"navy\", alpha = 0.5) +\n    theme_void() +\n    theme(\n      axis.title.y = element_text(size = 36, angle = 90, vjust = 0.5),\n      plot.title = element_textbox(size = 16, hjust = 0.5,\n                                   halign = 0.5)\n    )+\n    labs(y=year2,\n         title = glue(\"&lt;span style='font-size:30pt; font-weight:normal;'&gt;PLWH:&lt;/span&gt; \",\n                      \"&lt;span style='font-size:30pt; font-weight:bold;'&gt;\",\n                      \"{summary_df_HIV$Percentage[summary_df_HIV$Year == as.numeric(year2)]}%\",\n                      \"&lt;/span&gt;\",\n                      \"&lt;br&gt;\",\n                      \"{comma(summary_df_HIV$Numerator[summary_df_HIV$Year == as.numeric(year2)])}\",\n                      \" / \",\n                      \"{comma(summary_df_HIV$Denominator[summary_df_HIV$Year == as.numeric(year2)])}\",\n                      title_text_nonHIV[[year2]]\n         ))+\n    geom_sf(data=buffer_list[[organ]][[distance]][[year2]], color=\"red\", fill=NA)+\n    geom_sf(data=states_sf_transformed, fill=NA)\n  \n  #Combine plots\n  combined&lt;-cowplot::plot_grid(Plot1, Plot2,\n                               ncol = 2, align = \"hv\")\n  \n  final_plot &lt;- ggdraw() +\n    draw_plot(combined) +\n    draw_label(\n      plottitle,\n      x = 0.5, y = parameter_plot$y_title,   # top center\n      hjust = 0.5, vjust = 1,   # anchor to the top edge\n      fontface = 'bold',\n      size = 25\n    )+\n    # \n    draw_label(\n      \"Each blue dot represents 100 people with HIV\\nRed outlines represent the catchment area for each transplant center\",\n      x = 0.02, y = parameter_plot$y_footnote,          # left margin position\n      hjust = 0, vjust = 0,        # align text to the left edge\n      size = 14,\n      fontface = \"italic\"\n    )\n  \n  return(final_plot)\n  \n}",
     "crumbs": [
-      "Data Loading & Setup",
+      "Setup and helper functions",
       "Functions"
     ]
   },
@@ -878,7 +878,7 @@
     "section": "Plot the number of people with HIV in the catchment area of each transplant center",
     "text": "Plot the number of people with HIV in the catchment area of each transplant center\nThis function uses the ggbeeswarm package to make GraphPad Prism-type plots comparing the number of people living with HIV in the catchment area of each transplant center in the years specified.\n\n\nClick to show/hide R Code\nplot_center_HIV_catchment&lt;-function(organ,\n                                    distance,\n                                    buffer_list,\n                                    year1=\"2017\",\n                                    year2=\"2022\"){\n  \n  \n  \n  # ----Error checking----\n  \n  #Access name of object passed to `buffer_list`\n  buffer_name &lt;- deparse(substitute(buffer_list))\n  \n  if (!year1 %in% year_list) {\n    stop(glue::glue(\"year1 ({year1}) is not in year_list.\"))\n  }\n  \n  if (!year2 %in% year_list) {\n    stop(glue::glue(\"year2 ({year2}) is not in year_list.\"))\n  }\n  \n  \n  \n  temp_DF&lt;-list()\n  \n  temp_DF[[year1]]&lt;-buffer_list%&gt;%\n    pluck(year1)%&gt;%\n    st_drop_geometry()%&gt;%\n    group_by(OTCCode)%&gt;%\n    summarize(total_cases=round(sum(tract_cases), 0))%&gt;%\n    mutate(year=as.numeric(year1))%&gt;%\n    mutate(Center_classification=case_when(\n      OTCCode %in% HOPE_center_volumes[[organ]][[year1]]$REC_CTR_CD~\"HOPE center\",\n      OTCCode %in% HIV__center_volumes[[organ]][[year1]]$REC_CTR_CD~\"≥1 HIV R+ transplants\",\n      OTCCode %in% Active_tx_centers[[organ]][[year1]]~\"No HIV R+ transplants\"\n    ))%&gt;%\n    filter(!is.na(OTCCode))\n  \n  \n  temp_DF[[year2]]&lt;-buffer_list%&gt;%\n    pluck(year2)%&gt;%\n    st_drop_geometry()%&gt;%\n    group_by(OTCCode)%&gt;%\n    summarize(total_cases=round(sum(tract_cases), 0))%&gt;%\n    mutate(year=as.numeric(year2))%&gt;%\n    mutate(Center_classification=case_when(\n      OTCCode %in% HOPE_center_volumes[[organ]][[year2]]$REC_CTR_CD~\"HOPE center\",\n      OTCCode %in% HIV__center_volumes[[organ]][[year2]]$REC_CTR_CD~\"≥1 HIV R+ transplants\",\n      OTCCode %in% Active_tx_centers[[organ]][[year2]]~\"No HIV R+ transplants\"\n    ))%&gt;%\n    filter(!is.na(OTCCode))\n  \n  combined_DF&lt;-bind_rows(temp_DF)%&gt;%\n    mutate(Center_classification=factor(Center_classification,\n                                        levels=c(\"HOPE center\",\"≥1 HIV R+ transplants\", \"No HIV R+ transplants\"),\n                                        labels=c(\"HOPE center\",\"≥1 HIV R+ transplants\", \"No HIV R+ transplants\")\n    ))%&gt;%\n    mutate(Center_classification_color=case_when(\n      OTCCode %in% HOPE_center_volumes[[organ]][[year1]]$REC_CTR_CD~\"HOPE center\",\n      OTCCode %in% HIV__center_volumes[[organ]][[year1]]$REC_CTR_CD~\"≥1 HIV R+ transplants\",\n      OTCCode %in% Active_tx_centers[[organ]][[year1]]~\"No HIV R+ transplants\",\n      TRUE~glue(\"No transplants in {year1}\")\n    ))\n  \n  combined_DF %&gt;% ggplot()+\n    geom_violin(mapping = aes(x=Center_classification, y=total_cases), color = NA, alpha=0.5,fill = \"grey\", \n                draw_quantiles = 1)+\n    stat_summary(mapping = aes(x=Center_classification, y=total_cases),fun = median, \n                 fun.min = median, fun.max = median, \n                 geom = \"crossbar\", width = 0.9, fatten=1.5)+\n    geom_quasirandom(mapping = aes(x=Center_classification, y=total_cases, color=Center_classification_color), \n                     cex=2, alpha=0.7)+\n    stat_compare_means(method = \"kruskal.test\",\n                       mapping = aes(x = Center_classification, y = total_cases)) +\n    scale_y_continuous(labels = scales::comma)+\n    guides(color = guide_legend(title.position = \"top\", nrow = 1))+\n    theme_classic()+\n    theme(legend.position = \"bottom\",\n          legend.title = element_text(hjust = 0.5),  # centers title\n          legend.box = \"horizontal\")+\n    theme(axis.text.x = element_text(\n      angle = 45,\n      hjust = 1,\n      vjust = 1))+\n    facet_grid(.~year)+\n    labs(x = \"Center HIV R+ volume\", y=\"PLWH in catchment area\", color=glue(\"{year1} status\"))+\n    scale_color_discrete(breaks = c(\"HOPE center\",\n                                    \"≥1 HIV R+ transplants\", \n                                    \"No HIV R+ transplants\",\n                                    glue(\"No transplants in {year1}\"))\n    )\n  \n  \n  \n}",
     "crumbs": [
-      "Data Loading & Setup",
+      "Setup and helper functions",
       "Functions"
     ]
   },
@@ -889,7 +889,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Loading & Setup",
+      "Setup and helper functions",
       "Functions"
     ]
   },
@@ -900,7 +900,7 @@
     "section": "",
     "text": "This section identifies which census tracts fall within transplant center catchment areas.\nEarlier steps created:\nHere, we determine which tracts intersect each center’s catchment area using spatial joins.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to buffers"
     ]
   },
@@ -911,7 +911,7 @@
     "section": "Linking Census Tracts to Transplant Center Catchment Areas",
     "text": "Linking Census Tracts to Transplant Center Catchment Areas\nThis code performs spatial intersection joins between:\n\nCensus tract–level data (Merged_tracts)\nTransplant center buffer polygons\n\nThe goal is to determine which tracts are geographically reachable from transplant centers under each scenario.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to buffers"
     ]
   },
@@ -922,7 +922,7 @@
     "section": "Objects Created",
     "text": "Objects Created\nThree nested list objects are generated:\n\ntracts_in_buffers_active\ntracts_in_buffers_HIV\ntracts_in_buffers_HOPE\n\nEach is indexed by:\n\nOrgan\n\nDistance\n\nYear",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to buffers"
     ]
   },
@@ -933,7 +933,7 @@
     "section": "What the Spatial Join Does",
     "text": "What the Spatial Join Does\nFor each:\n\nOrgan\n\nDistance\n\nYear\n\nThe script performs:\nst_join(…, join = st_intersects)\nThis means:\n\nA census tract is included if its geometry intersects the transplant center buffer polygon.\n\nIn practical terms:\n\nIf any part of a tract lies within a center’s catchment area,\nThat tract is considered geographically accessible to that center.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to buffers"
     ]
   },
@@ -944,7 +944,7 @@
     "section": "Important Note on Duplication",
     "text": "Important Note on Duplication\nBecause this join is performed against individual center buffers, a tract can appear multiple times if:\n\nIt falls within the catchment area of more than one transplant center.\n\nThis duplication is intentional at this stage because:\n\nIt preserves center-level relationships.\nIt allows downstream analyses of overlap and multi-center accessibility.\n\nLater steps that use united buffers eliminate this duplication when calculating total population coverage.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to buffers"
     ]
   },
@@ -955,7 +955,7 @@
     "section": "Why This Step Matters",
     "text": "Why This Step Matters\nThis spatial join enables calculation of:\n\nNumber of people living with HIV within reach of transplant centers\nDifferences in geographic access between:\n\nActive centers\nHIV R+ centers\nHOPE centers\n\nChanges over time (e.g., 2017 vs 2022)\n\nBy linking tract-level population data to center catchment areas, the analysis translates geography into measurable access.\n\n\n\nClick to show/hide R Code\n#ST join to individual tracts and transplant centers\n\n\ntracts_in_buffers_active&lt;-list()\ntracts_in_buffers_HIV&lt;-list()\ntracts_in_buffers_HOPE&lt;-list()\n\n\n\n\nfor (organ_loop in organ_list){\n  for (distance_loop in distance_list){\n    for (year_loop in year_list){\n\n      message(paste(\"Currently on:\", organ_loop, \"\", distance_loop, \"for year:\", year_loop))\n      message(\"Calculating tracts for active...\")\n      \n      #This leads to duplication of tracts if they fall in more than one transplant center's catchment area)      \n      tracts_in_buffers_active[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_active_buffer[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n      \n      \n      message(\"Calculating tracts for HIV...\")\n      \n      tracts_in_buffers_HIV[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_HIV_buffer[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n      \n      message(\"Calculating tracts for HOPE...\")\n      \n      tracts_in_buffers_HOPE[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_HOPE_buffer[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n\n      \n            \n    }\n  }\n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to buffers"
     ]
   },
@@ -966,7 +966,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Join tracts to buffers"
     ]
   },
@@ -977,7 +977,7 @@
     "section": "",
     "text": "The code in this script loads the data needed for other scripts from multiple sources, as explained in detail below.",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Load data"
     ]
   },
@@ -988,7 +988,7 @@
     "section": "Load US state maps from census",
     "text": "Load US state maps from census\nWe import U.S. state boundary shapefiles using the tigris package.\nThe tigris::states() function retrieves state-level shapefiles from the U.S. Census Bureau’s TIGER/Line products.\n\nColumn Selection\nWe retain only:\n\nNAME → full state name\nSTUSPS → two-letter state abbreviation\ngeometry → polygon boundaries\n\nThis reduces memory overhead and keeps the object lightweight for downstream joins and plotting.\n\n\nExclusions\nWe remove:\n\nAlaska and Hawaii (to avoid projection distortion in contiguous U.S. maps)\nU.S. territories (not included in SRTR transplant center analyses)\n\nThis ensures that visualizations align with the contiguous U.S. study population.\n\n\nOutput\nThe resulting object, states_sf, is an sf object containing polygon geometries for the 48 contiguous U.S. states,\n\n\nClick to show/hide R Code\nstates_sf &lt;- tigris::states(cb = TRUE, year = 2022)%&gt;%\n  select(NAME, STUSPS, geometry) %&gt;%\n  filter(!(NAME %in% c(\"Alaska\", \n                       \"Hawaii\", \n                       \"Puerto Rico\", \n                       \"United States Virgin Islands\",\n                       \"Commonwealth of the Northern Mariana Islands\",\n                       \"Guam\",\n                       \"American Samoa\"))) %&gt;%\n  rename(State=NAME)",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Load data"
     ]
   },
@@ -999,7 +999,7 @@
     "section": "Import transplant data from UNOS SRTR",
     "text": "Import transplant data from UNOS SRTR\nTo identify active transplant centers and characterize transplant activity by organ type, we import transplant recipient-level and donor-level data from the Scientific Registry of Transplant Recipients (SRTR).\nThese datasets are accessed using a custom helper function, load_srtr_file(), which standardizes file loading, variable labeling, and preprocessing across SRTR tables.\n\n\nClick to show/hide R Code\ntx&lt;-list()\n\ntx[[\"kidney\"]] &lt;- load_srtr_file(\"tx_ki\")\ntx[[\"liver\"]] &lt;- load_srtr_file(\"tx_li\")\ntx[[\"heart\"]] &lt;- load_srtr_file(\"tx_hr\")\ntx[[\"lung\"]] &lt;- load_srtr_file(\"tx_lu\")\ntx[[\"pancreas\"]] &lt;- load_srtr_file(\"tx_kp\")\n\n\n\ndonor_deceased &lt;- load_srtr_file(\"donor_deceased\")%&gt;%\n  select(DONOR_ID, DON_ANTI_HIV, DON_HIV_NAT)",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Load data"
     ]
   },
@@ -1010,7 +1010,7 @@
     "section": "Load transplant center data from SRTR package",
     "text": "Load transplant center data from SRTR package\nTo map transplant center locations and define geographic catchment areas, we retrieve center-level data from the Health Resources and Services Administration (HRSA) using the sRtr package.\nThe get_hrsa_transplant_centers() function accesses HRSA transplant center metadata, including center identifiers and geographic coordinates.\nSubsequent steps:\n\nRemove Hawaii and Puerto Rico\nKeep the following variables:\n\nOTC_NM: transplant center name\nOTC_CD: transplant center 4-letter UNOS code\nService_Lst: list of organs transplanted at that center\nX, Y: longitude and latitude of transplant center\n\nKeep transplant centers whose organ corresponds with the organ defined in the organ_loop variable for each loop\nRemoves duplicates with the distinct() command\nRenames variables for convenience\nPauses for five seconds between iterations to avoid overloading the HRSA website\n\n\n\nClick to show/hide R Code\nTransplant_centers_all&lt;-list()\n\nfor (organ_loop in organ_list)\n{\n  \n  \n  Transplant_centers_all[[organ_loop]]&lt;-sRtr::get_hrsa_transplant_centers()%&gt;%\n    filter(OPO_STATE_ABBR != \"PR\" & OPO_STATE_ABBR!= \"HI\")%&gt;%\n    select(OTC_NM, OTC_CD, Service_Lst, X, Y) %&gt;%\n    filter(str_detect(Service_Lst, str_to_sentence(organ_loop)))%&gt;%\n    select(-Service_Lst)%&gt;%\n    distinct()%&gt;%\n    rename(OTCName=OTC_NM, OTCCode=OTC_CD, Latitude=Y, Longitude=X)\n  Sys.sleep(5)\n  \n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Load data"
     ]
   },
@@ -1021,7 +1021,7 @@
     "section": "Load census data",
     "text": "Load census data\nTo estimate catchment populations for transplant centers, we retrieve tract- and county-level population data from the American Community Survey (ACS) 5-year files. Because these data are large and slow to download, we implement a caching strategy to avoid repeated API calls during iterative renders.\n\nOverview\nFor each year in year_list, this code:\n\nRetrieves tract-level total population\nRetrieves county-level total population\nCaches results locally as .rds files\n\nThis structure ensures reproducibility while dramatically improving performance during Quarto re-rendering.\n\n\nTract-Level Population Data\nWe obtain tract-level total population using ACS variable:\n\nB01003_001 — Total population\n\nIf a cached file already exists (cache/us_tracts_population_YEAR.rds), it is loaded directly. Otherwise:\n\nData are downloaded using get_acs()\nGeometry is included (geometry = TRUE) for spatial joins\nCounty FIPS codes are derived from the first five digits of the tract GEOID\nIdentifier fields are converted to numeric for efficient joins\nOnly necessary variables are retained\nThe cleaned dataset is saved locally for future use\n\n\nWhy include geometry?\nIncluding tract geometry allows direct spatial intersection with:\n\n50-mile buffers\n60-minute isochrones\nUnited catchment areas\n\nThis avoids needing a second shapefile join later.\n\n\n\nCounty-Level Population Data\nCounty-level total population is retrieved using the same ACS variable (B01003_001), with geometry retained.\nCounty data are used for:\n\nCounty-level HIV prevalence overlays\nAggregated catchment summaries\nValidation checks against tract-level totals\n\nAs with tract data, results are cached locally to prevent redundant API calls.\n\n\nAge and Sex Variable Labels (B01001)\nThe ACS table B01001 contains detailed age- and sex-specific population counts. Rather than downloading these counts directly in this step, we load the variable metadata using:\n\n\nClick to show/hide R Code\nus_tracts_population&lt;-list()\nus_counties_population&lt;-list()\nvars&lt;-list()\n\nfor (year_loop in year_list){\n  \n  \n  tracts_path&lt;-paste0(\"cache/us_tracts_population_\",year_loop,\".rds\")\n  counties_path&lt;-paste0(\"cache/us_counties_population_\",year_loop,\".rds\")\n  \n  #Pull US Census tract populations if cache file doesn't already exist\n  \n  if (file.exists(tracts_path)) {\n    us_tracts_population[[year_loop]] &lt;- readRDS(tracts_path)\n  } else {\n    \n    us_tracts_population[[year_loop]]&lt;-get_acs(\n      geography = \"tract\",\n      variables = \"B01003_001\",\n      year = as.numeric(year_loop),\n      survey = \"acs5\",\n      geometry = TRUE,\n      state = continental_fips\n    )%&gt;%\n      mutate(county_fips = substr(GEOID, 1, 5))%&gt;%\n      mutate(GEOID=as.numeric(GEOID))%&gt;%\n      mutate(county_fips=as.numeric(county_fips))%&gt;%\n      select(-variable, -moe)%&gt;%\n      rename(tract_population=estimate)\n    \n    saveRDS(us_tracts_population[[year_loop]], \n            tracts_path)\n    \n  }\n  \n  #Pull US Census counties populations if cache file doesn't already exist\n  \n  if (file.exists(counties_path)) {\n    us_counties_population[[year_loop]] &lt;- readRDS(counties_path)\n  } else {\n    \n    us_counties_population[[year_loop]]&lt;-get_acs(\n      geography = \"county\",\n      variables = \"B01003_001\",\n      year = as.numeric(year_loop),\n      survey = \"acs5\",\n      geometry = TRUE,\n      state = continental_fips\n    )%&gt;%\n      mutate(GEOID=as.numeric(GEOID))%&gt;%\n      select(-variable, -moe)%&gt;%\n      rename(county_population=estimate)\n    \n    saveRDS(us_counties_population[[year_loop]], \n            counties_path)\n    \n    \n  }\n  \n  # Load tract variable labels for age/sex values B01001 from the ACS 5-year 2017 dataset\n  vars[[year_loop]] &lt;- load_variables(year_loop, \"acs5\", cache = TRUE) %&gt;%\n    filter(str_detect(name, \"B01001_\"))%&gt;%\n    mutate(label = str_replace_all(label, \"Estimate!!Total!!\", \"\"))%&gt;%\n    mutate(label = str_replace_all(label, \"!!\", \"_\"))%&gt;%\n    mutate(label = str_replace_all(label, \" \", \"_\"))\n  \n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Load data"
     ]
   },
@@ -1032,7 +1032,7 @@
     "section": "AtlasPlus county-level HIV data",
     "text": "AtlasPlus county-level HIV data\nThis code uses the CDCAtlas package to download county-level HIV prevalence data for the years defined in year_list.\n\n\nClick to show/hide R Code\nAtlasPlusTableData_county_totals&lt;-list()\n\nfor (year_loop in year_list){\n  \n  AtlasPlusTableData_county_totals[[year_loop]] &lt;-CDCAtlas::get_atlas(disease=\"hiv\",\n                                                                      geography=\"county\",\n                                                                      year=as.numeric(year_loop))%&gt;%\n    clean_names()%&gt;%\n    rename(county_cases=cases)%&gt;%\n    rename(geo_id=fips)%&gt;%\n    rename(county_name=geography)%&gt;%\n    mutate(county_cases=if_else(is.na(county_cases),0, county_cases))%&gt;%\n    mutate(geo_id=as.numeric(geo_id))%&gt;%\n    filter(year==as.numeric(year_loop))%&gt;%\n    select(-year)%&gt;%\n    filter(indicator==\"HIV prevalence\")\n  \n}",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Load data"
     ]
   },
@@ -1043,7 +1043,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Processing",
+      "Data loading and processing",
       "Load data"
     ]
   },
@@ -1120,7 +1120,7 @@
     "section": "",
     "text": "The code in this script imports libraries, initializes constants, and performs other such preparatory work for the main analysis.",
     "crumbs": [
-      "Data Loading & Setup",
+      "Setup and helper functions",
       "Setup"
     ]
   },
@@ -1131,7 +1131,7 @@
     "section": "Libraries",
     "text": "Libraries\nThe analysis relies on a set of open-source R packages for data management, cohort construction, visualization, and statistical modeling. These libraries were selected based on their stability, community support, and suitability for large-scale longitudinal health data.\n\n\nClick to show/hide R Code\n# Libraries necessary for the analysis\n\n# Data management\nlibrary(tidyverse)\nlibrary(stringi)\nlibrary(glue)\n\n#Core library for the SRTR\nlibrary(sRtr)\n\n#Data import libraries\nlibrary(readxl)\nlibrary(readr)\nlibrary(haven)\nlibrary(mapboxapi)\nlibrary(CDCAtlas)\n\n#Geographic libraries\nlibrary(sf)\nlibrary(tigris)\nlibrary(tidycensus)\nlibrary(tmap)\nlibrary(lutz)\n\n#Table libraries\nlibrary(flextable)\nlibrary(gt)\n\n#Plotting\nlibrary(colorspace)\nlibrary(ggtext)\nlibrary(extrafont)\nlibrary(janitor)\nlibrary(ggrepel)\nlibrary(writexl)\nlibrary(plotly)\nlibrary(htmlwidgets)\nlibrary(patchwork)\nlibrary(ggbeeswarm)\nlibrary(ggpubr)\nlibrary(cowplot)\nlibrary(scales)\n\n\nThe table below lists the required packages along with links to their primary documentation.\n\n\n\n\n\n\n\n\nRequired R Packages\n\n\nLibraries used for data processing, visualization, and statistical modeling\n\n\nCategory\nR package\nDocumentation\n\n\n\n\nData management\ntidyverse\ntidyverse\n\n\nData management\nstringi\nstringi\n\n\nData management\nglue\nglue\n\n\nSRTR-specific\nsRtr\nsRtr GitHub\n\n\nData import\nreadxl\nreadxl\n\n\nData import\nreadr\nreadr\n\n\nData import\nhaven\nhaven\n\n\nData import\nmapboxapi\nmapboxapi\n\n\nData import\nCDCAtlas\nCDCAtlas GitHub\n\n\nGeographic\nsf\nsf\n\n\nGeographic\ntigris\ntigris\n\n\nGeographic\ntidycensus\ntidycensus\n\n\nGeographic\ntmap\ntmap\n\n\nGeographic\nlutz\nlutz\n\n\nTables\nflextable\nflextable\n\n\nTables\ngt\ngt\n\n\nPlotting\ncolorspace\ncolorspace\n\n\nPlotting\nggtext\nggtext\n\n\nPlotting\nextrafont\nextrafont\n\n\nPlotting\njanitor\njanitor\n\n\nPlotting\nggrepel\nggrepel\n\n\nPlotting\nwritexl\nwritexl\n\n\nPlotting\nplotly\nplotly\n\n\nPlotting\nhtmlwidgets\nhtmlwidgets\n\n\nPlotting\npatchwork\npatchwork\n\n\nPlotting\nggbeeswarm\nggbeeswarm\n\n\nPlotting\nggpubr\nggpubr\n\n\nPlotting\ncowplot\ncowplot\n\n\nPlotting\nscales\nscales",
     "crumbs": [
-      "Data Loading & Setup",
+      "Setup and helper functions",
       "Setup"
     ]
   },
@@ -1142,7 +1142,7 @@
     "section": "Constants",
     "text": "Constants\nA number of analysis parameters are reused across cohort construction, matching, and cost modeling steps.\nThese constants are defined in the R/setup.R file.\n\n\nClick to show/hide R Code\norgan_list&lt;-c(\"liver\", \"kidney\", \"heart\", \"lung\", \"pancreas\")\nyear_list&lt;-c(\"2017\", \"2022\")\ndistance_list=c(\"50mile\", \"60min\", \"100mile\", \"200mile\")\n\n#List states which are continental\ncontinental_fips &lt;- c(\n  \"01\", \"04\", \"05\", \"06\", \"08\", \"09\", \"10\", \"11\", \"12\", \"13\", \"16\",\n  \"17\", \"18\", \"19\", \"20\", \"21\", \"22\", \"23\", \"24\", \"25\", \"26\",\n  \"27\", \"28\", \"29\", \"30\", \"31\", \"32\", \"33\", \"34\", \"35\", \"36\",\n  \"37\", \"38\", \"39\", \"40\", \"41\", \"42\", \"44\", \"45\", \"46\", \"47\",\n  \"48\", \"49\", \"50\", \"51\", \"53\", \"54\", \"55\", \"56\"\n)\n\n#For isochrone analysis, we need to account for time zones in order to calculate driving time at 7 AM on the specific date\n\n#List US continental time zones\n\ntimezones&lt;-c(\"America/New_York\",\"America/Chicago\",\"America/Denver\",\"America/Los_Angeles\",\"America/Phoenix\",\n             \"America/Indiana/Indianapolis\",\"America/Kentucky/Louisville\",\"America/Detroit\")\n\nreference_date&lt;-list()\n\n# Specific date to anchor the time: First Monday in March of both years\nreference_date[[\"2022\"]] &lt;- as.Date(\"2022-03-07\")\nreference_date[[\"2017\"]] &lt;- as.Date(\"2017-03-06\")\n\n\nFor clarity, these constants are summarized below along with brief explanations of their role in the analysis.\n\n\n\n\n\n\n\n\nAnalysis Constants\n\n\nGeographic buffer definitions and time-zone parameters\n\n\nConstant\nValue\nExplanation\n\n\n\n\norgan_list\nliver, kidney, heart, lung, pancreas\nOrgans included in transplant center access analysis\n\n\nyear_list\n2017, 2022\nCalendar years evaluated for geographic access comparison\n\n\ndistance_list\n50mile, 60min, 100mile, 200mile\nDistance or drive-time buffers used to define transplant center catchment areas\n\n\ncontinental_fips\n01, 04, 05, 06, 08, 09, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 53, 54, 55, 56\nFIPS codes representing continental U.S. states included in analysis\n\n\ntimezones\nAmerica/New_York, America/Chicago, America/Denver, America/Los_Angeles, America/Phoenix, America/Indiana/Indianapolis, America/Kentucky/Louisville, America/Detroit\nTime zones used to convert local 7 AM departure times to UTC for isochrone calculations\n\n\nreference_date\n2022: 2022-03-07 | 2017: 2017-03-06\nAnchor dates (first Monday in March) used for time-zone–adjusted isochrone generation",
     "crumbs": [
-      "Data Loading & Setup",
+      "Setup and helper functions",
       "Setup"
     ]
   },
@@ -1153,7 +1153,7 @@
     "section": "Other portions of the analysis",
     "text": "Other portions of the analysis\n\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
-      "Data Loading & Setup",
+      "Setup and helper functions",
       "Setup"
     ]
   },

@@ -499,7 +499,7 @@
     "href": "quarto/background.html#hiv-epidemiology-and-geography-in-the-united-states",
     "title": "Clinical background",
     "section": "HIV epidemiology and geography in the United States",
-    "text": "HIV epidemiology and geography in the United States\nNational HIV surveillance in the United States is maintained through CDC’s HIV data systems, with regularly updated public data products and technical resources: - CDC HIV Data (landing page): https://www.cdc.gov/hiv-data/index.html\n- About HIV Surveillance and Monitoring: https://www.cdc.gov/hiv-data/about/index.html\nTo support geographic analyses, CDC’s NCHHSTP AtlasPlus provides interactive tools to visualize and extract data (tables/maps/charts) for HIV and related conditions: - About AtlasPlus: https://www.cdc.gov/nchhstp/about/atlasplus.html\n- AtlasPlus (main): https://gis.cdc.gov/grasp/nchhstpatlas/main.html\n- AtlasPlus Tables: https://gis.cdc.gov/grasp/nchhstpatlas/tables.html\n- AtlasPlus Maps: https://gis.cdc.gov/grasp/nchhstpatlas/maps.html\nBecause HIV burden is geographically heterogeneous, comparing HIV prevalence patterns with the distribution of transplant programs is a clinically meaningful way to assess structural access.",
+    "text": "HIV epidemiology and geography in the United States\nNational HIV surveillance in the United States is maintained through CDC’s HIV data systems, with regularly updated public data products and technical resources:\n\nCDC HIV Data (landing page): https://www.cdc.gov/hiv-data/index.html\nAbout HIV Surveillance and Monitoring: https://www.cdc.gov/hiv-data/about/index.html\n\nTo support geographic analyses, CDC’s NCHHSTP AtlasPlus provides interactive tools to visualize and extract data (tables/maps/charts) for HIV and related conditions:\n\nAbout AtlasPlus: https://www.cdc.gov/nchhstp/about/atlasplus.html\nAtlasPlus (main): https://gis.cdc.gov/grasp/nchhstpatlas/main.html\nAtlasPlus Tables: https://gis.cdc.gov/grasp/nchhstpatlas/tables.html\nAtlasPlus Maps: https://gis.cdc.gov/grasp/nchhstpatlas/maps.html\n\nBecause HIV burden is geographically heterogeneous, comparing HIV prevalence patterns with the distribution of transplant programs is a clinically meaningful way to assess structural access.",
     "crumbs": [
       "Background",
       "Clinical background"
@@ -521,7 +521,7 @@
     "href": "quarto/background.html#kidney-transplantation",
     "title": "Clinical background",
     "section": "Kidney transplantation",
-    "text": "Kidney transplantation\nKidney transplantation outcomes in carefully selected recipients living with HIV have been demonstrated in multicenter prospective work in the ART era.\nSeminal multicenter trial: - Stock et al., New England Journal of Medicine (2010): https://www.nejm.org/doi/full/10.1056/NEJMoa1001197\n- PubMed record: https://pubmed.ncbi.nlm.nih.gov/21083386/",
+    "text": "Kidney transplantation\nKidney transplantation outcomes in carefully selected recipients living with HIV have been demonstrated in multicenter prospective work in the ART era.\nSeminal multicenter trial:\n\nStock et al., New England Journal of Medicine (2010): https://www.nejm.org/doi/full/10.1056/NEJMoa1001197\nPubMed record: https://pubmed.ncbi.nlm.nih.gov/21083386/",
     "crumbs": [
       "Background",
       "Clinical background"
@@ -532,7 +532,7 @@
     "href": "quarto/background.html#liver-transplantation",
     "title": "Clinical background",
     "section": "Liver transplantation",
-    "text": "Liver transplantation\nLiver transplantation for people living with HIV (including HCV coinfection) has been evaluated in prospective multicenter U.S. cohorts.\nTerrault et al., Liver Transplantation (2012): - Full text: https://onlinelibrary.wiley.com/doi/full/10.1002/lt.23411\n- PubMed record: https://pubmed.ncbi.nlm.nih.gov/22328294/\n- Open-access PMC version: https://pmc.ncbi.nlm.nih.gov/articles/PMC3358510/",
+    "text": "Liver transplantation\nLiver transplantation for people living with HIV (including HCV coinfection) has been evaluated in prospective multicenter U.S. cohorts.\nTerrault et al., Liver Transplantation (2012):\n\nFull text: https://onlinelibrary.wiley.com/doi/full/10.1002/lt.23411\nPubMed record: https://pubmed.ncbi.nlm.nih.gov/22328294/\nOpen-access PMC version: https://pmc.ncbi.nlm.nih.gov/articles/PMC3358510/",
     "crumbs": [
       "Background",
       "Clinical background"
@@ -543,7 +543,7 @@
     "href": "quarto/background.html#heart-transplantation",
     "title": "Clinical background",
     "section": "Heart transplantation",
-    "text": "Heart transplantation\nRegistry-based analyses suggest that heart transplantation in people living with HIV can achieve acceptable outcomes in carefully selected patients with well-controlled HIV, though numbers remain relatively small and center experience is concentrated.\nExamples: - Madan et al., American Journal of Transplantation (2019) full text: https://www.amjtransplant.org/article/S1600-6135%2822%2909086-4/fulltext\n- PubMed record: https://pubmed.ncbi.nlm.nih.gov/30614612/\n- SRTR-based comparison study (open access, PMC): https://pmc.ncbi.nlm.nih.gov/articles/PMC6452439/",
+    "text": "Heart transplantation\nRegistry-based analyses suggest that heart transplantation in people living with HIV can achieve acceptable outcomes in carefully selected patients with well-controlled HIV, though numbers remain relatively small and center experience is concentrated.\nExamples:\n\nMadan et al., American Journal of Transplantation (2019) full text: https://www.amjtransplant.org/article/S1600-6135%2822%2909086-4/fulltext\nPubMed record: https://pubmed.ncbi.nlm.nih.gov/30614612/\nSRTR-based comparison study (open access, PMC): https://pmc.ncbi.nlm.nih.gov/articles/PMC6452439/",
     "crumbs": [
       "Background",
       "Clinical background"
@@ -554,7 +554,7 @@
     "href": "quarto/background.html#lung-transplantation",
     "title": "Clinical background",
     "section": "Lung transplantation",
-    "text": "Lung transplantation\nLung transplantation in people living with HIV has historically been uncommon, but cohort-level experience suggests feasibility in carefully selected patients with controlled HIV, while emphasizing careful attention to rejection risk and medication interactions.\nKey cohort experience (open access, PMC): - Kern et al., Annals of the American Thoracic Society (2014): https://pmc.ncbi.nlm.nih.gov/articles/PMC4213997/\n- PubMed record: https://pubmed.ncbi.nlm.nih.gov/24964265/",
+    "text": "Lung transplantation\nLung transplantation in people living with HIV has historically been uncommon, but cohort-level experience suggests feasibility in carefully selected patients with controlled HIV, while emphasizing careful attention to rejection risk and medication interactions.\nKey cohort experience (open access, PMC):\n\nKern et al., Annals of the American Thoracic Society (2014): https://pmc.ncbi.nlm.nih.gov/articles/PMC4213997/\nPubMed record: https://pubmed.ncbi.nlm.nih.gov/24964265/",
     "crumbs": [
       "Background",
       "Clinical background"
@@ -565,7 +565,7 @@
     "href": "quarto/background.html#pancreas-and-simultaneous-pancreaskidney-spk-transplantation",
     "title": "Clinical background",
     "section": "Pancreas and simultaneous pancreas–kidney (SPK) transplantation",
-    "text": "Pancreas and simultaneous pancreas–kidney (SPK) transplantation\nPancreas transplantation and SPK in people living with HIV remain rare and concentrated in a limited number of programs, but case reports and small series support feasibility in highly selected candidates.\nExamples: - Akhtar et al. (SPK case report), PubMed: https://pubmed.ncbi.nlm.nih.gov/22172869/\n- Miro et al. (SPK experience/literature), PubMed: https://pubmed.ncbi.nlm.nih.gov/21094878/\n- Grossi et al. (SPK series), PubMed: https://pubmed.ncbi.nlm.nih.gov/22221659/",
+    "text": "Pancreas and simultaneous pancreas–kidney (SPK) transplantation\nPancreas transplantation and SPK in people living with HIV remain rare and concentrated in a limited number of programs, but case reports and small series support feasibility in highly selected candidates.\nExamples:\n\nAkhtar et al. (SPK case report), PubMed: https://pubmed.ncbi.nlm.nih.gov/22172869/\nMiro et al. (SPK experience/literature), PubMed: https://pubmed.ncbi.nlm.nih.gov/21094878/\nGrossi et al. (SPK series), PubMed: https://pubmed.ncbi.nlm.nih.gov/22221659/",
     "crumbs": [
       "Background",
       "Clinical background"
@@ -576,7 +576,7 @@
     "href": "quarto/background.html#the-hope-act-and-evolving-u.s.-policy",
     "title": "Clinical background",
     "section": "The HOPE Act and evolving U.S. policy",
-    "text": "The HOPE Act and evolving U.S. policy\nUntil 2013, federal law prohibited transplantation of organs from donors with HIV. The HIV Organ Policy Equity (HOPE) Act (Public Law 113–51) created a pathway to allow transplantation of organs from donors with HIV into recipients living with HIV under specified safeguards.\n\nHOPE Act statute PDF (Congress.gov): https://www.congress.gov/113/statute/STATUTE-127/STATUTE-127-Pg579.pdf\n\nIn late 2024, HHS finalized changes determining that kidney and liver HOPE transplants no longer require participation in IRB-approved research protocols (i.e., removing the “research-only” requirement for these organs): - HHS Final Rule (Federal Register, Nov 27, 2024): https://www.federalregister.gov/documents/2024/11/27/2024-27410/organ-procurement-and-transplantation-implementation-of-the-hiv-organ-policy-equity-hope-act\n- NIH Final Notice (Federal Register, Dec 30, 2024): https://www.federalregister.gov/documents/2024/12/30/2024-31265/final-revised-human-immunodeficiency-virus-hiv-organ-policy-equity-act-safeguards-and-research\nOPTN/HRSA maintains a central HOPE Act resource page and notes the current status of the OPTN open variance: - HRSA HOPE Act resource page: https://www.hrsa.gov/optn/professionals/resources/hope-act",
+    "text": "The HOPE Act and evolving U.S. policy\nUntil 2013, federal law prohibited transplantation of organs from donors with HIV. The HIV Organ Policy Equity (HOPE) Act (Public Law 113–51) created a pathway to allow transplantation of organs from donors with HIV into recipients living with HIV under specified safeguards.\n\nHOPE Act statute PDF (Congress.gov): https://www.congress.gov/113/statute/STATUTE-127/STATUTE-127-Pg579.pdf\n\nIn late 2024, HHS finalized changes determining that kidney and liver HOPE transplants no longer require participation in IRB-approved research protocols (i.e., removing the “research-only” requirement for these organs):\n\nHHS Final Rule (Federal Register, Nov 27, 2024): https://www.federalregister.gov/documents/2024/11/27/2024-27410/organ-procurement-and-transplantation-implementation-of-the-hiv-organ-policy-equity-hope-act\nNIH Final Notice (Federal Register, Dec 30, 2024): https://www.federalregister.gov/documents/2024/12/30/2024-31265/final-revised-human-immunodeficiency-virus-hiv-organ-policy-equity-act-safeguards-and-research\n\nOPTN/HRSA maintains a central HOPE Act resource page and notes the current status of the OPTN open variance:\n\nHRSA HOPE Act resource page: https://www.hrsa.gov/optn/professionals/resources/hope-act",
     "crumbs": [
       "Background",
       "Clinical background"
@@ -598,7 +598,7 @@
     "href": "quarto/background.html#data-sources-used-in-this-project",
     "title": "Clinical background",
     "section": "Data sources used in this project",
-    "text": "Data sources used in this project\nHIV epidemiology (CDC) - CDC HIV Data: https://www.cdc.gov/hiv-data/index.html\n- CDC AtlasPlus: https://www.cdc.gov/nchhstp/about/atlasplus.html\nTransplant program reporting (SRTR) - SRTR home: https://www.srtr.org/\n- Program-Specific Reports: https://www.srtr.org/reports/program-specific-reports/\n- About SRTR reports: https://www.srtr.org/reports/about-srtr-reports/",
+    "text": "Data sources used in this project\nHIV epidemiology (CDC)\n\nCDC HIV Data: https://www.cdc.gov/hiv-data/index.html\nCDC AtlasPlus: https://www.cdc.gov/nchhstp/about/atlasplus.html\n\nTransplant program reporting (SRTR)\n\nSRTR home: https://www.srtr.org/\nProgram-Specific Reports: https://www.srtr.org/reports/program-specific-reports/\n\nAbout SRTR reports: https://www.srtr.org/reports/about-srtr-reports/",
     "crumbs": [
       "Background",
       "Clinical background"

@@ -27,6 +27,13 @@ website:
       - href: index.qmd
         text: Home
 
+      - section: Background
+        contents:
+          - href: quarto/background.qmd
+            text: Clinical background
+          - href: quarto/analysis_methods.qmd
+            text: Description of R analysis methods
+
       - section: Data Loading & Setup
         contents:
           - href: quarto/setup.qmd

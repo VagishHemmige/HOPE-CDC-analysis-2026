@@ -1,6 +1,183 @@
 # Figures
 
 
+#----Plot model of data derivation and calculations----
+
+g <- grViz("
+digraph hope_access {
+
+graph [
+  rankdir = TB
+  ranksep = 1.5
+  nodesep = 1.2
+]
+
+node [
+  fontname = Helvetica
+  fontsize = 20
+]
+
+# ----------------
+# DATA SOURCES
+# ----------------
+
+node [
+  shape = ellipse
+  style = filled
+  fillcolor = '#E0E0E0'
+  margin = '0.35,0.2'
+  fontsize = 22
+]
+
+tiger  [label = 'US Census TIGER\ngeographic data']
+srtr   [label = 'SRTR transplant\nregistry data']
+mapbox [label = 'Mapbox\nrouting API']
+cdc    [label = 'CDC HIV\nsurveillance data']
+census [label = 'US Census\npopulation (ACS)']
+
+{rank = same; tiger; srtr; mapbox; cdc; census}
+
+# ----------------
+# DERIVED DATA
+# ----------------
+
+node [
+  shape = box
+  style = 'rounded,filled'
+  fillcolor = '#E8F1FF'
+  margin = '0.25,0.2'
+  fontsize = 20
+]
+
+centers [
+label = <
+<TABLE BORDER='0' CELLBORDER='0' CELLPADDING='8'>
+<TR><TD><B>Transplant center</B></TD></TR>
+<TR><TD><B>classification</B></TD></TR>
+<TR><TD ALIGN='LEFT'>• Active centers</TD></TR>
+<TR><TD ALIGN='LEFT'>• HIV transplant centers</TD></TR>
+<TR><TD ALIGN='LEFT'>• HOPE centers</TD></TR>
+</TABLE>
+>
+]
+
+dist [
+label = <
+<TABLE BORDER='0' CELLBORDER='0'>
+<TR><TD>Distance buffers</TD></TR>
+<TR><TD>(50, 100, 200 miles)</TD></TR>
+</TABLE>
+>
+]
+
+iso [
+label = <
+<TABLE BORDER='0' CELLBORDER='0'>
+<TR><TD>Travel-time</TD></TR>
+<TR><TD>isochrones</TD></TR>
+<TR><TD>(60 minutes)</TD></TR>
+</TABLE>
+>
+]
+
+tract [
+label = <
+<TABLE BORDER='0' CELLBORDER='0'>
+<TR><TD>Tract HIV</TD></TR>
+<TR><TD>burden estimates</TD></TR>
+</TABLE>
+>
+]
+
+{rank = same; dist; iso; tract}
+
+# ----------------
+# MODEL
+# ----------------
+
+node [
+  shape = box
+  style = 'rounded,filled'
+  fillcolor = '#F4E1D2'
+  margin = '0.3,0.25'
+]
+
+model [
+width = 3.6
+label = <
+<TABLE BORDER='0' CELLBORDER='0' CELLPADDING='8'>
+<TR><TD><B>Geographic access model</B></TD></TR>
+<TR><TD>Intersect access zones with</TD></TR>
+<TR><TD>tract-level HIV population</TD></TR>
+</TABLE>
+>
+]
+
+# ----------------
+# RESULT
+# ----------------
+
+node [
+  shape = box
+  style = 'rounded,filled'
+  fillcolor = '#DFF2DF'
+  fontsize = 22
+]
+
+result [
+label = <
+<TABLE BORDER='0' CELLBORDER='0' CELLPADDING='8'>
+<TR><TD>Population with</TD></TR>
+<TR><TD>geographic access</TD></TR>
+<TR><TD>to HIV transplant centers</TD></TR>
+</TABLE>
+>
+]
+
+# ----------------
+# INVISIBLE EDGES (layout alignment)
+# ----------------
+
+tiger -> dist [style=invis]
+srtr -> centers [style=invis]
+mapbox -> iso [style=invis]
+cdc -> tract [style=invis]
+
+# ----------------
+# EDGES
+# ----------------
+
+srtr -> centers
+
+centers -> dist
+tiger -> dist
+
+centers -> iso
+mapbox -> iso
+
+cdc -> tract
+census -> tract
+
+dist -> model
+iso -> model
+tract -> model
+
+model -> result
+
+}
+")
+
+# Export diagram
+svg <- export_svg(g)
+
+writeLines(svg, "figures/hope_cdc_access_model.svg")
+
+rsvg_png(
+  charToRaw(svg),
+  "figures/hope_cdc_access_model.png",
+  width = 2600
+)
+
 
 #----Create dot plot sf data frames----
 

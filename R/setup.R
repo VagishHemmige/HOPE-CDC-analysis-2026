@@ -42,6 +42,9 @@ library(ggbeeswarm)
 library(ggpubr)
 library(cowplot)
 library(scales)
+library(DiagrammeR)
+library(DiagrammeRsvg)
+library(rsvg)
 
 
 

@@ -16,6 +16,8 @@ Results_HIV_gt    <- readRDS("../cache/Results_HIV_gt.rds")
 Results_nonHIV_gt <- readRDS("../cache/Results_nonHIV_gt.rds")
 
 source("../R/setup.R")
+source("../R/functions.R")
+
 
 
 ```
@@ -28,7 +30,6 @@ This table summarizes the number and proportion of people living with HIV who re
 
 - Active transplant centers  
 - HIV R+ transplant centers  
-- HOPE Act D+ centers  
 
 Catchment areas are defined by:
 
@@ -43,8 +44,87 @@ Results are shown for 2017 and 2022.
 
 ```{r, echo=FALSE}
 
-Results_HIV_gt[[organ]]
 
+tbl_body <- gt::extract_body(Results_HIV_gt[[organ]])
+
+tbl_body_no_hope <- tbl_body %>%
+  dplyr::filter(
+    !dplyr::if_any(
+      everything(),
+      ~ stringr::str_detect(as.character(.x), stringr::regex("HOPE", ignore_case = TRUE))
+    )
+  ) %>%
+  gt::gt() %>%
+  {
+    purrr::reduce(
+      year_list,
+      ~ .x %>%
+        gt::tab_spanner(
+          label = .y,
+          columns = matches(paste0("_", .y, "$"))
+        ),
+      .init = .
+    )
+  } %>%
+  gt::fmt_number(
+    columns = matches("Numerator_|Denominator_"),
+    decimals = 0,
+    use_seps = TRUE
+  ) %>%
+  gt::fmt_number(
+    columns = matches("Percentage_"),
+    decimals = 1
+  ) %>%
+  gt::tab_header(
+    title = "Access to transplant in PLWH"
+  ) %>%
+  gt::cols_label_with(~ "Numerator",   columns = matches("^Numerator_")) %>%
+  gt::cols_label_with(~ "Denominator", columns = matches("^Denominator_")) %>%
+  gt::cols_label_with(~ "Percentage",  columns = matches("^Percentage_")) %>%
+  {
+    purrr::reduce(
+      seq_along(year_list),
+      ~ .x %>%
+        gt::tab_style(
+          style = gt::cell_fill(
+            color = colorRampPalette(c("lightgray", "lightblue"))(length(year_list))[.y]
+          ),
+          locations = gt::cells_body(
+            columns = matches(paste0("_", year_list[.y], "$"))
+          )
+        ),
+      .init = .
+    )
+  } %>%
+  {
+    purrr::reduce(
+      seq_len(length(year_list) - 1),
+      ~ .x %>%
+        gt::tab_style(
+          style = gt::cell_borders(
+            sides = "right",
+            weight = gt::px(2),
+            color = "black"
+          ),
+          locations = gt::cells_body(
+            columns = matches(paste0("Percentage_", year_list[.y], "$"))
+          )
+        ) %>%
+        gt::tab_style(
+          style = gt::cell_borders(
+            sides = "left",
+            weight = gt::px(2),
+            color = "black"
+          ),
+          locations = gt::cells_body(
+            columns = matches(paste0("Numerator_", year_list[.y + 1], "$"))
+          )
+        ),
+      .init = .
+    )
+  }
+
+tbl_body_no_hope
 ```
 
 ### Table 2: Individuals Without HIV
@@ -97,6 +177,7 @@ list.files(
   full.names = TRUE
 )%>%
   str_subset("Active")%>%
+  str_subset("HOPE", negate = TRUE) %>%
   {
     .[order(as.numeric(stringr::str_extract(., "\\d+(?=(mile|min))")))]
   } %>%
@@ -114,7 +195,7 @@ For each catchment definition, results are shown for:
 
 - Active centers  
 - HIV R+ centers  
-- HOPE Act D+ centers  
+
 
 This section highlights temporal changes in transplant center availability.
 
@@ -130,6 +211,7 @@ list.files(
   full.names = TRUE
 )%>%
   str_subset("Active", negate=TRUE)%>%
+  str_subset("HOPE", negate = TRUE) %>%
   {
     .[order(as.numeric(stringr::str_extract(., "\\d+(?=(mile|min))")))]
   } %>%
@@ -141,24 +223,21 @@ list.files(
 
 ### Beeswarm Plots
 
-Beeswarm plots display the distribution of catchment-level population proportions across centers.
+In these beeswarm plots, we plot the number of PLWh in each transplant center's catchment area, classifying centers by whether or not they had performed an HIV R+ lung transplant in 2013-2017 and 2018-2022, respectively.
 
 Each point represents a transplant center, with the distribution shown for each distance definition.
 
 These plots illustrate variability in geographic access across centers rather than only aggregate proportions.
 
-```{r, echo=FALSE}
 
+The 50-mile results are below.
+![](../figures/lung/Beeswarm lung plot 2026-2-14 50mile.png)
 
-list.files(
-  glue::glue("../figures/{organ}"),
-  pattern = "Beeswarm.*\\.png$",
-  full.names = TRUE
-)%>%
-  {
-    .[order(as.numeric(stringr::str_extract(., "\\d+(?=(mile|min))")))]
-  } %>%
-  knitr::include_graphics()
+The 60-minute results are below.
+![](../figures/lung/Beeswarm lung plot 2026-2-14 60min.png)
 
-```
+The 100-mile results are below.
+![](../figures/lung/Beeswarm lung plot 2026-2-14 100mile.png)
 
+The 200-mile results are below.
+![](../figures/lung/Beeswarm lung plot 2026-2-14 200mile.png)

@@ -353,7 +353,6 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
    
   <ul>
   <li><a href="#initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files" id="toc-initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files" class="nav-link active" data-scroll-target="#initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files">Initial data loading and preprocessing of USRDS core and transplant files</a></li>
-  <li><a href="#other-portions-of-the-analysis" id="toc-other-portions-of-the-analysis" class="nav-link" data-scroll-target="#other-portions-of-the-analysis">Other portions of the analysis</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/main/quarto/analysis_methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -388,17 +387,13 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <p>This section describes the R analysis methods</p>
 <section id="initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files" class="level2">
 <h2 class="anchored" data-anchor-id="initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files">Initial data loading and preprocessing of USRDS core and transplant files</h2>
-<p>Pending</p>
-</section>
-<section id="other-portions-of-the-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="other-portions-of-the-analysis">Other portions of the analysis</h2>
-<ul>
-<li><p><a href="../quarto/setup.html"><strong>Setup</strong></a>: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.</p></li>
-<li><p><a href="../quarto/functions.html"><strong>Functions</strong></a>: Reusable helper functions for cohort construction, matching, costing, and modeling.</p></li>
-<li><p><a href="../quarto/tables.html"><strong>Tables</strong></a>: Summary tables and regression outputs generated from the final models.</p></li>
-<li><p><a href="../quarto/figures.html"><strong>Figures</strong></a>:Visualizations of costs, risks, and model-based estimates.</p></li>
-<li><p><a href="../quarto/about.html"><strong>About</strong></a>: methods, assumptions, and disclosures</p></li>
-</ul>
+<p>The analysis requires integration of data from multiple sources, as explained in the graphic below:</p>
+<p><img src="../figures/hope_cdc_access_model.svg" class="img-fluid"></p>
+<p>##Extrapolation of county HIV population to the census tract level</p>
+<p>The CDC Atlas database provides HIV prevalence estimates at the county level. We used a straightforward mathematical interpolation to estimate the number of people living with HIV for each <a href="https://www.census.gov/data/academy/data-gems/2018/tract.html">census tract</a>:</p>
+<p><img src="../figures/tract_math_explainer.png" class="img-fluid"></p>
+<p>while these estimates are crude at the tract level, the inaccuracy when aggregated is likely to be small as most counties. with large numbers of people with HIV are entirely within or without the catchment areas of interest. In future work, we intent to performed stratified interpolation based on race, age, and sex.</p>
+<p>For simplicity, we use the st_intersect() function to assess which census tracts lie in areas of interest, and include the entire population of tracts if the geographic boundary line crosses the census tract. In future work, we may look to perform <a href="https://walker-data.com/tidycensus/reference/interpolate_pw.html">population-weighted areal interpolation</a> instead.</p>
 
 
 <!-- -->
@@ -895,24 +890,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Initial data loading and preprocessing of USRDS core and transplant files</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Pending</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>The analysis requires integration of data from multiple sources, as explained in the graphic below:</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, eval=FALSE}</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="al">![](../figures/hope_cdc_access_model.svg)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>##Extrapolation of county HIV population to the census tract level</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>The CDC Atlas database provides HIV prevalence estimates at the county level.  We used a straightforward mathematical interpolation to estimate the number of people living with HIV for each <span class="co">[</span><span class="ot">census tract</span><span class="co">](https://www.census.gov/data/academy/data-gems/2018/tract.html)</span>:</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="al">![](../figures/tract_math_explainer.png)</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Other portions of the analysis</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>while these estimates are crude at the tract level, the inaccuracy when aggregated is likely to be small as most counties. with large numbers of people with HIV are entirely within or without the catchment areas of interest.  In future work, we intent to performed stratified interpolation based on race, age, and sex.</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Setup**</span><span class="co">](setup.qmd)</span>: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Functions**</span><span class="co">](functions.qmd)</span>: Reusable helper functions for cohort construction, matching, costing, and modeling.</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Tables**</span><span class="co">](tables.qmd)</span>: Summary tables and regression outputs generated from the final models.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Figures**</span><span class="co">](figures.qmd)</span>:Visualizations of costs, risks, and model-based estimates.</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**About**</span><span class="co">](about.qmd)</span>: methods, assumptions, and disclosures</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>For simplicity, we use the st_intersect() function to assess which census tracts lie in areas of interest, and include the entire population of tracts if the geographic boundary line crosses the census tract.  In future work, we may look to perform <span class="co">[</span><span class="ot">population-weighted areal interpolation</span><span class="co">](https://walker-data.com/tidycensus/reference/interpolate_pw.html)</span> instead.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

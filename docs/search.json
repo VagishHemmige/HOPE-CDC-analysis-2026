@@ -722,7 +722,7 @@
     "href": "quarto/analysis_methods.html#initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files",
     "title": "Background of R analysis methods",
     "section": "Initial data loading and preprocessing of USRDS core and transplant files",
-    "text": "Initial data loading and preprocessing of USRDS core and transplant files\nPending",
+    "text": "Initial data loading and preprocessing of USRDS core and transplant files\nThe analysis requires integration of data from multiple sources, as explained in the graphic below:\n\n##Extrapolation of county HIV population to the census tract level\nThe CDC Atlas database provides HIV prevalence estimates at the county level. We used a straightforward mathematical interpolation to estimate the number of people living with HIV for each census tract:\n\nwhile these estimates are crude at the tract level, the inaccuracy when aggregated is likely to be small as most counties. with large numbers of people with HIV are entirely within or without the catchment areas of interest. In future work, we intent to performed stratified interpolation based on race, age, and sex.\nFor simplicity, we use the st_intersect() function to assess which census tracts lie in areas of interest, and include the entire population of tracts if the geographic boundary line crosses the census tract. In future work, we may look to perform population-weighted areal interpolation instead.",
     "crumbs": [
       "Background",
       "Description of R analysis methods"

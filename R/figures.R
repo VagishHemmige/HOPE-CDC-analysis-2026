@@ -1,6 +1,5 @@
 # Figures
 
-
 #----Plot model of data derivation and calculations----
 
 g <- grViz("
@@ -8,8 +7,8 @@ digraph hope_access {
 
 graph [
   rankdir = TB
-  ranksep = 1.5
-  nodesep = 1.2
+  ranksep = 1.3
+  nodesep = 1.0
 ]
 
 node [
@@ -29,13 +28,15 @@ node [
   fontsize = 22
 ]
 
-tiger  [label = 'US Census TIGER\ngeographic data']
 srtr   [label = 'SRTR transplant\nregistry data']
+hrsa   [label = 'HRSA transplant\ncenter data']
+tiger  [label = 'US Census TIGER\ngeographic data']
 mapbox [label = 'Mapbox\nrouting API']
 cdc    [label = 'CDC HIV\nsurveillance data']
 census [label = 'US Census\npopulation (ACS)']
 
-{rank = same; tiger; srtr; mapbox; cdc; census}
+# Source order aligned with downstream targets
+{rank = same; srtr; hrsa; tiger; mapbox; cdc; census}
 
 # ----------------
 # DERIVED DATA
@@ -49,7 +50,7 @@ node [
   fontsize = 20
 ]
 
-centers [
+classify [
 label = <
 <TABLE BORDER='0' CELLBORDER='0' CELLPADDING='8'>
 <TR><TD><B>Transplant center</B></TD></TR>
@@ -57,6 +58,15 @@ label = <
 <TR><TD ALIGN='LEFT'>• Active centers</TD></TR>
 <TR><TD ALIGN='LEFT'>• HIV transplant centers</TD></TR>
 <TR><TD ALIGN='LEFT'>• HOPE centers</TD></TR>
+</TABLE>
+>
+]
+
+locations [
+label = <
+<TABLE BORDER='0' CELLBORDER='0' CELLPADDING='8'>
+<TR><TD><B>Transplant center</B></TD></TR>
+<TR><TD><B>locations</B></TD></TR>
 </TABLE>
 >
 ]
@@ -89,6 +99,10 @@ label = <
 >
 ]
 
+# First derived row
+{rank = same; classify; locations}
+
+# Second derived row
 {rank = same; dist; iso; tract}
 
 # ----------------
@@ -103,7 +117,7 @@ node [
 ]
 
 model [
-width = 3.6
+width = 3.8
 label = <
 <TABLE BORDER='0' CELLBORDER='0' CELLPADDING='8'>
 <TR><TD><B>Geographic access model</B></TD></TR>
@@ -138,26 +152,29 @@ label = <
 # INVISIBLE EDGES (layout alignment)
 # ----------------
 
-tiger -> dist [style=invis]
-srtr -> centers [style=invis]
-mapbox -> iso [style=invis]
-cdc -> tract [style=invis]
+srtr   -> classify  [style=invis]
+hrsa   -> locations [style=invis]
+tiger  -> dist      [style=invis]
+mapbox -> iso       [style=invis]
+cdc    -> tract     [style=invis]
 
 # ----------------
 # EDGES
 # ----------------
 
-srtr -> centers
+srtr -> classify
+hrsa -> locations
 
-centers -> dist
+locations -> dist
 tiger -> dist
 
-centers -> iso
+locations -> iso
 mapbox -> iso
 
 cdc -> tract
 census -> tract
 
+classify -> model
 dist -> model
 iso -> model
 tract -> model

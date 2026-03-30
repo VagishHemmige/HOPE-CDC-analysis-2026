@@ -141,10 +141,6 @@ list.files(
 
 ### Beeswarm Plots
 
-
-
-### Beeswarm Plots
-
 In these beeswarm plots, we plot the number of PLWh in each transplant center's catchment area, classifying centers by whether or not they had performed an HIV R+ lung transplant in 2013-2017 and 2018-2022, respectively.
 
 Each point represents a transplant center, with the distribution shown for each distance definition.

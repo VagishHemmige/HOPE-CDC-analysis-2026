@@ -193,12 +193,3 @@ for (organ_loop in organ_list)
 saveRDS(Results_HIV_gt, "cache/Results_HIV_gt.rds")
 saveRDS(Results_nonHIV_gt, "cache/Results_nonHIV_gt.rds")
 ```
-
-
-## Other portions of the analysis
-
--   [**Setup**](setup.qmd): Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.
--   [**Functions**](functions.qmd): Reusable helper functions for cohort construction, matching, costing, and modeling.
--   [**Figures**](figures.qmd):Visualizations of costs, risks, and model-based estimates.
--   [**About**](about.qmd): methods, assumptions, and disclosures
-

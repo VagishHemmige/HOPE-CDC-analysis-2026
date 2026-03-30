@@ -3,6 +3,7 @@ title: "Center-level geographic calculations"
 format: html
 ---
 
+This script prepares transplant center spatial objects for access estimation. It standardizes center-level geometry and attributes so that organ-specific distance buffers and drive-time isochrones can be generated consistently across years and center categories.
 
 ::: {.Rcode title="Source code"}
 
@@ -157,11 +158,3 @@ for (organ_loop in organ_list){
 
 ```
 
-
-## Other portions of the analysis
-
--   [**Setup**](setup.qmd): Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.
--   [**Functions**](functions.qmd): Reusable helper functions for cohort construction, matching, costing, and modeling.
--   [**Tables**](tables.qmd): Summary tables and regression outputs generated from the final models.
--   [**Figures**](figures.qmd):Visualizations of costs, risks, and model-based estimates.
--   [**About**](about.qmd): methods, assumptions, and disclosures

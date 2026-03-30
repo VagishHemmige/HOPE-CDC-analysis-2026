@@ -3,7 +3,7 @@ title: "County-level geographic calculations"
 format: html
 ---
 
-The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.
+This script performs county-level geographic preparation for the access analysis, including integration of HIV case counts, county boundaries, and related spatial attributes used to support later tract-level and catchment-level summaries. These county-level objects provide the initial geographic representation of HIV burden before finer tract-based aggregation.
 
 ::: {.Rcode title="Source code"}
 
@@ -221,12 +221,3 @@ for (year_loop in year_list) {
 
 
 ```
-
-
-## Other portions of the analysis
-
--   [**Setup**](setup.qmd): Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.
--   [**Functions**](functions.qmd): Reusable helper functions for cohort construction, matching, costing, and modeling.
--   [**Tables**](tables.qmd): Summary tables and regression outputs generated from the final models.
--   [**Figures**](figures.qmd):Visualizations of costs, risks, and model-based estimates.
--   [**About**](about.qmd): methods, assumptions, and disclosures

@@ -353,7 +353,6 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
    
   <ul>
   <li><a href="#initialize-lists" id="toc-initialize-lists" class="nav-link active" data-scroll-target="#initialize-lists">Initialize lists</a></li>
-  <li><a href="#other-portions-of-the-analysis" id="toc-other-portions-of-the-analysis" class="nav-link" data-scroll-target="#other-portions-of-the-analysis">Other portions of the analysis</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/main/quarto/classify_centers.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -385,7 +384,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </header>
 
 
-<p>The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.</p>
+<p>The code in this script classifies centers based on whether they had performed HIV D-/R+ and HIV D+/R+ transplants in the 2013-2017 and 2018-2022 periods.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -476,16 +475,6 @@ Source code
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-<section id="other-portions-of-the-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="other-portions-of-the-analysis">Other portions of the analysis</h2>
-<ul>
-<li><a href="../quarto/setup.html"><strong>Setup</strong></a>: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.</li>
-<li><a href="../quarto/functions.html"><strong>Functions</strong></a>: Reusable helper functions for cohort construction, matching, costing, and modeling.</li>
-<li><a href="../quarto/tables.html"><strong>Tables</strong></a>: Summary tables and regression outputs generated from the final models.</li>
-<li><a href="../quarto/figures.html"><strong>Figures</strong></a>:Visualizations of costs, risks, and model-based estimates.</li>
-<li><a href="../quarto/about.html"><strong>About</strong></a>: methods, assumptions, and disclosures</li>
-</ul>
 
 
 <!-- -->
@@ -978,7 +967,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>The code in this script classifies centers based on whether they had performed HIV D-/R+ and HIV D+/R+ transplants in the 2013-2017 and 2018-2022 periods.</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
@@ -1067,15 +1056,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## Other portions of the analysis</span></span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Setup**</span><span class="co">](setup.qmd)</span>: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Functions**</span><span class="co">](functions.qmd)</span>: Reusable helper functions for cohort construction, matching, costing, and modeling.</span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Tables**</span><span class="co">](tables.qmd)</span>: Summary tables and regression outputs generated from the final models.</span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Figures**</span><span class="co">](figures.qmd)</span>:Visualizations of costs, risks, and model-based estimates.</span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**About**</span><span class="co">](about.qmd)</span>: methods, assumptions, and disclosures</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

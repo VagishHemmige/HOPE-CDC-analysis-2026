@@ -356,7 +356,6 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <li><a href="#converting-data-frame-of-summary-results-into-a-gt-format-table" id="toc-converting-data-frame-of-summary-results-into-a-gt-format-table" class="nav-link" data-scroll-target="#converting-data-frame-of-summary-results-into-a-gt-format-table">converting data frame of summary results into a <code>gt</code> format table</a></li>
   <li><a href="#creates-paired-plots-of-maps-with-percentages-in-the-plot" id="toc-creates-paired-plots-of-maps-with-percentages-in-the-plot" class="nav-link" data-scroll-target="#creates-paired-plots-of-maps-with-percentages-in-the-plot">Creates paired plots of maps with percentages in the plot</a></li>
   <li><a href="#plot-the-number-of-people-with-hiv-in-the-catchment-area-of-each-transplant-center" id="toc-plot-the-number-of-people-with-hiv-in-the-catchment-area-of-each-transplant-center" class="nav-link" data-scroll-target="#plot-the-number-of-people-with-hiv-in-the-catchment-area-of-each-transplant-center">Plot the number of people with HIV in the catchment area of each transplant center</a></li>
-  <li><a href="#other-portions-of-the-analysis" id="toc-other-portions-of-the-analysis" class="nav-link" data-scroll-target="#other-portions-of-the-analysis">Other portions of the analysis</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/main/quarto/functions.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -388,7 +387,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </header>
 
 
-<p>The code in this script generates tables for the manuscript.</p>
+<p>The code in this script performs a number of useful tasks required for the analysis.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -870,15 +869,6 @@ Source code
 <span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-<section id="other-portions-of-the-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="other-portions-of-the-analysis">Other portions of the analysis</h2>
-<ul>
-<li><a href="../quarto/setup.html"><strong>Setup</strong></a>: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.</li>
-<li><a href="../quarto/tables.html"><strong>Tables</strong></a>: Summary tables and regression outputs generated from the final models.</li>
-<li><a href="../quarto/figures.html"><strong>Figures</strong></a>:Visualizations of costs, risks, and model-based estimates.</li>
-<li><a href="../quarto/about.html"><strong>About</strong></a>: methods, assumptions, and disclosures</li>
-</ul>
 
 
 <!-- -->
@@ -1371,7 +1361,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>The code in this script generates tables for the manuscript.</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>The code in this script performs a number of useful tasks required for the analysis.</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
@@ -1854,16 +1844,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-486"><a href="#cb5-486" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
 <span id="cb5-487"><a href="#cb5-487" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
 <span id="cb5-488"><a href="#cb5-488" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb5-489"><a href="#cb5-489" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-490"><a href="#cb5-490" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-491"><a href="#cb5-491" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-492"><a href="#cb5-492" aria-hidden="true" tabindex="-1"></a><span class="fu">## Other portions of the analysis</span></span>
-<span id="cb5-493"><a href="#cb5-493" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-494"><a href="#cb5-494" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-495"><a href="#cb5-495" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Setup**</span><span class="co">](setup.qmd)</span>: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.</span>
-<span id="cb5-496"><a href="#cb5-496" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Tables**</span><span class="co">](tables.qmd)</span>: Summary tables and regression outputs generated from the final models.</span>
-<span id="cb5-497"><a href="#cb5-497" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Figures**</span><span class="co">](figures.qmd)</span>:Visualizations of costs, risks, and model-based estimates.</span>
-<span id="cb5-498"><a href="#cb5-498" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**About**</span><span class="co">](about.qmd)</span>: methods, assumptions, and disclosures</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb5-489"><a href="#cb5-489" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

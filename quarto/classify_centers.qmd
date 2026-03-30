@@ -3,7 +3,7 @@ title: "Classify centers"
 format: html
 ---
 
-The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.
+The code in this script classifies centers based on whether they had performed HIV D-/R+ and HIV D+/R+ transplants in the 2013-2017 and 2018-2022 periods.
 
 ::: {.Rcode title="Source code"}
 
@@ -94,10 +94,3 @@ for (organ_loop in organ_list)
 ```
 
 
-## Other portions of the analysis
-
--   [**Setup**](setup.qmd): Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.
--   [**Functions**](functions.qmd): Reusable helper functions for cohort construction, matching, costing, and modeling.
--   [**Tables**](tables.qmd): Summary tables and regression outputs generated from the final models.
--   [**Figures**](figures.qmd):Visualizations of costs, risks, and model-based estimates.
--   [**About**](about.qmd): methods, assumptions, and disclosures

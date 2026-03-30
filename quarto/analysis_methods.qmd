@@ -3,20 +3,32 @@ title: "Background of R analysis methods"
 format: html
 ---
 
-This section describes the R analysis methods
+This section describes the R analysis methods utilized in this analysis at a conceptual level, with later pages explaining the analysis in more detail.
 
-## Initial data loading and preprocessing of USRDS core and transplant files
+## Initial data loading and preprocessing of data from raw sources
 
 The analysis requires integration of data from multiple sources, as explained in the graphic below:
 
 ![](../figures/hope_cdc_access_model.svg)
 
-##Extrapolation of county HIV population to the census tract level
+At a high level, each source contributed the following:
+
+- **CDC AtlasPlus** provided county-level estimates of the number of people living with HIV. These data formed the basis for the HIV burden estimates used throughout the analysis.
+- **U.S. Census Bureau / American Community Survey (ACS)** provided tract- and county-level population denominators used to estimate how HIV burden might be distributed within counties.
+- **Census TIGER/Line shapefiles** provided the geographic boundary files for counties, census tracts, and other map layers used in spatial processing.
+- **HRSA transplant center data** provided the geographic locations of transplant centers.
+- **SRTR data** were used to classify transplant centers according to center characteristics relevant to this study.
+- **Mapbox isochrone and routing tools** were used to estimate travel-time catchment areas around transplant centers.
+
+
+## Extrapolation of county HIV population to the census tract level
 
 The CDC Atlas database provides HIV prevalence estimates at the county level.  We used a straightforward mathematical interpolation to estimate the number of people living with HIV for each [census tract](https://www.census.gov/data/academy/data-gems/2018/tract.html):
 
 ![](../figures/tract_math_explainer.png)
 
-while these estimates are crude at the tract level, the inaccuracy when aggregated is likely to be small as most counties. with large numbers of people with HIV are entirely within or without the catchment areas of interest.  In future work, we intent to performed stratified interpolation based on race, age, and sex.
+Because CDC AtlasPlus provides HIV prevalence estimates at the county level, tract-level counts were approximated by allocating county case counts in proportion to tract population. This produces crude tract-level estimates, but should introduce limited error in aggregated analyses when catchment boundaries tend to encompass most or none of a county’s high-burden tracts. In future work, we plan to evaluate stratified or [population-weighted areal interpolation](https://walker-data.com/tidycensus/reference/interpolate_pw.html) instead.
 
-For simplicity, we use the st_intersect() function to assess which census tracts lie in areas of interest, and include the entire population of tracts if the geographic boundary line crosses the census tract.  In future work, we may look to perform [population-weighted areal interpolation](https://walker-data.com/tidycensus/reference/interpolate_pw.html) instead.
+## Geospatial methods in R
+
+Geospatial processing for this analysis was conducted in R, using the `sf` package as the primary framework for spatial data management and analysis. The geospatial approach closely follows the methods outlined in [*Analyzing US Census Data: Methods, Maps, and Models in R*](https://walker-data.com/census-r/), which provides a practical foundation for working with Census geography in R.

@@ -352,7 +352,9 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files" id="toc-initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files" class="nav-link active" data-scroll-target="#initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files">Initial data loading and preprocessing of USRDS core and transplant files</a></li>
+  <li><a href="#initial-data-loading-and-preprocessing-of-data-from-raw-sources" id="toc-initial-data-loading-and-preprocessing-of-data-from-raw-sources" class="nav-link active" data-scroll-target="#initial-data-loading-and-preprocessing-of-data-from-raw-sources">Initial data loading and preprocessing of data from raw sources</a></li>
+  <li><a href="#extrapolation-of-county-hiv-population-to-the-census-tract-level" id="toc-extrapolation-of-county-hiv-population-to-the-census-tract-level" class="nav-link" data-scroll-target="#extrapolation-of-county-hiv-population-to-the-census-tract-level">Extrapolation of county HIV population to the census tract level</a></li>
+  <li><a href="#geospatial-methods-in-r" id="toc-geospatial-methods-in-r" class="nav-link" data-scroll-target="#geospatial-methods-in-r">Geospatial methods in R</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/main/quarto/analysis_methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -384,16 +386,30 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </header>
 
 
-<p>This section describes the R analysis methods</p>
-<section id="initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files" class="level2">
-<h2 class="anchored" data-anchor-id="initial-data-loading-and-preprocessing-of-usrds-core-and-transplant-files">Initial data loading and preprocessing of USRDS core and transplant files</h2>
+<p>This section describes the R analysis methods utilized in this analysis at a conceptual level, with later pages explaining the analysis in more detail.</p>
+<section id="initial-data-loading-and-preprocessing-of-data-from-raw-sources" class="level2">
+<h2 class="anchored" data-anchor-id="initial-data-loading-and-preprocessing-of-data-from-raw-sources">Initial data loading and preprocessing of data from raw sources</h2>
 <p>The analysis requires integration of data from multiple sources, as explained in the graphic below:</p>
 <p><img src="../figures/hope_cdc_access_model.svg" class="img-fluid"></p>
-<p>##Extrapolation of county HIV population to the census tract level</p>
+<p>At a high level, each source contributed the following:</p>
+<ul>
+<li><strong>CDC AtlasPlus</strong> provided county-level estimates of the number of people living with HIV. These data formed the basis for the HIV burden estimates used throughout the analysis.</li>
+<li><strong>U.S. Census Bureau / American Community Survey (ACS)</strong> provided tract- and county-level population denominators used to estimate how HIV burden might be distributed within counties.</li>
+<li><strong>Census TIGER/Line shapefiles</strong> provided the geographic boundary files for counties, census tracts, and other map layers used in spatial processing.</li>
+<li><strong>HRSA transplant center data</strong> provided the geographic locations of transplant centers.</li>
+<li><strong>SRTR data</strong> were used to classify transplant centers according to center characteristics relevant to this study.</li>
+<li><strong>Mapbox isochrone and routing tools</strong> were used to estimate travel-time catchment areas around transplant centers.</li>
+</ul>
+</section>
+<section id="extrapolation-of-county-hiv-population-to-the-census-tract-level" class="level2">
+<h2 class="anchored" data-anchor-id="extrapolation-of-county-hiv-population-to-the-census-tract-level">Extrapolation of county HIV population to the census tract level</h2>
 <p>The CDC Atlas database provides HIV prevalence estimates at the county level. We used a straightforward mathematical interpolation to estimate the number of people living with HIV for each <a href="https://www.census.gov/data/academy/data-gems/2018/tract.html">census tract</a>:</p>
 <p><img src="../figures/tract_math_explainer.png" class="img-fluid"></p>
-<p>while these estimates are crude at the tract level, the inaccuracy when aggregated is likely to be small as most counties. with large numbers of people with HIV are entirely within or without the catchment areas of interest. In future work, we intent to performed stratified interpolation based on race, age, and sex.</p>
-<p>For simplicity, we use the st_intersect() function to assess which census tracts lie in areas of interest, and include the entire population of tracts if the geographic boundary line crosses the census tract. In future work, we may look to perform <a href="https://walker-data.com/tidycensus/reference/interpolate_pw.html">population-weighted areal interpolation</a> instead.</p>
+<p>Because CDC AtlasPlus provides HIV prevalence estimates at the county level, tract-level counts were approximated by allocating county case counts in proportion to tract population. This produces crude tract-level estimates, but should introduce limited error in aggregated analyses when catchment boundaries tend to encompass most or none of a county’s high-burden tracts. In future work, we plan to evaluate stratified or <a href="https://walker-data.com/tidycensus/reference/interpolate_pw.html">population-weighted areal interpolation</a> instead.</p>
+</section>
+<section id="geospatial-methods-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="geospatial-methods-in-r">Geospatial methods in R</h2>
+<p>Geospatial processing for this analysis was conducted in R, using the <code>sf</code> package as the primary framework for spatial data management and analysis. The geospatial approach closely follows the methods outlined in <a href="https://walker-data.com/census-r/"><em>Analyzing US Census Data: Methods, Maps, and Models in R</em></a>, which provides a practical foundation for working with Census geography in R.</p>
 
 
 <!-- -->
@@ -886,23 +902,35 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>This section describes the R analysis methods</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>This section describes the R analysis methods utilized in this analysis at a conceptual level, with later pages explaining the analysis in more detail.</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Initial data loading and preprocessing of USRDS core and transplant files</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## Initial data loading and preprocessing of data from raw sources</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>The analysis requires integration of data from multiple sources, as explained in the graphic below:</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="al">![](../figures/hope_cdc_access_model.svg)</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>##Extrapolation of county HIV population to the census tract level</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>At a high level, each source contributed the following:</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>The CDC Atlas database provides HIV prevalence estimates at the county level.  We used a straightforward mathematical interpolation to estimate the number of people living with HIV for each <span class="co">[</span><span class="ot">census tract</span><span class="co">](https://www.census.gov/data/academy/data-gems/2018/tract.html)</span>:</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="al">![](../figures/tract_math_explainer.png)</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>while these estimates are crude at the tract level, the inaccuracy when aggregated is likely to be small as most counties. with large numbers of people with HIV are entirely within or without the catchment areas of interest.  In future work, we intent to performed stratified interpolation based on race, age, and sex.</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>For simplicity, we use the st_intersect() function to assess which census tracts lie in areas of interest, and include the entire population of tracts if the geographic boundary line crosses the census tract.  In future work, we may look to perform <span class="co">[</span><span class="ot">population-weighted areal interpolation</span><span class="co">](https://walker-data.com/tidycensus/reference/interpolate_pw.html)</span> instead.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**CDC AtlasPlus** provided county-level estimates of the number of people living with HIV. These data formed the basis for the HIV burden estimates used throughout the analysis.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**U.S. Census Bureau / American Community Survey (ACS)** provided tract- and county-level population denominators used to estimate how HIV burden might be distributed within counties.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Census TIGER/Line shapefiles** provided the geographic boundary files for counties, census tracts, and other map layers used in spatial processing.</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**HRSA transplant center data** provided the geographic locations of transplant centers.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**SRTR data** were used to classify transplant centers according to center characteristics relevant to this study.</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mapbox isochrone and routing tools** were used to estimate travel-time catchment areas around transplant centers.</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Extrapolation of county HIV population to the census tract level</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>The CDC Atlas database provides HIV prevalence estimates at the county level.  We used a straightforward mathematical interpolation to estimate the number of people living with HIV for each <span class="co">[</span><span class="ot">census tract</span><span class="co">](https://www.census.gov/data/academy/data-gems/2018/tract.html)</span>:</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="al">![](../figures/tract_math_explainer.png)</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Because CDC AtlasPlus provides HIV prevalence estimates at the county level, tract-level counts were approximated by allocating county case counts in proportion to tract population. This produces crude tract-level estimates, but should introduce limited error in aggregated analyses when catchment boundaries tend to encompass most or none of a county’s high-burden tracts. In future work, we plan to evaluate stratified or <span class="co">[</span><span class="ot">population-weighted areal interpolation</span><span class="co">](https://walker-data.com/tidycensus/reference/interpolate_pw.html)</span> instead.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Geospatial methods in R</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>Geospatial processing for this analysis was conducted in R, using the <span class="in">`sf`</span> package as the primary framework for spatial data management and analysis. The geospatial approach closely follows the methods outlined in <span class="co">[</span><span class="ot">*Analyzing US Census Data: Methods, Maps, and Models in R*</span><span class="co">](https://walker-data.com/census-r/)</span>, which provides a practical foundation for working with Census geography in R.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

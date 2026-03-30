@@ -366,7 +366,6 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   <li><a href="#step-2-loop-over-years" id="toc-step-2-loop-over-years" class="nav-link" data-scroll-target="#step-2-loop-over-years">Step 2: Loop Over Years</a></li>
   <li><a href="#a-merge-county-population-data-with-cdc-atlas-data" id="toc-a-merge-county-population-data-with-cdc-atlas-data" class="nav-link" data-scroll-target="#a-merge-county-population-data-with-cdc-atlas-data">A) Merge County Population Data with CDC Atlas Data</a></li>
   </ul></li>
-  <li><a href="#other-portions-of-the-analysis" id="toc-other-portions-of-the-analysis" class="nav-link" data-scroll-target="#other-portions-of-the-analysis">Other portions of the analysis</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/main/quarto/county_geographic_calculations.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -398,7 +397,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </header>
 
 
-<p>The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.</p>
+<p>This script performs county-level geographic preparation for the access analysis, including integration of HIV case counts, county boundaries, and related spatial attributes used to support later tract-level and catchment-level summaries. These county-level objects provide the initial geographic representation of HIV burden before finer tract-based aggregation.</p>
 <div class="callout callout-style-default callout-Rcode callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -600,21 +599,11 @@ Census tract–level spatial data with estimated HIV-positive and HIV-negative p
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
-</section>
-<section id="other-portions-of-the-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="other-portions-of-the-analysis">Other portions of the analysis</h2>
-<ul>
-<li><a href="../quarto/setup.html"><strong>Setup</strong></a>: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.</li>
-<li><a href="../quarto/functions.html"><strong>Functions</strong></a>: Reusable helper functions for cohort construction, matching, costing, and modeling.</li>
-<li><a href="../quarto/tables.html"><strong>Tables</strong></a>: Summary tables and regression outputs generated from the final models.</li>
-<li><a href="../quarto/figures.html"><strong>Figures</strong></a>:Visualizations of costs, risks, and model-based estimates.</li>
-<li><a href="../quarto/about.html"><strong>About</strong></a>: methods, assumptions, and disclosures</li>
-</ul>
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1103,7 +1092,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>The code in this script creates the cohort of kidney transplant patients eligible for the study for use in other scripts.</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>This script performs county-level geographic preparation for the access analysis, including integration of HIV case counts, county boundaries, and related spatial attributes used to support later tract-level and catchment-level summaries. These county-level objects provide the initial geographic representation of HIV burden before finer tract-based aggregation.</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>::: {.Rcode title="Source code"}</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
@@ -1320,16 +1309,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a><span class="fu">## Other portions of the analysis</span></span>
-<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Setup**</span><span class="co">](setup.qmd)</span>: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.</span>
-<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Functions**</span><span class="co">](functions.qmd)</span>: Reusable helper functions for cohort construction, matching, costing, and modeling.</span>
-<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Tables**</span><span class="co">](tables.qmd)</span>: Summary tables and regression outputs generated from the final models.</span>
-<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**Figures**</span><span class="co">](figures.qmd)</span>:Visualizations of costs, risks, and model-based estimates.</span>
-<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">**About**</span><span class="co">](about.qmd)</span>: methods, assumptions, and disclosures</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

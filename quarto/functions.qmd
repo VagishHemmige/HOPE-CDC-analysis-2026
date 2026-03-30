@@ -3,7 +3,7 @@ title: "Functions"
 format: html
 ---
 
-The code in this script generates tables for the manuscript.
+The code in this script performs a number of useful tasks required for the analysis.
 
 ::: {.Rcode title="Source code"}
 
@@ -488,11 +488,3 @@ plot_center_HIV_catchment<-function(organ,
 }
 ```
 
-
-## Other portions of the analysis
-
-
--   [**Setup**](setup.qmd): Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.
--   [**Tables**](tables.qmd): Summary tables and regression outputs generated from the final models.
--   [**Figures**](figures.qmd):Visualizations of costs, risks, and model-based estimates.
--   [**About**](about.qmd): methods, assumptions, and disclosures

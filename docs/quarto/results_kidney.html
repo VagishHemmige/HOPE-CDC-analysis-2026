@@ -76,6 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-b512256bc363577b27543e003c495f0c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -420,23 +423,23 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <hr>
 <div class="cell">
 <div class="cell-output-display">
-<div id="yxqfislzpo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yxqfislzpo table {
+<div id="iwscofcsjj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#iwscofcsjj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yxqfislzpo thead, #yxqfislzpo tbody, #yxqfislzpo tfoot, #yxqfislzpo tr, #yxqfislzpo td, #yxqfislzpo th {
+#iwscofcsjj thead, #iwscofcsjj tbody, #iwscofcsjj tfoot, #iwscofcsjj tr, #iwscofcsjj td, #iwscofcsjj th {
   border-style: none;
 }
 
-#yxqfislzpo p {
+#iwscofcsjj p {
   margin: 0;
   padding: 0;
 }
 
-#yxqfislzpo .gt_table {
+#iwscofcsjj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -462,12 +465,12 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-left-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_caption {
+#iwscofcsjj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yxqfislzpo .gt_title {
+#iwscofcsjj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -479,7 +482,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-bottom-width: 0;
 }
 
-#yxqfislzpo .gt_subtitle {
+#iwscofcsjj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -491,7 +494,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-top-width: 0;
 }
 
-#yxqfislzpo .gt_heading {
+#iwscofcsjj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -503,13 +506,13 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-right-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_bottom_border {
+#iwscofcsjj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_col_headings {
+#iwscofcsjj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -524,7 +527,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-right-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_col_heading {
+#iwscofcsjj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -544,7 +547,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   overflow-x: hidden;
 }
 
-#yxqfislzpo .gt_column_spanner_outer {
+#iwscofcsjj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -556,15 +559,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 4px;
 }
 
-#yxqfislzpo .gt_column_spanner_outer:first-child {
+#iwscofcsjj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yxqfislzpo .gt_column_spanner_outer:last-child {
+#iwscofcsjj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yxqfislzpo .gt_column_spanner {
+#iwscofcsjj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -576,11 +579,11 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   width: 100%;
 }
 
-#yxqfislzpo .gt_spanner_row {
+#iwscofcsjj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yxqfislzpo .gt_group_heading {
+#iwscofcsjj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -606,7 +609,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   text-align: left;
 }
 
-#yxqfislzpo .gt_empty_group_heading {
+#iwscofcsjj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -621,15 +624,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   vertical-align: middle;
 }
 
-#yxqfislzpo .gt_from_md > :first-child {
+#iwscofcsjj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yxqfislzpo .gt_from_md > :last-child {
+#iwscofcsjj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yxqfislzpo .gt_row {
+#iwscofcsjj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -648,7 +651,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   overflow-x: hidden;
 }
 
-#yxqfislzpo .gt_stub {
+#iwscofcsjj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -661,7 +664,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 5px;
 }
 
-#yxqfislzpo .gt_stub_row_group {
+#iwscofcsjj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -675,15 +678,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   vertical-align: top;
 }
 
-#yxqfislzpo .gt_row_group_first td {
+#iwscofcsjj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yxqfislzpo .gt_row_group_first th {
+#iwscofcsjj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yxqfislzpo .gt_summary_row {
+#iwscofcsjj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -693,16 +696,16 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 5px;
 }
 
-#yxqfislzpo .gt_first_summary_row {
+#iwscofcsjj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_first_summary_row.thick {
+#iwscofcsjj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yxqfislzpo .gt_last_summary_row {
+#iwscofcsjj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -712,7 +715,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-bottom-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_grand_summary_row {
+#iwscofcsjj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -722,7 +725,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 5px;
 }
 
-#yxqfislzpo .gt_first_grand_summary_row {
+#iwscofcsjj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -732,7 +735,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-top-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_last_grand_summary_row_top {
+#iwscofcsjj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -742,11 +745,11 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-bottom-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_striped {
+#iwscofcsjj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yxqfislzpo .gt_table_body {
+#iwscofcsjj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -755,7 +758,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-bottom-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_footnotes {
+#iwscofcsjj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -769,7 +772,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-right-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_footnote {
+#iwscofcsjj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -778,7 +781,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 5px;
 }
 
-#yxqfislzpo .gt_sourcenotes {
+#iwscofcsjj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -792,7 +795,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-right-color: #D3D3D3;
 }
 
-#yxqfislzpo .gt_sourcenote {
+#iwscofcsjj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -800,72 +803,72 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 5px;
 }
 
-#yxqfislzpo .gt_left {
+#iwscofcsjj .gt_left {
   text-align: left;
 }
 
-#yxqfislzpo .gt_center {
+#iwscofcsjj .gt_center {
   text-align: center;
 }
 
-#yxqfislzpo .gt_right {
+#iwscofcsjj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yxqfislzpo .gt_font_normal {
+#iwscofcsjj .gt_font_normal {
   font-weight: normal;
 }
 
-#yxqfislzpo .gt_font_bold {
+#iwscofcsjj .gt_font_bold {
   font-weight: bold;
 }
 
-#yxqfislzpo .gt_font_italic {
+#iwscofcsjj .gt_font_italic {
   font-style: italic;
 }
 
-#yxqfislzpo .gt_super {
+#iwscofcsjj .gt_super {
   font-size: 65%;
 }
 
-#yxqfislzpo .gt_footnote_marks {
+#iwscofcsjj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yxqfislzpo .gt_asterisk {
+#iwscofcsjj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yxqfislzpo .gt_indent_1 {
+#iwscofcsjj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yxqfislzpo .gt_indent_2 {
+#iwscofcsjj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yxqfislzpo .gt_indent_3 {
+#iwscofcsjj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yxqfislzpo .gt_indent_4 {
+#iwscofcsjj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yxqfislzpo .gt_indent_5 {
+#iwscofcsjj .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yxqfislzpo .katex-display {
+#iwscofcsjj .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yxqfislzpo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#iwscofcsjj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1030,23 +1033,23 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <hr>
 <div class="cell">
 <div class="cell-output-display">
-<div id="istuwdgyod" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#istuwdgyod table {
+<div id="yymqxgjfow" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yymqxgjfow table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#istuwdgyod thead, #istuwdgyod tbody, #istuwdgyod tfoot, #istuwdgyod tr, #istuwdgyod td, #istuwdgyod th {
+#yymqxgjfow thead, #yymqxgjfow tbody, #yymqxgjfow tfoot, #yymqxgjfow tr, #yymqxgjfow td, #yymqxgjfow th {
   border-style: none;
 }
 
-#istuwdgyod p {
+#yymqxgjfow p {
   margin: 0;
   padding: 0;
 }
 
-#istuwdgyod .gt_table {
+#yymqxgjfow .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1072,12 +1075,12 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-left-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_caption {
+#yymqxgjfow .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#istuwdgyod .gt_title {
+#yymqxgjfow .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1089,7 +1092,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-bottom-width: 0;
 }
 
-#istuwdgyod .gt_subtitle {
+#yymqxgjfow .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1101,7 +1104,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-top-width: 0;
 }
 
-#istuwdgyod .gt_heading {
+#yymqxgjfow .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1113,13 +1116,13 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-right-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_bottom_border {
+#yymqxgjfow .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_col_headings {
+#yymqxgjfow .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1134,7 +1137,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-right-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_col_heading {
+#yymqxgjfow .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1154,7 +1157,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   overflow-x: hidden;
 }
 
-#istuwdgyod .gt_column_spanner_outer {
+#yymqxgjfow .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1166,15 +1169,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 4px;
 }
 
-#istuwdgyod .gt_column_spanner_outer:first-child {
+#yymqxgjfow .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#istuwdgyod .gt_column_spanner_outer:last-child {
+#yymqxgjfow .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#istuwdgyod .gt_column_spanner {
+#yymqxgjfow .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1186,11 +1189,11 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   width: 100%;
 }
 
-#istuwdgyod .gt_spanner_row {
+#yymqxgjfow .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#istuwdgyod .gt_group_heading {
+#yymqxgjfow .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1216,7 +1219,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   text-align: left;
 }
 
-#istuwdgyod .gt_empty_group_heading {
+#yymqxgjfow .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1231,15 +1234,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   vertical-align: middle;
 }
 
-#istuwdgyod .gt_from_md > :first-child {
+#yymqxgjfow .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#istuwdgyod .gt_from_md > :last-child {
+#yymqxgjfow .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#istuwdgyod .gt_row {
+#yymqxgjfow .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1258,7 +1261,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   overflow-x: hidden;
 }
 
-#istuwdgyod .gt_stub {
+#yymqxgjfow .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1271,7 +1274,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 5px;
 }
 
-#istuwdgyod .gt_stub_row_group {
+#yymqxgjfow .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1285,15 +1288,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   vertical-align: top;
 }
 
-#istuwdgyod .gt_row_group_first td {
+#yymqxgjfow .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#istuwdgyod .gt_row_group_first th {
+#yymqxgjfow .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#istuwdgyod .gt_summary_row {
+#yymqxgjfow .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1303,16 +1306,16 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 5px;
 }
 
-#istuwdgyod .gt_first_summary_row {
+#yymqxgjfow .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_first_summary_row.thick {
+#yymqxgjfow .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#istuwdgyod .gt_last_summary_row {
+#yymqxgjfow .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1322,7 +1325,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-bottom-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_grand_summary_row {
+#yymqxgjfow .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1332,7 +1335,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 5px;
 }
 
-#istuwdgyod .gt_first_grand_summary_row {
+#yymqxgjfow .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1342,7 +1345,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-top-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_last_grand_summary_row_top {
+#yymqxgjfow .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1352,11 +1355,11 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-bottom-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_striped {
+#yymqxgjfow .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#istuwdgyod .gt_table_body {
+#yymqxgjfow .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1365,7 +1368,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-bottom-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_footnotes {
+#yymqxgjfow .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1379,7 +1382,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-right-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_footnote {
+#yymqxgjfow .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1388,7 +1391,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 5px;
 }
 
-#istuwdgyod .gt_sourcenotes {
+#yymqxgjfow .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1402,7 +1405,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   border-right-color: #D3D3D3;
 }
 
-#istuwdgyod .gt_sourcenote {
+#yymqxgjfow .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1410,72 +1413,72 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
   padding-right: 5px;
 }
 
-#istuwdgyod .gt_left {
+#yymqxgjfow .gt_left {
   text-align: left;
 }
 
-#istuwdgyod .gt_center {
+#yymqxgjfow .gt_center {
   text-align: center;
 }
 
-#istuwdgyod .gt_right {
+#yymqxgjfow .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#istuwdgyod .gt_font_normal {
+#yymqxgjfow .gt_font_normal {
   font-weight: normal;
 }
 
-#istuwdgyod .gt_font_bold {
+#yymqxgjfow .gt_font_bold {
   font-weight: bold;
 }
 
-#istuwdgyod .gt_font_italic {
+#yymqxgjfow .gt_font_italic {
   font-style: italic;
 }
 
-#istuwdgyod .gt_super {
+#yymqxgjfow .gt_super {
   font-size: 65%;
 }
 
-#istuwdgyod .gt_footnote_marks {
+#yymqxgjfow .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#istuwdgyod .gt_asterisk {
+#yymqxgjfow .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#istuwdgyod .gt_indent_1 {
+#yymqxgjfow .gt_indent_1 {
   text-indent: 5px;
 }
 
-#istuwdgyod .gt_indent_2 {
+#yymqxgjfow .gt_indent_2 {
   text-indent: 10px;
 }
 
-#istuwdgyod .gt_indent_3 {
+#yymqxgjfow .gt_indent_3 {
   text-indent: 15px;
 }
 
-#istuwdgyod .gt_indent_4 {
+#yymqxgjfow .gt_indent_4 {
   text-indent: 20px;
 }
 
-#istuwdgyod .gt_indent_5 {
+#yymqxgjfow .gt_indent_5 {
   text-indent: 25px;
 }
 
-#istuwdgyod .katex-display {
+#yymqxgjfow .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#istuwdgyod div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#yymqxgjfow div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1580,28 +1583,28 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/ActivekidneyCenterCombinedPlot50mile.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/ActivekidneyCenterCombinedPlot50mile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../figures/kidney/ActivekidneyCenterCombinedPlot50mile.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/ActivekidneyCenterCombinedPlot60min.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/ActivekidneyCenterCombinedPlot60min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../figures/kidney/ActivekidneyCenterCombinedPlot60min.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/ActivekidneyCenterCombinedPlot100mile.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/ActivekidneyCenterCombinedPlot100mile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../figures/kidney/ActivekidneyCenterCombinedPlot100mile.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/ActivekidneyCenterCombinedPlot200mile.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/ActivekidneyCenterCombinedPlot200mile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../figures/kidney/ActivekidneyCenterCombinedPlot200mile.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
@@ -1625,84 +1628,84 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 50mile active.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 50mile active.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="../figures/kidney/Combined kidney plot 2026-2-14 50mile active.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 50mile HIV.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 50mile HIV.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="../figures/kidney/Combined kidney plot 2026-2-14 50mile HIV.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 50mile HOPE.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 50mile HOPE.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="../figures/kidney/Combined kidney plot 2026-2-14 50mile HOPE.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 60min active.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 60min active.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="../figures/kidney/Combined kidney plot 2026-2-14 60min active.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 60min HIV.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 60min HIV.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../figures/kidney/Combined kidney plot 2026-2-14 60min HIV.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 60min HOPE.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 60min HOPE.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../figures/kidney/Combined kidney plot 2026-2-14 60min HOPE.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 100mile active.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 100mile active.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../figures/kidney/Combined kidney plot 2026-2-14 100mile active.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 100mile HIV.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 100mile HIV.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="../figures/kidney/Combined kidney plot 2026-2-14 100mile HIV.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 100mile HOPE.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 100mile HOPE.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="../figures/kidney/Combined kidney plot 2026-2-14 100mile HOPE.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 200mile active.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 200mile active.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="../figures/kidney/Combined kidney plot 2026-2-14 200mile active.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 200mile HIV.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 200mile HIV.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="../figures/kidney/Combined kidney plot 2026-2-14 200mile HIV.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Combined kidney plot 2026-2-14 200mile HOPE.png" class="img-fluid figure-img" width="900"></p>
+<p><a href="../figures/kidney/Combined kidney plot 2026-2-14 200mile HOPE.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="../figures/kidney/Combined kidney plot 2026-2-14 200mile HOPE.png" class="img-fluid figure-img" width="900"></a></p>
 </figure>
 </div>
 </div>
@@ -1718,28 +1721,28 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Beeswarm kidney plot 2026-2-14 50mile.png" class="img-fluid figure-img" width="499"></p>
+<p><a href="../figures/kidney/Beeswarm kidney plot 2026-2-14 50mile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="../figures/kidney/Beeswarm kidney plot 2026-2-14 50mile.png" class="img-fluid figure-img" width="499"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Beeswarm kidney plot 2026-2-14 60min.png" class="img-fluid figure-img" width="499"></p>
+<p><a href="../figures/kidney/Beeswarm kidney plot 2026-2-14 60min.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="../figures/kidney/Beeswarm kidney plot 2026-2-14 60min.png" class="img-fluid figure-img" width="499"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Beeswarm kidney plot 2026-2-14 100mile.png" class="img-fluid figure-img" width="499"></p>
+<p><a href="../figures/kidney/Beeswarm kidney plot 2026-2-14 100mile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="../figures/kidney/Beeswarm kidney plot 2026-2-14 100mile.png" class="img-fluid figure-img" width="499"></a></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="../figures/kidney/Beeswarm kidney plot 2026-2-14 200mile.png" class="img-fluid figure-img" width="499"></p>
+<p><a href="../figures/kidney/Beeswarm kidney plot 2026-2-14 200mile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="../figures/kidney/Beeswarm kidney plot 2026-2-14 200mile.png" class="img-fluid figure-img" width="499"></a></p>
 </figure>
 </div>
 </div>
@@ -2397,8 +2400,40 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/main/quarto/results_kidney.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/main/quarto/results_kidney.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

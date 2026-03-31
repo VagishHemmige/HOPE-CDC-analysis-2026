@@ -76,6 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-b512256bc363577b27543e003c495f0c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -390,7 +393,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="initial-data-loading-and-preprocessing-of-data-from-raw-sources" class="level2">
 <h2 class="anchored" data-anchor-id="initial-data-loading-and-preprocessing-of-data-from-raw-sources">Initial data loading and preprocessing of data from raw sources</h2>
 <p>The analysis requires integration of data from multiple sources, as explained in the graphic below:</p>
-<p><img src="../figures/hope_cdc_access_model.svg" class="img-fluid"></p>
+<p><a href="../figures/hope_cdc_access_model.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../figures/hope_cdc_access_model.svg" class="img-fluid"></a></p>
 <p>At a high level, each source contributed the following:</p>
 <ul>
 <li><strong>CDC AtlasPlus</strong> provided county-level estimates of the number of people living with HIV. These data formed the basis for the HIV burden estimates used throughout the analysis.</li>
@@ -404,7 +407,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <section id="extrapolation-of-county-hiv-population-to-the-census-tract-level" class="level2">
 <h2 class="anchored" data-anchor-id="extrapolation-of-county-hiv-population-to-the-census-tract-level">Extrapolation of county HIV population to the census tract level</h2>
 <p>The CDC Atlas database provides HIV prevalence estimates at the county level. We used a straightforward mathematical interpolation to estimate the number of people living with HIV for each <a href="https://www.census.gov/data/academy/data-gems/2018/tract.html">census tract</a>:</p>
-<p><img src="../figures/tract_math_explainer.png" class="img-fluid"></p>
+<p><a href="../figures/tract_math_explainer.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../figures/tract_math_explainer.png" class="img-fluid"></a></p>
 <p>Because CDC AtlasPlus provides HIV prevalence estimates at the county level, tract-level counts were approximated by allocating county case counts in proportion to tract population. This produces crude tract-level estimates, but should introduce limited error in aggregated analyses when catchment boundaries tend to encompass most or none of a county’s high-burden tracts. In future work, we plan to evaluate stratified or <a href="https://walker-data.com/tidycensus/reference/interpolate_pw.html">population-weighted areal interpolation</a> instead.</p>
 </section>
 <section id="geospatial-methods-in-r" class="level2">
@@ -933,8 +936,40 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>Geospatial processing for this analysis was conducted in R, using the <span class="in">`sf`</span> package as the primary framework for spatial data management and analysis. The geospatial approach closely follows the methods outlined in <span class="co">[</span><span class="ot">*Analyzing US Census Data: Methods, Maps, and Models in R*</span><span class="co">](https://walker-data.com/census-r/)</span>, which provides a practical foundation for working with Census geography in R.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/main/quarto/analysis_methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/main/quarto/analysis_methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

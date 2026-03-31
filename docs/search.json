@@ -66,17 +66,6 @@
     ]
   },
   {
-    "objectID": "quarto/unite_buffers.html#other-portions-of-the-analysis",
-    "href": "quarto/unite_buffers.html#other-portions-of-the-analysis",
-    "title": "Unite buffers",
-    "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
-    "crumbs": [
-      "Data loading and processing",
-      "Unite buffers"
-    ]
-  },
-  {
     "objectID": "quarto/set_isochrones.html",
     "href": "quarto/set_isochrones.html",
     "title": "Set isochrones",
@@ -313,17 +302,6 @@
     "title": "Join tracts to united buffers",
     "section": "Why This Step Matters",
     "text": "Why This Step Matters\nThis unified join enables accurate calculation of:\n\nTotal population within reach of transplant services\n\nTotal number of people living with HIV within those catchment areas\n\nChanges in geographic access across years\n\nComparisons between Active, HIV R+, and HOPE centers\n\nBy eliminating overlap-driven duplication, this approach ensures that access estimates reflect true geographic coverage, not inflated counts.\n\n\n\nClick to show/hide R Code\n#Join tracts to united buffers\n\n\ntracts_in_buffers_active_united&lt;-list()\ntracts_in_buffers_HIV_united&lt;-list()\ntracts_in_buffers_HOPE_united&lt;-list()\n\nfor (organ_loop in organ_list){\n  for (distance_loop in distance_list){\n    for (year_loop in year_list){\n      \n      message(paste(\"Currently on:\", organ_loop, \"\", distance_loop, \"for year:\", year_loop))\n      message(\"Calculating tracts for active...\")\n      \n      #ST join to individual tracts and the united transplant center geography to avoid duplication\n      tracts_in_buffers_active_united[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_active_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n      \n      message(\"Calculating tracts for HIV...\")\n      tracts_in_buffers_HIV_united[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_HIV_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n      \n      message(\"Calculating tracts for HOPE...\")\n      tracts_in_buffers_HOPE_united[[organ_loop]][[distance_loop]][[year_loop]] &lt;- \n        st_join(Merged_tracts[[year_loop]], \n                Transplant_centers_HOPE_buffer_united[[organ_loop]][[distance_loop]][[year_loop]], \n                join = st_intersects)\n    }}}",
-    "crumbs": [
-      "Data loading and processing",
-      "Join tracts to united buffers"
-    ]
-  },
-  {
-    "objectID": "quarto/join_tracts_to_united_buffers.html#other-portions-of-the-analysis",
-    "href": "quarto/join_tracts_to_united_buffers.html#other-portions-of-the-analysis",
-    "title": "Join tracts to united buffers",
-    "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
       "Data loading and processing",
       "Join tracts to united buffers"
@@ -927,17 +905,6 @@
     ]
   },
   {
-    "objectID": "quarto/join_tracts_to_buffers.html#other-portions-of-the-analysis",
-    "href": "quarto/join_tracts_to_buffers.html#other-portions-of-the-analysis",
-    "title": "Join tracts to buffers",
-    "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
-    "crumbs": [
-      "Data loading and processing",
-      "Join tracts to buffers"
-    ]
-  },
-  {
     "objectID": "quarto/load_data.html",
     "href": "quarto/load_data.html",
     "title": "Load data",
@@ -998,17 +965,6 @@
     "title": "Load data",
     "section": "AtlasPlus county-level HIV data",
     "text": "AtlasPlus county-level HIV data\nThis code uses the CDCAtlas package to download county-level HIV prevalence data for the years defined in year_list.\n\n\nClick to show/hide R Code\nAtlasPlusTableData_county_totals&lt;-list()\n\nfor (year_loop in year_list){\n  \n  AtlasPlusTableData_county_totals[[year_loop]] &lt;-CDCAtlas::get_atlas(disease=\"hiv\",\n                                                                      geography=\"county\",\n                                                                      year=as.numeric(year_loop))%&gt;%\n    clean_names()%&gt;%\n    rename(county_cases=cases)%&gt;%\n    rename(geo_id=fips)%&gt;%\n    rename(county_name=geography)%&gt;%\n    mutate(county_cases=if_else(is.na(county_cases),0, county_cases))%&gt;%\n    mutate(geo_id=as.numeric(geo_id))%&gt;%\n    filter(year==as.numeric(year_loop))%&gt;%\n    select(-year)%&gt;%\n    filter(indicator==\"HIV prevalence\")\n  \n}",
-    "crumbs": [
-      "Data loading and processing",
-      "Load data"
-    ]
-  },
-  {
-    "objectID": "quarto/load_data.html#other-portions-of-the-analysis",
-    "href": "quarto/load_data.html#other-portions-of-the-analysis",
-    "title": "Load data",
-    "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
       "Data loading and processing",
       "Load data"
@@ -1114,17 +1070,6 @@
     ]
   },
   {
-    "objectID": "quarto/setup.html#other-portions-of-the-analysis",
-    "href": "quarto/setup.html#other-portions-of-the-analysis",
-    "title": "Setup",
-    "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nTables: Summary tables and regression outputs generated from the final models.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
-    "crumbs": [
-      "Setup and helper functions",
-      "Setup"
-    ]
-  },
-  {
     "objectID": "quarto/tables.html",
     "href": "quarto/tables.html",
     "title": "Tables",
@@ -1207,17 +1152,6 @@
     "title": "Tables",
     "section": "Why This Matters",
     "text": "Why This Matters\nThis step translates analytic outputs into:\n\nClean, interpretable manuscript tables\nReproducible formatted results\nFiles ready for journal submission\n\nIt represents the final transformation from geographic modeling to publication-ready evidence.\n\n\nClick to show/hide R Code\n#Tables\n\n\n# Initialize lists of gt objects\nResults_HIV_gt&lt;-list()\nResults_nonHIV_gt&lt;-list()\n\n#Create tables as docx and PNG\n\nfor (organ_loop in organ_list)\n{\n  \n  #Initialize file_path\n  file_path&lt;-list()\n  file_path[[\"Table 1\"]][[\".docx\"]]&lt;-paste0(\"tables/\", organ_loop,\"/\",organ_loop, \" analysis results Table 1.docx\")\n  file_path[[\"Table 2\"]][[\".docx\"]]&lt;-paste0(\"tables/\", organ_loop,\"/\",organ_loop, \" analysis results Table 2.docx\")\n  file_path[[\"Table 1\"]][[\".png\"]]&lt;-paste0(\"tables/\", organ_loop,\"/\",organ_loop, \" analysis results Table 1.png\")\n  file_path[[\"Table 2\"]][[\".png\"]]&lt;-paste0(\"tables/\", organ_loop,\"/\",organ_loop, \" analysis results Table 2.png\")\n  \n  #Define table with labels based on values in distance_list and types of outcomes\n  \n  table_factor_values&lt;-expand.grid(\n    Type = c(\"active\", \"HIV\", \"HOPE\"),\n    Distance = distance_list,\n    stringsAsFactors = FALSE)%&gt;%\n    mutate(value=paste(Type, Distance))%&gt;%\n    mutate(\n      label = paste(\n        recode(Type,\n               active = paste(\"Active\", organ_loop, \"center\"),\n               HIV    = paste(\"Active HIV R+\", organ_loop, \"center\"),\n               HOPE   = paste(\"Active HOPE D+\", organ_loop, \"center\")\n        ),\n        case_when(\n          stringr::str_detect(Distance, \"mile$\") ~ \n            stringr::str_replace(Distance, \"mile$\", \" mile radius\"),\n          stringr::str_detect(Distance, \"min$\")  ~ \n            stringr::str_replace(Distance, \"min$\", \" min radius\"),\n          TRUE ~ Distance\n        )\n      )\n    )\n  \n  #Remove .docx files if they exist\n  if (file.exists(file_path[[\"Table 1\"]][[\".docx\"]])) {\n    file.remove(file_path[[\"Table 1\"]][[\".docx\"]])\n  }\n  \n  if (file.exists(file_path[[\"Table 2\"]][[\".docx\"]])) {\n    file.remove(file_path[[\"Table 2\"]][[\".docx\"]])\n  }\n  \n  #Create tables and save results as .docx and PNG\n  Results_HIV_gt[[organ_loop]]&lt;-Results_HIV_df[[organ_loop]]%&gt;%\n    convert_resultsdf_to_table(year_list_fn=year_list,\n                               row_values = table_factor_values$value,\n                               row_labels = table_factor_values$label,\n                               table_title= \"Access to transplant in PLWH\")\n  gtsave(Results_HIV_gt[[organ_loop]], file_path[[\"Table 1\"]][[\".docx\"]])\n  gtsave(Results_HIV_gt[[organ_loop]], file_path[[\"Table 1\"]][[\".png\"]])\n  \n  Results_nonHIV_gt[[organ_loop]]&lt;-Results_nonHIV_df[[organ_loop]]%&gt;%\n    convert_resultsdf_to_table(year_list_fn=year_list,\n                               row_values = table_factor_values$value,\n                               row_labels = table_factor_values$label,\n                               table_title= \"Access to transplant in people without HIV\")\n  gtsave(Results_nonHIV_gt[[organ_loop]], file_path[[\"Table 2\"]][[\".docx\"]])\n  gtsave(Results_nonHIV_gt[[organ_loop]], file_path[[\"Table 2\"]][[\".png\"]])\n  \n  \n  \n}\n\n#Save table objects as .RDS so they can be accessed by Quarto\nsaveRDS(Results_HIV_gt, \"cache/Results_HIV_gt.rds\")\nsaveRDS(Results_nonHIV_gt, \"cache/Results_nonHIV_gt.rds\")",
-    "crumbs": [
-      "Code to create tables and figures",
-      "Tables"
-    ]
-  },
-  {
-    "objectID": "quarto/tables.html#other-portions-of-the-analysis",
-    "href": "quarto/tables.html#other-portions-of-the-analysis",
-    "title": "Tables",
-    "section": "Other portions of the analysis",
-    "text": "Other portions of the analysis\n\nSetup: Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.\nFunctions: Reusable helper functions for cohort construction, matching, costing, and modeling.\nFigures:Visualizations of costs, risks, and model-based estimates.\nAbout: methods, assumptions, and disclosures",
     "crumbs": [
       "Code to create tables and figures",
       "Tables"

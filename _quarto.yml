@@ -104,3 +104,4 @@ format:
     code-tools: true
     page-layout: full
     code-summary: "Click to show/hide R Code"
+    lightbox: true

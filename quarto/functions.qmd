@@ -82,7 +82,15 @@ set_60_min_isochrone_at_7AM<-function(SFObject, year) {
 
 ## converting data frame of summary results into a `gt` format table
 
-Inset LLM text here
+This function takes a summary results data frame and formats it into a publication-ready table using the `gt` package. The input data are assumed to contain one row per characteristic and year, with separate columns for the numerator, denominator, and percentage of the population meeting the specified access criterion.
+
+The function first reshapes the data from long to wide format so that each study year appears as a grouped set of columns. It then converts the `Characteristic` column into a factor with a user-specified ordering and labeling, ensuring that rows appear in a meaningful and reproducible sequence rather than default alphabetical order.
+
+After restructuring the data, the function applies a consistent `gt` table layout. Columns are grouped under year-specific spanner headers, counts are displayed with thousands separators, and percentages are rounded to one decimal place. The table title is supplied as an argument, allowing the same function to be reused across multiple result tables.
+
+To improve readability, the function also applies subtle background shading to distinguish columns belonging to different years and adds vertical borders between year groupings. The result is a standardized comparative table that can be reused throughout the project for presenting access estimates across organs, center classifications, and distance definitions.
+
+This function also makes repeated use of `purrr::reduce()`, which is a functional programming tool for applying the same transformation cumulatively across a sequence of values. Here, the sequence is the set of study years. Each iteration takes the current `gt` table and adds another layer of formatting, such as a year-specific spanner, fill color, or border. This avoids repetitive code and makes the table-building process both more compact and more generalizable to analyses involving different numbers of years.
 
 ```{r, eval=FALSE}
 
@@ -201,7 +209,13 @@ convert_resultsdf_to_table<-function(resultsdf,
 
 ## Creates paired plots of maps with percentages in the plot
 
-LLM text
+This function creates side-by-side map panels comparing geographic access in two different years, while also embedding the corresponding summary percentages directly into the plot titles. For a given organ, distance definition, and center category, the function pulls the relevant summary statistics from the precomputed results tables and combines them with the geographic buffer objects used to draw the maps. This allows each figure to show both the spatial distribution of access and the headline percentage values in a single visual.
+
+The function is designed to compare two years, by default 2017 and 2022. For each year, it overlays transplant center catchment areas in red on a national base map, while blue dots represent the estimated distribution of people living with HIV. The title above each panel reports the percentage, numerator, and denominator for the selected outcome, allowing the reader to interpret the geographic pattern alongside the underlying quantitative summary.
+
+An optional argument, `include_nonHIV`, allows the figure title to also display the corresponding results for people without HIV. This makes it possible to present HIV and non-HIV comparisons within the same figure when desired, while keeping the map itself visually simple. The function also performs basic checks to ensure that the requested years and outcome labels are valid and that the buffer object supplied is likely to match the intended analysis.
+
+Finally, the two maps are combined into a single annotated figure using `cowplot`, with a shared title and a brief explanatory note. The result is a presentation-style comparative graphic that is useful for showing changes over time in transplant center catchment areas and in the proportion of people with HIV who live within those areas.
 
 ```{r, eval=FALSE}
 

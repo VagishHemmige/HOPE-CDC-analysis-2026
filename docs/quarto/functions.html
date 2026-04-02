@@ -353,7 +353,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
    
   <ul>
   <li><a href="#drawing-60-minute-isochrones-around-each-transplant-center" id="toc-drawing-60-minute-isochrones-around-each-transplant-center" class="nav-link active" data-scroll-target="#drawing-60-minute-isochrones-around-each-transplant-center">Drawing 60 minute isochrones around each transplant center</a></li>
-  <li><a href="#converting-data-frame-of-summary-results-into-a-gt-format-table" id="toc-converting-data-frame-of-summary-results-into-a-gt-format-table" class="nav-link" data-scroll-target="#converting-data-frame-of-summary-results-into-a-gt-format-table">converting data frame of summary results into a <code>gt</code> format table</a></li>
+  <li><a href="#converting-data-frame-of-summary-results-into-a-gt-format-table" id="toc-converting-data-frame-of-summary-results-into-a-gt-format-table" class="nav-link" data-scroll-target="#converting-data-frame-of-summary-results-into-a-gt-format-table">Converting data frame of summary results into a <code>gt</code> format table</a></li>
   <li><a href="#creates-paired-plots-of-maps-with-percentages-in-the-plot" id="toc-creates-paired-plots-of-maps-with-percentages-in-the-plot" class="nav-link" data-scroll-target="#creates-paired-plots-of-maps-with-percentages-in-the-plot">Creates paired plots of maps with percentages in the plot</a></li>
   <li><a href="#plot-the-number-of-people-with-hiv-in-the-catchment-area-of-each-transplant-center" id="toc-plot-the-number-of-people-with-hiv-in-the-catchment-area-of-each-transplant-center" class="nav-link" data-scroll-target="#plot-the-number-of-people-with-hiv-in-the-catchment-area-of-each-transplant-center">Plot the number of people with HIV in the catchment area of each transplant center</a></li>
   </ul>
@@ -465,7 +465,7 @@ Source code
 </div>
 </section>
 <section id="converting-data-frame-of-summary-results-into-a-gt-format-table" class="level2">
-<h2 class="anchored" data-anchor-id="converting-data-frame-of-summary-results-into-a-gt-format-table">converting data frame of summary results into a <code>gt</code> format table</h2>
+<h2 class="anchored" data-anchor-id="converting-data-frame-of-summary-results-into-a-gt-format-table">Converting data frame of summary results into a <code>gt</code> format table</h2>
 <p>This function takes a summary results data frame and formats it into a publication-ready table using the <code>gt</code> package. The input data are assumed to contain one row per characteristic and year, with separate columns for the numerator, denominator, and percentage of the population meeting the specified access criterion.</p>
 <p>The function first reshapes the data from long to wide format so that each study year appears as a grouped set of columns. It then converts the <code>Characteristic</code> column into a factor with a user-specified ordering and labeling, ensuring that rows appear in a meaningful and reproducible sequence rather than default alphabetical order.</p>
 <p>After restructuring the data, the function applies a consistent <code>gt</code> table layout. Columns are grouped under year-specific spanner headers, counts are displayed with thousands separators, and percentages are rounded to one decimal place. The table title is supplied as an argument, allowing the same function to be reused across multiple result tables.</p>
@@ -1445,7 +1445,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## converting data frame of summary results into a `gt` format table</span></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## Converting data frame of summary results into a `gt` format table</span></span>
 <span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>This function takes a summary results data frame and formats it into a publication-ready table using the <span class="in">`gt`</span> package. The input data are assumed to contain one row per characteristic and year, with separate columns for the numerator, denominator, and percentage of the population meeting the specified access criterion.</span>
 <span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a></span>

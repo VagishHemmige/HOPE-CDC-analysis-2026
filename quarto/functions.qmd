@@ -80,7 +80,7 @@ set_60_min_isochrone_at_7AM<-function(SFObject, year) {
 ```
 
 
-## converting data frame of summary results into a `gt` format table
+## Converting data frame of summary results into a `gt` format table
 
 This function takes a summary results data frame and formats it into a publication-ready table using the `gt` package. The input data are assumed to contain one row per characteristic and year, with separate columns for the numerator, denominator, and percentage of the population meeting the specified access criterion.
 

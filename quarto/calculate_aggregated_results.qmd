@@ -19,11 +19,19 @@ The full R script is available at:
 
 -   [`R/calculate_aggregated_results.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/calculate_aggregated_results.R)
 
+The code sections below are imported directly from that script when this page is rendered.
+
 This R script file is itself reliant on the following helper files:
 
 -   [`R/setup.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/setup.R)
 -   [`R/functions.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/functions.R)
 :::
+
+```{r}
+#| include: false
+#| cache: false
+knitr::read_chunk("../R/calculate_aggregated_results.R")
+```
 
 ---
 
@@ -68,55 +76,9 @@ These totals are stored in:
 These values serve as the denominators for all subsequent percentage calculations.
 
 
-```{r, eval=FALSE}
-
-Results_HIV_df<-list()
-Results_nonHIV_df<-list()
-Tract_total_HIV_cases<-list()
-Tract_total_nonHIV_cases<-list()
-                      
-for (organ_loop in organ_list)
-  
-{
-  
-  #Initialize data frames
-  Results_HIV_df[[organ_loop]] <- tibble(
-    Characteristic = character(),
-    Numerator = numeric(),
-    Denominator = numeric(),
-    Percentage = numeric(),
-    Year= numeric()
-  )
-  
-  Results_nonHIV_df[[organ_loop]] <- tibble(
-    Characteristic = character(),
-    Numerator = numeric(),
-    Denominator = numeric(),
-    Percentage = numeric(),
-    Year= numeric()
-  )
-}
-  
-  for (year_loop in year_list)
-  {
-  
-  #Calculate the total number of HIV cases assigned to a tract
-  Tract_total_HIV_cases[[year_loop]]<-Merged_tracts[[year_loop]]%>%
-    st_drop_geometry()%>%
-    summarize(total_cases=sum(tract_cases, na.rm=TRUE))%>%
-    pull(total_cases)%>%
-    first()
-  
-  #Calculate the total number of nonHIV cases (i.e. people without HIV) assigned to a tract
-  Tract_total_nonHIV_cases[[year_loop]]<-Merged_tracts[[year_loop]]%>%
-    st_drop_geometry()%>%
-    summarize(total_cases=sum(tract_noncases, na.rm=TRUE))%>%
-    pull(total_cases)%>%
-    first()
-}
-
-
-
+```{r}
+#| label: initialize-results
+#| eval: false
 ```
 
 ## Aggregate Coverage Results for People Living with HIV (PLWH)
@@ -154,47 +116,9 @@ The resulting table quantifies geographic access to transplant services for peop
 - Across time (e.g., 2017 vs 2022)  
 
 
-```{r, eval=FALSE}
-
-
-
-#Calculate table for PLWH
-
-
-for (organ_loop in organ_list)
-{
-  for (distance_loop in distance_list){
-    for (year_loop in year_list){
-      for (type in c("active", "HIV", "HOPE")) {
-        
-        name_of_df<-paste0("tracts_in_buffers_", type, "_united")
-        print(name_of_df)
-        
-        temp_Num<-get(name_of_df)[[organ_loop]][[distance_loop]][[year_loop]]%>%
-          st_drop_geometry()%>%
-          group_by(catchment_area)%>%
-          summarize(total_cases=sum(tract_cases, na.rm=TRUE))%>%
-          pull(total_cases)%>%
-          first()
-        
-        temp_Denom<-Tract_total_HIV_cases[[year_loop]]
-        
-        
-        Results_HIV_df[[organ_loop]]<-Results_HIV_df[[organ_loop]]%>%
-          add_row(
-            Characteristic = paste(type, distance_loop),
-            Numerator = round(temp_Num, 0),
-            Denominator = temp_Denom,
-            Percentage = round(100*temp_Num/temp_Denom,1),
-            Year= as.numeric(year_loop)
-          ) 
-        
-      }
-    }
-  }
-}
-
-
+```{r}
+#| label: results-plwh
+#| eval: false
 ```
 
 
@@ -253,56 +177,7 @@ These results allow comparison between:
 Together, the PLWH and non-HIV tables provide the quantitative foundation for the manuscript’s access comparisons.
 
 
-```{r, eval=FALSE}
-
-
-
-#Calculate tract-level results for people without HIV
-for (organ_loop in organ_list)
-{
-  for (distance_loop in distance_list){
-    for (year_loop in year_list){
-      for (type in c("active")) {
-        
-        name_of_df<-paste0("tracts_in_buffers_", type, "_united")
-        print(name_of_df)
-        
-        temp_Num<-get(name_of_df)[[organ_loop]][[distance_loop]][[year_loop]]%>%
-          st_drop_geometry()%>%
-          group_by(catchment_area)%>%
-          summarize(total_noncases=sum(tract_noncases, na.rm=TRUE))%>%
-          pull(total_noncases)%>%
-          first()
-        
-        temp_Denom<-Tract_total_nonHIV_cases[[year_loop]]
-        
-        Results_nonHIV_df[[organ_loop]]<-Results_nonHIV_df[[organ_loop]]%>%
-          add_row(
-            Characteristic = paste(type, distance_loop),
-            Numerator = round(temp_Num, 0),
-            Denominator = temp_Denom,
-            Percentage = round(100*temp_Num/temp_Denom,1),
-            Year= as.numeric(year_loop))
-        
-        
-        
-      }
-    }
-  }
-  
-}
-
-
-
-
+```{r}
+#| label: results-non-hiv
+#| eval: false
 ```
-
-
-
-## Other portions of the analysis
-
--   [**Setup**](setup.qmd): Defines global paths, data sources, cohort inclusion criteria, and analysis-wide constants.
--   [**Functions**](functions.qmd): Reusable helper functions for cohort construction, matching, costing, and modeling.
--   [**Tables**](tables.qmd): Summary tables and regression outputs generated from the final models.
--   [**Figures**](figures.qmd):Visualizations of costs, risks, and model-based estimates.
--   [**About**](about.qmd): methods, assumptions, and disclosures

@@ -22,59 +22,24 @@ The full R script is available at:
 
 -   [`R/setup.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/setup.R)
 
+The code sections below are imported directly from that script when this page is rendered.
+
 :::
+
+```{r}
+#| include: false
+#| cache: false
+knitr::read_chunk("../R/setup.R")
+```
 
 ## Libraries
 
-The analysis relies on a set of open-source R packages for data management, cohort construction, visualization, and statistical modeling. These libraries were selected based on their stability, community support, and suitability for large-scale longitudinal health data. 
+The analysis relies on a set of open-source R packages for data management, data import, spatial analysis, tables, and visualization. These libraries were selected based on their stability, community support, and suitability for large-scale geographic and transplant registry data. 
 
 
-```{r eval=FALSE}
-
-# Libraries necessary for the analysis
-
-# Data management
-library(tidyverse)
-library(stringi)
-library(glue)
-
-#Core library for the SRTR
-library(sRtr)
-
-#Data import libraries
-library(readxl)
-library(readr)
-library(haven)
-library(mapboxapi)
-library(CDCAtlas)
-
-#Geographic libraries
-library(sf)
-library(tigris)
-library(tidycensus)
-library(tmap)
-library(lutz)
-
-#Table libraries
-library(flextable)
-library(gt)
-
-#Plotting
-library(colorspace)
-library(ggtext)
-library(extrafont)
-library(janitor)
-library(ggrepel)
-library(writexl)
-library(plotly)
-library(htmlwidgets)
-library(patchwork)
-library(ggbeeswarm)
-library(ggpubr)
-library(cowplot)
-library(scales)
-
-
+```{r}
+#| label: libraries
+#| eval: false
 ```
 
 The table below lists the required packages along with links to their primary documentation.
@@ -100,6 +65,9 @@ libraries_table <- tibble::tibble(
     "Geographic",
     "Tables",
     "Tables",
+    "Plotting",
+    "Plotting",
+    "Plotting",
     "Plotting",
     "Plotting",
     "Plotting",
@@ -142,7 +110,10 @@ libraries_table <- tibble::tibble(
               "ggbeeswarm", 
               "ggpubr", 
               "cowplot", 
-              "scales"
+              "scales",
+              "DiagrammeR",
+              "DiagrammeRsvg",
+              "rsvg"
   )
   ,
 Documentation = c(
@@ -179,7 +150,10 @@ Documentation = c(
     "[ggbeeswarm](https://cran.r-project.org/package=ggbeeswarm)",
     "[ggpubr](https://rpkgs.datanovia.com/ggpubr/)",
     "[cowplot](https://wilkelab.org/cowplot/)",
-    "[scales](https://scales.r-lib.org/)"
+    "[scales](https://scales.r-lib.org/)",
+    "[DiagrammeR](https://rich-iannone.github.io/DiagrammeR/)",
+    "[DiagrammeRsvg](https://github.com/rich-iannone/DiagrammeRsvg)",
+    "[rsvg](https://docs.ropensci.org/rsvg/)"
   )
   )
 
@@ -193,7 +167,7 @@ libraries_table |>
   ) |>
   gt::tab_header(
     title = "Required R Packages",
-    subtitle = "Libraries used for data processing, visualization, and statistical modeling"
+    subtitle = "Libraries used for data processing, spatial analysis, tables, and visualization"
   )|>
   gt::tab_style(
   style = gt::cell_text(font = "mono"),
@@ -207,39 +181,12 @@ libraries_table |>
 
 ## Constants
 
-A number of analysis parameters are reused across cohort construction, matching, and cost modeling steps. 
+A number of analysis parameters are reused across the center classification, buffer and isochrone construction, and aggregation steps. 
 
 These constants are defined in the `R/setup.R` file.
 
 ```{r}
-
-
-organ_list<-c("liver", "kidney", "heart", "lung", "pancreas")
-year_list<-c("2017", "2022")
-distance_list=c("50mile", "60min", "100mile", "200mile")
-
-#List states which are continental
-continental_fips <- c(
-  "01", "04", "05", "06", "08", "09", "10", "11", "12", "13", "16",
-  "17", "18", "19", "20", "21", "22", "23", "24", "25", "26",
-  "27", "28", "29", "30", "31", "32", "33", "34", "35", "36",
-  "37", "38", "39", "40", "41", "42", "44", "45", "46", "47",
-  "48", "49", "50", "51", "53", "54", "55", "56"
-)
-
-#For isochrone analysis, we need to account for time zones in order to calculate driving time at 7 AM on the specific date
-
-#List US continental time zones
-
-timezones<-c("America/New_York","America/Chicago","America/Denver","America/Los_Angeles","America/Phoenix",
-             "America/Indiana/Indianapolis","America/Kentucky/Louisville","America/Detroit")
-
-reference_date<-list()
-
-# Specific date to anchor the time: First Monday in March of both years
-reference_date[["2022"]] <- as.Date("2022-03-07")
-reference_date[["2017"]] <- as.Date("2017-03-06")
-
+#| label: constants
 ```
 
 For clarity, these constants are summarized below along with brief explanations of their role in the analysis.

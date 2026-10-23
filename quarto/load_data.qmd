@@ -12,11 +12,19 @@ The full R script is available at:
 
 -   [`R/load_data.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/load_data.R)
 
+The code sections below are imported directly from that script when this page is rendered.
+
 This R script file is itself reliant on the following helper files:
 
 -   [`R/setup.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/setup.R)
 -   [`R/functions.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/functions.R)
 :::
+
+```{r}
+#| include: false
+#| cache: false
+knitr::read_chunk("../R/load_data.R")
+```
 
 
 ## Load US state maps from census
@@ -48,19 +56,9 @@ This ensures that visualizations align with the contiguous U.S. study population
 
 The resulting object, `states_sf`, is an `sf` object containing polygon geometries for the 48 contiguous U.S. states,
 
-```{r, eval=FALSE}
-
-states_sf <- tigris::states(cb = TRUE, year = 2022)%>%
-  select(NAME, STUSPS, geometry) %>%
-  filter(!(NAME %in% c("Alaska", 
-                       "Hawaii", 
-                       "Puerto Rico", 
-                       "United States Virgin Islands",
-                       "Commonwealth of the Northern Mariana Islands",
-                       "Guam",
-                       "American Samoa"))) %>%
-  rename(State=NAME)
-
+```{r}
+#| label: state-maps
+#| eval: false
 ```
 
 
@@ -75,22 +73,9 @@ To identify active transplant centers and characterize transplant activity by or
 These datasets are accessed using a custom helper function, `load_srtr_file()`, which standardizes file loading, variable labeling, and preprocessing across SRTR tables.
 
 
-```{r, eval=FALSE}
-
-tx<-list()
-
-tx[["kidney"]] <- load_srtr_file("tx_ki")
-tx[["liver"]] <- load_srtr_file("tx_li")
-tx[["heart"]] <- load_srtr_file("tx_hr")
-tx[["lung"]] <- load_srtr_file("tx_lu")
-tx[["pancreas"]] <- load_srtr_file("tx_kp")
-
-
-
-donor_deceased <- load_srtr_file("donor_deceased")%>%
-  select(DONOR_ID, DON_ANTI_HIV, DON_HIV_NAT)
-
-
+```{r}
+#| label: transplant-data
+#| eval: false
 ```
 
 
@@ -117,27 +102,9 @@ Subsequent steps:
 - Renames variables for convenience
 - Pauses for five seconds between iterations to avoid overloading the HRSA website
 
-```{r, eval=FALSE}
-
-
-Transplant_centers_all<-list()
-
-for (organ_loop in organ_list)
-{
-  
-  
-  Transplant_centers_all[[organ_loop]]<-sRtr::get_hrsa_transplant_centers()%>%
-    filter(OPO_STATE_ABBR != "PR" & OPO_STATE_ABBR!= "HI")%>%
-    select(OTC_NM, OTC_CD, Service_Lst, X, Y) %>%
-    filter(str_detect(Service_Lst, str_to_sentence(organ_loop)))%>%
-    select(-Service_Lst)%>%
-    distinct()%>%
-    rename(OTCName=OTC_NM, OTCCode=OTC_CD, Latitude=Y, Longitude=X)
-  Sys.sleep(5)
-  
-}
-
-
+```{r}
+#| label: transplant-centers
+#| eval: false
 ```
 
 
@@ -196,77 +163,9 @@ As with tract data, results are cached locally to prevent redundant API calls.
 
 The ACS table `B01001` contains detailed age- and sex-specific population counts. Rather than downloading these counts directly in this step, we load the variable metadata using:
 
-```{r, eval=FALSE}
-
-
-us_tracts_population<-list()
-us_counties_population<-list()
-vars<-list()
-
-for (year_loop in year_list){
-  
-  
-  tracts_path<-paste0("cache/us_tracts_population_",year_loop,".rds")
-  counties_path<-paste0("cache/us_counties_population_",year_loop,".rds")
-  
-  #Pull US Census tract populations if cache file doesn't already exist
-  
-  if (file.exists(tracts_path)) {
-    us_tracts_population[[year_loop]] <- readRDS(tracts_path)
-  } else {
-    
-    us_tracts_population[[year_loop]]<-get_acs(
-      geography = "tract",
-      variables = "B01003_001",
-      year = as.numeric(year_loop),
-      survey = "acs5",
-      geometry = TRUE,
-      state = continental_fips
-    )%>%
-      mutate(county_fips = substr(GEOID, 1, 5))%>%
-      mutate(GEOID=as.numeric(GEOID))%>%
-      mutate(county_fips=as.numeric(county_fips))%>%
-      select(-variable, -moe)%>%
-      rename(tract_population=estimate)
-    
-    saveRDS(us_tracts_population[[year_loop]], 
-            tracts_path)
-    
-  }
-  
-  #Pull US Census counties populations if cache file doesn't already exist
-  
-  if (file.exists(counties_path)) {
-    us_counties_population[[year_loop]] <- readRDS(counties_path)
-  } else {
-    
-    us_counties_population[[year_loop]]<-get_acs(
-      geography = "county",
-      variables = "B01003_001",
-      year = as.numeric(year_loop),
-      survey = "acs5",
-      geometry = TRUE,
-      state = continental_fips
-    )%>%
-      mutate(GEOID=as.numeric(GEOID))%>%
-      select(-variable, -moe)%>%
-      rename(county_population=estimate)
-    
-    saveRDS(us_counties_population[[year_loop]], 
-            counties_path)
-    
-    
-  }
-  
-  # Load tract variable labels for age/sex values B01001 from the ACS 5-year 2017 dataset
-  vars[[year_loop]] <- load_variables(year_loop, "acs5", cache = TRUE) %>%
-    filter(str_detect(name, "B01001_"))%>%
-    mutate(label = str_replace_all(label, "Estimate!!Total!!", ""))%>%
-    mutate(label = str_replace_all(label, "!!", "_"))%>%
-    mutate(label = str_replace_all(label, " ", "_"))
-  
-}
-
+```{r}
+#| label: census-data
+#| eval: false
 ```
 
 
@@ -276,27 +175,8 @@ for (year_loop in year_list){
 This code uses the `CDCAtlas` package to download county-level HIV prevalence data for the years defined in `year_list`.
 
 
-```{r eval=FALSE}
-
-
-AtlasPlusTableData_county_totals<-list()
-
-for (year_loop in year_list){
-  
-  AtlasPlusTableData_county_totals[[year_loop]] <-CDCAtlas::get_atlas(disease="hiv",
-                                                                      geography="county",
-                                                                      year=as.numeric(year_loop))%>%
-    clean_names()%>%
-    rename(county_cases=cases)%>%
-    rename(geo_id=fips)%>%
-    rename(county_name=geography)%>%
-    mutate(county_cases=if_else(is.na(county_cases),0, county_cases))%>%
-    mutate(geo_id=as.numeric(geo_id))%>%
-    filter(year==as.numeric(year_loop))%>%
-    select(-year)%>%
-    filter(indicator=="HIV prevalence")
-  
-}
-
+```{r}
+#| label: atlas-county-totals
+#| eval: false
 ```
 

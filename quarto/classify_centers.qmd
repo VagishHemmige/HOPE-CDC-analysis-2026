@@ -3,7 +3,7 @@ title: "Classify centers"
 format: html
 ---
 
-The code in this script classifies centers based on whether they had performed HIV D-/R+ and HIV D+/R+ transplants in the 2013-2017 and 2018-2022 periods.
+The code in this script classifies centers based on whether they had performed HIV R+ transplants (any donor HIV status) and HIV D+/R+ transplants in the 2013-2017 and 2018-2022 periods.
 
 ::: {.Rcode title="Source code"}
 
@@ -11,6 +11,8 @@ The code in this script classifies centers based on whether they had performed H
 The full R script is available at:
 
 -   [`R/classify_centers.R`](https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/blob/master/R/classify_centers.R)
+
+The code sections below are imported directly from that script when this page is rendered.
 
 This R script file is itself reliant on the following helper files:
 
@@ -25,7 +27,7 @@ This portion of the code initializes lists to classify transplant centers by act
 
 For example, the nested list `HOPE_center_volumes` can be used to identify the number of HIV D+/R+ transplants performed at each transplant center for each organ and each time period.
 
-`HOPE_center_volume[["kidney]][["2017"]]` will yield a data frame of HOPE kidney volumes for centers that performed at least one HOPE adult transplant in the 2013-2017 time period.
+`HOPE_center_volumes[["kidney"]][["2017"]]` will yield a data frame of HOPE kidney volumes for centers that performed at least one HOPE adult transplant in the 2013-2017 time period.
 
 Key lists created:
 
@@ -37,60 +39,9 @@ Key lists created:
 
 
 
-```{r, eval=FALSE}
-
-for (organ_loop in organ_list)
-{
-  
-  for (year_loop in year_list)
-    
-    
-  {
-    
-    Active_tx_centers[[organ_loop]][[year_loop]]<-tx[[organ_loop]]%>%
-      filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>% #Adult recipient
-      mutate(year_transplant=year(REC_TX_DT))%>%
-      filter(year_transplant==as.numeric(year_loop))%>%
-      group_by(REC_CTR_CD)%>%
-      count()%>%
-      pull(REC_CTR_CD)
-    
-    #Calculate center level volumes for pts with HIV in five-year period ending in year for active centers
-    HIV_center_volumes[[organ_loop]][[year_loop]]<-tx[[organ_loop]]%>%
-      filter(REC_HIV_STAT=="P")%>%
-      filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>% #Adult recipient
-      mutate(year_transplant=year(REC_TX_DT))%>%
-      filter(year_transplant>=(as.numeric(year_loop)-4) & year_transplant<=as.numeric(year_loop))%>%
-      group_by(REC_CTR_CD)%>%
-      count()%>%
-      filter(REC_CTR_CD %in% Active_tx_centers[[organ_loop]][[year_loop]])
-    
-    
-    #Identify HOPE centers in years of interest
-    HOPE_center_volumes[[organ_loop]][[year_loop]]<-tx[[organ_loop]]%>%
-      filter(REC_HIV_STAT=="P")%>%
-      filter(REC_AGE_IN_MONTHS_AT_TX>=216)%>%
-      mutate(year_transplant=year(REC_TX_DT	))%>%
-      filter(year_transplant>=(as.numeric(year_loop)-4) & year_transplant<=as.numeric(year_loop))%>%
-      left_join(donor_deceased)%>%
-      filter(DON_HIV_NAT %in% c("P", "P: Positive")| 
-               DON_ANTI_HIV %in% c("P", "P: Positive"))%>%
-      group_by(REC_CTR_CD	)%>%
-      count()
-    
-    #Convert to state transplant volumes for recipients with HIV
-    State_level_transplant_volumes[[organ_loop]][[year_loop]]<-HIV_center_volumes[[organ_loop]][[year_loop]]%>%
-      mutate(state_code = substr(REC_CTR_CD, 1, 2))%>%
-      group_by(state_code)%>%
-      summarize(total_HIV_transplants=sum(n, na.rm = TRUE))
-    
-    #Create DFs for active centers in years of interest
-    Transplant_centers_active[[organ_loop]][[year_loop]]<-Transplant_centers_all[[organ_loop]]%>%
-      filter(OTCCode %in% Active_tx_centers[[organ_loop]][[year_loop]])
-    
-  }
-}
-
+```{r}
+#| file: "../R/classify_centers.R"
+#| eval: false
 ```
 
 

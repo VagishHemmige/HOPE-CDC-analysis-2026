@@ -9,3 +9,5 @@
 /tables/
 /figures/
 /.quarto/
+
+**/*.quarto_ipynb

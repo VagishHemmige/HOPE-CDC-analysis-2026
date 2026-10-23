@@ -1,5 +1,6 @@
 
 
+## ---- isochrone-function
 #Define a function that takes an SF data object and returns 60 minute isochrones
 set_60_min_isochrone_at_7AM<-function(SFObject, year) {
   
@@ -42,6 +43,7 @@ set_60_min_isochrone_at_7AM<-function(SFObject, year) {
   }
 }
 
+## ---- results-table-function
 #Function that converts results df into a gt format table
 
 convert_resultsdf_to_table<-function(resultsdf, 
@@ -153,6 +155,7 @@ convert_resultsdf_to_table<-function(resultsdf,
 
 
 
+## ---- paired-plot-function
 # Function that creates paired plots of maps with percentages in the plot
 make_paired_plot<-function(organ,
                            distance,
@@ -332,6 +335,7 @@ make_paired_plot<-function(organ,
 
 
 
+## ---- catchment-plot-function
 plot_center_HIV_catchment<-function(organ,
                                     distance,
                                     buffer_list,

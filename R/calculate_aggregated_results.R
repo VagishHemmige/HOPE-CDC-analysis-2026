@@ -1,6 +1,7 @@
 #Calculate results for geographic analyses
 
 
+## ---- initialize-results
 Results_HIV_df<-list()
 Results_nonHIV_df<-list()
 Tract_total_HIV_cases<-list()
@@ -49,6 +50,7 @@ for (organ_loop in organ_list)
 
 
 
+## ---- results-plwh
 #Calculate table for PLWH
 
 
@@ -86,6 +88,7 @@ for (organ_loop in organ_list)
 }
 
 
+## ---- results-non-hiv
 #Calculate tract-level results for people without HIV
 for (organ_loop in organ_list)
 {

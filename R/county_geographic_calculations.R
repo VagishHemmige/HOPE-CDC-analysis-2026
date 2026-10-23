@@ -1,6 +1,7 @@
 
 
 
+## ---- center-sf-objects
 Transplant_centers_all_sf<-list()
 Transplant_centers_active_SF<-list()
 Transplant_centers_HIV_sf<-list()
@@ -41,6 +42,7 @@ for (organ_loop in organ_list)
 
 
 
+## ---- county-tract-merge
 Merged_Counties<-list()
 Merged_Counties_nonSF<-list()
 Merged_tracts<-list()

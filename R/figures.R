@@ -1,6 +1,7 @@
 # Figures
 
-#----Plot model of data derivation and calculations----
+## ---- access-diagram
+# Plot model of data derivation and calculations
 
 g <- grViz("
 digraph hope_access {
@@ -16,9 +17,9 @@ node [
   fontsize = 20
 ]
 
-# ----------------
+# ================
 # DATA SOURCES
-# ----------------
+# ================
 
 node [
   shape = ellipse
@@ -38,9 +39,9 @@ census [label = 'US Census\npopulation (ACS)']
 # Source order aligned with downstream targets
 {rank = same; srtr; hrsa; tiger; mapbox; cdc; census}
 
-# ----------------
+# ================
 # DERIVED DATA
-# ----------------
+# ================
 
 node [
   shape = box
@@ -105,9 +106,9 @@ label = <
 # Second derived row
 {rank = same; dist; iso; tract}
 
-# ----------------
+# ================
 # MODEL
-# ----------------
+# ================
 
 node [
   shape = box
@@ -127,9 +128,9 @@ label = <
 >
 ]
 
-# ----------------
+# ================
 # RESULT
-# ----------------
+# ================
 
 node [
   shape = box
@@ -148,9 +149,9 @@ label = <
 >
 ]
 
-# ----------------
+# ================
 # INVISIBLE EDGES (layout alignment)
-# ----------------
+# ================
 
 srtr   -> classify  [style=invis]
 hrsa   -> locations [style=invis]
@@ -158,9 +159,9 @@ tiger  -> dist      [style=invis]
 mapbox -> iso       [style=invis]
 cdc    -> tract     [style=invis]
 
-# ----------------
+# ================
 # EDGES
-# ----------------
+# ================
 
 srtr -> classify
 hrsa -> locations
@@ -196,7 +197,8 @@ rsvg_png(
 )
 
 
-#----Create dot plot sf data frames----
+## ---- dot-density-objects
+# Create dot plot sf data frames
 
 county_dots<-list()
 county_dots_transformed<-list()
@@ -220,7 +222,8 @@ states_sf_transformed<-states_sf%>%
   st_transform(5070)
 
 
-#----Maps of active transplant centers----
+## ---- center-maps
+# Maps of active transplant centers
 Activemap<-list()
 HIV_map<-list()
 
@@ -255,7 +258,8 @@ for (organ_loop in organ_list) {
 }
 
 
-#----Paired plots for PLWH comparing years----
+## ---- paired-plots
+# Paired plots for PLWH comparing years
 
 for (organ_loop in organ_list) {
   for (distance_loop in distance_list){
@@ -379,7 +383,8 @@ for (organ_loop in organ_list) {
   }
 }
 
-# ---- Plot the number of people with HIV in the catchment area of each transplant center----
+## ---- catchment-beeswarm
+# Plot the number of people with HIV in the catchment area of each transplant center
 
 for (organ_loop in organ_list) {
   for (distance_loop in distance_list){

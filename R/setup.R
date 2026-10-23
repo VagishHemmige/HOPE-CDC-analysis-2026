@@ -1,6 +1,7 @@
 #Setup
 
-# ----Libraries needed for the analysis ----
+## ---- libraries
+# Libraries needed for the analysis
 
 # Data management
 library(tidyverse)
@@ -49,7 +50,8 @@ library(rsvg)
 
 
 
-# ----Define constants----
+## ---- constants
+# Define constants
 
 organ_list<-c("liver", "kidney", "heart", "lung", "pancreas")
 year_list<-c("2017", "2022")

@@ -1,6 +1,7 @@
 #Loads data
 
-# ----Load US state maps from census----
+## ---- state-maps
+# Load US state maps from census
 states_sf <- tigris::states(cb = TRUE, year = 2022)%>%
   select(NAME, STUSPS, geometry) %>%
   filter(!(NAME %in% c("Alaska", 
@@ -13,7 +14,8 @@ states_sf <- tigris::states(cb = TRUE, year = 2022)%>%
   rename(State=NAME)
 
 
-#----Import transplant data from UNOS SRTR----
+## ---- transplant-data
+# Import transplant data from UNOS SRTR
 
 tx<-list()
 
@@ -29,7 +31,8 @@ donor_deceased <- load_srtr_file("donor_deceased")%>%
   select(DONOR_ID, DON_ANTI_HIV, DON_HIV_NAT)
 
 
-#----Load transplant center data from SRTR package----
+## ---- transplant-centers
+# Load transplant center data from SRTR package
 Transplant_centers_all<-list()
 
 for (organ_loop in organ_list)
@@ -51,7 +54,8 @@ for (organ_loop in organ_list)
 
 
 
-#----Load census data----
+## ---- census-data
+# Load census data
 us_tracts_population<-list()
 us_counties_population<-list()
 vars<-list()
@@ -122,7 +126,8 @@ for (year_loop in year_list){
 
 
 
-#----Atlasplus county totals----
+## ---- atlas-county-totals
+# Atlasplus county totals
 #This code uses the CDCAtlas package to download county-level HIV prevalence data
 
 

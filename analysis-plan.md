@@ -1,291 +1,200 @@
 # Analysis plan — HOPE CDC Analysis 2026
 
-| | |
-|---|---|
-| **Version** | 0.2 (draft for author review) |
-| **Date** | 2026-10-24 |
-| **Reporting frameworks** | STROBE (cross-sectional) with RECORD extensions; crosswalk in [Appendix A](#appendix-a-strobe-and-record-crosswalk) |
-| **Authors** | [CONFIRM] |
-
-Text marked **[CONFIRM]** needs an author decision or verification. Text marked **[OPEN]** is a choice not yet made.
-
----
+**Status:** Draft reflecting research decisions agreed through October 24, 2026. Methodological commitments below do not establish that the corresponding code has been implemented or that analyses have been reproduced.
 
 ## 1. Background and rationale
 
-People living with HIV (PLWH) can now receive solid-organ transplants with acceptable outcomes in selected recipients, but transplant experience with HIV is concentrated at a minority of centers. The HIV Organ Policy Equity (HOPE) Act of 2013 permitted transplantation of organs from donors with HIV into recipients with HIV under research protocols. A U.S. Department of Health and Human Services final rule, effective November 27, 2024, removed the research and institutional review board requirement for **kidney and liver** HIV-positive-donor transplants only. Heart, lung and pancreas remain under research criteria.
+People living with HIV (PLWH) may benefit from solid-organ transplantation, but HIV-related transplant experience varies across centers. The HIV Organ Policy Equity (HOPE) Act created a pathway for transplantation from donors with HIV to recipients with HIV. Regulatory requirements differ by organ and calendar period, and geographic proximity to a center does not establish clinical eligibility or program willingness to accept a candidate.
 
-Where centers sit relative to where PLWH live is a structural determinant of access. This study will describe that geography for five organs at two time points.
+This study describes the geographic distribution of access to adult solid-organ transplant centers among PLWH and people without HIV, and distinguishes access to any active center from access to centers with documented HIV recipient or HIV-positive donor experience.
 
 ## 2. Objectives
 
-### 2.1 Co-primary objectives
+### 2.1 Co-primary descriptive objectives
 
-Both use the 60-minute driving isochrone as the reach definition, for each organ (kidney, liver, heart, lung, pancreas) and index year (2017, 2022).
+The primary geographic reach measure is a 60-minute driving isochrone. Each objective is evaluated separately for kidney, liver, heart, lung and pancreas, in 2017 and 2022.
 
-- **P1 (HIV status).** Estimate the percentage of PLWH, and of people without HIV, living within 60 minutes' drive of an active adult transplant center, and the percentage-point difference between them (PLWH minus people without HIV).
-- **P2 (center experience).** Among PLWH, estimate the percentage living within 60 minutes' drive of (a) any active center, (b) an HIV R+ center and (c) a HOPE D+ center, and the percentage-point reductions from (a) to (b) and from (a) to (c).
+- **P1 — Access by HIV status:** Estimate the percentage of PLWH and the percentage of people without HIV residing within the catchment of any active adult transplant center, and their difference in percentage points (PLWH minus people without HIV).
+- **P2 — Access by center experience:** Among PLWH, estimate the percentages residing within reach of (a) any active adult center, (b) an active HIV R+ center and (c) an active HOPE D+ center, and the percentage-point differences between these categories.
 
 ### 2.2 Secondary objectives
 
-- **S-reach.** Repeat P1 and P2 using 50, 100 and 200 mile straight-line buffers.
-- **S-change.** Describe the change in each primary and secondary estimate from 2017 to 2022.
+- **S1 — Alternative reach distances:** Repeat P1 and P2 with 50-, 100- and 200-mile straight-line catchments.
+- **S2 — Temporal comparison:** Describe 2017-to-2022 differences in each estimate **in percentage points**, not relative percentage change. The two years are snapshots, not a longitudinal trend series.
+- **S3 — Population stratification:** Estimate geographic coverage by race/ethnicity, sex, age group and geographic region where comparable HIV surveillance counts and corresponding population denominators support meaningful estimates. Document unavailable or suppressed strata rather than treating missing values as zero. Stratified comparisons are descriptive and conditional on data feasibility and quality.
+- **S4 — Potential center expansion:** Among active centers without documented HIV R+ transplantation in the relevant five-year window, estimate the incremental number and percentage of PLWH who would lie within reach if a candidate center began offering HIV transplant services. Identify high-yield candidates by additional population covered beyond the existing HIV R+ network, accounting for overlap. This models hypothetical expansion of service availability, not actual feasibility or uptake.
 
 ### 2.3 Exploratory objective
 
-- **E1.** Among active centers, compare the estimated number of PLWH within each center's own catchment across center status groups (HOPE D+, HIV R+ only, no HIV R+ transplants).
+Describe the estimated number of PLWH within individual active centers' catchments according to center experience category: HOPE D+, HIV R+ without HOPE D+ experience, and no documented HIV R+ experience. This is descriptive, not inferential.
 
-## 3. Study design
+## 3. Study design and setting
 
-A repeated cross-sectional, population-level (ecological) geospatial study at two index years.
+Repeated cross-sectional, ecological geospatial analysis of the 48 contiguous states and Washington, DC. Alaska, Hawaii, Puerto Rico and other territories are outside the study geography for both population and center analyses.
 
-There are two units of analysis:
+The index years are 2017 and 2022. Historical center experience is defined within five calendar years ending in each index year (2013–2017 and 2018–2022). Population estimates correspond to each index year. Geographic coverage is attributed to residential areas, not to individual patients or observed transplant referrals. SRTR patient-level records are used only to classify centers and derive experience measures; there is no patient-level linkage to community HIV surveillance data.
 
-- **Census tract** for the primary and secondary objectives, carrying estimated counts of PLWH and people without HIV.
-- **Transplant center** for the exploratory objective and for defining catchments.
+## 4. Data sources and measurement periods
 
-No individual-level linkage between transplant recipients and population counts will be made. SRTR records will be used only to classify centers.
-
-## 4. Setting
-
-| Element | Definition |
+| Source | Time basis and intended contribution |
 |---|---|
-| Geography | 48 contiguous states and the District of Columbia. Alaska, Hawaii, Puerto Rico and the territories are excluded from both population data and the center list. [CONFIRM: Alaska centers are excluded too] |
-| Index years | 2017 and 2022 (calendar years) |
-| Center-experience windows | Five calendar years ending in the index year: 2013–2017 and 2018–2022 |
-| Isochrone reference dates | First Monday in March: 2017-03-06 and 2022-03-07, departing 07:00 local time |
+| SRTR transplant and relevant donor records | Historical activity and transplant experience for each organ and five-year window; restricted patient-level source |
+| Historical transplant-center records, including HRSA/OPTN or comparable authoritative sources | Center identity, organ service and **location at the applicable index year**; historical reconstruction is required |
+| CDC NCHHSTP AtlasPlus HIV prevalence | County counts of diagnosed PLWH corresponding to each index year; verify age coverage and compatible state totals |
+| American Community Survey 5-year estimates | County and tract populations for 2017 and 2022; age 13+ for the primary analysis, and all ages for a sensitivity analysis |
+| Mapbox or comparably specified road-routing source | Modeled 60-minute driving catchments using a common contemporary road-network methodology for both historical snapshots |
+| Census geographic boundaries | Appropriate county/tract geographic vintages; changes in geographic definitions, including Connecticut, require reconciliation |
 
-Rationale for the index years: [CONFIRM — for example, alignment with ACS 5-year periods 2013–2017 and 2018–2022, and pre- and post-COVID comparison].
+The primary analysis requires index-year center locations, but **does not require a historical road-network reconstruction**. Contemporary road-network and traffic assumptions applied consistently to the two years should be disclosed as a modeling limitation. Source vintages and retrieval assumptions must be sufficiently documented to interpret the findings.
 
-## 5. Data sources
+## 5. Study populations and transplant-center definitions
 
-| Source | Vintage | Geography | Use | Access conditions |
-|---|---|---|---|---|
-| SRTR Standard Analysis Files: kidney, liver, heart, lung and kidney-pancreas transplant files; deceased donor file | SAF release [CONFIRM] | Recipient and donor records, center code | Classifying centers | Restricted; SRTR data use agreement. No patient-level data leave the analysis environment. |
-| HRSA transplant center list | Fetch date recorded with each reported run | Center point coordinates, organ services | Center locations | Public |
-| American Community Survey (ACS) 5-year, total population (`B01003_001`) | 2013–2017 (for 2017) and 2018–2022 (for 2022) | Tract and county; 2010 tract boundaries for 2017, 2020 boundaries for 2022 | Tract and county population | Public |
-| CDC NCHHSTP AtlasPlus, "HIV prevalence" | 2017 and 2022 | County | County PLWH counts | Public |
-| Mapbox Isochrone API, `driving-traffic` profile | Computation date recorded | Center points | 60-minute catchments | Commercial API |
-| Census cartographic boundary files (states) | 2022 | State | Maps only | Public |
+### 5.1 Transplant-center cohorts
 
-Notes for interpretation:
+Definitions apply separately by organ and index year. All three analytic center categories are nested:
 
-- AtlasPlus prevalence counts persons with diagnosed HIV aged 13 and older [CONFIRM against AtlasPlus technical notes]. ACS `B01003_001` counts all ages (see L4).
-- The HRSA center list reflects the date it is fetched, not the index years (see L5 and check V4).
-- Mapbox routes on its road network and traffic model as of computation, not as of 2017 [CONFIRM how Mapbox treats past departure times]. Differences between the 2017 and 2022 isochrones will therefore reflect mainly which centers are included.
+1. **Active:** A geographically eligible program with at least one qualifying adult transplant of that organ in the index calendar year (adult defined as age 18+ at transplant).
+2. **HIV R+:** An active center with at least one qualifying adult recipient living with HIV transplanted in the five-year window ending in the index year.
+3. **HOPE D+:** An active HIV R+ center with at least one qualifying adult HIV D+/R+ transplant using a **deceased donor with HIV** in the same five-year window.
 
-## 6. Study populations
+Thus, **HOPE D+ ⊆ HIV R+ ⊆ active**. HIV-positive living-donor transplants are not included in the HOPE D+ classification. Because such donations are uncommon, omission is expected to have little impact on center classification, but the extent of any difference can be checked if reliably identifiable data are available. Confirm as a simple validation check whether restricting HOPE D+ centers to index-year-active programs excludes any programs; do not treat a null difference as a standalone sensitivity analysis.
 
-### 6.1 Transplant centers
+**Organ definitions:** Kidney activity and experience include qualifying kidney-alone and simultaneous kidney-pancreas transplants. Pancreas activity and experience include qualifying pancreas-alone and simultaneous kidney-pancreas transplants. A simultaneous kidney-pancreas transplant may contribute to *both* organ-specific analyses, but must not appear twice within either organ-specific count. Determine the handling of other combined-organ procedures consistently with the source definitions and avoid double counting. Actual SRTR file contents and transplant-type coding must be verified during implementation.
 
-All definitions apply separately to each organ and index year. Centers are identified by SRTR center code, matched to the HRSA center code.
+Center HIV experience is a proxy for past experience, not a demonstration of current willingness, clinical capacity, or candidacy acceptance.
 
-| Group | Definition | SRTR fields and values |
-|---|---|---|
-| **Base list** | HRSA centers listing the organ among their services, in the study geography | `Service_Lst` [CONFIRM that the match for "Heart" and "Pancreas" captures the intended programs] |
-| **Active** | At least one adult transplant of that organ in the index calendar year | Adult: `REC_AGE_IN_MONTHS_AT_TX >= 216` (18 years); year of `REC_TX_DT` equals the index year |
-| **HIV R+** | Active in the index year, **and** at least one adult recipient with HIV in the five-year window | `REC_HIV_STAT == "P"`; unknown, missing and not-done values count as not HIV-positive [CONFIRM coding] |
-| **HOPE D+** | At least one adult recipient with HIV in the five-year window whose deceased donor was HIV-positive by NAT or antibody. Activity in the index year is **not** required. | Recipient as above; donor `DON_HIV_NAT` or `DON_ANTI_HIV` positive |
+### 5.2 Geographic population groups
 
-Decisions and rationale:
+- **PLWH:** County prevalence counts of diagnosed HIV obtained from AtlasPlus, allocated to census tracts proportionally to their resident population aged 13+.
+- **People without HIV:** ACS resident population aged 13+ minus the estimated tract PLWH count.
 
-- **HOPE D+ centers will not be restricted to active centers.** Rationale: [CONFIRM — for example, HOPE experience reflects durable institutional capacity, and HOPE volumes are too small for one inactive year to signal lost capability]. Sensitivity analysis SA5 applies the restriction.
-- **Living HIV-positive donors** [CONFIRM: whether they are included in HOPE D+].
-- **Organ files.** Pancreas uses the kidney-pancreas file, which includes kidney-pancreas and pancreas-alone transplants [CONFIRM]. Whether simultaneous kidney-pancreas transplants also count toward kidney activity: [CONFIRM].
+This primary age alignment is conditional on verifying that the selected AtlasPlus HIV prevalence indicator covers ages 13+. It is a **population-measure alignment**, not an assertion that adolescents are eligible for adult transplant programs. Adults and pediatric patients use different transplant systems; the population aged 13–17 is retained because reliably age-disaggregated county HIV counts may not support an 18+ estimate. The effect of using all-age ACS population is examined separately.
 
-### 6.2 Population groups
+## 6. Population estimation and suppressed counts
 
-| Group | Definition |
+### 6.1 County-to-tract allocation
+
+For county *c* and tract *t* within that county:
+
+\[
+\widehat{H}_{t}=H_{c}\,\frac{P_{t,13+}}{P_{c,13+}}
+\]
+
+where \(H_c\) is the county diagnosed-PLWH count and \(P_{13+}\) is resident population aged 13+. The county and tract age denominators should refer to compatible geographic units and periods. Population-proportional allocation is an ecological estimate assuming uniform HIV prevalence within each county; the resulting tract counts are not measured tract-level HIV counts. Totals must reconcile at the county level within rounding. Zero-denominator and missing county cases require explicit handling.
+
+### 6.2 Suppressed county estimates
+
+The planned method will be implemented in the **CDCAtlas package**, not independently recreated in the analysis repository. Within each state, subtract the sum of reported nonsuppressed county HIV counts from the comparable state total; allocate the nonnegative residual among suppressed counties in proportion to their relevant populations. Preserve the original observed-versus-imputed status and reconcile the completed county totals to state totals, allowing for published rounding. If state and county totals differ in scope, age definition, geography or vintage—or the residual is inconsistent—the discrepancy must be resolved or reported before applying this method.
+
+This is an agreed **planned method**, not a claim that CDCAtlas already implements it. An alternative zero-fill treatment of suppressed counties is a prespecified sensitivity analysis.
+
+## 7. Historical center linkage and geography
+
+Historical location reconstruction for **both** index years is required. SRTR supplies activity and center identifiers; index-year location and program identity should be established using historical authoritative records rather than automatically carrying back current coordinates. Differences due to relocation, opening, closing, or identifier changes matter insofar as they affect geographically modeled coverage.
+
+Linkage quality should be checked in proportion to its analytic impact: summarize numbers matched and unmatched, flag ambiguous or materially consequential unresolved centers, and investigate those cases as needed. There is **no requirement for manual verification of every automatically matched center**, or for a published linkage-audit table. Do not silently interpret a missing historical center location as evidence that the center did not exist.
+
+County-to-ACS joins, county-to-tract assignments and any altered county-equivalent geography (notably Connecticut) must be reconciled sufficiently to avoid loss or duplication of HIV counts. Different tract boundary vintages do not imply that individual tract observations can be directly compared across years; cross-year comparisons focus on aggregate coverage.
+
+## 8. Geographic reach and outcomes
+
+### 8.1 Catchments
+
+- **Primary:** 60-minute modeled driving isochrone for each center, at **7:00 AM local time on a weekday**, with consistent routing assumptions across the 2017 and 2022 comparisons. The previously selected reference weekdays were March 6, 2017 and March 7, 2022; these are reference departure conventions, **not evidence of historical traffic conditions**.
+- **Secondary:** 50-, 100- and 200-mile straight-line buffers, computed in an appropriate projected coordinate system with distance units converted consistently.
+
+For any organ, year, reach measure and center category, combine center catchments into a union before estimating population coverage so that overlapping catchments do not double-count residents.
+
+### 8.2 Primary tract inclusion rule and denominator
+
+A tract is considered covered if **any part of its geometry intersects** the union of eligible center catchments. All of its estimated PLWH or non-HIV population then contributes to the numerator. The denominator is the corresponding estimated population over the entire study geography in that year. Coverage is reported as a percentage to one decimal place, with contrasts in **percentage points**. Any-intersection can overstate access, particularly in large rural tracts; a geometric centroid rule is a prespecified sensitivity analysis.
+
+Non-HIV geographic coverage is evaluated for the *active* center group (P1). PLWH coverage is evaluated for all three nested groups (P2).
+
+When a group has **no qualifying centers**, report 0% with a clear “no qualifying centers” label. When qualifying centers exist but the modeled population covered is zero, report 0% without that label. Missing or unresolved input data yield **undetermined**, not zero. Report qualifying center counts alongside coverage findings.
+
+## 9. Analysis and interpretation
+
+### 9.1 Stratified geographic access (S3)
+
+For each feasible subgroup and organ/year, use appropriately matched subgroup HIV counts and population denominators to estimate coverage under the same catchment and tract-inclusion definitions as the main study. Evaluate suppression, geographic completeness and reconciliation before interpreting subgroup differences. Where fine-grained age bands or intersections of demographic characteristics cannot be estimated reliably, report the limitation and omit unsupported strata rather than fabricate precision. Geographic regions must be defined consistently for the comparison. Subgroup analyses are descriptive and should not be interpreted as individual-level disparities in transplant referral or receipt.
+
+### 9.2 Potential expansion of HIV R+ services (S4)
+
+Take the union of catchments for active HIV R+ centers as the existing service network. For each eligible active non-HIV R+ center, calculate the additional estimated PLWH covered by its catchment **outside** that existing union, using the same index-year population and reach definition. Report absolute newly covered PLWH and change in coverage in percentage points; a candidate's total catchment population is not its marginal gain. Individual candidate gains are not additive when candidate catchments overlap. If illustrating a sequence of multiple additions, recalculate marginal gain after each hypothetical addition instead of summing standalone gains. This is a geographic prioritization scenario, not evidence that a center will or can initiate an HIV transplant program. Center ranking is descriptive and does not equate geographic benefit with clinical readiness.
+
+### 9.3 Interpretation and inference
+
+The co-primary and secondary estimates are **descriptive population quantities**. Report the percentages and prespecified percentage-point contrasts; do not calculate confidence intervals, conduct hypothesis tests or report relative percentage changes. The major uncertainties concern spatial allocation, suppressed counts, center location and routing assumptions, rather than sampling variation. Prespecified sensitivity analyses evaluate selected structural assumptions, but do not exhaust all sources of uncertainty.
+
+For the exploratory per-center comparison, estimate PLWH within each individual center's catchment and display distributions, medians and appropriate descriptive plots across mutually exclusive experience categories. Individual center catchments overlap and may share tracts; centers can also appear in both years. **Do not perform Kruskal–Wallis or other hypothesis tests** for these comparisons, and do not infer a causal effect of local HIV population on center experience or vice versa.
+
+## 10. Missing data and validity requirements
+
+- Distinguish missing, unknown or not-done HIV status from demonstrated positive status when classifying recipients and donors. Document the handling of such records.
+- Do not silently equate a suppressed county HIV count with zero in the primary analysis; retain observed/imputed indicators and reconcile sums.
+- Verify that county-level HIV counts allocated to tracts reconcile with their parent counties and that estimated PLWH plus people without HIV reconcile with the corresponding ACS population base.
+- Check matching and inclusion of historical centers and identify unresolved records with material potential impact; confirm nested center-group counts and membership.
+- Confirm eligible-center catchments, valid geometries, uniform geography exclusions and absence of double counting in catchment unions or organ-specific transplant counts.
+- Verify logically ordered results: 50-mile coverage must not exceed 100-mile coverage, which must not exceed 200-mile coverage; HOPE D+ coverage must not exceed HIV R+, which must not exceed active coverage, for a shared organ, year and reach measure.
+- Explicitly distinguish empty center groups, uncovered populations and data failures.
+- For subgroup coverage, reconcile source totals and denominators where comparable, track suppression and geographic completeness, and identify strata that cannot support estimation.
+- For center expansion, verify that candidates are active and not already HIV R+ centers, and that newly covered tracts are not already in the existing catchment; avoid summing overlapping candidate gains.
+
+These checks are **internal analytic requirements**. They do not mandate a published validation appendix or manual line-by-line audit. Material unresolved discrepancies should be corrected or disclosed before results are treated as final.
+
+## 11. Prespecified sensitivity analyses
+
+All three analyses will be performed and documented. Material changes in interpretation should be included in the manuscript; results may otherwise appear in supplementary materials rather than the main text.
+
+| Analysis | Alternative to primary method |
 |---|---|
-| **PLWH** | AtlasPlus county HIV prevalence count, allocated to tracts in proportion to tract population: `tract PLWH = county PLWH × tract population / county population` |
-| **People without HIV** | Tract population minus tract PLWH |
+| **SA-suppression** | Fill suppressed county HIV counts with zero rather than state-residual, population-proportional estimates |
+| **SA-tract** | Count a tract only if its **geometric centroid** lies within the unioned catchment, rather than using any-intersection |
+| **SA-age** | Use all-age ACS population for geographic allocation and the non-HIV population comparison rather than an age-13+ base, consistent with the original analysis |
 
-The allocation assumes uniform prevalence within each county. Tract counts are estimates; only their sums over large areas will be interpreted.
+The 50-, 100- and 200-mile buffer analyses are **secondary objectives**, not additional sensitivity analyses. No separate sensitivity analysis is required for historical road networks, alternative departure times, alternative county-to-tract allocation, or unrestricted HOPE D+ centers, apart from the checks already described.
 
-## 7. Linkage
+## 12. Limitations
 
-| ID | Linkage | Key | Method | Quality report |
-|---|---|---|---|---|
-| K1 | SRTR active centers → HRSA locations | Center code | Exact match | Per organ and year: active SRTR centers, number matched, unmatched centers with their transplant volumes |
-| K2 | SRTR recipients → deceased donors | Donor ID | Left join | HIV R+ recipients by donor type (deceased matched, living, unmatched) |
-| K3 | AtlasPlus counties → ACS counties | County FIPS | Left join from ACS | Per year: unmatched counties and their case counts, in each direction. Connecticut 2022 needs a stated rule, because ACS uses planning regions as county equivalents [CONFIRM which units AtlasPlus 2022 uses]. |
-| K4 | Tracts → counties | First five digits of tract GEOID | Deterministic | All tracts assigned |
+1. **Ecological estimation:** HIV counts are observed at county level and allocated to tracts under uniform within-county prevalence; within-county clustering and partial-tract coverage are not directly measured.
+2. **Diagnosed HIV only:** Undiagnosed HIV is not counted in the source HIV surveillance measure.
+3. **Geographic potential rather than realized access:** Proximity does not establish clinical need, referral, ability to travel, insurance coverage, program acceptance, or receipt of transplant.
+4. **Age/clinical-system mismatch:** The 13+ population measure includes adolescents, whereas center activity is defined by adult transplantation; adolescent HIV burden is expected to be small but is not necessarily separately identifiable in county data.
+5. **Center experience as proxy:** Previous HIV R+ or deceased-donor HIV D+/R+ transplantation need not indicate contemporary willingness or capacity; living-donor HIV D+/R+ experience is not separately classified.
+6. **Historical and contemporary measurement:** Historical center locations and populations are combined with contemporary road-network and traffic assumptions; estimates do not recover historical driving conditions.
+7. **Geographic and time limitations:** Contiguous US and DC only; two cross-sectional years; changes in tract boundaries and county equivalents complicate small-area comparisons.
+8. **Source data quality:** HIV classification, center linkage, suppression and revisions to surveillance or geographic data may alter results.
+9. **Subgroup coverage:** Differential suppression, incompatible denominator categories and incomplete demographic stratification may limit comparisons across population groups.
+10. **Expansion scenarios:** Marginal geographic coverage does not establish a center’s clinical readiness, willingness, staffing, referral patterns or patients’ realized access.
 
-## 8. Reach definitions
+## 13. Required scientific results
 
-| Definition | Role | Parameters |
-|---|---|---|
-| **60-minute isochrone** | **Primary** | Mapbox `driving-traffic`; 60 minutes; departure 07:00 local time on the reference date; each center's local time zone determined from its coordinates |
-| 50-mile buffer | Secondary | Straight-line, 80,467.2 m, on EPSG:5070 (CONUS Albers equal-area) |
-| 100-mile buffer | Secondary | 160,934.4 m |
-| 200-mile buffer | Secondary | 321,868 m |
+The analysis must produce, for each organ and index year: counts of centers by nested experience group; relevant population totals; 60-minute geographic coverage estimates for both co-primary objectives; prespecified percentage-point contrasts; secondary distance-buffer coverage; 2017-to-2022 percentage-point differences; descriptive center-level catchment population comparisons; feasible, quality-assessed population subgroup comparisons; and a descriptive ranking of potential HIV R+ center expansion by incremental geographic coverage. Prespecified sensitivity analyses must be documented, with material effects reported.
 
-Every center in a group will receive a catchment under every definition (check V5). Mapbox limits isochrones to 60 minutes, so longer driving times are outside this design.
+Maps, tables, figures and manuscript ordering are presentation choices and are not fixed by this analysis plan.
 
-## 9. Outcome definitions
+## 14. Reproducibility and data access
 
-For each organ × year × center group × reach definition:
-
-1. **Catchment.** The catchments of all centers in the group are dissolved into one area, so overlapping catchments count once.
-2. **Tract inclusion.** A tract is within reach if any part of it intersects the catchment. SA3 tests a stricter rule.
-3. **Numerator.** Sum of PLWH (or people without HIV) in tracts within reach.
-4. **Denominator.** Sum of PLWH (or people without HIV) over all tracts in the study geography for that year.
-5. **Percentage.** 100 × numerator ÷ denominator, reported to one decimal place.
-6. **Contrasts.** Percentage-point differences for P1, P2 and the 2017 → 2022 change.
-
-People without HIV are analyzed for active centers only (P1).
-
-**Empty center groups.** When a group has no centers (likely for HOPE D+ heart, lung and pancreas), the numerator is 0 and the cell is reported as "0% (no centers)" with a footnote. Every results cell reports the number of centers it is based on.
-
-## 10. Statistical methods
-
-### 10.1 Primary and secondary objectives
-
-Estimates are descriptive population quantities. No hypothesis tests are planned for P1, P2, S-reach or S-change.
-
-No confidence intervals will be reported. The inputs are a near-complete enumeration of centers and population-level surveillance and census estimates, not a sample. The main uncertainty is structural (allocation, reach definition, suppression) and is addressed by the sensitivity analyses. ACS margins of error will not be propagated. [OPEN: whether to report the range across sensitivity analyses alongside each headline estimate.]
-
-### 10.2 Exploratory objective (E1)
-
-- For each active center, sum PLWH over tracts intersecting that center's own catchment (not the dissolved catchment).
-- Group centers by status in each index year: HOPE D+, HIV R+ only, no HIV R+ transplants. Only active centers enter this analysis, so HOPE D+ centers inactive in the index year are excluded.
-- Display as beeswarm and violin plots with medians, by year.
-- Compare groups with a Kruskal–Wallis test.
-
-Interpretation constraints:
-
-- The test is exploratory and descriptive. Center values are not independent: overlapping catchments share tracts, and the same centers appear in both years.
-- Up to 40 tests (5 organs × 4 reach definitions × 2 years) will be run without multiplicity adjustment. P-values are descriptive only.
-- No causal interpretation will be made about whether local PLWH population drives HIV transplant experience, or the reverse.
-
-## 11. Missing, suppressed and invalid data
-
-| Issue | Handling |
-|---|---|
-| **CDC-suppressed county counts** | Filled with best estimates through the planned `CDCAtlas` update. Report per year the number of suppressed counties and the estimated PLWH assigned to them. Zero-fill is SA2. |
-| Unmatched counties (K3) | Reported with their counts; resolved case by case, with each resolution recorded |
-| Zero-population tracts or counties | Zero-population tracts contribute zero. Confirm that no county has zero population. |
-| Recipient HIV status missing or unknown | Treated as not HIV-positive; the number of such adult recipients reported per organ and window |
-| Centers missing coordinates or not linked | Reported (K1) and excluded |
-| Invalid catchment geometries | Checked and repaired before joining (V9) |
-
-## 12. Sensitivity analyses
-
-| ID | Question | Variation |
-|---|---|---|
-| SA1 | Does the reach definition change conclusions? | 50, 100 and 200 mile buffers (the secondary objectives) |
-| SA2 | Does suppression handling matter? | Zero-fill instead of best-estimate fill |
-| SA3 | Does the tract inclusion rule matter? | Tract centroid inside the catchment, instead of any intersection [OPEN: geometric or population-weighted centroid] |
-| SA4 | Does the within-county allocation matter? | Population-weighted areal interpolation [OPEN] |
-| SA5 | Does the HOPE D+ scope matter? | HOPE D+ centers restricted to those active in the index year |
-| SA6 | Does the population comparison depend on age? | People without HIV restricted to ages 13 and older, to match AtlasPlus [OPEN] |
-
-## 13. Anticipated limitations
-
-- **L1. Ecological allocation.** Tract PLWH counts assume uniform prevalence within counties; within-county clustering is not represented.
-- **L2. Diagnosed HIV only.** Undiagnosed PLWH are not counted.
-- **L3. Residence, not candidacy.** The population is all PLWH, not those with end-stage organ disease or on a waiting list. Estimates describe potential geographic access, not need.
-- **L4. Age mismatch.** PLWH counts cover ages 13 and older [CONFIRM]; people without HIV include all ages; centers are defined by adult activity. SA6 addresses this.
-- **L5. Center list currency.** Current HRSA locations are applied to past years; centers that have since closed may be missing.
-- **L6. Routing assumptions.** One departure time and day, the current road network for both years, and driving only. Transit, cost and referral pathways are not considered.
-- **L7. Experience as a proxy.** At least one HIV R+ transplant in five years does not measure a program's current willingness or capacity to evaluate PLWH.
-- **L8. SRTR HIV coding.** Recipient and donor HIV fields may be incomplete or misclassified.
-- **L9. Boundary changes.** 2017 and 2022 use different tract vintages and, in Connecticut, different county equivalents. Cross-year comparisons are made at the national level only.
-
-## 14. Validation and reconciliation checks
-
-Reported in a supplementary table, each with its expected result.
-
-| ID | Check | Expected result |
-|---|---|---|
-| V1 | Total tract PLWH vs. total county PLWH over matched counties, per year | Equal within rounding |
-| V2 | Total tract PLWH + people without HIV vs. ACS total population, per year | Equal, apart from unmatched counties |
-| V3 | County linkage (K3) | Unmatched counties listed and explained |
-| V4 | Center linkage (K1) | Unmatched active centers listed with volumes |
-| V5 | Catchments vs. centers, per group, organ, year and reach definition | One catchment per center |
-| V6 | Groups with zero centers | Percentage 0, not 100 |
-| V7 | Ordering | 50 ≤ 100 ≤ 200 mile within each group; HIV R+ ≤ active within each reach definition. HOPE D+ need not be ≤ active. |
-| V8 | Results grid | 120 PLWH estimates and 40 estimates for people without HIV |
-| V9 | Geometry validity | All catchments valid |
-
-## 15. Planned outputs
-
-- **Table 1.** Per organ and year: number of centers in each group; total PLWH and total population.
-- **Center flow diagram** per organ and year: HRSA base list → linked to SRTR → active → HIV R+, with HOPE D+ shown separately.
-- **Results tables.** P1 and P2 at the primary reach definition with contrasts; secondary reach definitions in supplementary tables.
-- **Maps.** Paired 2017 and 2022 maps of catchments over a PLWH dot-density layer.
-- **Exploratory figure.** Beeswarm plots for E1.
-- **Supplementary tables.** Linkage quality (K1–K3), suppression (Section 11), validation checks (Section 14), sensitivity analyses (Section 12).
-
-## 16. Reproducibility and data access
-
-- **Code:** <https://github.com/VagishHemmige/HOPE-CDC-analysis-2026>. Each reported run cites its commit hash.
-- **Investigator access:** [CONFIRM the analysts' level of access to SRTR data under the data use agreement].
-- **Restricted data:** SRTR files are not shared. Only center-level aggregates are published.
-- **Live inputs:** dated snapshots of the HRSA list and AtlasPlus data are saved with each reported run.
-- **Cached inputs:** build dates of ACS pulls and Mapbox isochrones are recorded with each reported run.
-- **Software:** R and package versions recorded with each reported run [OPEN: whether to adopt `renv`].
-
-## 17. Amendments
-
-Changes to this plan after version 1.0 are recorded here with date, change and reason.
-
-| Date | Version | Change | Reason |
-|---|---|---|---|
-| | | | |
+The study relies on restricted SRTR records and publicly available population, surveillance and geographic sources, as well as modeled routing data. Restricted, patient-level SRTR information must not be published or transferred into public analysis outputs. The analysis should be reproducible within an authorized environment from defined data vintages and methodological assumptions. Repository-specific execution, version-recording, cache management and contributor instructions belong in `AGENTS.md`; the current implementation and data flow belong in `ARCHITECTURE.md`. Extensions using longer driving times or transit, and Bayesian county-to-tract modeling, are potential subsequent studies rather than requirements of this plan.
 
 ---
 
 ## Appendix A. STROBE and RECORD crosswalk
 
-S = STROBE item; R = RECORD extension. The manuscript column is filled in at submission.
+This is a planning aid, not a claim of reporting-guideline compliance. Manuscript locations can be supplied during manuscript preparation.
 
-| Item | Topic | Plan section | Manuscript | Notes |
-|---|---|---|---|---|
-| S1a / S1b | Design in title; informative abstract | 3 | | |
-| R1.1 | Type of data in title or abstract | 5 | | Name SRTR, AtlasPlus, ACS |
-| R1.2 | Geographic region and time frame | 4 | | |
-| R1.3 | Linkage stated | 7 | | |
-| S2 | Background and rationale | 1 | | |
-| S3 | Objectives | 2 | | |
-| S4 | Study design | 3 | | |
-| S5 | Setting, locations, dates | 4 | | |
-| S6a | Eligibility and sources | 6 | | Centers and populations |
-| R6.1 | Codes or algorithms to select the population | 6.1, 6.2 | | |
-| R6.2 | Validation of those codes | 6.1, 13 (L8) | | [CONFIRM any published validation of SRTR HIV fields] |
-| R6.3 | Linkage flow diagram | 7, 15 | | Center flow diagram |
-| S7 | Variables | 2, 8, 9 | | Exposure: HIV status (P1) or center group (P2) |
-| R7.1 | Complete list of codes and algorithms | 6.1, 8 | | |
-| S8 | Data sources and measurement | 5 | | |
-| S9 | Efforts to address bias | 11, 12, 13 | | Framed as threats to the estimate |
-| S10 | Study size | 15 (Table 1) | | No power calculation; counts reported |
-| S11 | Quantitative variables | 8, 9 | | |
-| S12a | Statistical methods | 9, 10 | | |
-| S12b | Subgroups and interactions | 2 | | By organ and year |
-| S12c | Missing data | 11 | | |
-| S12d | Sampling strategy | 3, 10.1 | | Not applicable: no sampling |
-| S12e | Sensitivity analyses | 12 | | |
-| R12.1 | Investigator access to the database | 16 | | |
-| R12.2 | Data cleaning | 6, 11 | | |
-| R12.3 | Linkage methods and quality | 7, 14 | | |
-| S13a–c | Numbers at each stage; flow diagram | 15 | | Center flow |
-| R13.1 | Selection, including data quality and linkage | 7, 14 | | |
-| S14a | Characteristics of the study population | 15 (Table 1) | | |
-| S14b | Missing data per variable | 11 | | |
-| S15 | Outcome data | 9 | | |
-| S16a | Estimates and precision | 9, 10.1 | | No adjustment; no confidence intervals, with reason |
-| S16b–c | Category boundaries; absolute measures | 8 | | |
-| S17 | Other analyses | 10.2, 12 | | |
-| S18 | Key results | — | | |
-| S19 | Limitations | 13 | | |
-| R19.1 | Limitations of routinely collected data | 13 | | |
-| S20 | Interpretation | 10, 13 | | |
-| S21 | Generalisability | 13 | | |
-| S22 | Funding | — | | [CONFIRM] |
-| R22.1 | Access to protocol, data and code | 16 | | |
+| Item | Topic | Plan section | Manuscript location |
+|---|---|---|---|
+| STROBE 1–3; RECORD 1.1–1.3 | Title, abstract, background, objectives and linkage description | 1–2, 4, 7 | — |
+| STROBE 4–6; RECORD 6.1–6.3 | Design, setting, participants, center selection and coding | 3–5 | — |
+| STROBE 7–8; RECORD 7.1 | Variables, sources and measurement | 4–8 | — |
+| STROBE 9–12; RECORD 12.1–12.3 | Bias, study size, statistical methods, missing data and linkage quality | 6–11, 14 | — |
+| STROBE 13–17; RECORD 13.1 | Descriptive results, study population, subgroup and expansion analyses, outcome estimates and sensitivity analyses | 9–11, 13 | — |
+| STROBE 18–21; RECORD 19.1 | Interpretation, limitations and generalisability | 9, 12 | — |
+| STROBE 22; RECORD 22.1 | Funding, protocol, data availability and access | 14; funding to be stated in manuscript | — |
 
 ## References
 
 - von Elm E, et al. The Strengthening the Reporting of Observational Studies in Epidemiology (STROBE) statement. *PLoS Med.* 2007;4(10):e296.
 - Benchimol EI, et al. The REporting of studies Conducted using Observational Routinely-collected health Data (RECORD) statement. *PLoS Med.* 2015;12(10):e1001885.
-- HHS final rule removing clinical research and IRB requirements for HIV-positive-to-HIV-positive kidney and liver transplantation, effective November 27, 2024 [CONFIRM Federal Register citation].

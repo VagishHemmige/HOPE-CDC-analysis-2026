@@ -1,7 +1,7 @@
 # HOPE CDC Analysis 2026 — Architecture
 
-> Describes the code as of commit `dbf22b0` on `master` (October 23, 2026).
-> File paths are relative to the repository root.
+> Describes the code as of commit `ec5ab05` on `master` (November 4, 2026),
+> with no uncommitted changes. File paths are relative to the repository root.
 
 ## Overview
 
@@ -18,9 +18,12 @@ The project has two layers:
 
 1. **A sequential R pipeline** (`R/main.R`) that builds every object as a named
    list in the global environment and writes tables, figures and cached
-   objects to disk.
-2. **A Quarto website** (`_quarto.yml`, output in `docs/`) that documents each
-   script and displays results by reading the pipeline's saved outputs.
+   objects to disk. Its last steps copy the tables and figures the website
+   shows into `site-outputs/`, which is committed.
+2. **A Quarto website** (`_quarto.yml`) that documents each script and shows
+   results by reading `site-outputs/`. A GitHub Actions workflow renders it
+   and publishes it to the `gh-pages` branch, which GitHub Pages serves. The
+   website never runs the analysis and needs no restricted data.
 
 ## Execution order
 
@@ -69,6 +72,8 @@ flowchart TD
     TAB["tables.R"]
     JIND["join_tracts_to_buffers.R"]
     FIG["figures.R"]
+    SO[("site-outputs/<br/>committed tables and figures")]
+    SITE["Quarto website<br/>rendered by GitHub Actions"]
 
     SRTR & HRSA & ACS & ATLAS & TIG --> LOAD
     LOAD --> CLASS --> COUNTY
@@ -88,6 +93,10 @@ flowchart TD
     COUNTY -->|Merged_Counties| FIG
     CLASS -->|center groups| FIG
     LOAD -->|states_sf| FIG
+
+    TAB -->|HTML tables| SO
+    FIG -->|figure copies| SO
+    SO --> SITE
 ```
 
 ## Components
@@ -214,9 +223,17 @@ These are two independent branches from the buffers, not a sequence.
 **Location:** `R/tables.R`
 
 gt objects built by `convert_resultsdf_to_table()` from `Results_HIV_df` and
-`Results_nonHIV_df`. Saved as `.docx` and `.png` in `tables/<organ>/`, and as
-RDS in `cache/Results_HIV_gt.rds` and `cache/Results_nonHIV_gt.rds` for the
-website.
+`Results_nonHIV_df`, two per organ. Each is saved four ways:
+
+| Output | Location | Used by |
+|---|---|---|
+| Word table | `tables/<organ>/<organ> analysis results Table 1.docx`, `Table 2.docx` | Manuscript work |
+| Image | `tables/<organ>/... Table 1.png`, `Table 2.png` | Manuscript work |
+| HTML fragment from `gt::as_raw_html()` | `site-outputs/tables/<organ>_hiv.html`, `<organ>_nonhiv.html` | The results pages |
+| RDS of the gt objects, all organs | `cache/Results_HIV_gt.rds`, `cache/Results_nonHIV_gt.rds` | Reloading in an R session; the website does not read them |
+
+The HTML fragments carry their styling inline, so the website shows the same
+formatted table without gt installed.
 
 ### Figures
 
@@ -245,13 +262,22 @@ flowchart LR
 
 | Family | Built by | Inputs | Output files | Used on site |
 |---|---|---|---|---|
-| Access model diagram | `grViz()` in `figures.R` | None (hand-written spec) | `figures/hope_cdc_access_model.svg`, `.png` | `quarto/analysis_methods.qmd` |
+| Access model diagram | `grViz()` in `figures.R` | None (hand-written spec) | `figures/hope_cdc_access_model.svg`, `.png` | Study design and methods page |
 | Center maps | `figures.R` loop | Dots, states, active and HIV R+ buffers | `figures/<organ>/Active <organ> <distance> map<year>.svg`, `HIV <organ> ...svg` | No |
 | Paired plots, PLWH and people without HIV | `make_paired_plot(include_nonHIV = TRUE)` | Dots, states, active buffers, both results tables | `figures/<organ>/Active<organ>CenterCombinedPlot<distance>.png` | Results page, first section |
 | Paired plots, PLWH by center group | `make_paired_plot()` | Dots, states, active, HIV R+ or HOPE D+ buffers, `Results_HIV_df` | `figures/<organ>/Combined <organ> plot 2026-2-14 <distance> <active/HIV/HOPE>.png` | Results page, second section |
 | Beeswarm plots | `plot_center_HIV_catchment()` | `tracts_in_buffers_active`, center groups | `figures/<organ>/Beeswarm <organ> plot 2026-2-14 <distance>.png` | Results page, third section |
 
 Every family except the diagram is also saved as `.svg`.
+
+**Export to the website** (section `export-site-figures`, at the end of
+`R/figures.R`): builds an explicit list of the 101 files the website shows
+(the access model SVG, and for each organ and reach definition the paired
+plot of PLWH and people without HIV, the three center-group plots and the
+beeswarm plot), stops with
+an error naming any that is missing, and copies them into
+`site-outputs/figures/`, keeping each organ's folder. Only listed files are
+copied, so other files in `figures/` never reach the site.
 
 **Paired plots** (`make_paired_plot()`): two maps side by side, one per index
 year. Each shows the dot-density layer, the per-center catchment outlines in
@@ -278,20 +304,57 @@ run.
 
 ### Website
 
-**Location:** `_quarto.yml`, `index.qmd`, `quarto/*.qmd`; output in `docs/`
+**Location:** `_quarto.yml`, `index.qmd`, `404.qmd`, `quarto/*.qmd`,
+`styles.css`, `_extensions/`; build in `.github/workflows/publish.yml`
 
-- A docked sidebar mirrors the pipeline: Background, Setup and helpers, Data
-  loading and processing (one page per script), Tables and Figures, Results
-  by organ, About.
+```mermaid
+flowchart LR
+    R["R/*.R scripts"] -->|"knitr::read_chunk(), file:"| SCRIPT["Script pages<br/>code shown, not run"]
+    SO[("site-outputs/tables<br/>site-outputs/figures")] --> RES["Results pages"]
+    IMG[("images/")] --> HOME["Home, Study design<br/>and methods"]
+    SO --> HOME
+    DOCS[("analysis-plan.md, ARCHITECTURE.md,<br/>AGENTS.md, REPOSITORY-BLUEPRINT.md")] --> PD["Project documents pages"]
+    SCRIPT & RES & HOME & PD --> GHA["GitHub Actions<br/>quarto render"]
+    GHA -->|pull request| CHECK["Render check only"]
+    GHA -->|push to master| GHP[("gh-pages branch")] --> PAGES["GitHub Pages"]
+```
+
+- **Sidebar.** Docked, with every section open (`collapse-level: 3`): Home,
+  Background, Study design and methods, Code (setup and helpers, one page per
+  pipeline script in `main.R` order, tables and figures), Results by organ,
+  Project documents, About. Each kind of page has one icon, coloured by
+  `styles.css`: `book` background, `diagram-3` study design and methods,
+  `laptop` R code, `clipboard-data` results, `file-earmark-ruled` project
+  documents.
+- **Nothing runs by default.** `_quarto.yml` sets `execute: eval: false`.
+  Chunks that must run set `eval: true`: the `read_chunk()` imports, the
+  setup page's package and constants tables, the results pages, and the
+  Architecture page's reader.
 - **Script pages pull code from the scripts at render time.** Pages for
   scripts with labeled sections (`## ---- label`) call `knitr::read_chunk()`
   and show each section next to its explanation: setup, functions,
   load_data, county_geographic_calculations, calculate_aggregated_results
   and figures. The remaining script pages show the whole script with the
-  `file:` chunk option. Code on these pages is displayed, not run.
-- Results pages read `../cache/Results_*_gt.rds` and find figures in
-  `../figures/<organ>` with `list.files()` and a filename pattern.
-- The `coatless-quarto/custom-callout` extension styles the source-code boxes.
+  `file:` chunk option.
+- **Results pages** read only `site-outputs/`. A hidden setup chunk defines
+  `show_table()`, which prints an HTML fragment, and `site_figures()`, which
+  lists the page's figures ordered by reach distance and then by center
+  group. Both use base R. On the lung and pancreas pages `hide_hope <- TRUE`
+  removes the HOPE D+ table rows and figures; these organs have no HOPE D+
+  centers.
+- **Project documents pages** (`quarto/analysis-plan.qmd`, `architecture.qmd`,
+  `agents.qmd`, `repository-blueprint.qmd`) show the root files at render
+  time, so the root file is the only copy. The Architecture page reads
+  `ARCHITECTURE.md` as text and turns its mermaid fences into drawn diagrams.
+- **Callouts and marks.** The `coatless-quarto/custom-callout` extension
+  provides the `Rcode`, `Results` and `Pending` callouts.
+  `quarto/_pending.lua` highlights paragraphs that start with
+  **Decision pending:**, and any `[text]{.pending}`, in yellow.
+- **Build and publishing.** `.github/workflows/publish.yml` installs Quarto
+  1.10.18 and the R packages the pages use (knitr, rmarkdown, tidyverse, gt),
+  renders the site, and on pushes to `master` publishes it to `gh-pages`. On
+  pull requests it only renders. Local renders write to `docs/`, which git
+  ignores.
 - `repo-branch: master` points the edit and issue links at the right branch.
 
 ## Data flow for the results tables
@@ -322,7 +385,11 @@ and reach definition (4): 120 rows for PLWH and 40 rows for people without HIV
 | Mapbox token | Environment (`mapboxapi`) | Needed only when isochrones are not cached |
 | Census API key | Environment (`tidycensus`) | Needed only when ACS pulls are not cached |
 | SRTR file location | `sRtr` package configuration | Restricted data, not in the repository |
-| Site render list, navigation, theme, branch | `_quarto.yml` | `output-dir: docs`, `repo-branch: master` |
+| Site render list, navigation, theme, branch | `_quarto.yml` | `output-dir: docs` (gitignored), `repo-branch: master`, `execute: eval: false` |
+| Figures the site shows | `R/figures.R`, section `export-site-figures` | Explicit list of 101 files |
+| Site build and publishing | `.github/workflows/publish.yml` | Quarto 1.10.18; publishes to `gh-pages` on pushes to `master` |
+| Pages source | GitHub repository settings | `gh-pages` branch, root folder |
+| HOPE D+ rows and figures hidden | `hide_hope` in each `quarto/results_<organ>.qmd` | `TRUE` for lung and pancreas |
 
 ## Code references
 
@@ -335,10 +402,13 @@ and reach definition (4): 120 rows for PLWH and 40 rows for people without HIV
 | Allocation | `R/county_geographic_calculations.R` | `Merged_Counties`, `Merged_tracts`, `tract_cases`, `tract_noncases` |
 | Union | `R/unite_buffers.R` | `*_buffer_united` |
 | Results | `R/calculate_aggregated_results.R` | `Results_HIV_df`, `Results_nonHIV_df` |
-| Tables | `R/functions.R`, `R/tables.R` | `convert_resultsdf_to_table()`, `Results_HIV_gt` |
+| Tables | `R/functions.R`, `R/tables.R` | `convert_resultsdf_to_table()`, `Results_HIV_gt`, `as_raw_html()` |
 | Figure layers | `R/figures.R` | `county_dots_transformed`, `states_sf_transformed` |
 | Paired plots | `R/functions.R`, `R/figures.R` | `make_paired_plot()` |
 | Beeswarm plots | `R/functions.R`, `R/figures.R` | `plot_center_HIV_catchment()` |
+| Website export | `R/figures.R` | `export-site-figures`, `site_figures` |
+| Results pages | `quarto/results_<organ>.qmd` | `show_table()`, `site_figures()`, `hide_hope` |
+| Site build | `.github/workflows/publish.yml` | `quarto-dev/quarto-actions/publish` |
 
 ## Glossary
 
@@ -362,11 +432,11 @@ and reach definition (4): 120 rows for PLWH and 40 rows for people without HIV
 - The center maps are saved as SVG only and are not shown on the site.
 - `R/load_tract_data_from_cache.R` is not sourced by `R/main.R`. It is a
   standalone helper for reloading cached isochrones.
-- `cache/`, `tables/` and `figures/` are gitignored, so results pages render
-  only on a machine that has run the pipeline. At render, Quarto copies the
-  figures each page uses into `docs/figures/`, so the published site is as
-  current as the last render. To update the site, run `R/main.R`, then
-  render.
-- Results pages find figures with `list.files()` and a filename pattern, so
-  any leftover file in `figures/<organ>/` that matches the pattern also
-  appears on the site.
+- `cache/`, `tables/`, `figures/` and `docs/` are gitignored. `site-outputs/`
+  and `images/` are committed, and they are all the website reads, so the
+  site renders on any machine.
+- The published site is as current as `site-outputs/`. To update it, run
+  `R/main.R`, which rewrites `site-outputs/`, review the changed files, and
+  merge them into `master`.
+- `images/` holds the two images no script makes: the tract-allocation
+  explainer and the IDWeek 2025 poster.

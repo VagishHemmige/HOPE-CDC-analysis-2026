@@ -5,7 +5,11 @@
 Results_HIV_gt<-list()
 Results_nonHIV_gt<-list()
 
-#Create tables as docx and PNG
+# Folder for the tables the website shows. It is committed and published, so
+# check any change to it for disclosure before committing.
+dir.create("site-outputs/tables", recursive = TRUE, showWarnings = FALSE)
+
+#Create tables as docx and PNG, and as HTML for the website
 
 for (organ_loop in organ_list)
 {
@@ -58,6 +62,8 @@ for (organ_loop in organ_list)
                                table_title= "Access to transplant in PLWH")
   gtsave(Results_HIV_gt[[organ_loop]], file_path[["Table 1"]][[".docx"]])
   gtsave(Results_HIV_gt[[organ_loop]], file_path[["Table 1"]][[".png"]])
+  writeLines(as_raw_html(Results_HIV_gt[[organ_loop]]),
+             paste0("site-outputs/tables/", organ_loop, "_hiv.html"))
   
   Results_nonHIV_gt[[organ_loop]]<-Results_nonHIV_df[[organ_loop]]%>%
     convert_resultsdf_to_table(year_list_fn=year_list,
@@ -66,11 +72,14 @@ for (organ_loop in organ_list)
                                table_title= "Access to transplant in people without HIV")
   gtsave(Results_nonHIV_gt[[organ_loop]], file_path[["Table 2"]][[".docx"]])
   gtsave(Results_nonHIV_gt[[organ_loop]], file_path[["Table 2"]][[".png"]])
+  writeLines(as_raw_html(Results_nonHIV_gt[[organ_loop]]),
+             paste0("site-outputs/tables/", organ_loop, "_nonhiv.html"))
   
   
   
 }
 
-#Save table objects as .RDS so they can be accessed by Quarto
+# Save the gt objects for use in an R session. The website does not read
+# these; it shows the HTML copies in site-outputs/tables/.
 saveRDS(Results_HIV_gt, "cache/Results_HIV_gt.rds")
 saveRDS(Results_nonHIV_gt, "cache/Results_nonHIV_gt.rds")

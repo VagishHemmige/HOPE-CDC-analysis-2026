@@ -9,7 +9,7 @@ This section describes the R analysis methods utilized in this analysis at a con
 
 The analysis requires integration of data from multiple sources, as explained in the graphic below:
 
-![](../figures/hope_cdc_access_model.svg)
+![](../site-outputs/figures/hope_cdc_access_model.svg)
 
 At a high level, each source contributed the following:
 
@@ -25,7 +25,7 @@ At a high level, each source contributed the following:
 
 The CDC Atlas database provides HIV prevalence estimates at the county level.  We used a straightforward mathematical interpolation to estimate the number of people living with HIV for each [census tract](https://www.census.gov/data/academy/data-gems/2018/tract.html):
 
-![](../figures/tract_math_explainer.png)
+![](../images/tract_math_explainer.png)
 
 Because CDC AtlasPlus provides HIV prevalence estimates at the county level, tract-level counts were approximated by allocating county case counts in proportion to tract population. This produces crude tract-level estimates, but should introduce limited error in aggregated analyses when catchment boundaries tend to encompass most or none of a county’s high-burden tracts. In future work, we plan to evaluate stratified or [population-weighted areal interpolation](https://walker-data.com/tidycensus/reference/interpolate_pw.html) instead.
 

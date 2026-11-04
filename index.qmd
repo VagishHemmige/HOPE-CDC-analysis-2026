@@ -36,6 +36,6 @@ This analysis has yet to be published to date.
 
 Abstracts have been presented or will be presented at:
 
-- IDWeek 2025 (click below to enlarge) [![](figures/liver/IDWeek 2025.png)](figures/liver/IDWeek 2025.png)
+- IDWeek 2025 (click below to enlarge) [![](images/IDWeek 2025.png)](images/IDWeek 2025.png)
 - International Society of Heart and Lung Transplantation 2026
 - American Transplant Congress 2026

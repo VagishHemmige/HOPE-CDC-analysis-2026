@@ -115,15 +115,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 <style>
-div.callout-Results.callout {
-  border-left-color: #198754;
+div.callout-Rcode.callout {
+  border-left-color: pink;
 }
-div.callout-Results.callout-style-default > .callout-header {
-  background-color: rgba(25, 135, 84, 0.13);
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgb(from pink r g b / 13%);
 }
-div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
-  content: '📊';
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Pending.callout {
@@ -137,15 +137,15 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
   content: '⏳';
   background-image: none;
 }
-div.callout-Rcode.callout {
-  border-left-color: pink;
+div.callout-Results.callout {
+  border-left-color: #198754;
 }
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgb(from pink r g b / 13%);
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
 }
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
   background-image: none;
 }
 </style>
@@ -523,15 +523,15 @@ It reads only ARCHITECTURE.md, never data, and runs no analysis code.
 <section id="hope-cdc-analysis-2026-architecture" class="level1">
 <h1>HOPE CDC Analysis 2026 — Architecture</h1>
 <blockquote class="blockquote">
-<p>Describes the code as of commit <code>dbf22b0</code> on <code>master</code> (October 23, 2026). File paths are relative to the repository root.</p>
+<p>Describes the code as of commit <code>ec5ab05</code> on <code>master</code> (November 4, 2026), with no uncommitted changes. File paths are relative to the repository root.</p>
 </blockquote>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>This project estimates what share of people living with HIV (PLWH) in the continental United States live within reach of an adult solid-organ transplant center, and compares that with people without HIV. It covers five organs (kidney, liver, heart, lung, pancreas), two index years (2017, 2022), and four reach definitions: 50, 100 and 200 mile straight-line buffers, and a 60-minute driving isochrone. Centers are grouped three ways: all active adult centers, centers that transplanted a recipient with HIV (HIV R+), and centers that used an HIV-positive donor (HOPE D+).</p>
 <p>The project has two layers:</p>
 <ol type="1">
-<li><strong>A sequential R pipeline</strong> (<code>R/main.R</code>) that builds every object as a named list in the global environment and writes tables, figures and cached objects to disk.</li>
-<li><strong>A Quarto website</strong> (<code>_quarto.yml</code>, output in <code>docs/</code>) that documents each script and displays results by reading the pipeline’s saved outputs.</li>
+<li><strong>A sequential R pipeline</strong> (<code>R/main.R</code>) that builds every object as a named list in the global environment and writes tables, figures and cached objects to disk. Its last steps copy the tables and figures the website shows into <code>site-outputs/</code>, which is committed.</li>
+<li><strong>A Quarto website</strong> (<code>_quarto.yml</code>) that documents each script and shows results by reading <code>site-outputs/</code>. A GitHub Actions workflow renders it and publishes it to the <code>gh-pages</code> branch, which GitHub Pages serves. The website never runs the analysis and needs no restricted data.</li>
 </ol>
 </section>
 <section id="execution-order" class="level2">
@@ -582,6 +582,8 @@ It reads only ARCHITECTURE.md, never data, and runs no analysis code.
     TAB["tables.R"]
     JIND["join_tracts_to_buffers.R"]
     FIG["figures.R"]
+    SO[("site-outputs/&lt;br/&gt;committed tables and figures")]
+    SITE["Quarto website&lt;br/&gt;rendered by GitHub Actions"]
 
     SRTR &amp; HRSA &amp; ACS &amp; ATLAS &amp; TIG --&gt; LOAD
     LOAD --&gt; CLASS --&gt; COUNTY
@@ -601,6 +603,10 @@ It reads only ARCHITECTURE.md, never data, and runs no analysis code.
     COUNTY --&gt;|Merged_Counties| FIG
     CLASS --&gt;|center groups| FIG
     LOAD --&gt;|states_sf| FIG
+
+    TAB --&gt;|HTML tables| SO
+    FIG --&gt;|figure copies| SO
+    SO --&gt; SITE
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -669,7 +675,44 @@ It reads only ARCHITECTURE.md, never data, and runs no analysis code.
 <section id="tables" class="level3">
 <h3 class="anchored" data-anchor-id="tables">Tables</h3>
 <p><strong>Location:</strong> <code>R/tables.R</code></p>
-<p>gt objects built by <code>convert_resultsdf_to_table()</code> from <code>Results_HIV_df</code> and <code>Results_nonHIV_df</code>. Saved as <code>.docx</code> and <code>.png</code> in <code>tables/&lt;organ&gt;/</code>, and as RDS in <code>cache/Results_HIV_gt.rds</code> and <code>cache/Results_nonHIV_gt.rds</code> for the website.</p>
+<p>gt objects built by <code>convert_resultsdf_to_table()</code> from <code>Results_HIV_df</code> and <code>Results_nonHIV_df</code>, two per organ. Each is saved four ways:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Location</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Word table</td>
+<td><code>tables/&lt;organ&gt;/&lt;organ&gt; analysis results Table 1.docx</code>, <code>Table 2.docx</code></td>
+<td>Manuscript work</td>
+</tr>
+<tr class="even">
+<td>Image</td>
+<td><code>tables/&lt;organ&gt;/... Table 1.png</code>, <code>Table 2.png</code></td>
+<td>Manuscript work</td>
+</tr>
+<tr class="odd">
+<td>HTML fragment from <code>gt::as_raw_html()</code></td>
+<td><code>site-outputs/tables/&lt;organ&gt;_hiv.html</code>, <code>&lt;organ&gt;_nonhiv.html</code></td>
+<td>The results pages</td>
+</tr>
+<tr class="even">
+<td>RDS of the gt objects, all organs</td>
+<td><code>cache/Results_HIV_gt.rds</code>, <code>cache/Results_nonHIV_gt.rds</code></td>
+<td>Reloading in an R session; the website does not read them</td>
+</tr>
+</tbody>
+</table>
+<p>The HTML fragments carry their styling inline, so the website shows the same formatted table without gt installed.</p>
 </section>
 <section id="figures" class="level3">
 <h3 class="anchored" data-anchor-id="figures">Figures</h3>
@@ -721,7 +764,7 @@ It reads only ARCHITECTURE.md, never data, and runs no analysis code.
 <td><code>grViz()</code> in <code>figures.R</code></td>
 <td>None (hand-written spec)</td>
 <td><code>figures/hope_cdc_access_model.svg</code>, <code>.png</code></td>
-<td><code>quarto/analysis_methods.qmd</code></td>
+<td>Study design and methods page</td>
 </tr>
 <tr class="even">
 <td>Center maps</td>
@@ -754,18 +797,42 @@ It reads only ARCHITECTURE.md, never data, and runs no analysis code.
 </tbody>
 </table>
 <p>Every family except the diagram is also saved as <code>.svg</code>.</p>
+<p><strong>Export to the website</strong> (section <code>export-site-figures</code>, at the end of <code>R/figures.R</code>): builds an explicit list of the 101 files the website shows (the access model SVG, and for each organ and reach definition the paired plot of PLWH and people without HIV, the three center-group plots and the beeswarm plot), stops with an error naming any that is missing, and copies them into <code>site-outputs/figures/</code>, keeping each organ’s folder. Only listed files are copied, so other files in <code>figures/</code> never reach the site.</p>
 <p><strong>Paired plots</strong> (<code>make_paired_plot()</code>): two maps side by side, one per index year. Each shows the dot-density layer, the per-center catchment outlines in red, and state outlines. The headline percentage and the numerator and denominator above each map come from the results tables, so the numbers come from the united branch while the outlines are drawn from the per-center buffers.</p>
 <p><strong>Beeswarm plots</strong> (<code>plot_center_HIV_catchment()</code>): sums <code>tract_cases</code> within each active center’s own catchment, giving the estimated PLWH near each center. Centers are grouped by status in each year (HOPE center, at least one HIV R+ transplant, no HIV R+ transplants) and faceted by year. Point color shows each center’s status in the first year, so movement between groups is visible. The plot adds a violin, a median bar, and a Kruskal–Wallis test across groups (<code>ggpubr::stat_compare_means()</code>).</p>
 <p><strong>Implicit inputs:</strong> both helpers read global objects that are not passed as arguments. <code>make_paired_plot()</code> reads <code>Results_HIV_df</code>, <code>Results_nonHIV_df</code>, <code>county_dots_transformed</code>, <code>states_sf_transformed</code> and <code>year_list</code>. <code>plot_center_HIV_catchment()</code> reads <code>Active_tx_centers</code>, <code>HIV_center_volumes</code>, <code>HOPE_center_volumes</code> and <code>year_list</code>. They work only after <code>R/figures.R</code> has built the shared layers and the earlier scripts have run.</p>
 </section>
 <section id="website" class="level3">
 <h3 class="anchored" data-anchor-id="website">Website</h3>
-<p><strong>Location:</strong> <code>_quarto.yml</code>, <code>index.qmd</code>, <code>quarto/*.qmd</code>; output in <code>docs/</code></p>
+<p><strong>Location:</strong> <code>_quarto.yml</code>, <code>index.qmd</code>, <code>404.qmd</code>, <code>quarto/*.qmd</code>, <code>styles.css</code>, <code>_extensions/</code>; build in <code>.github/workflows/publish.yml</code></p>
+<div class="cell" data-eval="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    R["R/*.R scripts"] --&gt;|"knitr::read_chunk(), file:"| SCRIPT["Script pages&lt;br/&gt;code shown, not run"]
+    SO[("site-outputs/tables&lt;br/&gt;site-outputs/figures")] --&gt; RES["Results pages"]
+    IMG[("images/")] --&gt; HOME["Home, Study design&lt;br/&gt;and methods"]
+    SO --&gt; HOME
+    DOCS[("analysis-plan.md, ARCHITECTURE.md,&lt;br/&gt;AGENTS.md, REPOSITORY-BLUEPRINT.md")] --&gt; PD["Project documents pages"]
+    SCRIPT &amp; RES &amp; HOME &amp; PD --&gt; GHA["GitHub Actions&lt;br/&gt;quarto render"]
+    GHA --&gt;|pull request| CHECK["Render check only"]
+    GHA --&gt;|push to master| GHP[("gh-pages branch")] --&gt; PAGES["GitHub Pages"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <ul>
-<li>A docked sidebar mirrors the pipeline: Background, Setup and helpers, Data loading and processing (one page per script), Tables and Figures, Results by organ, About.</li>
-<li><strong>Script pages pull code from the scripts at render time.</strong> Pages for scripts with labeled sections (<code>## ---- label</code>) call <code>knitr::read_chunk()</code> and show each section next to its explanation: setup, functions, load_data, county_geographic_calculations, calculate_aggregated_results and figures. The remaining script pages show the whole script with the <code>file:</code> chunk option. Code on these pages is displayed, not run.</li>
-<li>Results pages read <code>../cache/Results_*_gt.rds</code> and find figures in <code>../figures/&lt;organ&gt;</code> with <code>list.files()</code> and a filename pattern.</li>
-<li>The <code>coatless-quarto/custom-callout</code> extension styles the source-code boxes.</li>
+<li><strong>Sidebar.</strong> Docked, with every section open (<code>collapse-level: 3</code>): Home, Background, Study design and methods, Code (setup and helpers, one page per pipeline script in <code>main.R</code> order, tables and figures), Results by organ, Project documents, About. Each kind of page has one icon, coloured by <code>styles.css</code>: <code>book</code> background, <code>diagram-3</code> study design and methods, <code>laptop</code> R code, <code>clipboard-data</code> results, <code>file-earmark-ruled</code> project documents.</li>
+<li><strong>Nothing runs by default.</strong> <code>_quarto.yml</code> sets <code>execute: eval: false</code>. Chunks that must run set <code>eval: true</code>: the <code>read_chunk()</code> imports, the setup page’s package and constants tables, the results pages, and the Architecture page’s reader.</li>
+<li><strong>Script pages pull code from the scripts at render time.</strong> Pages for scripts with labeled sections (<code>## ---- label</code>) call <code>knitr::read_chunk()</code> and show each section next to its explanation: setup, functions, load_data, county_geographic_calculations, calculate_aggregated_results and figures. The remaining script pages show the whole script with the <code>file:</code> chunk option.</li>
+<li><strong>Results pages</strong> read only <code>site-outputs/</code>. A hidden setup chunk defines <code>show_table()</code>, which prints an HTML fragment, and <code>site_figures()</code>, which lists the page’s figures ordered by reach distance and then by center group. Both use base R. On the lung and pancreas pages <code>hide_hope &lt;- TRUE</code> removes the HOPE D+ table rows and figures; these organs have no HOPE D+ centers.</li>
+<li><strong>Project documents pages</strong> (<code>quarto/analysis-plan.qmd</code>, <code>architecture.qmd</code>, <code>agents.qmd</code>, <code>repository-blueprint.qmd</code>) show the root files at render time, so the root file is the only copy. The Architecture page reads <code>ARCHITECTURE.md</code> as text and turns its mermaid fences into drawn diagrams.</li>
+<li><strong>Callouts and marks.</strong> The <code>coatless-quarto/custom-callout</code> extension provides the <code>Rcode</code>, <code>Results</code> and <code>Pending</code> callouts. <code>quarto/_pending.lua</code> highlights paragraphs that start with <strong>Decision pending:</strong>, and any <code>[text]{.pending}</code>, in yellow.</li>
+<li><strong>Build and publishing.</strong> <code>.github/workflows/publish.yml</code> installs Quarto 1.10.18 and the R packages the pages use (knitr, rmarkdown, tidyverse, gt), renders the site, and on pushes to <code>master</code> publishes it to <code>gh-pages</code>. On pull requests it only renders. Local renders write to <code>docs/</code>, which git ignores.</li>
 <li><code>repo-branch: master</code> points the edit and issue links at the right branch.</li>
 </ul>
 </section>
@@ -847,7 +914,27 @@ It reads only ARCHITECTURE.md, never data, and runs no analysis code.
 <tr class="even">
 <td>Site render list, navigation, theme, branch</td>
 <td><code>_quarto.yml</code></td>
-<td><code>output-dir: docs</code>, <code>repo-branch: master</code></td>
+<td><code>output-dir: docs</code> (gitignored), <code>repo-branch: master</code>, <code>execute: eval: false</code></td>
+</tr>
+<tr class="odd">
+<td>Figures the site shows</td>
+<td><code>R/figures.R</code>, section <code>export-site-figures</code></td>
+<td>Explicit list of 101 files</td>
+</tr>
+<tr class="even">
+<td>Site build and publishing</td>
+<td><code>.github/workflows/publish.yml</code></td>
+<td>Quarto 1.10.18; publishes to <code>gh-pages</code> on pushes to <code>master</code></td>
+</tr>
+<tr class="odd">
+<td>Pages source</td>
+<td>GitHub repository settings</td>
+<td><code>gh-pages</code> branch, root folder</td>
+</tr>
+<tr class="even">
+<td>HOPE D+ rows and figures hidden</td>
+<td><code>hide_hope</code> in each <code>quarto/results_&lt;organ&gt;.qmd</code></td>
+<td><code>TRUE</code> for lung and pancreas</td>
 </tr>
 </tbody>
 </table>
@@ -906,7 +993,7 @@ It reads only ARCHITECTURE.md, never data, and runs no analysis code.
 <tr class="even">
 <td>Tables</td>
 <td><code>R/functions.R</code>, <code>R/tables.R</code></td>
-<td><code>convert_resultsdf_to_table()</code>, <code>Results_HIV_gt</code></td>
+<td><code>convert_resultsdf_to_table()</code>, <code>Results_HIV_gt</code>, <code>as_raw_html()</code></td>
 </tr>
 <tr class="odd">
 <td>Figure layers</td>
@@ -922,6 +1009,21 @@ It reads only ARCHITECTURE.md, never data, and runs no analysis code.
 <td>Beeswarm plots</td>
 <td><code>R/functions.R</code>, <code>R/figures.R</code></td>
 <td><code>plot_center_HIV_catchment()</code></td>
+</tr>
+<tr class="even">
+<td>Website export</td>
+<td><code>R/figures.R</code></td>
+<td><code>export-site-figures</code>, <code>site_figures</code></td>
+</tr>
+<tr class="odd">
+<td>Results pages</td>
+<td><code>quarto/results_&lt;organ&gt;.qmd</code></td>
+<td><code>show_table()</code>, <code>site_figures()</code>, <code>hide_hope</code></td>
+</tr>
+<tr class="even">
+<td>Site build</td>
+<td><code>.github/workflows/publish.yml</code></td>
+<td><code>quarto-dev/quarto-actions/publish</code></td>
 </tr>
 </tbody>
 </table>
@@ -977,8 +1079,9 @@ It reads only ARCHITECTURE.md, never data, and runs no analysis code.
 <li><strong>Computed but not used downstream:</strong> <code>tracts_in_buffers_HIV</code>, <code>tracts_in_buffers_HOPE</code>, <code>Transplant_center_all_buffer</code> and its united version, <code>State_level_transplant_volumes</code>, and <code>vars</code>. The all-centers buffers include 60-minute isochrones, so on a cache miss the pipeline makes Mapbox calls whose results nothing reads.</li>
 <li>The center maps are saved as SVG only and are not shown on the site.</li>
 <li><code>R/load_tract_data_from_cache.R</code> is not sourced by <code>R/main.R</code>. It is a standalone helper for reloading cached isochrones.</li>
-<li><code>cache/</code>, <code>tables/</code> and <code>figures/</code> are gitignored, so results pages render only on a machine that has run the pipeline. At render, Quarto copies the figures each page uses into <code>docs/figures/</code>, so the published site is as current as the last render. To update the site, run <code>R/main.R</code>, then render.</li>
-<li>Results pages find figures with <code>list.files()</code> and a filename pattern, so any leftover file in <code>figures/&lt;organ&gt;/</code> that matches the pattern also appears on the site.</li>
+<li><code>cache/</code>, <code>tables/</code>, <code>figures/</code> and <code>docs/</code> are gitignored. <code>site-outputs/</code> and <code>images/</code> are committed, and they are all the website reads, so the site renders on any machine.</li>
+<li>The published site is as current as <code>site-outputs/</code>. To update it, run <code>R/main.R</code>, which rewrites <code>site-outputs/</code>, review the changed files, and merge them into <code>master</code>.</li>
+<li><code>images/</code> holds the two images no script makes: the tract-allocation explainer and the IDWeek 2025 poster.</li>
 </ul>
 
 

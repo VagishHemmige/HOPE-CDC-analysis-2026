@@ -112,17 +112,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
-  background-image: none;
-}
 div.callout-Rcode.callout {
   border-left-color: pink;
 }
@@ -143,6 +132,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 </style>
@@ -456,14 +456,17 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   <ul>
   <li><a href="#agents.md" id="toc-agents.md" class="nav-link active" data-scroll-target="#agents.md">AGENTS.md</a>
   <ul class="collapse">
-  <li><a href="#sources-of-truth" id="toc-sources-of-truth" class="nav-link" data-scroll-target="#sources-of-truth">Sources of truth</a></li>
-  <li><a href="#experimentation-and-definitive-analysis" id="toc-experimentation-and-definitive-analysis" class="nav-link" data-scroll-target="#experimentation-and-definitive-analysis">Experimentation and definitive analysis</a></li>
-  <li><a href="#r-workflow-and-maintainability" id="toc-r-workflow-and-maintainability" class="nav-link" data-scroll-target="#r-workflow-and-maintainability">R workflow and maintainability</a></li>
-  <li><a href="#scientific-and-geographic-integrity" id="toc-scientific-and-geographic-integrity" class="nav-link" data-scroll-target="#scientific-and-geographic-integrity">Scientific and geographic integrity</a></li>
-  <li><a href="#quarto-site-outputs-and-caches" id="toc-quarto-site-outputs-and-caches" class="nav-link" data-scroll-target="#quarto-site-outputs-and-caches">Quarto site, outputs, and caches</a></li>
-  <li><a href="#restricted-data-confidentiality-and-credentials" id="toc-restricted-data-confidentiality-and-credentials" class="nav-link" data-scroll-target="#restricted-data-confidentiality-and-credentials">Restricted data, confidentiality, and credentials</a></li>
-  <li><a href="#working-with-agents-and-reviewing-changes" id="toc-working-with-agents-and-reviewing-changes" class="nav-link" data-scroll-target="#working-with-agents-and-reviewing-changes">Working with agents and reviewing changes</a></li>
-  <li><a href="#reference-material" id="toc-reference-material" class="nav-link" data-scroll-target="#reference-material">Reference material</a></li>
+  <li><a href="#the-project" id="toc-the-project" class="nav-link" data-scroll-target="#the-project">The project</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data sources</a></li>
+  <li><a href="#exploration-and-definitive-analysis" id="toc-exploration-and-definitive-analysis" class="nav-link" data-scroll-target="#exploration-and-definitive-analysis">Exploration and definitive analysis</a></li>
+  <li><a href="#r-scripts" id="toc-r-scripts" class="nav-link" data-scroll-target="#r-scripts">R scripts</a></li>
+  <li><a href="#chunk-labels" id="toc-chunk-labels" class="nav-link" data-scroll-target="#chunk-labels">Chunk labels</a></li>
+  <li><a href="#quarto-website" id="toc-quarto-website" class="nav-link" data-scroll-target="#quarto-website">Quarto website</a></li>
+  <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs">Outputs</a></li>
+  <li><a href="#restricted-data-applies-to-everyone" id="toc-restricted-data-applies-to-everyone" class="nav-link" data-scroll-target="#restricted-data-applies-to-everyone">Restricted data (applies to everyone)</a></li>
+  <li><a href="#coding-conventions" id="toc-coding-conventions" class="nav-link" data-scroll-target="#coding-conventions">Coding conventions</a></li>
+  <li><a href="#checks-for-any-change" id="toc-checks-for-any-change" class="nav-link" data-scroll-target="#checks-for-any-change">Checks for any change</a></li>
+  <li><a href="#working-with-agents" id="toc-working-with-agents" class="nav-link" data-scroll-target="#working-with-agents">Working with agents</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/master/quarto/agents.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -501,73 +504,243 @@ edit that file, not this page. Its first heading is the page title.
 -->
 <section id="agents.md" class="level1">
 <h1>AGENTS.md</h1>
-<p>Guidance for contributors and AI coding agents working on HOPE-CDC-analysis-2026. This is an <strong>R analysis and Quarto website, not an R package</strong>. The default branch is <code>master</code>.</p>
-<section id="sources-of-truth" class="level2">
-<h2 class="anchored" data-anchor-id="sources-of-truth">Sources of truth</h2>
-<p>Read these documents before substantive work:</p>
+<p>Guidance for everyone working on this repository: the maintainer, collaborators, and any AI agents working for them. It covers how to work here: conventions, data handling, and checks.</p>
+<p>Four places divide the documentation:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Where</th>
+<th>Covers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>analysis-plan.md</code></td>
+<td>Study design and methods: what the analysis is meant to do</td>
+</tr>
+<tr class="even">
+<td><code>ARCHITECTURE.md</code></td>
+<td>Code structure: scripts, data flow, and the objects passed between them, as implemented at its stated commit</td>
+</tr>
+<tr class="odd">
+<td><code>AGENTS.md</code> (this file)</td>
+<td>How to work in the repository: rules, conventions, and checks</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues">GitHub Issues</a></td>
+<td>Open scientific decisions (decision issues), gaps between code and plan, and known defects</td>
+</tr>
+</tbody>
+</table>
+<p>Read the three files before making changes. Each covers its own topic and does not repeat the others.</p>
+<section id="the-project" class="level2">
+<h2 class="anchored" data-anchor-id="the-project">The project</h2>
+<p>This is an <strong>R analysis project, not an R package</strong>. It estimates the share of people living with HIV (PLWH), and of people without HIV, who live within reach of an adult solid-organ transplant center in the contiguous United States, by organ, index year (2017 and 2022), center experience with HIV (active, HIV R+, HOPE D+) and reach definition (a 60-minute driving isochrone and 50-, 100- and 200-mile buffers). It combines SRTR transplant records, HRSA center locations, CDC AtlasPlus county HIV prevalence, ACS population counts and Mapbox isochrones. The code and methods are published as a Quarto website.</p>
 <ul>
-<li><a href="analysis-plan.md"><code>analysis-plan.md</code></a> — intended scientific questions, definitions, methods, and validation requirements. <strong>Scientific decisions belong here.</strong></li>
-<li><a href="ARCHITECTURE.md"><code>ARCHITECTURE.md</code></a> — a Posit-generated snapshot of <strong>implemented</strong> scripts, data flow, dependencies, and website structure, as of its stated commit. It is descriptive, not a roadmap.</li>
-<li><code>AGENTS.md</code> — repository-wide working conventions, protection of restricted data, and expectations for checks and documentation.</li>
+<li><strong><code>analysis-plan.md</code> is the source of truth for design.</strong> Code implements the plan; it does not redefine it. If code needs to depart from the plan, open a decision issue, or comment on the existing one, for the deciders. Once a decider has settled it (in the issue, or relayed there in their exact words), the plan change and the code can go in the same pull request, which closes the issue.</li>
+<li><strong>Deciders.</strong> Scientific decisions in every area are made by Vagish Hemmige. Anyone may open or contribute to a decision issue; only a decider settles it (see “Working with agents”).</li>
+<li><strong>Do not make unresolved scientific decisions implicitly through code.</strong> Check the relevant open issues before implementing an analysis that depends on them.</li>
+<li><strong>This is an analysis project, not an R package.</strong> Do not add DESCRIPTION, NAMESPACE, roxygen, or pkgdown infrastructure, or apply CRAN conventions.</li>
+<li><strong>Default branch:</strong> <code>master</code>. Changes reach it only through pull requests.</li>
 </ul>
-<p>If code and the plan disagree, <strong>report the difference</strong>. Do not quietly redefine the study in code or rewrite architecture to make it appear implemented. Obtain an investigator’s decision before changing scientific methods. Do not add package infrastructure (<code>DESCRIPTION</code>, <code>NAMESPACE</code>, roxygen, pkgdown, CRAN workflows) to this analysis project.</p>
 </section>
-<section id="experimentation-and-definitive-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="experimentation-and-definitive-analysis">Experimentation and definitive analysis</h2>
-<p>Exploration is welcome. Contributors can trial alternative scripts, data structures, workflows, and methods on their own branches or forks without immediately integrating them into <code>R/main.R</code> or creating public Quarto pages. Label experimental findings as preliminary; do not present them as validated results.</p>
-<p><strong>Every script adopted into the definitive analytical workflow must have a substantive Quarto explainer.</strong> Explain its purpose, upstream inputs and prerequisites, main transformations and assumptions, downstream objects or outputs, and its place in the workflow. The explainer should display or reference the <strong>actual source script</strong>, not maintain a second, independently edited code copy. Where useful, split the script into labeled sections (<code>## ---- label</code>) and use <code>knitr::read_chunk()</code>; alternatively show the script using Quarto’s <code>file:</code> option with execution disabled. Explain <em>why</em> choices were made, not only what each line does.</p>
-<p>When integrating a definitive step, update orchestration and Quarto navigation as needed. Refresh <code>ARCHITECTURE.md</code> with Posit’s <code>describe-design</code> skill after substantive implementation changes; verify it against the actual code and update its snapshot commit. Do not insert planned features into architecture as though they already exist.</p>
-</section>
-<section id="r-workflow-and-maintainability" class="level2">
-<h2 class="anchored" data-anchor-id="r-workflow-and-maintainability">R workflow and maintainability</h2>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">Data sources</h2>
+<p>Each source this project uses is listed below with the package that accesses it. <strong>Code that touches a source goes through its package.</strong> Do not write project-specific loading, cleaning, or definition code for something the package already does.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>Accessed through</th>
+<th>Package documentation</th>
+<th>Package maintained by</th>
+<th>Access</th>
+<th>What AI agents may do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SRTR standard analysis files: transplant files <code>tx_ki</code>, <code>tx_li</code>, <code>tx_hr</code>, <code>tx_lu</code>, <code>tx_kp</code>, and <code>donor_deceased</code></td>
+<td>sRtr (<code>load_srtr_file()</code>)</td>
+<td>https://vagishhemmige.github.io/sRtr/</td>
+<td>This team</td>
+<td>Restricted (SRTR data use agreement)</td>
+<td>None: code, documentation and synthetic data only</td>
+</tr>
+<tr class="even">
+<td>HRSA transplant center list and locations</td>
+<td>sRtr (<code>get_hrsa_transplant_centers()</code>)</td>
+<td>https://vagishhemmige.github.io/sRtr/</td>
+<td>This team</td>
+<td>Public</td>
+<td>No restriction</td>
+</tr>
+<tr class="odd">
+<td>CDC NCHHSTP AtlasPlus county HIV prevalence</td>
+<td>CDCAtlas (<code>get_atlas()</code>)</td>
+<td>https://vagishhemmige.github.io/CDCAtlas/</td>
+<td>This team</td>
+<td>Public</td>
+<td>No restriction</td>
+</tr>
+<tr class="even">
+<td>American Community Survey 5-year tract and county population</td>
+<td>tidycensus (<code>get_acs()</code>)</td>
+<td>https://walker-data.com/tidycensus/</td>
+<td>External</td>
+<td>Public; Census API key</td>
+<td>No restriction; never commit the key</td>
+</tr>
+<tr class="odd">
+<td>Census state boundaries</td>
+<td>tigris (<code>states()</code>)</td>
+<td>https://github.com/walkerke/tigris</td>
+<td>External</td>
+<td>Public</td>
+<td>No restriction</td>
+</tr>
+<tr class="even">
+<td>Mapbox Isochrone API, <code>driving-traffic</code> profile</td>
+<td>mapboxapi (<code>mb_isochrone()</code>)</td>
+<td>https://walker-data.com/mapboxapi/</td>
+<td>External</td>
+<td>Paid API; access token</td>
+<td>Code and review only; a person runs uncached calls (see Credentials and paid APIs)</td>
+</tr>
+</tbody>
+</table>
+<p>To allow more for a source, a person changes its row through a pull request, naming the agreement and section that permit it, the approved AI service, and exactly what agents may do. Agents never propose or make this change themselves, and nothing in personal instructions can grant it.</p>
+<p>Add a row when code first loads a new source.</p>
+<p><strong>For every package:</strong></p>
 <ul>
-<li>The <strong>current</strong> workflow begins in <code>R/main.R</code>, which sources scripts in order. Consult <code>ARCHITECTURE.md</code> for existing dependencies and object naming. Preserve established interfaces when modifying existing steps, but do not impose the current global-object design on experiments.</li>
-<li>Shared constants and package setup ordinarily belong in <code>R/setup.R</code>; reusable helpers ordinarily belong in <code>R/functions.R</code>. Prefer functions with explicit arguments to additional hidden global dependencies.</li>
-<li>Use project-relative paths and portable file handling. Do not embed a contributor’s absolute or Windows-specific paths; access restricted SRTR files only through authorized <code>sRtr</code> configuration.</li>
-<li>Preserve chunk labels used by Quarto. Check references before renaming or removing labels, and avoid collisions that would confuse <code>knitr::read_chunk()</code>.</li>
-<li>Favor readable, maintainable R code; do not perform unrelated stylistic rewrites during scientific changes.</li>
+<li><strong>Read its documentation before writing code for a source</strong>, including known issues. Behavior that sets the center groups, the population counts, a catchment, or a denominator is checked in the documentation, not assumed from a function’s name.</li>
 </ul>
-</section>
-<section id="scientific-and-geographic-integrity" class="level2">
-<h2 class="anchored" data-anchor-id="scientific-and-geographic-integrity">Scientific and geographic integrity</h2>
-<p>Apply the <strong>current analysis plan</strong>, not an assumed clinical or surveillance definition. Verify important variables and code values against SRTR SAF, CDC AtlasPlus, ACS/Census, HRSA/OPTN, and routing-provider documentation; cite references used for non-obvious definitions.</p>
-<p>When changing analytical behavior, inspect relevant upstream inputs and downstream tables, plots, and Quarto interpretations. In particular:</p>
+<p><strong>For packages this team maintains (sRtr, CDCAtlas):</strong></p>
 <ul>
-<li><strong>Joins:</strong> Specify keys and expected relationships; check duplicate keys, row multiplication, unmatched records, and geographic identifiers. Keep FIPS/GEOIDs as zero-padded characters.</li>
-<li><strong>Population:</strong> Distinguish observed, suppressed, missing, and estimated counts. Check denominators, age/stratum compatibility, county-to-tract allocation, and reconciliation at the intended level. Never silently equate missing or suppressed with zero.</li>
-<li><strong>Centers:</strong> Check organ-specific activity, classification windows, donor/recipient definitions, historical location assumptions, and whether centers are eligible in each year. Avoid duplicate events within organ analyses.</li>
-<li><strong>Space:</strong> Check CRS and units (the current buffer computations use EPSG:5070/meters), geometry validity, tract inclusion rule, overlapping catchments, and geographic exclusions. Use dissolved catchments for aggregate access estimates and per-center catchments only when overlaps are intentionally allowed.</li>
-<li><strong>Travel time:</strong> Keep driving isochrones, straight-line buffers, transit access, and travel-time matrices conceptually separate. Check routing profiles, reference times, coverage, API limits, and cached results.</li>
-<li><strong>Results:</strong> Confirm empty groups are distinguished from missing inputs; inspect denominators and plausibility/order checks without assuming every subgroup necessarily nests unless the agreed definitions require it.</li>
+<li><strong>Facts about the source belong in the package’s documentation</strong>, not in this file. If the package lacks something this project needs to know, add it there or open an issue there.</li>
+<li><strong>Problems belong in the package.</strong> If a function is wrong or does not quite do what the plan needs, open an issue in its repository. Fix it in the package (preferred when generally useful) or wrap it here with a code comment linking the issue, and remove the wrapper once the issue is fixed. The plan’s method for suppressed county HIV counts, for example, is to be implemented in CDCAtlas, not in this repository.</li>
 </ul>
-<p>Checks should test scientific consequences and edge cases, not merely reproduce the same calculation. Record which checks ran, which did not, and any unavailable data or credentials.</p>
-</section>
-<section id="quarto-site-outputs-and-caches" class="level2">
-<h2 class="anchored" data-anchor-id="quarto-site-outputs-and-caches">Quarto site, outputs, and caches</h2>
-<p>The Quarto website is configured through <code>_quarto.yml</code>, with rendered output in <code>docs/</code>. Definitive script pages explain methods; results pages should consume derived outputs rather than rerun restricted-data processing. Verify navigation, chunk labels, figure paths, captions/alt text, tables, citations, and consistency between displayed results and code.</p>
-<p>Caches and figures are not automatically invalidated when upstream code, definitions, source data, or routing assumptions change. Identify stale dependencies and describe what needs rebuilding. <strong>Do not assume that an existing cached or rendered result is current.</strong> Before deleting caches, running a full pipeline, or triggering substantial API usage, follow the permissions of the person directing the work. Do not silently clear outputs or launch expensive reruns.</p>
-<p>Keep source, generated outputs, and publication distinct. Changes to <code>docs/</code>, publishing, deployment, or externally visible actions require authorization under the contributor’s workflow. Do not assume a rendered website reproduces results unless its sources and build inputs have been verified.</p>
-</section>
-<section id="restricted-data-confidentiality-and-credentials" class="level2">
-<h2 class="anchored" data-anchor-id="restricted-data-confidentiality-and-credentials">Restricted data, confidentiality, and credentials</h2>
-<p>SRTR patient- and donor-level SAF data are restricted. These requirements apply regardless of collaborator or agent autonomy:</p>
+<p><strong>For external packages:</strong></p>
 <ul>
-<li>Do not commit, upload, paste, log, or publish patient-level SRTR data or derived row-level extracts. Respect the governing DUA and institutional approvals; <code>.gitignore</code> is not a substitute for disclosure review.</li>
-<li><strong>AI agents must not inspect real patient-level SRTR data or send them to model providers.</strong> Use synthetic, independently generated fixtures for agent-driven tests. Authorized investigators handle real-data analyses in approved environments.</li>
-<li>Even aggregates derived from restricted data require disclosure review under the applicable DUA, especially small cells and center-specific HIV transplant counts. Do not assume an output is shareable solely because it is aggregated or cached.</li>
-<li>Never commit secrets, credentials, access tokens, or local <code>.Renviron</code> files. Keep API keys in an approved external environment or user-level configuration, not in version-controlled source.</li>
-<li>Ask before paid, bulk, or otherwise expensive API calls (notably uncached Mapbox isochrones), full pipeline reruns, or operations requiring restricted data access.</li>
+<li><strong>Work around problems here.</strong> Wrap the function in <code>R/functions.R</code> with a comment explaining the problem and linking any upstream issue. Reporting a bug upstream is an external communication; the person directing the work decides whether to file it.</li>
+<li><strong>Facts about the source that this project relies on</strong> (definitions, release quirks, suppression rules, routing assumptions) go in <code>references/</code> with a citation to the provider’s documentation, or in the plan when they shape a decision.</li>
 </ul>
-<p>Public ACS, CDC AtlasPlus, HRSA, and Census data can generally be used subject to their own terms; distinguish these from restricted SRTR records.</p>
+<p><strong>For a source with no package:</strong> one loading script records the download URL, the release or access date, and any processing. Verify its variables against the provider’s documentation for that release.</p>
 </section>
-<section id="working-with-agents-and-reviewing-changes" class="level2">
-<h2 class="anchored" data-anchor-id="working-with-agents-and-reviewing-changes">Working with agents and reviewing changes</h2>
-<p>The person directing an agent controls its authorization. Some contributors may allow edits, synthetic-data runs, branches, and pull requests; others may require strictly read-only review. <strong>Do not infer permission to edit, run, commit, push, publish, or deploy from the presence of this file.</strong> Follow the stricter applicable instructions and ask before a consequential or externally visible action when authorization is unclear.</p>
-<p>For meaningful changes, report the scientific or technical purpose, affected files and downstream outputs, evidence or documentation consulted, validation performed, limitations, and any divergence from the analysis plan. Distinguish verified defects from issues needing real-data confirmation. Prefer focused reviews and clear GitHub issues over maintaining a second implementation-gap ledger in this file.</p>
+<section id="exploration-and-definitive-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="exploration-and-definitive-analysis">Exploration and definitive analysis</h2>
+<p>Exploration is welcome on branches or forks. Experimental scripts need not be sourced from <code>R/main.R</code> or have Quarto pages, and their findings are labelled preliminary. A script becomes part of the definitive analysis when it is sourced from <code>R/main.R</code>; from then on every rule below applies to it. Do not impose the current global-object design on experiments.</p>
 </section>
-<section id="reference-material" class="level2">
-<h2 class="anchored" data-anchor-id="reference-material">Reference material</h2>
-<p>Use the SRTR SAF dictionary and documentation, CDC AtlasPlus technical notes, Census ACS and geography documentation, HRSA/OPTN center documentation, relevant routing-provider API specifications, and peer-reviewed scientific literature as appropriate. Record specific references alongside the decisions they support.</p>
+<section id="r-scripts" class="level2">
+<h2 class="anchored" data-anchor-id="r-scripts">R scripts</h2>
+<ul>
+<li><strong>Running the analysis.</strong> Run <code>R/main.R</code> from the project root. It sources the other scripts in dependency order; <code>ARCHITECTURE.md</code> describes what each does.</li>
+<li><strong>One job per script.</strong> When you add a definitive script, source it from <code>main.R</code> at the right point and update <code>ARCHITECTURE.md</code> in the same pull request.</li>
+<li><strong>Header comment.</strong> Each script begins with what it does, which objects it needs from earlier scripts, and what it produces.</li>
+<li><strong>Constants, libraries, and code lists</strong> live in <code>R/setup.R</code>. Other scripts do not call <code>library()</code>, re-source <code>setup.R</code>, or hard-code values. Any number a reader might want to change (a window, a year, a distance, a reference date) is a named constant there.</li>
+<li><strong>Helper functions</strong> go in <code>R/functions.R</code>. A function takes its inputs as arguments and does not read global objects. Some existing helpers read globals (see <code>ARCHITECTURE.md</code>); new code does not add more.</li>
+<li><strong>No side effects outside the project.</strong> No <code>setwd()</code>, absolute or Windows-specific paths, or writes outside the project. Restricted data are located only through their access package’s configuration.</li>
+<li><strong>No results in the repository.</strong> No script (exploratory or definitive) or comment, commit message, issue, pull-request text or review report contains results, counts or data values from restricted data unless they are cleared for release. Check before every commit and post, since a public repository publishes everything pushed to it, on any branch.</li>
+</ul>
+</section>
+<section id="chunk-labels" class="level2">
+<h2 class="anchored" data-anchor-id="chunk-labels">Chunk labels</h2>
+<p>Scripts are divided into labelled sections so Quarto pages can show the code without copying it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ---- &lt;step-name&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Every logical step has a label. A label covers the code from its line to the next label.</li>
+<li>Labels are kebab-case, describe the step, and are <strong>unique across all scripts</strong>; a duplicate silently picks up the wrong code.</li>
+<li>Search the <code>.qmd</code> files before renaming or deleting a label.</li>
+<li>Labels are comments and never change what the code does.</li>
+</ul>
+</section>
+<section id="quarto-website" class="level2">
+<h2 class="anchored" data-anchor-id="quarto-website">Quarto website</h2>
+<p>The site documents the code. It does not run the analysis.</p>
+<ul>
+<li><code>_quarto.yml</code>, <code>index.qmd</code>, <code>404.qmd</code> (the page GitHub Pages shows for a missing address) and <code>styles.css</code> sit at the root; <code>quarto/</code> has one page per definitive script, named after it, plus the Background, Study design and methods, results, About and project-document pages. The <code>custom-callout</code> extension in <code>_extensions/</code> provides the <code>Rcode</code>, <code>Results</code> and <code>Pending</code> callouts.</li>
+<li><strong>Visual cues.</strong> Each kind of page has one sidebar icon, coloured by <code>styles.css</code>, and pages mark the same kind of content with the callout of that colour: background <code>book</code> (blue); study design and methods <code>diagram-3</code> (orange); R code <code>laptop</code> (pink, <code>Rcode</code> 💻); results <code>clipboard-data</code> (green, <code>Results</code> 📊); project documents <code>file-earmark-ruled</code> (grey). Give every new page the icon of its kind.</li>
+<li><strong>Provisional content.</strong> <code>quarto/_pending.lua</code> highlights in yellow every paragraph that starts with <strong>Decision pending:</strong> or, in the plan, <strong>Open:</strong>, and any <code>[text]{.pending}</code>, and adds a ⏳ <code>Pending</code> callout to pages that have a mark. Mark only what an open decision could change, and remove the mark when the decision is settled.</li>
+<li><strong>Project documents.</strong> <code>analysis-plan.md</code>, <code>ARCHITECTURE.md</code>, <code>AGENTS.md</code> and <code>REPOSITORY-BLUEPRINT.md</code> are shown on the site by pages in <code>quarto/</code> that only include the root file, which stays the one source: edit the root file, not the page.</li>
+<li>Each page loads its script with <code>knitr::read_chunk("../R/&lt;script&gt;.R")</code> in a hidden chunk and shows each labelled section with <code>#| eval: false</code>, with prose explaining what the section does and why. Pages link to the script on GitHub and to the scripts it depends on.</li>
+<li><strong>Never evaluate analysis code in the site.</strong> <code>_quarto.yml</code> sets <code>execute: eval: false</code>. Pages render without restricted data. Only the <code>read_chunk()</code> imports, the setup page’s package and constants tables, the Architecture page’s chunk that reads <code>ARCHITECTURE.md</code>, and the results pages, which read only <code>site-outputs/</code>, set <code>eval: true</code>.</li>
+<li><strong>Publishing.</strong> The site renders to <code>docs/</code>, which is not committed; <code>.github/workflows/publish.yml</code> renders it on every pull request as a check, and on every push to <code>master</code> renders and publishes it to the <code>gh-pages</code> branch, which GitHub Pages serves. When you add a script, add its page and sidebar entry in the same pull request.</li>
+<li><strong>Prose must match the code.</strong> If a change alters what a section does, update its explanation in the same pull request.</li>
+</ul>
+</section>
+<section id="outputs" class="level2">
+<h2 class="anchored" data-anchor-id="outputs">Outputs</h2>
+<ul>
+<li>Tables and figures are exported by <code>R/tables.R</code> and <code>R/figures.R</code> to <code>tables/</code> and <code>figures/</code>, which are gitignored because they derive from restricted SRTR data: agents may not open them (see Restricted data).</li>
+<li><strong><code>site-outputs/</code></strong> holds the tables and figures the website shows. <code>R/tables.R</code> and the <code>export-site-figures</code> section of <code>R/figures.R</code> write it, and it is committed. Commit changes to it only after the disclosure check below; agents may read what is committed there. <code>images/</code> holds the site’s images that no script makes.</li>
+<li><code>cache/</code> holds Census pulls, isochrones and other intermediates and is gitignored. <strong>Caches are not invalidated automatically</strong> when upstream code, definitions, source data or routing assumptions change: identify stale dependencies and say what needs rebuilding, and do not assume a cached or published result is current. Ask before deleting caches.</li>
+<li>Published figures need alt text.</li>
+<li><code>README.Rmd</code> is the source of <code>README.md</code>; edit the <code>.Rmd</code> and re-knit.</li>
+</ul>
+</section>
+<section id="restricted-data-applies-to-everyone" class="level2">
+<h2 class="anchored" data-anchor-id="restricted-data-applies-to-everyone">Restricted data (applies to everyone)</h2>
+<p>The <strong>Access</strong> column of “Data sources” says which sources are restricted. For each restricted source:</p>
+<ul>
+<li><strong>Never commit data</strong>, extracts, or saved objects or outputs derived from patient-level records. Keep data outside the repository, and check <code>.gitignore</code> before adding a new output type.</li>
+<li><strong>AI agents never read restricted data.</strong> Anything an agent opens, prints, or summarizes is sent to the model provider. Agents do not open data files or patient-level objects, print rows, or display identifiers, person-level dates, or small geographies. Agents also do not open outputs from restricted data that are not yet cleared for release (for example <code>tables/</code>, <code>figures/</code> and <code>cache/</code>). Agents write code, review it, and run it on <strong>synthetic data</strong>; results on real data are produced by an authorized person. The only exception is what the Data sources table explicitly allows for a source, and only within those words.</li>
+<li><strong>Synthetic data</strong> are built in code, labelled as synthetic, and never derived from real records.</li>
+<li><strong>Disclosure.</strong> Aggregates derived from SRTR data need review under the SRTR data use agreement before release, even though they are aggregated or cached. Take particular care with small cells and with center-specific information on HIV R+ and HOPE D+ transplantation, including the center-group outlines and beeswarm plots, and with counts recoverable by subtraction or complementary cells. Follow the agreement’s exact dissemination rules. Check every output before it leaves the approved environment, including <code>site-outputs/</code>, scripts, comments, commit messages, issues, pull-request text and review reports (see R scripts).</li>
+<li><strong>Credentials and paid APIs.</strong> Never commit keys, tokens, or <code>.Renviron</code>. Ask before paid, bulk, or uncached API calls, notably uncached Mapbox isochrones. Before a paid batch, make one call with the exact package version and settings, and check the result before running the rest. Which service or version to use is the person’s choice; an agent proposes, with the cost if known, and does not switch it on its own.</li>
+</ul>
+<p>Public ACS, CDC AtlasPlus, HRSA, and Census data can be used subject to their own terms.</p>
+</section>
+<section id="coding-conventions" class="level2">
+<h2 class="anchored" data-anchor-id="coding-conventions">Coding conventions</h2>
+<ul>
+<li><strong>Joins</strong> use <code>join_by()</code> with an explicit <code>relationship</code> where possible. After every join of records to centers and every spatial join, assert that rows did not multiply, and decide deliberately what happens to unmatched rows. Keep FIPS codes and GEOIDs as zero-padded character strings.</li>
+<li><strong>Windows</strong> (the five-year experience windows and index years) are written as constants matching the plan, and their edges are tested on synthetic data.</li>
+<li><strong>Code that turns spatial results into reported numbers</strong> lives in named functions in <code>R/functions.R</code>, tested on synthetic data with a known answer.</li>
+<li><strong>Never invent</strong> variables, codes, files, or definitions; check SRTR variables and code values against the SRTR documentation for the release used.</li>
+<li><strong>Package APIs:</strong> read the help page and NEWS for the installed version before calling a package; don’t write calls from memory. A test that fakes a package checks only our own logic, so call the real package once (synthetic data, or one cheap call) before relying on the code.</li>
+<li><strong>Style:</strong> readable for a clinician-analyst who learned R from online guides: pipes and dplyr/tidyr verbs, case_when(), loops over names or named lists rather than the apply family, Reduce or positional indexing. Required base R goes in a named, tested function. Tidyverse layout; style changes in their own commits, and no unrelated stylistic rewrites during scientific changes.</li>
+</ul>
+</section>
+<section id="checks-for-any-change" class="level2">
+<h2 class="anchored" data-anchor-id="checks-for-any-change">Checks for any change</h2>
+<p>Check the items that apply before opening a pull request.</p>
+<ul>
+<li><strong>Plan:</strong> does the change implement the plan as written, and does it leave every open decision open?</li>
+<li><strong>Data sources:</strong> does it use the access package’s functions, and does their documented behavior match what the plan needs?</li>
+<li><strong>Package APIs:</strong> for new or changed calls to a package, does the pull request name the installed version and the help page or NEWS entry relied on?</li>
+<li><strong>Joins and denominators:</strong> no unintended row multiplication; missing, suppressed, and zero kept distinct.</li>
+<li><strong>Reported numbers:</strong> does each estimate match the plan’s definition, and do tables, figures, and site prose say what the code actually computes?</li>
+<li><strong>Structure:</strong> is <code>ARCHITECTURE.md</code> current; are chunk labels unique and found by their pages; does every definitive script have a page and sidebar entry; does any site chunk run analysis code?</li>
+<li><strong>Disclosure:</strong> search every changed tracked file, including <code>site-outputs/</code>, and the commit messages and pull-request text, for dates, record IDs, names, absolute paths and numbers that could come from restricted data. Read each hit in context; legitimate ones (plan dates, deciders’ names, synthetic examples) stay.</li>
+<li><strong>Execution:</strong> does <code>main.R</code> run in a fresh session with relative paths; are any saved intermediates or caches stale?</li>
+</ul>
+<p>Checks specific to this design:</p>
+<ul>
+<li><strong>Population:</strong> observed, suppressed, missing and estimated counts kept distinct; denominators and age strata compatible; county-to-tract allocation reconciles to county totals; missing or suppressed never silently equated with zero.</li>
+<li><strong>Centers:</strong> organ-specific activity, the classification windows, recipient and donor HIV definitions, historical location assumptions, and eligibility in each index year; no duplicate events within an organ.</li>
+<li><strong>Space:</strong> CRS and units (buffers are computed in EPSG:5070, in meters); geometry validity; the tract inclusion rule; geographic exclusions. Dissolved catchments for aggregate coverage; per-center catchments only where overlap is intended.</li>
+<li><strong>Travel time:</strong> driving isochrones, straight-line buffers, transit access and travel-time matrices kept conceptually separate; routing profile, reference times, coverage, API limits and cached results checked.</li>
+<li><strong>Results:</strong> an empty center group distinguished from missing inputs; denominators and plausibility checked; subgroups not assumed to nest unless the plan’s definitions require it.</li>
+</ul>
+<p>Checks test scientific consequences and edge cases, not merely repeat the same calculation. Record which checks ran, which did not, and any data or credentials that were unavailable.</p>
+</section>
+<section id="working-with-agents" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-agents">Working with agents</h2>
+<ul>
+<li><strong>Autonomy.</strong> The person directing an agent sets its working style (review only, step by step, or hands-off) in their own instructions, and may add stricter rules; those take precedence. Without a style, an agent works step by step. At most, an agent may edit code and documentation, add scripts and tests, run code and render the site on synthetic data, and commit to a branch and open a pull request.</li>
+<li><strong>Decisions.</strong> Anyone, including an agent, may add options and evidence to a decision issue. A decider states the choice in the issue. Agents implement decisions; they never choose among options on their own, in the issue, the plan, or the code.</li>
+<li><strong>Every agent, under any autonomy:</strong> never merges a pull request; follows the restricted-data rules; asks before running the full pipeline, deleting caches or making expensive calls; shows a person the exact text before posting or sending anything as them, unless that person’s own instructions waive this; and proposes another way of writing something already agreed before committing it.</li>
+<li><strong>Pull requests opened by an agent</strong> are focused. Each says which plan section or issue it addresses, what was checked, and whether by running code on synthetic data or by reading only. Synthetic results are never described as results.</li>
+<li><strong>References:</strong> cite the source documentation and literature used, in <code>references.bib</code>, alongside the decisions they support.</li>
+</ul>
 
 
 <!-- -->
@@ -1039,17 +1212,17 @@ edit that file, not this page. Its first heading is the page title.
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">pagetitle:</span><span class="co"> "AGENTS.md"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">This page only shows AGENTS.md from the repository root, which is the one source:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">edit that file, not this page. Its first heading is the page title.</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../AGENTS.md &gt;}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">pagetitle:</span><span class="co"> "AGENTS.md"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">This page only shows AGENTS.md from the repository root, which is the one source:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">edit that file, not this page. Its first heading is the page title.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../AGENTS.md &gt;}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

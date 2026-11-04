@@ -12,6 +12,12 @@ author:
 
 
 
+# The site documents the code and never runs the analysis. Chunks that
+# must run (the read_chunk() imports, the setup page's summary tables and
+# the results pages) set eval: true themselves.
+execute:
+  eval: false
+
 website:
   site-url: https://vagishhemmige.github.io/HOPE-CDC-analysis-2026
   repo-url: https://github.com/VagishHemmige/HOPE-CDC-analysis-2026

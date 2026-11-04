@@ -7,6 +7,7 @@ format: html
 
 
 ```{r, include=FALSE}
+#| eval: true
 
 #This code prepares the .qmd environent for analysis
 
@@ -43,6 +44,7 @@ Results are shown for 2017 and 2022.
 ---
 
 ```{r, echo=FALSE}
+#| eval: true
 
 
 tbl_body <- gt::extract_body(Results_HIV_gt[[organ]])
@@ -139,6 +141,7 @@ It allows direct comparison of geographic access between:
 ---
 
 ```{r, echo=FALSE}
+#| eval: true
 
 
 Results_nonHIV_gt[[organ]]
@@ -169,6 +172,7 @@ These figures highlight disparities in access by HIV status.
 ---
 
 ```{r, echo=FALSE}
+#| eval: true
 
 
 list.files(
@@ -203,6 +207,7 @@ This section highlights temporal changes in transplant center availability.
 
 
 ```{r, echo=FALSE}
+#| eval: true
 
 
 list.files(

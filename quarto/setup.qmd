@@ -7,6 +7,7 @@ format: html
 The code in this script imports libraries, initializes constants, and performs other such preparatory work for the main analysis.
 
 ```{r, include=FALSE}
+#| eval: true
 
 #Ensures pipe works
 library(tidyverse)
@@ -27,6 +28,7 @@ The code sections below are imported directly from that script when this page is
 :::
 
 ```{r}
+#| eval: true
 #| include: false
 #| cache: false
 knitr::read_chunk("../R/setup.R")
@@ -45,6 +47,7 @@ The analysis relies on a set of open-source R packages for data management, data
 The table below lists the required packages along with links to their primary documentation.
 
 ```{r, echo=FALSE}
+#| eval: true
 
 
 libraries_table <- tibble::tibble(
@@ -186,12 +189,14 @@ A number of analysis parameters are reused across the center classification, buf
 These constants are defined in the `R/setup.R` file.
 
 ```{r}
+#| eval: true
 #| label: constants
 ```
 
 For clarity, these constants are summarized below along with brief explanations of their role in the analysis.
 
 ```{r, echo=FALSE}
+#| eval: true
 
 format_constant <- function(x) {
   if (inherits(x, "Date")) {

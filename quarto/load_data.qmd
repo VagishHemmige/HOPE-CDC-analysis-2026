@@ -21,6 +21,7 @@ This R script file is itself reliant on the following helper files:
 :::
 
 ```{r}
+#| eval: true
 #| include: false
 #| cache: false
 knitr::read_chunk("../R/load_data.R")

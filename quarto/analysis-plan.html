@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vagish Hemmige">
+
+<title>Analysis plan – Geographic Access of People Living with HIV to Solid Organ Transplant</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../quarto/architecture.html" rel="next">
+<link href="../quarto/results_pancreas.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: pink;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgb(from pink r g b / 13%);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/analysis-plan.html">Project documents</a></li><li class="breadcrumb-item"><a href="../quarto/analysis-plan.html">Analysis plan</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Geographic Access of People Living with HIV to Solid Organ Transplant</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><i class="bi bi-house" role="img">
+</i> 
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Background</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/background.html" class="sidebar-item-text sidebar-link"><i class="bi bi-book" role="img">
+</i> 
+ <span class="menu-text">Clinical background</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/analysis_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Study design and methods</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Setup and helper functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/setup.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/functions.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data loading and processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/load_data.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Load data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/classify_centers.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Classify centers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/county_geographic_calculations.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">County-level geographic calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/geographical_computations_for_centers.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Center-level geographic calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/set_isochrones.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Set isochrones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/unite_buffers.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Unite buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/join_tracts_to_buffers.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Join tracts to buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/join_tracts_to_united_buffers.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Join tracts to united buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/calculate_aggregated_results.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Calculate aggregated results</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Code to create tables and figures</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/tables.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Figures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Results, separated by organ</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_kidney.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Kidney</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_liver.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Liver</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_heart.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Heart</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_lung.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Lung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_pancreas.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Pancreas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Project documents</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link active"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">Analysis plan</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">Architecture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">AGENTS.md</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">Repository blueprint</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/about.html" class="sidebar-item-text sidebar-link"><i class="bi bi-info-circle" role="img">
+</i> 
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#analysis-plan--hope-cdc-analysis-2026" id="toc-analysis-plan--hope-cdc-analysis-2026" class="nav-link active" data-scroll-target="#analysis-plan--hope-cdc-analysis-2026">Analysis plan — HOPE CDC Analysis 2026</a>
+  <ul class="collapse">
+  <li><a href="#1-background-and-rationale" id="toc-1-background-and-rationale" class="nav-link" data-scroll-target="#1-background-and-rationale">1. Background and rationale</a></li>
+  <li><a href="#2-objectives" id="toc-2-objectives" class="nav-link" data-scroll-target="#2-objectives">2. Objectives</a>
+  <ul class="collapse">
+  <li><a href="#21-co-primary-descriptive-objectives" id="toc-21-co-primary-descriptive-objectives" class="nav-link" data-scroll-target="#21-co-primary-descriptive-objectives">2.1 Co-primary descriptive objectives</a></li>
+  <li><a href="#22-secondary-objectives" id="toc-22-secondary-objectives" class="nav-link" data-scroll-target="#22-secondary-objectives">2.2 Secondary objectives</a></li>
+  <li><a href="#23-exploratory-objective" id="toc-23-exploratory-objective" class="nav-link" data-scroll-target="#23-exploratory-objective">2.3 Exploratory objective</a></li>
+  </ul></li>
+  <li><a href="#3-study-design-and-setting" id="toc-3-study-design-and-setting" class="nav-link" data-scroll-target="#3-study-design-and-setting">3. Study design and setting</a></li>
+  <li><a href="#4-data-sources-and-measurement-periods" id="toc-4-data-sources-and-measurement-periods" class="nav-link" data-scroll-target="#4-data-sources-and-measurement-periods">4. Data sources and measurement periods</a></li>
+  <li><a href="#5-study-populations-and-transplant-center-definitions" id="toc-5-study-populations-and-transplant-center-definitions" class="nav-link" data-scroll-target="#5-study-populations-and-transplant-center-definitions">5. Study populations and transplant-center definitions</a>
+  <ul class="collapse">
+  <li><a href="#51-transplant-center-cohorts" id="toc-51-transplant-center-cohorts" class="nav-link" data-scroll-target="#51-transplant-center-cohorts">5.1 Transplant-center cohorts</a></li>
+  <li><a href="#52-geographic-population-groups" id="toc-52-geographic-population-groups" class="nav-link" data-scroll-target="#52-geographic-population-groups">5.2 Geographic population groups</a></li>
+  </ul></li>
+  <li><a href="#6-population-estimation-and-suppressed-counts" id="toc-6-population-estimation-and-suppressed-counts" class="nav-link" data-scroll-target="#6-population-estimation-and-suppressed-counts">6. Population estimation and suppressed counts</a>
+  <ul class="collapse">
+  <li><a href="#61-county-to-tract-allocation" id="toc-61-county-to-tract-allocation" class="nav-link" data-scroll-target="#61-county-to-tract-allocation">6.1 County-to-tract allocation</a></li>
+  <li><a href="#62-suppressed-county-estimates" id="toc-62-suppressed-county-estimates" class="nav-link" data-scroll-target="#62-suppressed-county-estimates">6.2 Suppressed county estimates</a></li>
+  </ul></li>
+  <li><a href="#7-historical-center-linkage-and-geography" id="toc-7-historical-center-linkage-and-geography" class="nav-link" data-scroll-target="#7-historical-center-linkage-and-geography">7. Historical center linkage and geography</a></li>
+  <li><a href="#8-geographic-reach-and-outcomes" id="toc-8-geographic-reach-and-outcomes" class="nav-link" data-scroll-target="#8-geographic-reach-and-outcomes">8. Geographic reach and outcomes</a>
+  <ul class="collapse">
+  <li><a href="#81-catchments" id="toc-81-catchments" class="nav-link" data-scroll-target="#81-catchments">8.1 Catchments</a></li>
+  <li><a href="#82-primary-tract-inclusion-rule-and-denominator" id="toc-82-primary-tract-inclusion-rule-and-denominator" class="nav-link" data-scroll-target="#82-primary-tract-inclusion-rule-and-denominator">8.2 Primary tract inclusion rule and denominator</a></li>
+  </ul></li>
+  <li><a href="#9-analysis-and-interpretation" id="toc-9-analysis-and-interpretation" class="nav-link" data-scroll-target="#9-analysis-and-interpretation">9. Analysis and interpretation</a>
+  <ul class="collapse">
+  <li><a href="#91-stratified-geographic-access-s3" id="toc-91-stratified-geographic-access-s3" class="nav-link" data-scroll-target="#91-stratified-geographic-access-s3">9.1 Stratified geographic access (S3)</a></li>
+  <li><a href="#92-potential-expansion-of-hiv-r-services-s4" id="toc-92-potential-expansion-of-hiv-r-services-s4" class="nav-link" data-scroll-target="#92-potential-expansion-of-hiv-r-services-s4">9.2 Potential expansion of HIV R+ services (S4)</a></li>
+  <li><a href="#93-interpretation-and-inference" id="toc-93-interpretation-and-inference" class="nav-link" data-scroll-target="#93-interpretation-and-inference">9.3 Interpretation and inference</a></li>
+  </ul></li>
+  <li><a href="#10-missing-data-and-validity-requirements" id="toc-10-missing-data-and-validity-requirements" class="nav-link" data-scroll-target="#10-missing-data-and-validity-requirements">10. Missing data and validity requirements</a></li>
+  <li><a href="#11-prespecified-sensitivity-analyses" id="toc-11-prespecified-sensitivity-analyses" class="nav-link" data-scroll-target="#11-prespecified-sensitivity-analyses">11. Prespecified sensitivity analyses</a></li>
+  <li><a href="#12-limitations" id="toc-12-limitations" class="nav-link" data-scroll-target="#12-limitations">12. Limitations</a></li>
+  <li><a href="#13-required-scientific-results" id="toc-13-required-scientific-results" class="nav-link" data-scroll-target="#13-required-scientific-results">13. Required scientific results</a></li>
+  <li><a href="#14-reproducibility-and-data-access" id="toc-14-reproducibility-and-data-access" class="nav-link" data-scroll-target="#14-reproducibility-and-data-access">14. Reproducibility and data access</a></li>
+  <li><a href="#appendix-a-strobe-and-record-crosswalk" id="toc-appendix-a-strobe-and-record-crosswalk" class="nav-link" data-scroll-target="#appendix-a-strobe-and-record-crosswalk">Appendix A. STROBE and RECORD crosswalk</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/master/quarto/analysis-plan.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content"><div class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/analysis-plan.html">Project documents</a></li><li class="breadcrumb-item"><a href="../quarto/analysis-plan.html">Analysis plan</a></li></ol></nav><div class="quarto-title-tools-only"><h1></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Vagish Hemmige <a href="mailto:vagish.hemmige@gmail.com" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!--
+This page only shows analysis-plan.md from the repository root, which is the one source:
+edit that file, not this page. Its first heading is the page title.
+
+The plan links its own sections GitHub's way (for example #3-design). Quarto's
+default heading IDs drop leading numbers (#design), so `from:` above
+gives this page GitHub-style IDs and those links work on both.
+-->
+<section id="analysis-plan--hope-cdc-analysis-2026" class="level1">
+<h1>Analysis plan — HOPE CDC Analysis 2026</h1>
+<p><strong>Status:</strong> Draft reflecting research decisions agreed through October 24, 2026. Methodological commitments below do not establish that the corresponding code has been implemented or that analyses have been reproduced.</p>
+<section id="1-background-and-rationale" class="level2">
+<h2 class="anchored" data-anchor-id="1-background-and-rationale">1. Background and rationale</h2>
+<p>People living with HIV (PLWH) may benefit from solid-organ transplantation, but HIV-related transplant experience varies across centers. The HIV Organ Policy Equity (HOPE) Act created a pathway for transplantation from donors with HIV to recipients with HIV. Regulatory requirements differ by organ and calendar period, and geographic proximity to a center does not establish clinical eligibility or program willingness to accept a candidate.</p>
+<p>This study describes the geographic distribution of access to adult solid-organ transplant centers among PLWH and people without HIV, and distinguishes access to any active center from access to centers with documented HIV recipient or HIV-positive donor experience.</p>
+</section>
+<section id="2-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="2-objectives">2. Objectives</h2>
+<section id="21-co-primary-descriptive-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="21-co-primary-descriptive-objectives">2.1 Co-primary descriptive objectives</h3>
+<p>The primary geographic reach measure is a 60-minute driving isochrone. Each objective is evaluated separately for kidney, liver, heart, lung and pancreas, in 2017 and 2022.</p>
+<ul>
+<li><strong>P1 — Access by HIV status:</strong> Estimate the percentage of PLWH and the percentage of people without HIV residing within the catchment of any active adult transplant center, and their difference in percentage points (PLWH minus people without HIV).</li>
+<li><strong>P2 — Access by center experience:</strong> Among PLWH, estimate the percentages residing within reach of (a) any active adult center, (b) an active HIV R+ center and (c) an active HOPE D+ center, and the percentage-point differences between these categories.</li>
+</ul>
+</section>
+<section id="22-secondary-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="22-secondary-objectives">2.2 Secondary objectives</h3>
+<ul>
+<li><strong>S1 — Alternative reach distances:</strong> Repeat P1 and P2 with 50-, 100- and 200-mile straight-line catchments.</li>
+<li><strong>S2 — Temporal comparison:</strong> Describe 2017-to-2022 differences in each estimate <strong>in percentage points</strong>, not relative percentage change. The two years are snapshots, not a longitudinal trend series.</li>
+<li><strong>S3 — Population stratification:</strong> Estimate geographic coverage by race/ethnicity, sex, age group and geographic region where comparable HIV surveillance counts and corresponding population denominators support meaningful estimates. Document unavailable or suppressed strata rather than treating missing values as zero. Stratified comparisons are descriptive and conditional on data feasibility and quality.</li>
+<li><strong>S4 — Potential center expansion:</strong> Among active centers without documented HIV R+ transplantation in the relevant five-year window, estimate the incremental number and percentage of PLWH who would lie within reach if a candidate center began offering HIV transplant services. Identify high-yield candidates by additional population covered beyond the existing HIV R+ network, accounting for overlap. This models hypothetical expansion of service availability, not actual feasibility or uptake.</li>
+</ul>
+</section>
+<section id="23-exploratory-objective" class="level3">
+<h3 class="anchored" data-anchor-id="23-exploratory-objective">2.3 Exploratory objective</h3>
+<p>Describe the estimated number of PLWH within individual active centers’ catchments according to center experience category: HOPE D+, HIV R+ without HOPE D+ experience, and no documented HIV R+ experience. This is descriptive, not inferential.</p>
+</section>
+</section>
+<section id="3-study-design-and-setting" class="level2">
+<h2 class="anchored" data-anchor-id="3-study-design-and-setting">3. Study design and setting</h2>
+<p>Repeated cross-sectional, ecological geospatial analysis of the 48 contiguous states and Washington, DC. Alaska, Hawaii, Puerto Rico and other territories are outside the study geography for both population and center analyses.</p>
+<p>The index years are 2017 and 2022. Historical center experience is defined within five calendar years ending in each index year (2013–2017 and 2018–2022). Population estimates correspond to each index year. Geographic coverage is attributed to residential areas, not to individual patients or observed transplant referrals. SRTR patient-level records are used only to classify centers and derive experience measures; there is no patient-level linkage to community HIV surveillance data.</p>
+</section>
+<section id="4-data-sources-and-measurement-periods" class="level2">
+<h2 class="anchored" data-anchor-id="4-data-sources-and-measurement-periods">4. Data sources and measurement periods</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>Time basis and intended contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SRTR transplant and relevant donor records</td>
+<td>Historical activity and transplant experience for each organ and five-year window; restricted patient-level source</td>
+</tr>
+<tr class="even">
+<td>Historical transplant-center records, including HRSA/OPTN or comparable authoritative sources</td>
+<td>Center identity, organ service and <strong>location at the applicable index year</strong>; historical reconstruction is required</td>
+</tr>
+<tr class="odd">
+<td>CDC NCHHSTP AtlasPlus HIV prevalence</td>
+<td>County counts of diagnosed PLWH corresponding to each index year; verify age coverage and compatible state totals</td>
+</tr>
+<tr class="even">
+<td>American Community Survey 5-year estimates</td>
+<td>County and tract populations for 2017 and 2022; age 13+ for the primary analysis, and all ages for a sensitivity analysis</td>
+</tr>
+<tr class="odd">
+<td>Mapbox or comparably specified road-routing source</td>
+<td>Modeled 60-minute driving catchments using a common contemporary road-network methodology for both historical snapshots</td>
+</tr>
+<tr class="even">
+<td>Census geographic boundaries</td>
+<td>Appropriate county/tract geographic vintages; changes in geographic definitions, including Connecticut, require reconciliation</td>
+</tr>
+</tbody>
+</table>
+<p>The primary analysis requires index-year center locations, but <strong>does not require a historical road-network reconstruction</strong>. Contemporary road-network and traffic assumptions applied consistently to the two years should be disclosed as a modeling limitation. Source vintages and retrieval assumptions must be sufficiently documented to interpret the findings.</p>
+</section>
+<section id="5-study-populations-and-transplant-center-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="5-study-populations-and-transplant-center-definitions">5. Study populations and transplant-center definitions</h2>
+<section id="51-transplant-center-cohorts" class="level3">
+<h3 class="anchored" data-anchor-id="51-transplant-center-cohorts">5.1 Transplant-center cohorts</h3>
+<p>Definitions apply separately by organ and index year. All three analytic center categories are nested:</p>
+<ol type="1">
+<li><strong>Active:</strong> A geographically eligible program with at least one qualifying adult transplant of that organ in the index calendar year (adult defined as age 18+ at transplant).</li>
+<li><strong>HIV R+:</strong> An active center with at least one qualifying adult recipient living with HIV transplanted in the five-year window ending in the index year.</li>
+<li><strong>HOPE D+:</strong> An active HIV R+ center with at least one qualifying adult HIV D+/R+ transplant using a <strong>deceased donor with HIV</strong> in the same five-year window.</li>
+</ol>
+<p>Thus, <strong>HOPE D+ ⊆ HIV R+ ⊆ active</strong>. HIV-positive living-donor transplants are not included in the HOPE D+ classification. Because such donations are uncommon, omission is expected to have little impact on center classification, but the extent of any difference can be checked if reliably identifiable data are available. Confirm as a simple validation check whether restricting HOPE D+ centers to index-year-active programs excludes any programs; do not treat a null difference as a standalone sensitivity analysis.</p>
+<p><strong>Organ definitions:</strong> Kidney activity and experience include qualifying kidney-alone and simultaneous kidney-pancreas transplants. Pancreas activity and experience include qualifying pancreas-alone and simultaneous kidney-pancreas transplants. A simultaneous kidney-pancreas transplant may contribute to <em>both</em> organ-specific analyses, but must not appear twice within either organ-specific count. Determine the handling of other combined-organ procedures consistently with the source definitions and avoid double counting. Actual SRTR file contents and transplant-type coding must be verified during implementation.</p>
+<p>Center HIV experience is a proxy for past experience, not a demonstration of current willingness, clinical capacity, or candidacy acceptance.</p>
+</section>
+<section id="52-geographic-population-groups" class="level3">
+<h3 class="anchored" data-anchor-id="52-geographic-population-groups">5.2 Geographic population groups</h3>
+<ul>
+<li><strong>PLWH:</strong> County prevalence counts of diagnosed HIV obtained from AtlasPlus, allocated to census tracts proportionally to their resident population aged 13+.</li>
+<li><strong>People without HIV:</strong> ACS resident population aged 13+ minus the estimated tract PLWH count.</li>
+</ul>
+<p>This primary age alignment is conditional on verifying that the selected AtlasPlus HIV prevalence indicator covers ages 13+. It is a <strong>population-measure alignment</strong>, not an assertion that adolescents are eligible for adult transplant programs. Adults and pediatric patients use different transplant systems; the population aged 13–17 is retained because reliably age-disaggregated county HIV counts may not support an 18+ estimate. The effect of using all-age ACS population is examined separately.</p>
+</section>
+</section>
+<section id="6-population-estimation-and-suppressed-counts" class="level2">
+<h2 class="anchored" data-anchor-id="6-population-estimation-and-suppressed-counts">6. Population estimation and suppressed counts</h2>
+<section id="61-county-to-tract-allocation" class="level3">
+<h3 class="anchored" data-anchor-id="61-county-to-tract-allocation">6.1 County-to-tract allocation</h3>
+<p>For county <em>c</em> and tract <em>t</em> within that county:</p>
+<p>[ <em>{t}=H</em>{c}, ]</p>
+<p>where (H_c) is the county diagnosed-PLWH count and (P_{13+}) is resident population aged 13+. The county and tract age denominators should refer to compatible geographic units and periods. Population-proportional allocation is an ecological estimate assuming uniform HIV prevalence within each county; the resulting tract counts are not measured tract-level HIV counts. Totals must reconcile at the county level within rounding. Zero-denominator and missing county cases require explicit handling.</p>
+</section>
+<section id="62-suppressed-county-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="62-suppressed-county-estimates">6.2 Suppressed county estimates</h3>
+<p>The planned method will be implemented in the <strong>CDCAtlas package</strong>, not independently recreated in the analysis repository. Within each state, subtract the sum of reported nonsuppressed county HIV counts from the comparable state total; allocate the nonnegative residual among suppressed counties in proportion to their relevant populations. Preserve the original observed-versus-imputed status and reconcile the completed county totals to state totals, allowing for published rounding. If state and county totals differ in scope, age definition, geography or vintage—or the residual is inconsistent—the discrepancy must be resolved or reported before applying this method.</p>
+<p>This is an agreed <strong>planned method</strong>, not a claim that CDCAtlas already implements it. An alternative zero-fill treatment of suppressed counties is a prespecified sensitivity analysis.</p>
+</section>
+</section>
+<section id="7-historical-center-linkage-and-geography" class="level2">
+<h2 class="anchored" data-anchor-id="7-historical-center-linkage-and-geography">7. Historical center linkage and geography</h2>
+<p>Historical location reconstruction for <strong>both</strong> index years is required. SRTR supplies activity and center identifiers; index-year location and program identity should be established using historical authoritative records rather than automatically carrying back current coordinates. Differences due to relocation, opening, closing, or identifier changes matter insofar as they affect geographically modeled coverage.</p>
+<p>Linkage quality should be checked in proportion to its analytic impact: summarize numbers matched and unmatched, flag ambiguous or materially consequential unresolved centers, and investigate those cases as needed. There is <strong>no requirement for manual verification of every automatically matched center</strong>, or for a published linkage-audit table. Do not silently interpret a missing historical center location as evidence that the center did not exist.</p>
+<p>County-to-ACS joins, county-to-tract assignments and any altered county-equivalent geography (notably Connecticut) must be reconciled sufficiently to avoid loss or duplication of HIV counts. Different tract boundary vintages do not imply that individual tract observations can be directly compared across years; cross-year comparisons focus on aggregate coverage.</p>
+</section>
+<section id="8-geographic-reach-and-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="8-geographic-reach-and-outcomes">8. Geographic reach and outcomes</h2>
+<section id="81-catchments" class="level3">
+<h3 class="anchored" data-anchor-id="81-catchments">8.1 Catchments</h3>
+<ul>
+<li><strong>Primary:</strong> 60-minute modeled driving isochrone for each center, at <strong>7:00 AM local time on a weekday</strong>, with consistent routing assumptions across the 2017 and 2022 comparisons. The previously selected reference weekdays were March 6, 2017 and March 7, 2022; these are reference departure conventions, <strong>not evidence of historical traffic conditions</strong>.</li>
+<li><strong>Secondary:</strong> 50-, 100- and 200-mile straight-line buffers, computed in an appropriate projected coordinate system with distance units converted consistently.</li>
+</ul>
+<p>For any organ, year, reach measure and center category, combine center catchments into a union before estimating population coverage so that overlapping catchments do not double-count residents.</p>
+</section>
+<section id="82-primary-tract-inclusion-rule-and-denominator" class="level3">
+<h3 class="anchored" data-anchor-id="82-primary-tract-inclusion-rule-and-denominator">8.2 Primary tract inclusion rule and denominator</h3>
+<p>A tract is considered covered if <strong>any part of its geometry intersects</strong> the union of eligible center catchments. All of its estimated PLWH or non-HIV population then contributes to the numerator. The denominator is the corresponding estimated population over the entire study geography in that year. Coverage is reported as a percentage to one decimal place, with contrasts in <strong>percentage points</strong>. Any-intersection can overstate access, particularly in large rural tracts; a geometric centroid rule is a prespecified sensitivity analysis.</p>
+<p>Non-HIV geographic coverage is evaluated for the <em>active</em> center group (P1). PLWH coverage is evaluated for all three nested groups (P2).</p>
+<p>When a group has <strong>no qualifying centers</strong>, report 0% with a clear “no qualifying centers” label. When qualifying centers exist but the modeled population covered is zero, report 0% without that label. Missing or unresolved input data yield <strong>undetermined</strong>, not zero. Report qualifying center counts alongside coverage findings.</p>
+</section>
+</section>
+<section id="9-analysis-and-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="9-analysis-and-interpretation">9. Analysis and interpretation</h2>
+<section id="91-stratified-geographic-access-s3" class="level3">
+<h3 class="anchored" data-anchor-id="91-stratified-geographic-access-s3">9.1 Stratified geographic access (S3)</h3>
+<p>For each feasible subgroup and organ/year, use appropriately matched subgroup HIV counts and population denominators to estimate coverage under the same catchment and tract-inclusion definitions as the main study. Evaluate suppression, geographic completeness and reconciliation before interpreting subgroup differences. Where fine-grained age bands or intersections of demographic characteristics cannot be estimated reliably, report the limitation and omit unsupported strata rather than fabricate precision. Geographic regions must be defined consistently for the comparison. Subgroup analyses are descriptive and should not be interpreted as individual-level disparities in transplant referral or receipt.</p>
+</section>
+<section id="92-potential-expansion-of-hiv-r-services-s4" class="level3">
+<h3 class="anchored" data-anchor-id="92-potential-expansion-of-hiv-r-services-s4">9.2 Potential expansion of HIV R+ services (S4)</h3>
+<p>Take the union of catchments for active HIV R+ centers as the existing service network. For each eligible active non-HIV R+ center, calculate the additional estimated PLWH covered by its catchment <strong>outside</strong> that existing union, using the same index-year population and reach definition. Report absolute newly covered PLWH and change in coverage in percentage points; a candidate’s total catchment population is not its marginal gain. Individual candidate gains are not additive when candidate catchments overlap. If illustrating a sequence of multiple additions, recalculate marginal gain after each hypothetical addition instead of summing standalone gains. This is a geographic prioritization scenario, not evidence that a center will or can initiate an HIV transplant program. Center ranking is descriptive and does not equate geographic benefit with clinical readiness.</p>
+</section>
+<section id="93-interpretation-and-inference" class="level3">
+<h3 class="anchored" data-anchor-id="93-interpretation-and-inference">9.3 Interpretation and inference</h3>
+<p>The co-primary and secondary estimates are <strong>descriptive population quantities</strong>. Report the percentages and prespecified percentage-point contrasts; do not calculate confidence intervals, conduct hypothesis tests or report relative percentage changes. The major uncertainties concern spatial allocation, suppressed counts, center location and routing assumptions, rather than sampling variation. Prespecified sensitivity analyses evaluate selected structural assumptions, but do not exhaust all sources of uncertainty.</p>
+<p>For the exploratory per-center comparison, estimate PLWH within each individual center’s catchment and display distributions, medians and appropriate descriptive plots across mutually exclusive experience categories. Individual center catchments overlap and may share tracts; centers can also appear in both years. <strong>Do not perform Kruskal–Wallis or other hypothesis tests</strong> for these comparisons, and do not infer a causal effect of local HIV population on center experience or vice versa.</p>
+</section>
+</section>
+<section id="10-missing-data-and-validity-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="10-missing-data-and-validity-requirements">10. Missing data and validity requirements</h2>
+<ul>
+<li>Distinguish missing, unknown or not-done HIV status from demonstrated positive status when classifying recipients and donors. Document the handling of such records.</li>
+<li>Do not silently equate a suppressed county HIV count with zero in the primary analysis; retain observed/imputed indicators and reconcile sums.</li>
+<li>Verify that county-level HIV counts allocated to tracts reconcile with their parent counties and that estimated PLWH plus people without HIV reconcile with the corresponding ACS population base.</li>
+<li>Check matching and inclusion of historical centers and identify unresolved records with material potential impact; confirm nested center-group counts and membership.</li>
+<li>Confirm eligible-center catchments, valid geometries, uniform geography exclusions and absence of double counting in catchment unions or organ-specific transplant counts.</li>
+<li>Verify logically ordered results: 50-mile coverage must not exceed 100-mile coverage, which must not exceed 200-mile coverage; HOPE D+ coverage must not exceed HIV R+, which must not exceed active coverage, for a shared organ, year and reach measure.</li>
+<li>Explicitly distinguish empty center groups, uncovered populations and data failures.</li>
+<li>For subgroup coverage, reconcile source totals and denominators where comparable, track suppression and geographic completeness, and identify strata that cannot support estimation.</li>
+<li>For center expansion, verify that candidates are active and not already HIV R+ centers, and that newly covered tracts are not already in the existing catchment; avoid summing overlapping candidate gains.</li>
+</ul>
+<p>These checks are <strong>internal analytic requirements</strong>. They do not mandate a published validation appendix or manual line-by-line audit. Material unresolved discrepancies should be corrected or disclosed before results are treated as final.</p>
+</section>
+<section id="11-prespecified-sensitivity-analyses" class="level2">
+<h2 class="anchored" data-anchor-id="11-prespecified-sensitivity-analyses">11. Prespecified sensitivity analyses</h2>
+<p>All three analyses will be performed and documented. Material changes in interpretation should be included in the manuscript; results may otherwise appear in supplementary materials rather than the main text.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Analysis</th>
+<th>Alternative to primary method</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>SA-suppression</strong></td>
+<td>Fill suppressed county HIV counts with zero rather than state-residual, population-proportional estimates</td>
+</tr>
+<tr class="even">
+<td><strong>SA-tract</strong></td>
+<td>Count a tract only if its <strong>geometric centroid</strong> lies within the unioned catchment, rather than using any-intersection</td>
+</tr>
+<tr class="odd">
+<td><strong>SA-age</strong></td>
+<td>Use all-age ACS population for geographic allocation and the non-HIV population comparison rather than an age-13+ base, consistent with the original analysis</td>
+</tr>
+</tbody>
+</table>
+<p>The 50-, 100- and 200-mile buffer analyses are <strong>secondary objectives</strong>, not additional sensitivity analyses. No separate sensitivity analysis is required for historical road networks, alternative departure times, alternative county-to-tract allocation, or unrestricted HOPE D+ centers, apart from the checks already described.</p>
+</section>
+<section id="12-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="12-limitations">12. Limitations</h2>
+<ol type="1">
+<li><strong>Ecological estimation:</strong> HIV counts are observed at county level and allocated to tracts under uniform within-county prevalence; within-county clustering and partial-tract coverage are not directly measured.</li>
+<li><strong>Diagnosed HIV only:</strong> Undiagnosed HIV is not counted in the source HIV surveillance measure.</li>
+<li><strong>Geographic potential rather than realized access:</strong> Proximity does not establish clinical need, referral, ability to travel, insurance coverage, program acceptance, or receipt of transplant.</li>
+<li><strong>Age/clinical-system mismatch:</strong> The 13+ population measure includes adolescents, whereas center activity is defined by adult transplantation; adolescent HIV burden is expected to be small but is not necessarily separately identifiable in county data.</li>
+<li><strong>Center experience as proxy:</strong> Previous HIV R+ or deceased-donor HIV D+/R+ transplantation need not indicate contemporary willingness or capacity; living-donor HIV D+/R+ experience is not separately classified.</li>
+<li><strong>Historical and contemporary measurement:</strong> Historical center locations and populations are combined with contemporary road-network and traffic assumptions; estimates do not recover historical driving conditions.</li>
+<li><strong>Geographic and time limitations:</strong> Contiguous US and DC only; two cross-sectional years; changes in tract boundaries and county equivalents complicate small-area comparisons.</li>
+<li><strong>Source data quality:</strong> HIV classification, center linkage, suppression and revisions to surveillance or geographic data may alter results.</li>
+<li><strong>Subgroup coverage:</strong> Differential suppression, incompatible denominator categories and incomplete demographic stratification may limit comparisons across population groups.</li>
+<li><strong>Expansion scenarios:</strong> Marginal geographic coverage does not establish a center’s clinical readiness, willingness, staffing, referral patterns or patients’ realized access.</li>
+</ol>
+</section>
+<section id="13-required-scientific-results" class="level2">
+<h2 class="anchored" data-anchor-id="13-required-scientific-results">13. Required scientific results</h2>
+<p>The analysis must produce, for each organ and index year: counts of centers by nested experience group; relevant population totals; 60-minute geographic coverage estimates for both co-primary objectives; prespecified percentage-point contrasts; secondary distance-buffer coverage; 2017-to-2022 percentage-point differences; descriptive center-level catchment population comparisons; feasible, quality-assessed population subgroup comparisons; and a descriptive ranking of potential HIV R+ center expansion by incremental geographic coverage. Prespecified sensitivity analyses must be documented, with material effects reported.</p>
+<p>Maps, tables, figures and manuscript ordering are presentation choices and are not fixed by this analysis plan.</p>
+</section>
+<section id="14-reproducibility-and-data-access" class="level2">
+<h2 class="anchored" data-anchor-id="14-reproducibility-and-data-access">14. Reproducibility and data access</h2>
+<p>The study relies on restricted SRTR records and publicly available population, surveillance and geographic sources, as well as modeled routing data. Restricted, patient-level SRTR information must not be published or transferred into public analysis outputs. The analysis should be reproducible within an authorized environment from defined data vintages and methodological assumptions. Repository-specific execution, version-recording, cache management and contributor instructions belong in <code>AGENTS.md</code>; the current implementation and data flow belong in <code>ARCHITECTURE.md</code>. Extensions using longer driving times or transit, and Bayesian county-to-tract modeling, are potential subsequent studies rather than requirements of this plan.</p>
+<hr>
+</section>
+<section id="appendix-a-strobe-and-record-crosswalk" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-a-strobe-and-record-crosswalk">Appendix A. STROBE and RECORD crosswalk</h2>
+<p>This is a planning aid, not a claim of reporting-guideline compliance. Manuscript locations can be supplied during manuscript preparation.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Topic</th>
+<th>Plan section</th>
+<th>Manuscript location</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>STROBE 1–3; RECORD 1.1–1.3</td>
+<td>Title, abstract, background, objectives and linkage description</td>
+<td>1–2, 4, 7</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>STROBE 4–6; RECORD 6.1–6.3</td>
+<td>Design, setting, participants, center selection and coding</td>
+<td>3–5</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>STROBE 7–8; RECORD 7.1</td>
+<td>Variables, sources and measurement</td>
+<td>4–8</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>STROBE 9–12; RECORD 12.1–12.3</td>
+<td>Bias, study size, statistical methods, missing data and linkage quality</td>
+<td>6–11, 14</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>STROBE 13–17; RECORD 13.1</td>
+<td>Descriptive results, study population, subgroup and expansion analyses, outcome estimates and sensitivity analyses</td>
+<td>9–11, 13</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>STROBE 18–21; RECORD 19.1</td>
+<td>Interpretation, limitations and generalisability</td>
+<td>9, 12</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>STROBE 22; RECORD 22.1</td>
+<td>Funding, protocol, data availability and access</td>
+<td>14; funding to be stated in manuscript</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li>von Elm E, et al.&nbsp;The Strengthening the Reporting of Observational Studies in Epidemiology (STROBE) statement. <em>PLoS Med.</em> 2007;4(10):e296.</li>
+<li>Benchimol EI, et al.&nbsp;The REporting of studies Conducted using Observational Routinely-collected health Data (RECORD) statement. <em>PLoS Med.</em> 2015;12(10):e1001885.</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/vagishhemmige\.github\.io\/HOPE-CDC-analysis-2026");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../quarto/results_pancreas.html" class="pagination-link" aria-label="Pancreas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Pancreas</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../quarto/architecture.html" class="pagination-link" aria-label="Architecture">
+        <span class="nav-page-text">Architecture</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">pagetitle:</span><span class="co"> "Analysis plan"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">from:</span><span class="co"> markdown+gfm_auto_identifiers</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">This page only shows analysis-plan.md from the repository root, which is the one source:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">edit that file, not this page. Its first heading is the page title.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">The plan links its own sections GitHub's way (for example #3-design). Quarto's</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">default heading IDs drop leading numbers (#design), so `from:` above</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">gives this page GitHub-style IDs and those links work on both.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>{{&lt; include ../analysis-plan.md &gt;}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/master/quarto/analysis-plan.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

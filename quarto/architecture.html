@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vagish Hemmige">
+
+<title>Architecture – Geographic Access of People Living with HIV to Solid Organ Transplant</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../quarto/agents.html" rel="next">
+<link href="../quarto/analysis-plan.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+<style>
+div.callout-Results.callout {
+  border-left-color: #198754;
+}
+div.callout-Results.callout-style-default > .callout-header {
+  background-color: rgba(25, 135, 84, 0.13);
+}
+div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
+  content: '📊';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: pink;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgb(from pink r g b / 13%);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
+  background-image: none;
+}
+</style>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/analysis-plan.html">Project documents</a></li><li class="breadcrumb-item"><a href="../quarto/architecture.html">Architecture</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Geographic Access of People Living with HIV to Solid Organ Transplant</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><i class="bi bi-house" role="img">
+</i> 
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Background</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/background.html" class="sidebar-item-text sidebar-link"><i class="bi bi-book" role="img">
+</i> 
+ <span class="menu-text">Clinical background</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/analysis_methods.html" class="sidebar-item-text sidebar-link"><i class="bi bi-diagram-3" role="img">
+</i> 
+ <span class="menu-text">Study design and methods</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Code</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Setup and helper functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/setup.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/functions.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Functions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Data loading and processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/load_data.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Load data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/classify_centers.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Classify centers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/county_geographic_calculations.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">County-level geographic calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/geographical_computations_for_centers.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Center-level geographic calculations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/set_isochrones.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Set isochrones</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/unite_buffers.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Unite buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/join_tracts_to_buffers.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Join tracts to buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/join_tracts_to_united_buffers.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Join tracts to united buffers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/calculate_aggregated_results.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Calculate aggregated results</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Code to create tables and figures</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/tables.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/figures.html" class="sidebar-item-text sidebar-link"><i class="bi bi-laptop" role="img">
+</i> 
+ <span class="menu-text">Figures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Results, separated by organ</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_kidney.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Kidney</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_liver.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Liver</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_heart.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Heart</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_lung.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Lung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/results_pancreas.html" class="sidebar-item-text sidebar-link"><i class="bi bi-clipboard-data" role="img">
+</i> 
+ <span class="menu-text">Pancreas</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Project documents</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/analysis-plan.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">Analysis plan</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/architecture.html" class="sidebar-item-text sidebar-link active"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">Architecture</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/agents.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">AGENTS.md</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/repository-blueprint.html" class="sidebar-item-text sidebar-link"><i class="bi bi-file-earmark-ruled" role="img">
+</i> 
+ <span class="menu-text">Repository blueprint</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../quarto/about.html" class="sidebar-item-text sidebar-link"><i class="bi bi-info-circle" role="img">
+</i> 
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#hope-cdc-analysis-2026-architecture" id="toc-hope-cdc-analysis-2026-architecture" class="nav-link active" data-scroll-target="#hope-cdc-analysis-2026-architecture">HOPE CDC Analysis 2026 — Architecture</a>
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#execution-order" id="toc-execution-order" class="nav-link" data-scroll-target="#execution-order">Execution order</a></li>
+  <li><a href="#architecture-diagram" id="toc-architecture-diagram" class="nav-link" data-scroll-target="#architecture-diagram">Architecture diagram</a></li>
+  <li><a href="#components" id="toc-components" class="nav-link" data-scroll-target="#components">Components</a>
+  <ul class="collapse">
+  <li><a href="#setup-and-helpers" id="toc-setup-and-helpers" class="nav-link" data-scroll-target="#setup-and-helpers">Setup and helpers</a></li>
+  <li><a href="#data-loading" id="toc-data-loading" class="nav-link" data-scroll-target="#data-loading">Data loading</a></li>
+  <li><a href="#center-classification" id="toc-center-classification" class="nav-link" data-scroll-target="#center-classification">Center classification</a></li>
+  <li><a href="#county-to-tract-allocation" id="toc-county-to-tract-allocation" class="nav-link" data-scroll-target="#county-to-tract-allocation">County-to-tract allocation</a></li>
+  <li><a href="#reach-geometry" id="toc-reach-geometry" class="nav-link" data-scroll-target="#reach-geometry">Reach geometry</a></li>
+  <li><a href="#tract-joins-and-aggregation" id="toc-tract-joins-and-aggregation" class="nav-link" data-scroll-target="#tract-joins-and-aggregation">Tract joins and aggregation</a></li>
+  <li><a href="#tables" id="toc-tables" class="nav-link" data-scroll-target="#tables">Tables</a></li>
+  <li><a href="#figures" id="toc-figures" class="nav-link" data-scroll-target="#figures">Figures</a></li>
+  <li><a href="#website" id="toc-website" class="nav-link" data-scroll-target="#website">Website</a></li>
+  </ul></li>
+  <li><a href="#data-flow-for-the-results-tables" id="toc-data-flow-for-the-results-tables" class="nav-link" data-scroll-target="#data-flow-for-the-results-tables">Data flow for the results tables</a></li>
+  <li><a href="#configuration" id="toc-configuration" class="nav-link" data-scroll-target="#configuration">Configuration</a></li>
+  <li><a href="#code-references" id="toc-code-references" class="nav-link" data-scroll-target="#code-references">Code references</a></li>
+  <li><a href="#glossary" id="toc-glossary" class="nav-link" data-scroll-target="#glossary">Glossary</a></li>
+  <li><a href="#notes-on-current-code-state" id="toc-notes-on-current-code-state" class="nav-link" data-scroll-target="#notes-on-current-code-state">Notes on current code state</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/master/quarto/architecture.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content"><div class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../quarto/analysis-plan.html">Project documents</a></li><li class="breadcrumb-item"><a href="../quarto/architecture.html">Architecture</a></li></ol></nav><div class="quarto-title-tools-only"><h1></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-body">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Vagish Hemmige <a href="mailto:vagish.hemmige@gmail.com" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!--
+This page only shows ARCHITECTURE.md from the repository root, which is the one source:
+edit that file, not this page. Its first heading is the page title.
+
+ARCHITECTURE.md marks its diagrams in GitHub's way, which GitHub draws but
+Quarto shows as code. The chunk below reads the file as text, marks each
+diagram in Quarto's way so Quarto draws it, and puts the result on the page.
+It reads only ARCHITECTURE.md, never data, and runs no analysis code.
+(Do not write a code fence in this comment: Quarto reads it as one.)
+-->
+<section id="hope-cdc-analysis-2026-architecture" class="level1">
+<h1>HOPE CDC Analysis 2026 — Architecture</h1>
+<blockquote class="blockquote">
+<p>Describes the code as of commit <code>dbf22b0</code> on <code>master</code> (October 23, 2026). File paths are relative to the repository root.</p>
+</blockquote>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This project estimates what share of people living with HIV (PLWH) in the continental United States live within reach of an adult solid-organ transplant center, and compares that with people without HIV. It covers five organs (kidney, liver, heart, lung, pancreas), two index years (2017, 2022), and four reach definitions: 50, 100 and 200 mile straight-line buffers, and a 60-minute driving isochrone. Centers are grouped three ways: all active adult centers, centers that transplanted a recipient with HIV (HIV R+), and centers that used an HIV-positive donor (HOPE D+).</p>
+<p>The project has two layers:</p>
+<ol type="1">
+<li><strong>A sequential R pipeline</strong> (<code>R/main.R</code>) that builds every object as a named list in the global environment and writes tables, figures and cached objects to disk.</li>
+<li><strong>A Quarto website</strong> (<code>_quarto.yml</code>, output in <code>docs/</code>) that documents each script and displays results by reading the pipeline’s saved outputs.</li>
+</ol>
+</section>
+<section id="execution-order" class="level2">
+<h2 class="anchored" data-anchor-id="execution-order">Execution order</h2>
+<p><code>R/main.R</code> sources the scripts in this order. Each script reads objects the earlier ones left in the global environment.</p>
+<ol type="1">
+<li><code>R/setup.R</code>, <code>R/functions.R</code></li>
+<li><code>R/load_data.R</code></li>
+<li><code>R/classify_centers.R</code></li>
+<li><code>R/county_geographic_calculations.R</code></li>
+<li><code>R/geographical_computations_for_centers.R</code></li>
+<li><code>R/set_isochrones.R</code></li>
+<li><code>R/unite_buffers.R</code></li>
+<li><code>R/join_tracts_to_buffers.R</code></li>
+<li><code>R/join_tracts_to_united_buffers.R</code></li>
+<li><code>R/calculate_aggregated_results.R</code></li>
+<li><code>R/tables.R</code></li>
+<li><code>R/figures.R</code></li>
+</ol>
+</section>
+<section id="architecture-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-diagram">Architecture diagram</h2>
+<p>The diagram shows data dependencies, not source order. Two branches leave the per-center buffers: the <strong>united branch</strong> produces the results tables, and the <strong>per-center branch</strong> feeds only the beeswarm figures.</p>
+<div class="cell" data-eval="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    subgraph EXT["External sources"]
+        SRTR[("SRTR SAF files&lt;br/&gt;tx_ki, tx_li, tx_hr, tx_lu, tx_kp,&lt;br/&gt;donor_deceased")]
+        HRSA[("HRSA center list&lt;br/&gt;via sRtr")]
+        ACS[("ACS 5-year tract and county&lt;br/&gt;population via tidycensus")]
+        ATLAS[("CDC AtlasPlus county&lt;br/&gt;HIV prevalence via CDCAtlas")]
+        MB[("Mapbox isochrone API&lt;br/&gt;driving-traffic")]
+        TIG[("tigris state outlines")]
+    end
+
+    LOAD["load_data.R"]
+    CLASS["classify_centers.R&lt;br/&gt;center groups and volumes"]
+    COUNTY["county_geographic_calculations.R&lt;br/&gt;center sf objects, tract HIV allocation"]
+    BUF["geographical_computations_for_centers.R&lt;br/&gt;mile buffers"]
+    ISO["set_isochrones.R&lt;br/&gt;60-min isochrones"]
+    PCB[("Per-center buffers&lt;br/&gt;Transplant_centers_*_buffer")]
+    UNITE["unite_buffers.R"]
+    JUN["join_tracts_to_united_buffers.R"]
+    AGG["calculate_aggregated_results.R"]
+    TAB["tables.R"]
+    JIND["join_tracts_to_buffers.R"]
+    FIG["figures.R"]
+
+    SRTR &amp; HRSA &amp; ACS &amp; ATLAS &amp; TIG --&gt; LOAD
+    LOAD --&gt; CLASS --&gt; COUNTY
+    COUNTY --&gt; BUF &amp; ISO
+    MB --&gt; ISO
+    BUF &amp; ISO --&gt; PCB
+
+    PCB --&gt; UNITE --&gt; JUN --&gt; AGG --&gt; TAB
+    PCB --&gt; JIND
+    COUNTY --&gt;|Merged_tracts| JUN
+    COUNTY --&gt;|Merged_tracts| JIND
+    COUNTY --&gt;|Merged_tracts| AGG
+
+    AGG --&gt;|"Results_*_df"| FIG
+    JIND --&gt;|tracts_in_buffers_active| FIG
+    PCB --&gt; FIG
+    COUNTY --&gt;|Merged_Counties| FIG
+    CLASS --&gt;|center groups| FIG
+    LOAD --&gt;|states_sf| FIG
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="components" class="level2">
+<h2 class="anchored" data-anchor-id="components">Components</h2>
+<section id="setup-and-helpers" class="level3">
+<h3 class="anchored" data-anchor-id="setup-and-helpers">Setup and helpers</h3>
+<p><strong>Location:</strong> <code>R/setup.R</code>, <code>R/functions.R</code></p>
+<p><strong>Purpose:</strong> Loads the analysis packages and defines the analysis grid and shared helper functions.</p>
+<p><strong>Key definitions (<code>R/setup.R</code>):</strong> - <code>organ_list</code>, <code>year_list</code>, <code>distance_list</code> — drive every loop in the pipeline - <code>continental_fips</code> — states included in Census pulls - <code>timezones</code>, <code>reference_date</code> — used to time isochrones at 7 AM local on the first Monday in March of each index year</p>
+<p><strong>Key functions (<code>R/functions.R</code>):</strong> - <code>set_60_min_isochrone_at_7AM()</code> — groups centers by time zone and calls <code>mapboxapi::mb_isochrone()</code> with a 7 AM local departure - <code>convert_resultsdf_to_table()</code> — builds the gt results tables - <code>make_paired_plot()</code>, <code>plot_center_HIV_catchment()</code> — plotting helpers, described under <a href="#figures">Figures</a></p>
+</section>
+<section id="data-loading" class="level3">
+<h3 class="anchored" data-anchor-id="data-loading">Data loading</h3>
+<p><strong>Location:</strong> <code>R/load_data.R</code></p>
+<p><strong>Inputs:</strong> - SRTR transplant files via <code>load_srtr_file()</code>, plus deceased-donor HIV fields (<code>DON_ANTI_HIV</code>, <code>DON_HIV_NAT</code>) - HRSA transplant centers via <code>sRtr::get_hrsa_transplant_centers()</code>, filtered by organ from <code>Service_Lst</code>, excluding Puerto Rico and Hawaii - ACS 5-year total population (<code>B01003_001</code>) for tracts and counties - CDC AtlasPlus county HIV prevalence via <code>CDCAtlas::get_atlas()</code> - State outlines via <code>tigris::states()</code></p>
+<p><strong>Outputs:</strong> <code>tx</code>, <code>donor_deceased</code>, <code>Transplant_centers_all</code>, <code>us_tracts_population</code>, <code>us_counties_population</code>, <code>AtlasPlusTableData_county_totals</code>, <code>vars</code>, <code>states_sf</code></p>
+<p><strong>Caching:</strong> ACS pulls are cached to <code>cache/us_tracts_population_&lt;year&gt;.rds</code> and <code>cache/us_counties_population_&lt;year&gt;.rds</code>. HRSA and AtlasPlus are fetched live on every run.</p>
+</section>
+<section id="center-classification" class="level3">
+<h3 class="anchored" data-anchor-id="center-classification">Center classification</h3>
+<p><strong>Location:</strong> <code>R/classify_centers.R</code></p>
+<p><strong>Purpose:</strong> Defines the three center groups for each organ and year.</p>
+<ul>
+<li><strong>Active:</strong> at least one adult (age ≥ 216 months) transplant in the index calendar year.</li>
+<li><strong>HIV R+ volume:</strong> adult recipients with HIV over the five years ending in the index year, restricted to active centers.</li>
+<li><strong>HOPE D+ volume:</strong> adult recipients with HIV over the same window whose donor was HIV-positive by NAT or antibody.</li>
+</ul>
+<p><strong>Outputs:</strong> <code>Active_tx_centers</code>, <code>HIV_center_volumes</code>, <code>HOPE_center_volumes</code>, <code>State_level_transplant_volumes</code>, <code>Transplant_centers_active</code></p>
+</section>
+<section id="county-to-tract-allocation" class="level3">
+<h3 class="anchored" data-anchor-id="county-to-tract-allocation">County-to-tract allocation</h3>
+<p><strong>Location:</strong> <code>R/county_geographic_calculations.R</code></p>
+<p><strong>Purpose:</strong> Projects center points to EPSG:5070 (CONUS Albers, meters), builds the HIV and HOPE center subsets, and estimates tract-level HIV counts.</p>
+<ul>
+<li>AtlasPlus county cases are joined to ACS counties by numeric GEOID.</li>
+<li>Each tract receives a share of its county’s cases in proportion to its population (<code>tract_cases</code>). <code>tract_noncases</code> is tract population minus <code>tract_cases</code>.</li>
+<li>These tract counts are estimates that assume HIV prevalence is uniform within a county.</li>
+</ul>
+<p><strong>Outputs:</strong> <code>Transplant_centers_all_sf</code>, <code>Transplant_centers_active_SF</code>, <code>Transplant_centers_HIV_sf</code>, <code>Transplant_centers_HOPE_sf</code>, <code>Merged_Counties</code>, <code>Merged_tracts</code></p>
+</section>
+<section id="reach-geometry" class="level3">
+<h3 class="anchored" data-anchor-id="reach-geometry">Reach geometry</h3>
+<p><strong>Location:</strong> <code>R/geographical_computations_for_centers.R</code>, <code>R/set_isochrones.R</code>, <code>R/unite_buffers.R</code></p>
+<ul>
+<li><strong>Mile buffers:</strong> <code>st_buffer()</code> in meters on EPSG:5070 (50 mi = 80,467.2 m; 100 mi = 160,934.4 m; 200 mi = 321,868 m).</li>
+<li><strong>Isochrones:</strong> 60 minutes, <code>driving-traffic</code> profile, departing 7 AM local time on the reference date. Each center’s time zone comes from <code>lutz::tz_lookup()</code>. Results are cached per organ, year and center group in <code>cache/Transplant_center(s)_*_60min_buffer_*.RDS</code>. The all-centers isochrone uses the 2017 reference date.</li>
+<li>Mile buffers and isochrones are stored in the same nested lists (<code>Transplant_centers_*_buffer[[organ]][[distance]][[year]]</code>), so every downstream step treats the four reach definitions the same way.</li>
+<li><strong>Union:</strong> each set of buffers is dissolved into a single catchment polygon (<code>catchment_area = "All Centers"</code>).</li>
+</ul>
+<p><strong>Outputs:</strong> <code>Transplant_center*_buffer</code> (per center) and <code>Transplant_center*_buffer_united</code> (dissolved), nested by organ, distance and year</p>
+</section>
+<section id="tract-joins-and-aggregation" class="level3">
+<h3 class="anchored" data-anchor-id="tract-joins-and-aggregation">Tract joins and aggregation</h3>
+<p><strong>Location:</strong> <code>R/join_tracts_to_united_buffers.R</code>, <code>R/calculate_aggregated_results.R</code>, <code>R/join_tracts_to_buffers.R</code></p>
+<p>These are two independent branches from the buffers, not a sequence.</p>
+<ul>
+<li><strong>United branch (results tables):</strong> tracts are joined to the dissolved catchment with <code>st_intersects</code>, so each tract counts once. Aggregation sums <code>tract_cases</code> (active, HIV R+ and HOPE D+ groups) and <code>tract_noncases</code> (active group only) for intersecting tracts, divided by the national tract totals. Outputs: <code>tracts_in_buffers_*_united</code>, <code>Results_HIV_df</code>, <code>Results_nonHIV_df</code>.</li>
+<li><strong>Per-center branch (beeswarm figures):</strong> tracts are joined to each center’s own buffer. A tract inside several catchments appears once per center, which is intended here because the figure shows each center’s own catchment. Outputs: <code>tracts_in_buffers_active</code>, <code>tracts_in_buffers_HIV</code>, <code>tracts_in_buffers_HOPE</code>. Only <code>tracts_in_buffers_active</code> is used downstream.</li>
+</ul>
+</section>
+<section id="tables" class="level3">
+<h3 class="anchored" data-anchor-id="tables">Tables</h3>
+<p><strong>Location:</strong> <code>R/tables.R</code></p>
+<p>gt objects built by <code>convert_resultsdf_to_table()</code> from <code>Results_HIV_df</code> and <code>Results_nonHIV_df</code>. Saved as <code>.docx</code> and <code>.png</code> in <code>tables/&lt;organ&gt;/</code>, and as RDS in <code>cache/Results_HIV_gt.rds</code> and <code>cache/Results_nonHIV_gt.rds</code> for the website.</p>
+</section>
+<section id="figures" class="level3">
+<h3 class="anchored" data-anchor-id="figures">Figures</h3>
+<p><strong>Location:</strong> <code>R/figures.R</code>, with helpers in <code>R/functions.R</code></p>
+<p><code>R/figures.R</code> builds five families of figures. Two shared layers are built first and reused by the helpers: <code>county_dots_transformed</code>, a dot-density layer of county HIV cases from <code>tidycensus::as_dot_density()</code> at 100 cases per dot, and <code>states_sf_transformed</code>, the state outlines. Both are projected to EPSG:5070.</p>
+<div class="cell" data-eval="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    MC[("Merged_Counties")] --&gt; DOTS["county_dots_transformed&lt;br/&gt;1 dot = 100 PLWH"]
+    ST[("states_sf")] --&gt; STT["states_sf_transformed"]
+    PCB[("Per-center buffers")]
+    RES[("Results_HIV_df&lt;br/&gt;Results_nonHIV_df")]
+    TIB[("tracts_in_buffers_active")]
+    GRP[("Active_tx_centers&lt;br/&gt;HIV_center_volumes&lt;br/&gt;HOPE_center_volumes")]
+
+    DOTS &amp; STT &amp; PCB --&gt; MAPS["Center maps&lt;br/&gt;SVG only"]
+    DOTS &amp; STT &amp; PCB &amp; RES --&gt; PAIR["make_paired_plot()&lt;br/&gt;2017 vs 2022 maps&lt;br/&gt;with percentages"]
+    TIB &amp; GRP --&gt; BEE["plot_center_HIV_catchment()&lt;br/&gt;beeswarm of PLWH&lt;br/&gt;per center"]
+    DIAG["DiagrammeR spec&lt;br/&gt;in figures.R"] --&gt; ACC["Access model diagram"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Family</th>
+<th>Built by</th>
+<th>Inputs</th>
+<th>Output files</th>
+<th>Used on site</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Access model diagram</td>
+<td><code>grViz()</code> in <code>figures.R</code></td>
+<td>None (hand-written spec)</td>
+<td><code>figures/hope_cdc_access_model.svg</code>, <code>.png</code></td>
+<td><code>quarto/analysis_methods.qmd</code></td>
+</tr>
+<tr class="even">
+<td>Center maps</td>
+<td><code>figures.R</code> loop</td>
+<td>Dots, states, active and HIV R+ buffers</td>
+<td><code>figures/&lt;organ&gt;/Active &lt;organ&gt; &lt;distance&gt; map&lt;year&gt;.svg</code>, <code>HIV &lt;organ&gt; ...svg</code></td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>Paired plots, PLWH and people without HIV</td>
+<td><code>make_paired_plot(include_nonHIV = TRUE)</code></td>
+<td>Dots, states, active buffers, both results tables</td>
+<td><code>figures/&lt;organ&gt;/Active&lt;organ&gt;CenterCombinedPlot&lt;distance&gt;.png</code></td>
+<td>Results page, first section</td>
+</tr>
+<tr class="even">
+<td>Paired plots, PLWH by center group</td>
+<td><code>make_paired_plot()</code></td>
+<td>Dots, states, active, HIV R+ or HOPE D+ buffers, <code>Results_HIV_df</code></td>
+<td><code>figures/&lt;organ&gt;/Combined &lt;organ&gt; plot 2026-2-14 &lt;distance&gt; &lt;active/HIV/HOPE&gt;.png</code></td>
+<td>Results page, second section</td>
+</tr>
+<tr class="odd">
+<td>Beeswarm plots</td>
+<td><code>plot_center_HIV_catchment()</code></td>
+<td><code>tracts_in_buffers_active</code>, center groups</td>
+<td><code>figures/&lt;organ&gt;/Beeswarm &lt;organ&gt; plot 2026-2-14 &lt;distance&gt;.png</code></td>
+<td>Results page, third section</td>
+</tr>
+</tbody>
+</table>
+<p>Every family except the diagram is also saved as <code>.svg</code>.</p>
+<p><strong>Paired plots</strong> (<code>make_paired_plot()</code>): two maps side by side, one per index year. Each shows the dot-density layer, the per-center catchment outlines in red, and state outlines. The headline percentage and the numerator and denominator above each map come from the results tables, so the numbers come from the united branch while the outlines are drawn from the per-center buffers.</p>
+<p><strong>Beeswarm plots</strong> (<code>plot_center_HIV_catchment()</code>): sums <code>tract_cases</code> within each active center’s own catchment, giving the estimated PLWH near each center. Centers are grouped by status in each year (HOPE center, at least one HIV R+ transplant, no HIV R+ transplants) and faceted by year. Point color shows each center’s status in the first year, so movement between groups is visible. The plot adds a violin, a median bar, and a Kruskal–Wallis test across groups (<code>ggpubr::stat_compare_means()</code>).</p>
+<p><strong>Implicit inputs:</strong> both helpers read global objects that are not passed as arguments. <code>make_paired_plot()</code> reads <code>Results_HIV_df</code>, <code>Results_nonHIV_df</code>, <code>county_dots_transformed</code>, <code>states_sf_transformed</code> and <code>year_list</code>. <code>plot_center_HIV_catchment()</code> reads <code>Active_tx_centers</code>, <code>HIV_center_volumes</code>, <code>HOPE_center_volumes</code> and <code>year_list</code>. They work only after <code>R/figures.R</code> has built the shared layers and the earlier scripts have run.</p>
+</section>
+<section id="website" class="level3">
+<h3 class="anchored" data-anchor-id="website">Website</h3>
+<p><strong>Location:</strong> <code>_quarto.yml</code>, <code>index.qmd</code>, <code>quarto/*.qmd</code>; output in <code>docs/</code></p>
+<ul>
+<li>A docked sidebar mirrors the pipeline: Background, Setup and helpers, Data loading and processing (one page per script), Tables and Figures, Results by organ, About.</li>
+<li><strong>Script pages pull code from the scripts at render time.</strong> Pages for scripts with labeled sections (<code>## ---- label</code>) call <code>knitr::read_chunk()</code> and show each section next to its explanation: setup, functions, load_data, county_geographic_calculations, calculate_aggregated_results and figures. The remaining script pages show the whole script with the <code>file:</code> chunk option. Code on these pages is displayed, not run.</li>
+<li>Results pages read <code>../cache/Results_*_gt.rds</code> and find figures in <code>../figures/&lt;organ&gt;</code> with <code>list.files()</code> and a filename pattern.</li>
+<li>The <code>coatless-quarto/custom-callout</code> extension styles the source-code boxes.</li>
+<li><code>repo-branch: master</code> points the edit and issue links at the right branch.</li>
+</ul>
+</section>
+</section>
+<section id="data-flow-for-the-results-tables" class="level2">
+<h2 class="anchored" data-anchor-id="data-flow-for-the-results-tables">Data flow for the results tables</h2>
+<div class="cell" data-eval="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["County HIV cases&lt;br/&gt;AtlasPlus"] --&gt; C["tract_cases =&lt;br/&gt;county_cases × tract pop ÷ county pop"]
+    B["Tract population&lt;br/&gt;ACS"] --&gt; C
+    C --&gt; D{"Tract intersects&lt;br/&gt;united catchment?"}
+    E["Center group × organ × year&lt;br/&gt;× reach definition"] --&gt; D
+    D --&gt;|yes| F["Numerator: sum of tract_cases"]
+    C --&gt; G["Denominator: national&lt;br/&gt;sum of tract_cases"]
+    F &amp; G --&gt; H["Percent of PLWH&lt;br/&gt;within reach"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Each result row is one combination of organ (5), year (2), center group (3) and reach definition (4): 120 rows for PLWH and 40 rows for people without HIV (active centers only).</p>
+</section>
+<section id="configuration" class="level2">
+<h2 class="anchored" data-anchor-id="configuration">Configuration</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Setting</th>
+<th>Where</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Organs, years, distances</td>
+<td><code>R/setup.R</code></td>
+<td>Drive every loop</td>
+</tr>
+<tr class="even">
+<td>Continental FIPS, time zones, reference dates</td>
+<td><code>R/setup.R</code></td>
+<td>Geography and isochrone timing</td>
+</tr>
+<tr class="odd">
+<td>Buffer distances in meters</td>
+<td><code>R/geographical_computations_for_centers.R</code></td>
+<td><code>case_when</code> on the distance label</td>
+</tr>
+<tr class="even">
+<td>Dots per case</td>
+<td><code>R/figures.R</code></td>
+<td><code>values_per_dot = 100</code></td>
+</tr>
+<tr class="odd">
+<td>Mapbox token</td>
+<td>Environment (<code>mapboxapi</code>)</td>
+<td>Needed only when isochrones are not cached</td>
+</tr>
+<tr class="even">
+<td>Census API key</td>
+<td>Environment (<code>tidycensus</code>)</td>
+<td>Needed only when ACS pulls are not cached</td>
+</tr>
+<tr class="odd">
+<td>SRTR file location</td>
+<td><code>sRtr</code> package configuration</td>
+<td>Restricted data, not in the repository</td>
+</tr>
+<tr class="even">
+<td>Site render list, navigation, theme, branch</td>
+<td><code>_quarto.yml</code></td>
+<td><code>output-dir: docs</code>, <code>repo-branch: master</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="code-references" class="level2">
+<h2 class="anchored" data-anchor-id="code-references">Code references</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>File</th>
+<th>Key symbols</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Orchestration</td>
+<td><code>R/main.R</code></td>
+<td><code>source()</code> order</td>
+</tr>
+<tr class="even">
+<td>Constants</td>
+<td><code>R/setup.R</code></td>
+<td><code>organ_list</code>, <code>year_list</code>, <code>distance_list</code>, <code>reference_date</code></td>
+</tr>
+<tr class="odd">
+<td>Isochrones</td>
+<td><code>R/functions.R</code>, <code>R/set_isochrones.R</code></td>
+<td><code>set_60_min_isochrone_at_7AM()</code>, <code>converted_times</code></td>
+</tr>
+<tr class="even">
+<td>Center groups</td>
+<td><code>R/classify_centers.R</code></td>
+<td><code>Active_tx_centers</code>, <code>HIV_center_volumes</code>, <code>HOPE_center_volumes</code></td>
+</tr>
+<tr class="odd">
+<td>Allocation</td>
+<td><code>R/county_geographic_calculations.R</code></td>
+<td><code>Merged_Counties</code>, <code>Merged_tracts</code>, <code>tract_cases</code>, <code>tract_noncases</code></td>
+</tr>
+<tr class="even">
+<td>Union</td>
+<td><code>R/unite_buffers.R</code></td>
+<td><code>*_buffer_united</code></td>
+</tr>
+<tr class="odd">
+<td>Results</td>
+<td><code>R/calculate_aggregated_results.R</code></td>
+<td><code>Results_HIV_df</code>, <code>Results_nonHIV_df</code></td>
+</tr>
+<tr class="even">
+<td>Tables</td>
+<td><code>R/functions.R</code>, <code>R/tables.R</code></td>
+<td><code>convert_resultsdf_to_table()</code>, <code>Results_HIV_gt</code></td>
+</tr>
+<tr class="odd">
+<td>Figure layers</td>
+<td><code>R/figures.R</code></td>
+<td><code>county_dots_transformed</code>, <code>states_sf_transformed</code></td>
+</tr>
+<tr class="even">
+<td>Paired plots</td>
+<td><code>R/functions.R</code>, <code>R/figures.R</code></td>
+<td><code>make_paired_plot()</code></td>
+</tr>
+<tr class="odd">
+<td>Beeswarm plots</td>
+<td><code>R/functions.R</code>, <code>R/figures.R</code></td>
+<td><code>plot_center_HIV_catchment()</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="glossary" class="level2">
+<h2 class="anchored" data-anchor-id="glossary">Glossary</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Meaning in this project</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Active center</td>
+<td>Performed at least one adult transplant of that organ in the index year</td>
+</tr>
+<tr class="even">
+<td>HIV R+ center</td>
+<td>Active center with at least one adult recipient with HIV in the five years ending in the index year</td>
+</tr>
+<tr class="odd">
+<td>HOPE D+ center</td>
+<td>Center with at least one adult HIV R+ transplant from an HIV-positive donor in that window</td>
+</tr>
+<tr class="even">
+<td>Per-center buffer</td>
+<td>One catchment polygon per center; catchments can overlap</td>
+</tr>
+<tr class="odd">
+<td>United buffer</td>
+<td>All buffers in a center group dissolved into one polygon, so each tract counts once</td>
+</tr>
+<tr class="even">
+<td>PLWH</td>
+<td>People living with HIV, from CDC AtlasPlus county prevalence</td>
+</tr>
+<tr class="odd">
+<td>Reach definition</td>
+<td>50, 100 or 200 mile straight-line buffer, or 60-minute driving isochrone</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notes-on-current-code-state" class="level2">
+<h2 class="anchored" data-anchor-id="notes-on-current-code-state">Notes on current code state</h2>
+<ul>
+<li><strong>Computed but not used downstream:</strong> <code>tracts_in_buffers_HIV</code>, <code>tracts_in_buffers_HOPE</code>, <code>Transplant_center_all_buffer</code> and its united version, <code>State_level_transplant_volumes</code>, and <code>vars</code>. The all-centers buffers include 60-minute isochrones, so on a cache miss the pipeline makes Mapbox calls whose results nothing reads.</li>
+<li>The center maps are saved as SVG only and are not shown on the site.</li>
+<li><code>R/load_tract_data_from_cache.R</code> is not sourced by <code>R/main.R</code>. It is a standalone helper for reloading cached isochrones.</li>
+<li><code>cache/</code>, <code>tables/</code> and <code>figures/</code> are gitignored, so results pages render only on a machine that has run the pipeline. At render, Quarto copies the figures each page uses into <code>docs/figures/</code>, so the published site is as current as the last render. To update the site, run <code>R/main.R</code>, then render.</li>
+<li>Results pages find figures with <code>list.files()</code> and a filename pattern, so any leftover file in <code>figures/&lt;organ&gt;/</code> that matches the pattern also appears on the site.</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/vagishhemmige\.github\.io\/HOPE-CDC-analysis-2026");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation column-body">
+  <div class="nav-page nav-page-previous">
+      <a href="../quarto/analysis-plan.html" class="pagination-link" aria-label="Analysis plan">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Analysis plan</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../quarto/agents.html" class="pagination-link" aria-label="AGENTS.md">
+        <span class="nav-page-text">AGENTS.md</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">pagetitle:</span><span class="co"> "Architecture"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">This page only shows ARCHITECTURE.md from the repository root, which is the one source:</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">edit that file, not this page. Its first heading is the page title.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">ARCHITECTURE.md marks its diagrams in GitHub's way, which GitHub draws but</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">Quarto shows as code. The chunk below reads the file as text, marks each</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">diagram in Quarto's way so Quarto draws it, and puts the result on the page.</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">It reads only ARCHITECTURE.md, never data, and runs no analysis code.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">(Do not write a code fence in this comment: Quarto reads it as one.)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(<span class="st">"../ARCHITECTURE.md"</span>)) {</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  architecture <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"../ARCHITECTURE.md"</span>, <span class="at">warn =</span> <span class="cn">FALSE</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  architecture <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"^```mermaid</span><span class="sc">\\</span><span class="st">s*$"</span>, <span class="st">"```{mermaid}</span><span class="sc">\n</span><span class="st">%%| eval: true"</span>, architecture)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(architecture, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"# Architecture</span><span class="sc">\n\n</span><span class="st">`ARCHITECTURE.md` has not been written yet.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/master/quarto/architecture.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

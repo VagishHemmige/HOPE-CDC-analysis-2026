@@ -411,3 +411,36 @@ for (organ_loop in organ_list) {
            bg = "white")
   }
 }
+
+
+## ---- export-site-figures
+# Copy the figures the website shows into site-outputs/figures/. That folder
+# is committed and published, so check any change to it for disclosure before
+# committing. Only the files named here are copied, so leftover files in
+# figures/ never reach the site, and a figure that was not created stops the
+# run instead of silently disappearing from the site.
+
+site_figures <- "figures/hope_cdc_access_model.svg"
+
+for (organ_loop in organ_list) {
+  for (distance_loop in distance_list) {
+    site_figures <- c(
+      site_figures,
+      glue("figures/{organ_loop}/Active{organ_loop}CenterCombinedPlot{distance_loop}.png"),
+      glue("figures/{organ_loop}/Combined {organ_loop} plot 2026-2-14 {distance_loop} {c('active', 'HIV', 'HOPE')}.png"),
+      glue("figures/{organ_loop}/Beeswarm {organ_loop} plot 2026-2-14 {distance_loop}.png")
+    )
+  }
+}
+
+missing_site_figures <- site_figures[!file.exists(site_figures)]
+if (length(missing_site_figures) > 0) {
+  stop("These figures for the website were not created:\n",
+       paste(missing_site_figures, collapse = "\n"))
+}
+
+site_figure_destinations <- sub("^figures/", "site-outputs/figures/", site_figures)
+for (folder in unique(dirname(site_figure_destinations))) {
+  dir.create(folder, recursive = TRUE, showWarnings = FALSE)
+}
+file.copy(site_figures, site_figure_destinations, overwrite = TRUE)

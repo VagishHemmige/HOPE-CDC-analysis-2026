@@ -41,7 +41,8 @@ For each organ:
 3. Saves the tables as:
    - `.docx` (for manuscript editing)
    - `.png` (for quick sharing or embedding)
-4. Caches the final `gt` objects as `.rds` files for reuse in Quarto.
+4. Writes an HTML copy of each table to `site-outputs/tables/` for the website.
+5. Caches the final `gt` objects as `.rds` files for use in an R session.
 
 ---
 
@@ -100,9 +101,12 @@ Each table is:
 
 - Saved as `.docx` (for manuscript submission workflows)
 - Saved as `.png` (for presentations or embedding)
+- Written as an HTML table to `site-outputs/tables/` (for the website)
 - Stored as an `.rds` object in the `cache/` directory
 
-Caching the `gt` objects allows Quarto pages to load the formatted tables directly without regenerating them.
+The results pages show the HTML copies. They are produced by `gt::as_raw_html()`, so the website shows the same formatted table as the manuscript files, and the site can be built without gt or the cached objects. `site-outputs/` is committed and public, so review changes to it for disclosure before committing.
+
+The `.rds` objects are kept for reloading the formatted tables in an R session; the website does not read them.
 
 ---
 

@@ -403,3 +403,26 @@ Together with maps and paired summary plots, they provide a multi-level view of 
 #| label: catchment-beeswarm
 #| eval: false
 ```
+
+---
+
+## Copying Figures to the Website Folder
+
+The website does not read `figures/`, which is not committed. This last step copies the figures the website shows into `site-outputs/figures/`, which is committed and published by the site's build.
+
+### What This Step Does
+
+- Builds the list of figures the results pages and the methods page show: for each organ and reach definition, the paired plot comparing PLWH with people without HIV, the three center-group plots (active, HIV R+, HOPE D+) and the beeswarm plot, plus the access model diagram. That is 101 files.
+- Stops with an error naming any figure on the list that was not created, so a missing plot cannot quietly drop off the site.
+- Copies the listed files, and only those, into `site-outputs/figures/`, keeping each organ's folder.
+
+Because only named files are copied, older or experimental files left in `figures/` never reach the site.
+
+### Before Committing
+
+`site-outputs/` is public once committed. The copy step does not decide what is published: after a run, review the changed files for disclosure under the SRTR data use agreement before committing them. The center-group and beeswarm plots draw on SRTR-derived center classifications.
+
+```{r}
+#| label: export-site-figures
+#| eval: false
+```

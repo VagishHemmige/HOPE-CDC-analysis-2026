@@ -6,21 +6,39 @@ format: html
 ## Table 1 and Table 2: Summary results in PLWH and without HIV
 
 
-```{r, include=FALSE}
+```{r}
 #| eval: true
+#| include: false
 
-#This code prepares the .qmd environent for analysis
+# Results come from the cleared outputs in site-outputs/, written by
+# R/tables.R and R/figures.R. This page runs no analysis code.
 
-organ<-"lung"
+organ <- "lung"
 
-Results_HIV_gt    <- readRDS("../cache/Results_HIV_gt.rds")
-Results_nonHIV_gt <- readRDS("../cache/Results_nonHIV_gt.rds")
+# HOPE D+ rows and figures are hidden for organs with no HOPE D+ centers,
+# where the aggregation currently reports 100% (empty-group defect, to be
+# fixed in the refactor).
+hide_hope <- TRUE
 
-source("../R/setup.R")
-source("../R/functions.R")
+out_dir <- file.path("..", "site-outputs")
 
+show_table <- function(file) {
+  x <- paste(readLines(file.path(out_dir, "tables", file), warn = FALSE, encoding = "UTF-8"),
+             collapse = "\n")
+  if (hide_hope) {
+    x <- gsub("(?s)<tr\\b(?:(?!</tr>).)*?HOPE(?:(?!</tr>).)*?</tr>", "", x, perl = TRUE)
+  }
+  cat(x)
+}
 
-
+site_figures <- function(pattern, keep = NULL, drop = NULL) {
+  f <- list.files(file.path(out_dir, "figures", organ), pattern = pattern, full.names = TRUE)
+  if (!is.null(keep)) f <- f[grepl(keep, basename(f), fixed = TRUE)]
+  if (!is.null(drop)) f <- f[!grepl(drop, basename(f), fixed = TRUE)]
+  if (hide_hope) f <- f[!grepl("HOPE", basename(f), fixed = TRUE)]
+  distance <- as.numeric(regmatches(f, regexpr("[0-9]+(?=(mile|min))", f, perl = TRUE)))
+  f[order(distance, tolower(basename(f)))]
+}
 ```
 
 
@@ -43,90 +61,11 @@ Results are shown for 2017 and 2022.
 
 ---
 
-```{r, echo=FALSE}
+```{r}
 #| eval: true
-
-
-tbl_body <- gt::extract_body(Results_HIV_gt[[organ]])
-
-tbl_body_no_hope <- tbl_body %>%
-  dplyr::filter(
-    !dplyr::if_any(
-      everything(),
-      ~ stringr::str_detect(as.character(.x), stringr::regex("HOPE", ignore_case = TRUE))
-    )
-  ) %>%
-  gt::gt() %>%
-  {
-    purrr::reduce(
-      year_list,
-      ~ .x %>%
-        gt::tab_spanner(
-          label = .y,
-          columns = matches(paste0("_", .y, "$"))
-        ),
-      .init = .
-    )
-  } %>%
-  gt::fmt_number(
-    columns = matches("Numerator_|Denominator_"),
-    decimals = 0,
-    use_seps = TRUE
-  ) %>%
-  gt::fmt_number(
-    columns = matches("Percentage_"),
-    decimals = 1
-  ) %>%
-  gt::tab_header(
-    title = "Access to transplant in PLWH"
-  ) %>%
-  gt::cols_label_with(~ "Numerator",   columns = matches("^Numerator_")) %>%
-  gt::cols_label_with(~ "Denominator", columns = matches("^Denominator_")) %>%
-  gt::cols_label_with(~ "Percentage",  columns = matches("^Percentage_")) %>%
-  {
-    purrr::reduce(
-      seq_along(year_list),
-      ~ .x %>%
-        gt::tab_style(
-          style = gt::cell_fill(
-            color = colorRampPalette(c("lightgray", "lightblue"))(length(year_list))[.y]
-          ),
-          locations = gt::cells_body(
-            columns = matches(paste0("_", year_list[.y], "$"))
-          )
-        ),
-      .init = .
-    )
-  } %>%
-  {
-    purrr::reduce(
-      seq_len(length(year_list) - 1),
-      ~ .x %>%
-        gt::tab_style(
-          style = gt::cell_borders(
-            sides = "right",
-            weight = gt::px(2),
-            color = "black"
-          ),
-          locations = gt::cells_body(
-            columns = matches(paste0("Percentage_", year_list[.y], "$"))
-          )
-        ) %>%
-        gt::tab_style(
-          style = gt::cell_borders(
-            sides = "left",
-            weight = gt::px(2),
-            color = "black"
-          ),
-          locations = gt::cells_body(
-            columns = matches(paste0("Numerator_", year_list[.y + 1], "$"))
-          )
-        ),
-      .init = .
-    )
-  }
-
-tbl_body_no_hope
+#| echo: false
+#| output: asis
+show_table(paste0(organ, "_hiv.html"))
 ```
 
 ### Table 2: Individuals Without HIV
@@ -140,12 +79,11 @@ It allows direct comparison of geographic access between:
 
 ---
 
-```{r, echo=FALSE}
+```{r}
 #| eval: true
-
-
-Results_nonHIV_gt[[organ]]
-
+#| echo: false
+#| output: asis
+show_table(paste0(organ, "_nonhiv.html"))
 ```
 
 
@@ -171,22 +109,10 @@ These figures highlight disparities in access by HIV status.
 
 ---
 
-```{r, echo=FALSE}
+```{r}
 #| eval: true
-
-
-list.files(
-  glue::glue("../figures/{organ}"),
-  pattern = "Combined.*\\.png$",
-  full.names = TRUE
-)%>%
-  str_subset("Active")%>%
-  str_subset("HOPE", negate = TRUE) %>%
-  {
-    .[order(as.numeric(stringr::str_extract(., "\\d+(?=(mile|min))")))]
-  } %>%
-  knitr::include_graphics()
-
+#| echo: false
+knitr::include_graphics(site_figures("CombinedPlot.*\\.png$", keep = "Active"))
 ```
 
 ---
@@ -206,22 +132,10 @@ This section highlights temporal changes in transplant center availability.
 ---
 
 
-```{r, echo=FALSE}
+```{r}
 #| eval: true
-
-
-list.files(
-  glue::glue("../figures/{organ}"),
-  pattern = "Combined.*\\.png$",
-  full.names = TRUE
-)%>%
-  str_subset("Active", negate=TRUE)%>%
-  str_subset("HOPE", negate = TRUE) %>%
-  {
-    .[order(as.numeric(stringr::str_extract(., "\\d+(?=(mile|min))")))]
-  } %>%
-  knitr::include_graphics()
-
+#| echo: false
+knitr::include_graphics(site_figures("^Combined.*\\.png$"))
 ```
 
 ---
@@ -236,13 +150,13 @@ These plots illustrate variability in geographic access across centers rather th
 
 
 The 50-mile results are below.
-![](../figures/lung/Beeswarm lung plot 2026-2-14 50mile.png)
+![](../site-outputs/figures/lung/Beeswarm lung plot 2026-2-14 50mile.png)
 
 The 60-minute results are below.
-![](../figures/lung/Beeswarm lung plot 2026-2-14 60min.png)
+![](../site-outputs/figures/lung/Beeswarm lung plot 2026-2-14 60min.png)
 
 The 100-mile results are below.
-![](../figures/lung/Beeswarm lung plot 2026-2-14 100mile.png)
+![](../site-outputs/figures/lung/Beeswarm lung plot 2026-2-14 100mile.png)
 
 The 200-mile results are below.
-![](../figures/lung/Beeswarm lung plot 2026-2-14 200mile.png)
+![](../site-outputs/figures/lung/Beeswarm lung plot 2026-2-14 200mile.png)

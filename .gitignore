@@ -11,3 +11,6 @@
 /.quarto/
 
 **/*.quarto_ipynb
+
+# Rendered site: built and published by .github/workflows/publish.yml
+/docs/

@@ -351,7 +351,7 @@ flowchart LR
   `quarto/_pending.lua` highlights paragraphs that start with
   **Decision pending:**, and any `[text]{.pending}`, in yellow.
 - **Build and publishing.** `.github/workflows/publish.yml` installs Quarto
-  1.10.18 and the R packages the pages use (knitr, rmarkdown, tidyverse, gt),
+  1.10.18 and the R packages the pages use ([{knitr}](https://yihui.org/knitr/), [{rmarkdown}](https://rmarkdown.rstudio.com/), [{tidyverse}](https://www.tidyverse.org/), [{gt}](https://gt.rstudio.com/)),
   renders the site, and on pushes to `master` publishes it to `gh-pages`. On
   pull requests it only renders. Local renders write to `docs/`, which git
   ignores.
@@ -382,9 +382,9 @@ and reach definition (4): 120 rows for PLWH and 40 rows for people without HIV
 | Continental FIPS, time zones, reference dates | `R/setup.R` | Geography and isochrone timing |
 | Buffer distances in meters | `R/geographical_computations_for_centers.R` | `case_when` on the distance label |
 | Dots per case | `R/figures.R` | `values_per_dot = 100` |
-| Mapbox token | Environment (`mapboxapi`) | Needed only when isochrones are not cached |
-| Census API key | Environment (`tidycensus`) | Needed only when ACS pulls are not cached |
-| SRTR file location | `sRtr` package configuration | Restricted data, not in the repository |
+| Mapbox token | Environment ([{mapboxapi}](https://CRAN.R-project.org/package=mapboxapi)) | Needed only when isochrones are not cached |
+| Census API key | Environment ([{tidycensus}](https://walker-data.com/tidycensus/)) | Needed only when ACS pulls are not cached |
+| SRTR file location | [{sRtr}](https://vagishhemmige.github.io/sRtr/) package configuration | Restricted data, not in the repository |
 | Site render list, navigation, theme, branch | `_quarto.yml` | `output-dir: docs` (gitignored), `repo-branch: master`, `execute: eval: false` |
 | Figures the site shows | `R/figures.R`, section `export-site-figures` | Explicit list of 101 files |
 | Site build and publishing | `.github/workflows/publish.yml` | Quarto 1.10.18; publishes to `gh-pages` on pushes to `master` |

@@ -43,7 +43,7 @@ This nested structure allows consistent iteration across organs, time points, an
 
 ### Step 1: Initialize Empty Buffer Lists
 
-Empty lists are created to store buffered `sf` objects.  
+Empty lists are created to store buffered [{sf}](https://r-spatial.github.io/sf/) objects.  
 These will hold polygon geometries representing the catchment area around each transplant center.
 
 ---

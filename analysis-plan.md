@@ -84,9 +84,9 @@ where \(H_c\) is the county diagnosed-PLWH count and \(P_{13+}\) is resident pop
 
 ### 6.2 Suppressed county estimates
 
-The planned method will be implemented in the **CDCAtlas package**, not independently recreated in the analysis repository. Within each state, subtract the sum of reported nonsuppressed county HIV counts from the comparable state total; allocate the nonnegative residual among suppressed counties in proportion to their relevant populations. Preserve the original observed-versus-imputed status and reconcile the completed county totals to state totals, allowing for published rounding. If state and county totals differ in scope, age definition, geography or vintage—or the residual is inconsistent—the discrepancy must be resolved or reported before applying this method.
+The planned method will be implemented in the **[{CDCAtlas}](https://vagishhemmige.github.io/CDCAtlas/) package**, not independently recreated in the analysis repository. Within each state, subtract the sum of reported nonsuppressed county HIV counts from the comparable state total; allocate the nonnegative residual among suppressed counties in proportion to their relevant populations. Preserve the original observed-versus-imputed status and reconcile the completed county totals to state totals, allowing for published rounding. If state and county totals differ in scope, age definition, geography or vintage—or the residual is inconsistent—the discrepancy must be resolved or reported before applying this method.
 
-This is an agreed **planned method**, not a claim that CDCAtlas already implements it. An alternative zero-fill treatment of suppressed counties is a prespecified sensitivity analysis.
+This is an agreed **planned method**, not a claim that {CDCAtlas} already implements it. An alternative zero-fill treatment of suppressed counties is a prespecified sensitivity analysis.
 
 ## 7. Historical center linkage and geography
 

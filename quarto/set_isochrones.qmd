@@ -38,7 +38,7 @@ In this analysis:
 - A **60-minute isochrone** represents all locations that can be reached within 60 minutes of driving from a transplant center.
 - This provides a more realistic measure of geographic access than straight-line (circular) buffers.
 
-Isochrones are generated using the **`mapboxapi` R package**, which interfaces with the Mapbox routing API:
+Isochrones are generated using the **[{mapboxapi}](https://CRAN.R-project.org/package=mapboxapi) R package**, which interfaces with the Mapbox routing API:
 
 - https://walker-data.com/mapboxapi/
 - CRAN: https://cran.r-project.org/package=mapboxapi
@@ -100,7 +100,7 @@ The resulting structure is:
 - `Transplant_centers_HIV_buffer[[organ]][["60min"]][[year]]`
 - `Transplant_centers_HOPE_buffer[[organ]][["60min"]][[year]]`
 
-Each object is an `sf` polygon representing the area reachable within 60 minutes of driving from the center.
+Each object is an [{sf}](https://r-spatial.github.io/sf/) polygon representing the area reachable within 60 minutes of driving from the center.
 
 ---
 

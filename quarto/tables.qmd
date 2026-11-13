@@ -5,7 +5,7 @@ format: html
 
 ## Table 1 and Table 2: Generating Manuscript-Ready Tables
 
-This section formats the aggregated results into publication-ready tables using the `gt` package.
+This section formats the aggregated results into publication-ready tables using the [{gt}](https://gt.rstudio.com/) package.
 
 Earlier steps produced:
 
@@ -37,12 +37,12 @@ This R script file is itself reliant on the following helper files:
 For each organ:
 
 1. Constructs descriptive row labels (e.g., “Active kidney center, 60 min radius”).
-2. Converts the results data frame into a formatted `gt` table.
+2. Converts the results data frame into a formatted {gt} table.
 3. Saves the tables as:
    - `.docx` (for manuscript editing)
    - `.png` (for quick sharing or embedding)
 4. Writes an HTML copy of each table to `site-outputs/tables/` for the website.
-5. Caches the final `gt` objects as `.rds` files for use in an R session.
+5. Caches the final {gt} objects as `.rds` files for use in an R session.
 
 ---
 

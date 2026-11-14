@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -494,7 +494,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 
 <section id="table-1-and-table-2-generating-manuscript-ready-tables" class="level2">
 <h2 class="anchored" data-anchor-id="table-1-and-table-2-generating-manuscript-ready-tables">Table 1 and Table 2: Generating Manuscript-Ready Tables</h2>
-<p>This section formats the aggregated results into publication-ready tables using the <code>gt</code> package.</p>
+<p>This section formats the aggregated results into publication-ready tables using the <a href="https://gt.rstudio.com/">{gt}</a> package.</p>
 <p>Earlier steps produced:</p>
 <ul>
 <li><code>Results_HIV_df</code> — coverage results for people living with HIV (PLWH)</li>
@@ -531,14 +531,14 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <p>For each organ:</p>
 <ol type="1">
 <li>Constructs descriptive row labels (e.g., “Active kidney center, 60 min radius”).</li>
-<li>Converts the results data frame into a formatted <code>gt</code> table.</li>
+<li>Converts the results data frame into a formatted {gt} table.</li>
 <li>Saves the tables as:
 <ul>
 <li><code>.docx</code> (for manuscript editing)</li>
 <li><code>.png</code> (for quick sharing or embedding)</li>
 </ul></li>
 <li>Writes an HTML copy of each table to <code>site-outputs/tables/</code> for the website.</li>
-<li>Caches the final <code>gt</code> objects as <code>.rds</code> files for use in an R session.</li>
+<li>Caches the final {gt} objects as <code>.rds</code> files for use in an R session.</li>
 </ol>
 <hr>
 </section>
@@ -1179,7 +1179,7 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Table 1 and Table 2: Generating Manuscript-Ready Tables</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>This section formats the aggregated results into publication-ready tables using the <span class="in">`gt`</span> package.</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>This section formats the aggregated results into publication-ready tables using the <span class="co">[</span><span class="ot">{gt}</span><span class="co">](https://gt.rstudio.com/)</span> package.</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>Earlier steps produced:</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
@@ -1211,12 +1211,12 @@ div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pen
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>For each organ:</span>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Constructs descriptive row labels (e.g., “Active kidney center, 60 min radius”).</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Converts the results data frame into a formatted <span class="in">`gt`</span> table.</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Converts the results data frame into a formatted {gt} table.</span>
 <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Saves the tables as:</span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`.docx`</span> (for manuscript editing)</span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span><span class="in">`.png`</span> (for quick sharing or embedding)</span>
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Writes an HTML copy of each table to <span class="in">`site-outputs/tables/`</span> for the website.</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Caches the final <span class="in">`gt`</span> objects as <span class="in">`.rds`</span> files for use in an R session.</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Caches the final {gt} objects as <span class="in">`.rds`</span> files for use in an R session.</span>
 <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>

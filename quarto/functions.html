@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -112,6 +112,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
+div.callout-Rcode.callout {
+  border-left-color: pink;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgb(from pink r g b / 13%);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
+  background-image: none;
+}
 div.callout-Results.callout {
   border-left-color: #198754;
 }
@@ -132,17 +143,6 @@ div.callout-Pending.callout-style-default > .callout-header {
 div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
   content: '⏳';
-  background-image: none;
-}
-div.callout-Rcode.callout {
-  border-left-color: pink;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgb(from pink r g b / 13%);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
   background-image: none;
 }
 </style>
@@ -513,7 +513,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </div>
 <section id="drawing-60-minute-isochrones-around-each-transplant-center" class="level2">
 <h2 class="anchored" data-anchor-id="drawing-60-minute-isochrones-around-each-transplant-center">Drawing 60 minute isochrones around each transplant center</h2>
-<p>The following function uses the <a href="https://walker-data.com/mapboxapi/"><code>mapboxapi</code> package</a> to calculate 60-minute travel isochrones around each transplant center.</p>
+<p>The following function uses the <a href="https://walker-data.com/mapboxapi/">{mapboxapi} package</a> to calculate 60-minute travel isochrones around each transplant center.</p>
 <p>The function assumes the that you have an API token configured in R. For details of how to do this, see the package documentation.</p>
 <p>Its inputs are as follows:</p>
 <ul>
@@ -569,11 +569,11 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="converting-data-frame-of-summary-results-into-a-gt-format-table" class="level2">
 <h2 class="anchored" data-anchor-id="converting-data-frame-of-summary-results-into-a-gt-format-table">Converting data frame of summary results into a <code>gt</code> format table</h2>
-<p>This function takes a summary results data frame and formats it into a publication-ready table using the <code>gt</code> package. The input data are assumed to contain one row per characteristic and year, with separate columns for the numerator, denominator, and percentage of the population meeting the specified access criterion.</p>
+<p>This function takes a summary results data frame and formats it into a publication-ready table using the <a href="https://gt.rstudio.com/">{gt}</a> package. The input data are assumed to contain one row per characteristic and year, with separate columns for the numerator, denominator, and percentage of the population meeting the specified access criterion.</p>
 <p>The function first reshapes the data from long to wide format so that each study year appears as a grouped set of columns. It then converts the <code>Characteristic</code> column into a factor with a user-specified ordering and labeling, ensuring that rows appear in a meaningful and reproducible sequence rather than default alphabetical order.</p>
-<p>After restructuring the data, the function applies a consistent <code>gt</code> table layout. Columns are grouped under year-specific spanner headers, counts are displayed with thousands separators, and percentages are rounded to one decimal place. The table title is supplied as an argument, allowing the same function to be reused across multiple result tables.</p>
+<p>After restructuring the data, the function applies a consistent {gt} table layout. Columns are grouped under year-specific spanner headers, counts are displayed with thousands separators, and percentages are rounded to one decimal place. The table title is supplied as an argument, allowing the same function to be reused across multiple result tables.</p>
 <p>To improve readability, the function also applies subtle background shading to distinguish columns belonging to different years and adds vertical borders between year groupings. The result is a standardized comparative table that can be reused throughout the project for presenting access estimates across organs, center classifications, and distance definitions.</p>
-<p>This function also makes repeated use of <code>purrr::reduce()</code>, which is a functional programming tool for applying the same transformation cumulatively across a sequence of values. Here, the sequence is the set of study years. Each iteration takes the current <code>gt</code> table and adds another layer of formatting, such as a year-specific spanner, fill color, or border. This avoids repetitive code and makes the table-building process both more compact and more generalizable to analyses involving different numbers of years.</p>
+<p>This function also makes repeated use of <code>purrr::reduce()</code>, which is a functional programming tool for applying the same transformation cumulatively across a sequence of values. Here, the sequence is the set of study years. Each iteration takes the current {gt} table and adds another layer of formatting, such as a year-specific spanner, fill color, or border. This avoids repetitive code and makes the table-building process both more compact and more generalizable to analyses involving different numbers of years.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -693,7 +693,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <p>This function creates side-by-side map panels comparing geographic access in two different years, while also embedding the corresponding summary percentages directly into the plot titles. For a given organ, distance definition, and center category, the function pulls the relevant summary statistics from the precomputed results tables and combines them with the geographic buffer objects used to draw the maps. This allows each figure to show both the spatial distribution of access and the headline percentage values in a single visual.</p>
 <p>The function is designed to compare two years, by default 2017 and 2022. For each year, it overlays transplant center catchment areas in red on a national base map, while blue dots represent the estimated distribution of people living with HIV. The title above each panel reports the percentage, numerator, and denominator for the selected outcome, allowing the reader to interpret the geographic pattern alongside the underlying quantitative summary.</p>
 <p>An optional argument, <code>include_nonHIV</code>, allows the figure title to also display the corresponding results for people without HIV. This makes it possible to present HIV and non-HIV comparisons within the same figure when desired, while keeping the map itself visually simple. The function also performs basic checks to ensure that the requested years and outcome labels are valid and that the buffer object supplied is likely to match the intended analysis.</p>
-<p>Finally, the two maps are combined into a single annotated figure using <code>cowplot</code>, with a shared title and a brief explanatory note. The result is a presentation-style comparative graphic that is useful for showing changes over time in transplant center catchment areas and in the proportion of people with HIV who live within those areas.</p>
+<p>Finally, the two maps are combined into a single annotated figure using <a href="https://wilkelab.org/cowplot/">{cowplot}</a>, with a shared title and a brief explanatory note. The result is a presentation-style comparative graphic that is useful for showing changes over time in transplant center catchment areas and in the proportion of people with HIV who live within those areas.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -878,7 +878,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="plot-the-number-of-people-with-hiv-in-the-catchment-area-of-each-transplant-center" class="level2">
 <h2 class="anchored" data-anchor-id="plot-the-number-of-people-with-hiv-in-the-catchment-area-of-each-transplant-center">Plot the number of people with HIV in the catchment area of each transplant center</h2>
-<p>This function uses the <code>ggbeeswarm</code> package to make GraphPad Prism-type plots comparing the number of people living with HIV in the catchment area of each transplant center in the years specified.</p>
+<p>This function uses the <a href="https://CRAN.R-project.org/package=ggbeeswarm">{ggbeeswarm}</a> package to make GraphPad Prism-type plots comparing the number of people living with HIV in the catchment area of each transplant center in the years specified.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1479,7 +1479,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Drawing 60 minute isochrones around each transplant center</span></span>
 <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>The following function uses the <span class="co">[</span><span class="ot">`mapboxapi` package</span><span class="co">](https://walker-data.com/mapboxapi/)</span> to calculate 60-minute travel isochrones around each</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>The following function uses the <span class="co">[</span><span class="ot">{mapboxapi} package</span><span class="co">](https://walker-data.com/mapboxapi/)</span> to calculate 60-minute travel isochrones around each</span>
 <span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>transplant center.</span>
 <span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>The function assumes the that you have an API token configured in R.  For details of how to do this, see the package documentation.</span>
@@ -1498,15 +1498,15 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Converting data frame of summary results into a `gt` format table</span></span>
 <span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>This function takes a summary results data frame and formats it into a publication-ready table using the <span class="in">`gt`</span> package. The input data are assumed to contain one row per characteristic and year, with separate columns for the numerator, denominator, and percentage of the population meeting the specified access criterion.</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>This function takes a summary results data frame and formats it into a publication-ready table using the <span class="co">[</span><span class="ot">{gt}</span><span class="co">](https://gt.rstudio.com/)</span> package. The input data are assumed to contain one row per characteristic and year, with separate columns for the numerator, denominator, and percentage of the population meeting the specified access criterion.</span>
 <span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>The function first reshapes the data from long to wide format so that each study year appears as a grouped set of columns. It then converts the <span class="in">`Characteristic`</span> column into a factor with a user-specified ordering and labeling, ensuring that rows appear in a meaningful and reproducible sequence rather than default alphabetical order.</span>
 <span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>After restructuring the data, the function applies a consistent <span class="in">`gt`</span> table layout. Columns are grouped under year-specific spanner headers, counts are displayed with thousands separators, and percentages are rounded to one decimal place. The table title is supplied as an argument, allowing the same function to be reused across multiple result tables.</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>After restructuring the data, the function applies a consistent {gt} table layout. Columns are grouped under year-specific spanner headers, counts are displayed with thousands separators, and percentages are rounded to one decimal place. The table title is supplied as an argument, allowing the same function to be reused across multiple result tables.</span>
 <span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>To improve readability, the function also applies subtle background shading to distinguish columns belonging to different years and adds vertical borders between year groupings. The result is a standardized comparative table that can be reused throughout the project for presenting access estimates across organs, center classifications, and distance definitions.</span>
 <span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>This function also makes repeated use of <span class="in">`purrr::reduce()`</span>, which is a functional programming tool for applying the same transformation cumulatively across a sequence of values. Here, the sequence is the set of study years. Each iteration takes the current <span class="in">`gt`</span> table and adds another layer of formatting, such as a year-specific spanner, fill color, or border. This avoids repetitive code and makes the table-building process both more compact and more generalizable to analyses involving different numbers of years.</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>This function also makes repeated use of <span class="in">`purrr::reduce()`</span>, which is a functional programming tool for applying the same transformation cumulatively across a sequence of values. Here, the sequence is the set of study years. Each iteration takes the current {gt} table and adds another layer of formatting, such as a year-specific spanner, fill color, or border. This avoids repetitive code and makes the table-building process both more compact and more generalizable to analyses involving different numbers of years.</span>
 <span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: results-table-function</span></span>
@@ -1522,7 +1522,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>An optional argument, <span class="in">`include_nonHIV`</span>, allows the figure title to also display the corresponding results for people without HIV. This makes it possible to present HIV and non-HIV comparisons within the same figure when desired, while keeping the map itself visually simple. The function also performs basic checks to ensure that the requested years and outcome labels are valid and that the buffer object supplied is likely to match the intended analysis.</span>
 <span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>Finally, the two maps are combined into a single annotated figure using <span class="in">`cowplot`</span>, with a shared title and a brief explanatory note. The result is a presentation-style comparative graphic that is useful for showing changes over time in transplant center catchment areas and in the proportion of people with HIV who live within those areas.</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>Finally, the two maps are combined into a single annotated figure using <span class="co">[</span><span class="ot">{cowplot}</span><span class="co">](https://wilkelab.org/cowplot/)</span>, with a shared title and a brief explanatory note. The result is a presentation-style comparative graphic that is useful for showing changes over time in transplant center catchment areas and in the proportion of people with HIV who live within those areas.</span>
 <span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: paired-plot-function</span></span>
@@ -1532,7 +1532,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## Plot the number of people with HIV in the catchment area of each transplant center</span></span>
 <span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>This function uses the <span class="in">`ggbeeswarm`</span> package to make GraphPad Prism-type plots comparing the number of people living with HIV in the catchment area of each transplant center in the years specified.</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>This function uses the <span class="co">[</span><span class="ot">{ggbeeswarm}</span><span class="co">](https://CRAN.R-project.org/package=ggbeeswarm)</span> package to make GraphPad Prism-type plots comparing the number of people living with HIV in the catchment area of each transplant center in the years specified.</span>
 <span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: catchment-plot-function</span></span>

@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -112,17 +112,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: pink;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgb(from pink r g b / 13%);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -132,6 +121,17 @@ div.callout-Pending.callout-style-default > .callout-header {
 div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
   content: '⏳';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: pink;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgb(from pink r g b / 13%);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 div.callout-Results.callout {
@@ -530,7 +530,7 @@ These catchment areas are later used to estimate how many people living with HIV
 <li>A <strong>60-minute isochrone</strong> represents all locations that can be reached within 60 minutes of driving from a transplant center.</li>
 <li>This provides a more realistic measure of geographic access than straight-line (circular) buffers.</li>
 </ul>
-<p>Isochrones are generated using the <strong><code>mapboxapi</code> R package</strong>, which interfaces with the Mapbox routing API:</p>
+<p>Isochrones are generated using the <strong><a href="https://CRAN.R-project.org/package=mapboxapi">{mapboxapi}</a> R package</strong>, which interfaces with the Mapbox routing API:</p>
 <ul>
 <li>https://walker-data.com/mapboxapi/</li>
 <li>CRAN: https://cran.r-project.org/package=mapboxapi</li>
@@ -595,7 +595,7 @@ To ensure consistency:</p>
 <li><code>Transplant_centers_HIV_buffer[[organ]][["60min"]][[year]]</code></li>
 <li><code>Transplant_centers_HOPE_buffer[[organ]][["60min"]][[year]]</code></li>
 </ul>
-<p>Each object is an <code>sf</code> polygon representing the area reachable within 60 minutes of driving from the center.</p>
+<p>Each object is an <a href="https://r-spatial.github.io/sf/">{sf}</a> polygon representing the area reachable within 60 minutes of driving from the center.</p>
 <hr>
 </section>
 <section id="why-travel-time-instead-of-miles" class="level2">
@@ -1206,7 +1206,7 @@ To ensure consistency:</p>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **60-minute isochrone** represents all locations that can be reached within 60 minutes of driving from a transplant center.</span>
 <span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>This provides a more realistic measure of geographic access than straight-line (circular) buffers.</span>
 <span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>Isochrones are generated using the **`mapboxapi` R package**, which interfaces with the Mapbox routing API:</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>Isochrones are generated using the **[{mapboxapi}](https://CRAN.R-project.org/package=mapboxapi) R package**, which interfaces with the Mapbox routing API:</span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>https://walker-data.com/mapboxapi/</span>
 <span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CRAN: https://cran.r-project.org/package=mapboxapi</span>
@@ -1268,7 +1268,7 @@ To ensure consistency:</p>
 <span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Transplant_centers_HIV_buffer[[organ]][["60min"]][[year]]`</span></span>
 <span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Transplant_centers_HOPE_buffer[[organ]][["60min"]][[year]]`</span></span>
 <span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>Each object is an <span class="in">`sf`</span> polygon representing the area reachable within 60 minutes of driving from the center.</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>Each object is an <span class="co">[</span><span class="ot">{sf}</span><span class="co">](https://r-spatial.github.io/sf/)</span> polygon representing the area reachable within 60 minutes of driving from the center.</span>
 <span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>

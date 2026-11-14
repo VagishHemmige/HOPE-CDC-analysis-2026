@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -524,18 +524,18 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </div>
 <section id="preparing-transplant-center-sf-objects" class="level2">
 <h2 class="anchored" data-anchor-id="preparing-transplant-center-sf-objects">Preparing transplant-center <code>sf</code> objects</h2>
-<p>This code converts multiple transplant-center datasets into geographic (<code>sf</code>) objects and organizes them in nested lists by <strong>organ</strong> and <strong>year</strong>. The end result is four parallel list objects that can be used downstream for buffering, distance calculations, and map overlays.</p>
+<p>This code converts multiple transplant-center datasets into geographic (<a href="https://r-spatial.github.io/sf/">{sf}</a>) objects and organizes them in nested lists by <strong>organ</strong> and <strong>year</strong>. The end result is four parallel list objects that can be used downstream for buffering, distance calculations, and map overlays.</p>
 <section id="what-gets-created" class="level3">
 <h3 class="anchored" data-anchor-id="what-gets-created">What gets created</h3>
 <ul>
 <li><p><code>Transplant_centers_all_sf</code><br>
-Spatial (<code>sf</code>) version of <strong>all</strong> transplant centers, by organ.</p></li>
+Spatial ({sf}) version of <strong>all</strong> transplant centers, by organ.</p></li>
 <li><p><code>Transplant_centers_active_SF</code><br>
-Spatial (<code>sf</code>) version of <strong>active</strong> transplant centers, by organ <em>and</em> year.</p></li>
+Spatial ({sf}) version of <strong>active</strong> transplant centers, by organ <em>and</em> year.</p></li>
 <li><p><code>Transplant_centers_HIV_sf</code><br>
-Spatial (<code>sf</code>) subset of centers that performed an <strong>HIV R+</strong> transplant at the given time point, by organ and year.</p></li>
+Spatial ({sf}) subset of centers that performed an <strong>HIV R+</strong> transplant at the given time point, by organ and year.</p></li>
 <li><p><code>Transplant_centers_HOPE_sf</code><br>
-Spatial (<code>sf</code>) subset of centers that performed an <strong>HOPE (HIV D+/R+)</strong> transplant at the given time point, by organ and year.</p></li>
+Spatial ({sf}) subset of centers that performed an <strong>HOPE (HIV D+/R+)</strong> transplant at the given time point, by organ and year.</p></li>
 </ul>
 </section>
 <section id="step-1-initialize-empty-containers" class="level3">
@@ -550,7 +550,7 @@ Spatial (<code>sf</code>) subset of centers that performed an <strong>HOPE (HIV 
 <h3 class="anchored" data-anchor-id="step-2-loop-over-organ-types">Step 2: Loop Over Organ Types</h3>
 <p>For each organ in <code>organ_list</code>:</p>
 <ol type="1">
-<li>The dataset of all transplant centers for that organ is converted to an <code>sf</code> object.</li>
+<li>The dataset of all transplant centers for that organ is converted to an {sf} object.</li>
 <li>The coordinate reference system is transformed to <strong>EPSG:5070 (NAD83 / Conus Albers)</strong>.</li>
 </ol>
 <p>This projection is used because it is well-suited for U.S. spatial analyses and provides consistent units for distance-based calculations.</p>
@@ -561,7 +561,7 @@ Spatial (<code>sf</code>) subset of centers that performed an <strong>HOPE (HIV 
 <p>For each <code>year</code> in <code>year_list</code>, three organ-year–specific spatial datasets are created:</p>
 <section id="a-active-centers" class="level4">
 <h4 class="anchored" data-anchor-id="a-active-centers">A) Active Centers</h4>
-<p>The year-specific dataset of active transplant centers is converted to <code>sf</code> and projected to EPSG:5070.</p>
+<p>The year-specific dataset of active transplant centers is converted to {sf} and projected to EPSG:5070.</p>
 </section>
 <section id="b-hiv-r-centers" class="level4">
 <h4 class="anchored" data-anchor-id="b-hiv-r-centers">B) HIV R+ Centers</h4>
@@ -661,7 +661,7 @@ Census tract–level spatial data with estimated HIV-positive and HIV-negative p
 <li>To <code>geo_id</code> from the CDC Atlas dataset</li>
 <li>A <code>left_join()</code> ensures that all counties remain in the dataset</li>
 </ul>
-<p>The result is a spatial (<code>sf</code>) object containing:</p>
+<p>The result is a spatial ({sf}) object containing:</p>
 <ul>
 <li>County geometry</li>
 <li>County population</li>
@@ -1204,21 +1204,21 @@ Census tract–level spatial data with estimated HIV-positive and HIV-negative p
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preparing transplant-center `sf` objects</span></span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>This code converts multiple transplant-center datasets into geographic (<span class="in">`sf`</span>) objects and organizes them in nested lists by **organ** and **year**. The end result is four parallel list objects that can be used downstream for buffering, distance calculations, and map overlays.</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>This code converts multiple transplant-center datasets into geographic (<span class="co">[</span><span class="ot">{sf}</span><span class="co">](https://r-spatial.github.io/sf/)</span>) objects and organizes them in nested lists by **organ** and **year**. The end result is four parallel list objects that can be used downstream for buffering, distance calculations, and map overlays.</span>
 <span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="fu">### What gets created</span></span>
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Transplant_centers_all_sf`</span>  </span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  Spatial (<span class="in">`sf`</span>) version of **all** transplant centers, by organ.</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  Spatial ({sf}) version of **all** transplant centers, by organ.</span>
 <span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Transplant_centers_active_SF`</span>  </span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  Spatial (<span class="in">`sf`</span>) version of **active** transplant centers, by organ *and* year.</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  Spatial ({sf}) version of **active** transplant centers, by organ *and* year.</span>
 <span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Transplant_centers_HIV_sf`</span>  </span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  Spatial (<span class="in">`sf`</span>) subset of centers that performed an **HIV R+** transplant at the given time point, by organ and year.</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  Spatial ({sf}) subset of centers that performed an **HIV R+** transplant at the given time point, by organ and year.</span>
 <span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Transplant_centers_HOPE_sf`</span>  </span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  Spatial (<span class="in">`sf`</span>) subset of centers that performed an **HOPE (HIV D+/R+)** transplant at the given time point, by organ and year.</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  Spatial ({sf}) subset of centers that performed an **HOPE (HIV D+/R+)** transplant at the given time point, by organ and year.</span>
 <span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1: initialize empty containers</span></span>
 <span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
@@ -1231,7 +1231,7 @@ Census tract–level spatial data with estimated HIV-positive and HIV-negative p
 <span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>For each organ in <span class="in">`organ_list`</span>:</span>
 <span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The dataset of all transplant centers for that organ is converted to an <span class="in">`sf`</span> object.</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The dataset of all transplant centers for that organ is converted to an {sf} object.</span>
 <span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>The coordinate reference system is transformed to **EPSG:5070 (NAD83 / Conus Albers)**.</span>
 <span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>This projection is used because it is well-suited for U.S. spatial analyses and provides consistent units for distance-based calculations.</span>
@@ -1244,7 +1244,7 @@ Census tract–level spatial data with estimated HIV-positive and HIV-negative p
 <span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="fu">#### A) Active Centers</span></span>
 <span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>The year-specific dataset of active transplant centers is converted to <span class="in">`sf`</span> and projected to EPSG:5070.</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>The year-specific dataset of active transplant centers is converted to {sf} and projected to EPSG:5070.</span>
 <span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="fu">#### B) HIV R+ Centers</span></span>
 <span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
@@ -1316,7 +1316,7 @@ Census tract–level spatial data with estimated HIV-positive and HIV-negative p
 <span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To <span class="in">`geo_id`</span> from the CDC Atlas dataset</span>
 <span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A <span class="in">`left_join()`</span> ensures that all counties remain in the dataset</span>
 <span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>The result is a spatial (<span class="in">`sf`</span>) object containing:</span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>The result is a spatial ({sf}) object containing:</span>
 <span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>County geometry</span>
 <span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>County population</span>

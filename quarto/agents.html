@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -112,6 +112,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
+  background-image: none;
+}
 div.callout-Rcode.callout {
   border-left-color: pink;
 }
@@ -132,17 +143,6 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
-  background-image: none;
-}
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
   background-image: none;
 }
 </style>
@@ -540,7 +540,7 @@ edit that file, not this page. Its first heading is the page title.
 <li><strong><code>analysis-plan.md</code> is the source of truth for design.</strong> Code implements the plan; it does not redefine it. If code needs to depart from the plan, open a decision issue, or comment on the existing one, for the deciders. Once a decider has settled it (in the issue, or relayed there in their exact words), the plan change and the code can go in the same pull request, which closes the issue.</li>
 <li><strong>Deciders.</strong> Scientific decisions in every area are made by Vagish Hemmige. Anyone may open or contribute to a decision issue; only a decider settles it (see “Working with agents”).</li>
 <li><strong>Do not make unresolved scientific decisions implicitly through code.</strong> Check the relevant open issues before implementing an analysis that depends on them.</li>
-<li><strong>This is an analysis project, not an R package.</strong> Do not add DESCRIPTION, NAMESPACE, roxygen, or pkgdown infrastructure, or apply CRAN conventions.</li>
+<li><strong>This is an analysis project, not an R package.</strong> Do not add DESCRIPTION, NAMESPACE, roxygen, or <a href="https://pkgdown.r-lib.org/">{pkgdown}</a> infrastructure, or apply CRAN conventions.</li>
 <li><strong>Default branch:</strong> <code>master</code>. Changes reach it only through pull requests.</li>
 </ul>
 </section>
@@ -569,7 +569,7 @@ edit that file, not this page. Its first heading is the page title.
 <tbody>
 <tr class="odd">
 <td>SRTR standard analysis files: transplant files <code>tx_ki</code>, <code>tx_li</code>, <code>tx_hr</code>, <code>tx_lu</code>, <code>tx_kp</code>, and <code>donor_deceased</code></td>
-<td>sRtr (<code>load_srtr_file()</code>)</td>
+<td>{sRtr} (<code>load_srtr_file()</code>)</td>
 <td>https://vagishhemmige.github.io/sRtr/</td>
 <td>This team</td>
 <td>Restricted (SRTR data use agreement)</td>
@@ -577,7 +577,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="even">
 <td>HRSA transplant center list and locations</td>
-<td>sRtr (<code>get_hrsa_transplant_centers()</code>)</td>
+<td>{sRtr} (<code>get_hrsa_transplant_centers()</code>)</td>
 <td>https://vagishhemmige.github.io/sRtr/</td>
 <td>This team</td>
 <td>Public</td>
@@ -585,7 +585,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="odd">
 <td>CDC NCHHSTP AtlasPlus county HIV prevalence</td>
-<td>CDCAtlas (<code>get_atlas()</code>)</td>
+<td>{CDCAtlas} (<code>get_atlas()</code>)</td>
 <td>https://vagishhemmige.github.io/CDCAtlas/</td>
 <td>This team</td>
 <td>Public</td>
@@ -593,7 +593,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="even">
 <td>American Community Survey 5-year tract and county population</td>
-<td>tidycensus (<code>get_acs()</code>)</td>
+<td>{tidycensus} (<code>get_acs()</code>)</td>
 <td>https://walker-data.com/tidycensus/</td>
 <td>External</td>
 <td>Public; Census API key</td>
@@ -601,7 +601,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="odd">
 <td>Census state boundaries</td>
-<td>tigris (<code>states()</code>)</td>
+<td>{tigris} (<code>states()</code>)</td>
 <td>https://github.com/walkerke/tigris</td>
 <td>External</td>
 <td>Public</td>
@@ -609,7 +609,7 @@ edit that file, not this page. Its first heading is the page title.
 </tr>
 <tr class="even">
 <td>Mapbox Isochrone API, <code>driving-traffic</code> profile</td>
-<td>mapboxapi (<code>mb_isochrone()</code>)</td>
+<td>{mapboxapi} (<code>mb_isochrone()</code>)</td>
 <td>https://walker-data.com/mapboxapi/</td>
 <td>External</td>
 <td>Paid API; access token</td>
@@ -623,10 +623,10 @@ edit that file, not this page. Its first heading is the page title.
 <ul>
 <li><strong>Read its documentation before writing code for a source</strong>, including known issues. Behavior that sets the center groups, the population counts, a catchment, or a denominator is checked in the documentation, not assumed from a function’s name.</li>
 </ul>
-<p><strong>For packages this team maintains (sRtr, CDCAtlas):</strong></p>
+<p><strong>For packages this team maintains (<a href="https://vagishhemmige.github.io/sRtr/">{sRtr}</a>, <a href="https://vagishhemmige.github.io/CDCAtlas/">{CDCAtlas}</a>):</strong></p>
 <ul>
 <li><strong>Facts about the source belong in the package’s documentation</strong>, not in this file. If the package lacks something this project needs to know, add it there or open an issue there.</li>
-<li><strong>Problems belong in the package.</strong> If a function is wrong or does not quite do what the plan needs, open an issue in its repository. Fix it in the package (preferred when generally useful) or wrap it here with a code comment linking the issue, and remove the wrapper once the issue is fixed. The plan’s method for suppressed county HIV counts, for example, is to be implemented in CDCAtlas, not in this repository.</li>
+<li><strong>Problems belong in the package.</strong> If a function is wrong or does not quite do what the plan needs, open an issue in its repository. Fix it in the package (preferred when generally useful) or wrap it here with a code comment linking the issue, and remove the wrapper once the issue is fixed. The plan’s method for suppressed county HIV counts, for example, is to be implemented in {CDCAtlas}, not in this repository.</li>
 </ul>
 <p><strong>For external packages:</strong></p>
 <ul>

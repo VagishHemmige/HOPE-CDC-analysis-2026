@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -112,17 +112,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>
-div.callout-Rcode.callout {
-  border-left-color: pink;
-}
-div.callout-Rcode.callout-style-default > .callout-header {
-  background-color: rgb(from pink r g b / 13%);
-}
-div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
-  content: '💻';
-  background-image: none;
-}
 div.callout-Pending.callout {
   border-left-color: #f0c400;
 }
@@ -143,6 +132,17 @@ div.callout-Results.callout-style-default > .callout-header {
 div.callout-Results .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Results.callout-style-default .callout-icon::before, div.callout-Results.callout-titled .callout-icon::before {
   content: '📊';
+  background-image: none;
+}
+div.callout-Rcode.callout {
+  border-left-color: pink;
+}
+div.callout-Rcode.callout-style-default > .callout-header {
+  background-color: rgb(from pink r g b / 13%);
+}
+div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
+  content: '💻';
   background-image: none;
 }
 </style>
@@ -526,7 +526,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </div>
 <section id="load-us-state-maps-from-census" class="level2">
 <h2 class="anchored" data-anchor-id="load-us-state-maps-from-census">Load US state maps from census</h2>
-<p>We import U.S. state boundary shapefiles using the <code>tigris</code> package.</p>
+<p>We import U.S. state boundary shapefiles using the <a href="https://CRAN.R-project.org/package=tigris">{tigris}</a> package.</p>
 <p>The <code>tigris::states()</code> function retrieves state-level shapefiles from the U.S. Census Bureau’s TIGER/Line products.</p>
 <section id="column-selection" class="level3">
 <h3 class="anchored" data-anchor-id="column-selection">Column Selection</h3>
@@ -549,7 +549,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </section>
 <section id="output" class="level3">
 <h3 class="anchored" data-anchor-id="output">Output</h3>
-<p>The resulting object, <code>states_sf</code>, is an <code>sf</code> object containing polygon geometries for the 48 contiguous U.S. states,</p>
+<p>The resulting object, <code>states_sf</code>, is an <a href="https://r-spatial.github.io/sf/">{sf}</a> object containing polygon geometries for the 48 contiguous U.S. states,</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -594,7 +594,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </section>
 <section id="load-transplant-center-data-from-srtr-package" class="level2">
 <h2 class="anchored" data-anchor-id="load-transplant-center-data-from-srtr-package">Load transplant center data from SRTR package</h2>
-<p>To map transplant center locations and define geographic catchment areas, we retrieve center-level data from the Health Resources and Services Administration (HRSA) using the <code>sRtr</code> package.</p>
+<p>To map transplant center locations and define geographic catchment areas, we retrieve center-level data from the Health Resources and Services Administration (HRSA) using the <a href="https://vagishhemmige.github.io/sRtr/">{sRtr}</a> package.</p>
 <p>The <code>get_hrsa_transplant_centers()</code> function accesses HRSA transplant center metadata, including center identifiers and geographic coordinates.</p>
 <p>Subsequent steps:</p>
 <ul>
@@ -764,7 +764,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 </section>
 <section id="atlasplus-county-level-hiv-data" class="level2">
 <h2 class="anchored" data-anchor-id="atlasplus-county-level-hiv-data">AtlasPlus county-level HIV data</h2>
-<p>This code uses the <code>CDCAtlas</code> package to download county-level HIV prevalence data for the years defined in <code>year_list</code>.</p>
+<p>This code uses the <a href="https://vagishhemmige.github.io/CDCAtlas/">{CDCAtlas}</a> package to download county-level HIV prevalence data for the years defined in <code>year_list</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Click to show/hide R Code</summary>
@@ -1294,7 +1294,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load US state maps from census</span></span>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>We import U.S. state boundary shapefiles using the <span class="in">`tigris`</span> package.</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>We import U.S. state boundary shapefiles using the <span class="co">[</span><span class="ot">{tigris}</span><span class="co">](https://CRAN.R-project.org/package=tigris)</span> package.</span>
 <span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>The <span class="in">`tigris::states()`</span> function retrieves state-level shapefiles from the U.S. Census Bureau’s TIGER/Line products.</span>
 <span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
@@ -1319,7 +1319,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="fu">### Output</span></span>
 <span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>The resulting object, <span class="in">`states_sf`</span>, is an <span class="in">`sf`</span> object containing polygon geometries for the 48 contiguous U.S. states,</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>The resulting object, <span class="in">`states_sf`</span>, is an <span class="co">[</span><span class="ot">{sf}</span><span class="co">](https://r-spatial.github.io/sf/)</span> object containing polygon geometries for the 48 contiguous U.S. states,</span>
 <span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: state-maps</span></span>
@@ -1349,7 +1349,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load transplant center data from SRTR package</span></span>
 <span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>To map transplant center locations and define geographic catchment areas, we retrieve center-level data from the Health Resources and Services Administration (HRSA) using the <span class="in">`sRtr`</span> package.</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>To map transplant center locations and define geographic catchment areas, we retrieve center-level data from the Health Resources and Services Administration (HRSA) using the <span class="co">[</span><span class="ot">{sRtr}</span><span class="co">](https://vagishhemmige.github.io/sRtr/)</span> package.</span>
 <span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>The <span class="in">`get_hrsa_transplant_centers()`</span> function accesses HRSA transplant center metadata, including center identifiers and geographic coordinates.</span>
 <span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a></span>
@@ -1437,7 +1437,7 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
 <span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a><span class="fu">## AtlasPlus county-level HIV data</span></span>
 <span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>This code uses the <span class="in">`CDCAtlas`</span> package to download county-level HIV prevalence data for the years defined in <span class="in">`year_list`</span>.</span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>This code uses the <span class="co">[</span><span class="ot">{CDCAtlas}</span><span class="co">](https://vagishhemmige.github.io/CDCAtlas/)</span> package to download county-level HIV prevalence data for the years defined in <span class="in">`year_list`</span>.</span>
 <span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>

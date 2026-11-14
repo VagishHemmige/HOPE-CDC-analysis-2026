@@ -83,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-66ae90e4418e9d0ac3caa4b8c3bef75c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9c6fd4a99ff4209dd1149a1765198857.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -126,17 +126,6 @@ div.callout-Results.callout-style-default .callout-icon::before, div.callout-Res
   content: '📊';
   background-image: none;
 }
-div.callout-Pending.callout {
-  border-left-color: #f0c400;
-}
-div.callout-Pending.callout-style-default > .callout-header {
-  background-color: rgba(240, 196, 0, 0.13);
-}
-div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
-div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
-  content: '⏳';
-  background-image: none;
-}
 div.callout-Rcode.callout {
   border-left-color: pink;
 }
@@ -146,6 +135,17 @@ div.callout-Rcode.callout-style-default > .callout-header {
 div.callout-Rcode .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
 div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode.callout-titled .callout-icon::before {
   content: '💻';
+  background-image: none;
+}
+div.callout-Pending.callout {
+  border-left-color: #f0c400;
+}
+div.callout-Pending.callout-style-default > .callout-header {
+  background-color: rgba(240, 196, 0, 0.13);
+}
+div.callout-Pending .callout-toggle::before {  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(33, 37, 41)" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');}
+div.callout-Pending.callout-style-default .callout-icon::before, div.callout-Pending.callout-titled .callout-icon::before {
+  content: '⏳';
   background-image: none;
 }
 </style>
@@ -514,7 +514,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 </section>
 <section id="geospatial-methods-in-r" class="level2">
 <h2 class="anchored" data-anchor-id="geospatial-methods-in-r">Geospatial methods in R</h2>
-<p>Geospatial processing for this analysis was conducted in R, using the <code>sf</code> package as the primary framework for spatial data management and analysis. The geospatial approach closely follows the methods outlined in <a href="https://walker-data.com/census-r/"><em>Analyzing US Census Data: Methods, Maps, and Models in R</em></a>, which provides a practical foundation for working with Census geography in R.</p>
+<p>Geospatial processing for this analysis was conducted in R, using the <a href="https://r-spatial.github.io/sf/">{sf}</a> package as the primary framework for spatial data management and analysis. The geospatial approach closely follows the methods outlined in <a href="https://walker-data.com/census-r/"><em>Analyzing US Census Data: Methods, Maps, and Models in R</em></a>, which provides a practical foundation for working with Census geography in R.</p>
 
 
 <!-- -->
@@ -1018,7 +1018,7 @@ div.callout-Rcode.callout-style-default .callout-icon::before, div.callout-Rcode
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Geospatial methods in R</span></span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>Geospatial processing for this analysis was conducted in R, using the <span class="in">`sf`</span> package as the primary framework for spatial data management and analysis. The geospatial approach closely follows the methods outlined in <span class="co">[</span><span class="ot">*Analyzing US Census Data: Methods, Maps, and Models in R*</span><span class="co">](https://walker-data.com/census-r/)</span>, which provides a practical foundation for working with Census geography in R.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>Geospatial processing for this analysis was conducted in R, using the <span class="co">[</span><span class="ot">{sf}</span><span class="co">](https://r-spatial.github.io/sf/)</span> package as the primary framework for spatial data management and analysis. The geospatial approach closely follows the methods outlined in <span class="co">[</span><span class="ot">*Analyzing US Census Data: Methods, Maps, and Models in R*</span><span class="co">](https://walker-data.com/census-r/)</span>, which provides a practical foundation for working with Census geography in R.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/edit/master/quarto/analysis_methods.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/VagishHemmige/HOPE-CDC-analysis-2026/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});

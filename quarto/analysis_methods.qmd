@@ -31,4 +31,4 @@ Because CDC AtlasPlus provides HIV prevalence estimates at the county level, tra
 
 ## Geospatial methods in R
 
-Geospatial processing for this analysis was conducted in R, using the `sf` package as the primary framework for spatial data management and analysis. The geospatial approach closely follows the methods outlined in [*Analyzing US Census Data: Methods, Maps, and Models in R*](https://walker-data.com/census-r/), which provides a practical foundation for working with Census geography in R.
+Geospatial processing for this analysis was conducted in R, using the [{sf}](https://r-spatial.github.io/sf/) package as the primary framework for spatial data management and analysis. The geospatial approach closely follows the methods outlined in [*Analyzing US Census Data: Methods, Maps, and Models in R*](https://walker-data.com/census-r/), which provides a practical foundation for working with Census geography in R.

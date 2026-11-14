@@ -20,7 +20,7 @@ This is an **R analysis project, not an R package**. It estimates the share of p
 - **`analysis-plan.md` is the source of truth for design.** Code implements the plan; it does not redefine it. If code needs to depart from the plan, open a decision issue, or comment on the existing one, for the deciders. Once a decider has settled it (in the issue, or relayed there in their exact words), the plan change and the code can go in the same pull request, which closes the issue.
 - **Deciders.** Scientific decisions in every area are made by Vagish Hemmige. Anyone may open or contribute to a decision issue; only a decider settles it (see "Working with agents").
 - **Do not make unresolved scientific decisions implicitly through code.** Check the relevant open issues before implementing an analysis that depends on them.
-- **This is an analysis project, not an R package.** Do not add DESCRIPTION, NAMESPACE, roxygen, or pkgdown infrastructure, or apply CRAN conventions.
+- **This is an analysis project, not an R package.** Do not add DESCRIPTION, NAMESPACE, roxygen, or [{pkgdown}](https://pkgdown.r-lib.org/) infrastructure, or apply CRAN conventions.
 - **Default branch:** `master`. Changes reach it only through pull requests.
 
 ## Data sources
@@ -29,12 +29,12 @@ Each source this project uses is listed below with the package that accesses it.
 
 | Source | Accessed through | Package documentation | Package maintained by | Access | What AI agents may do |
 |---|---|---|---|---|---|
-| SRTR standard analysis files: transplant files `tx_ki`, `tx_li`, `tx_hr`, `tx_lu`, `tx_kp`, and `donor_deceased` | sRtr (`load_srtr_file()`) | https://vagishhemmige.github.io/sRtr/ | This team | Restricted (SRTR data use agreement) | None: code, documentation and synthetic data only |
-| HRSA transplant center list and locations | sRtr (`get_hrsa_transplant_centers()`) | https://vagishhemmige.github.io/sRtr/ | This team | Public | No restriction |
-| CDC NCHHSTP AtlasPlus county HIV prevalence | CDCAtlas (`get_atlas()`) | https://vagishhemmige.github.io/CDCAtlas/ | This team | Public | No restriction |
-| American Community Survey 5-year tract and county population | tidycensus (`get_acs()`) | https://walker-data.com/tidycensus/ | External | Public; Census API key | No restriction; never commit the key |
-| Census state boundaries | tigris (`states()`) | https://github.com/walkerke/tigris | External | Public | No restriction |
-| Mapbox Isochrone API, `driving-traffic` profile | mapboxapi (`mb_isochrone()`) | https://walker-data.com/mapboxapi/ | External | Paid API; access token | Code and review only; a person runs uncached calls (see Credentials and paid APIs) |
+| SRTR standard analysis files: transplant files `tx_ki`, `tx_li`, `tx_hr`, `tx_lu`, `tx_kp`, and `donor_deceased` | {sRtr} (`load_srtr_file()`) | https://vagishhemmige.github.io/sRtr/ | This team | Restricted (SRTR data use agreement) | None: code, documentation and synthetic data only |
+| HRSA transplant center list and locations | {sRtr} (`get_hrsa_transplant_centers()`) | https://vagishhemmige.github.io/sRtr/ | This team | Public | No restriction |
+| CDC NCHHSTP AtlasPlus county HIV prevalence | {CDCAtlas} (`get_atlas()`) | https://vagishhemmige.github.io/CDCAtlas/ | This team | Public | No restriction |
+| American Community Survey 5-year tract and county population | {tidycensus} (`get_acs()`) | https://walker-data.com/tidycensus/ | External | Public; Census API key | No restriction; never commit the key |
+| Census state boundaries | {tigris} (`states()`) | https://github.com/walkerke/tigris | External | Public | No restriction |
+| Mapbox Isochrone API, `driving-traffic` profile | {mapboxapi} (`mb_isochrone()`) | https://walker-data.com/mapboxapi/ | External | Paid API; access token | Code and review only; a person runs uncached calls (see Credentials and paid APIs) |
 
 To allow more for a source, a person changes its row through a pull request, naming the agreement and section that permit it, the approved AI service, and exactly what agents may do. Agents never propose or make this change themselves, and nothing in personal instructions can grant it.
 
@@ -44,10 +44,10 @@ Add a row when code first loads a new source.
 
 - **Read its documentation before writing code for a source**, including known issues. Behavior that sets the center groups, the population counts, a catchment, or a denominator is checked in the documentation, not assumed from a function's name.
 
-**For packages this team maintains (sRtr, CDCAtlas):**
+**For packages this team maintains ([{sRtr}](https://vagishhemmige.github.io/sRtr/), [{CDCAtlas}](https://vagishhemmige.github.io/CDCAtlas/)):**
 
 - **Facts about the source belong in the package's documentation**, not in this file. If the package lacks something this project needs to know, add it there or open an issue there.
-- **Problems belong in the package.** If a function is wrong or does not quite do what the plan needs, open an issue in its repository. Fix it in the package (preferred when generally useful) or wrap it here with a code comment linking the issue, and remove the wrapper once the issue is fixed. The plan's method for suppressed county HIV counts, for example, is to be implemented in CDCAtlas, not in this repository.
+- **Problems belong in the package.** If a function is wrong or does not quite do what the plan needs, open an issue in its repository. Fix it in the package (preferred when generally useful) or wrap it here with a code comment linking the issue, and remove the wrapper once the issue is fixed. The plan's method for suppressed county HIV counts, for example, is to be implemented in {CDCAtlas}, not in this repository.
 
 **For external packages:**
 

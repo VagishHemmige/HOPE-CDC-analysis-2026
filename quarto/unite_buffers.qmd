@@ -72,7 +72,7 @@ The script:
 1. Takes the set of individual buffer polygons
 2. Applies `st_union(geometry)`  
 3. Collapses them into one merged geometry
-4. Converts the result back into an `sf` object
+4. Converts the result back into an [{sf}](https://r-spatial.github.io/sf/) object
 
 The resulting dataset contains a single row labeled:
 

@@ -30,7 +30,7 @@ knitr::read_chunk("../R/load_data.R")
 
 ## Load US state maps from census
 
-We import U.S. state boundary shapefiles using the `tigris` package.
+We import U.S. state boundary shapefiles using the [{tigris}](https://CRAN.R-project.org/package=tigris) package.
 
 The `tigris::states()` function retrieves state-level shapefiles from the U.S. Census Bureau’s TIGER/Line products.
 
@@ -55,7 +55,7 @@ This ensures that visualizations align with the contiguous U.S. study population
 
 ### Output
 
-The resulting object, `states_sf`, is an `sf` object containing polygon geometries for the 48 contiguous U.S. states,
+The resulting object, `states_sf`, is an [{sf}](https://r-spatial.github.io/sf/) object containing polygon geometries for the 48 contiguous U.S. states,
 
 ```{r}
 #| label: state-maps
@@ -85,7 +85,7 @@ These datasets are accessed using a custom helper function, `load_srtr_file()`, 
 
 ## Load transplant center data from SRTR package
 
-To map transplant center locations and define geographic catchment areas, we retrieve center-level data from the Health Resources and Services Administration (HRSA) using the `sRtr` package.
+To map transplant center locations and define geographic catchment areas, we retrieve center-level data from the Health Resources and Services Administration (HRSA) using the [{sRtr}](https://vagishhemmige.github.io/sRtr/) package.
 
 The `get_hrsa_transplant_centers()` function accesses HRSA transplant center metadata, including center identifiers and geographic coordinates.
 
@@ -173,7 +173,7 @@ The ACS table `B01001` contains detailed age- and sex-specific population counts
 
 ## AtlasPlus county-level HIV data
 
-This code uses the `CDCAtlas` package to download county-level HIV prevalence data for the years defined in `year_list`.
+This code uses the [{CDCAtlas}](https://vagishhemmige.github.io/CDCAtlas/) package to download county-level HIV prevalence data for the years defined in `year_list`.
 
 
 ```{r}

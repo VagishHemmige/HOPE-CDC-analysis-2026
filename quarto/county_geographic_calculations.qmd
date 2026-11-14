@@ -29,21 +29,21 @@ knitr::read_chunk("../R/county_geographic_calculations.R")
 
 ## Preparing transplant-center `sf` objects
 
-This code converts multiple transplant-center datasets into geographic (`sf`) objects and organizes them in nested lists by **organ** and **year**. The end result is four parallel list objects that can be used downstream for buffering, distance calculations, and map overlays.
+This code converts multiple transplant-center datasets into geographic ([{sf}](https://r-spatial.github.io/sf/)) objects and organizes them in nested lists by **organ** and **year**. The end result is four parallel list objects that can be used downstream for buffering, distance calculations, and map overlays.
 
 ### What gets created
 
 - `Transplant_centers_all_sf`  
-  Spatial (`sf`) version of **all** transplant centers, by organ.
+  Spatial ({sf}) version of **all** transplant centers, by organ.
 
 - `Transplant_centers_active_SF`  
-  Spatial (`sf`) version of **active** transplant centers, by organ *and* year.
+  Spatial ({sf}) version of **active** transplant centers, by organ *and* year.
 
 - `Transplant_centers_HIV_sf`  
-  Spatial (`sf`) subset of centers that performed an **HIV R+** transplant at the given time point, by organ and year.
+  Spatial ({sf}) subset of centers that performed an **HIV R+** transplant at the given time point, by organ and year.
 
 - `Transplant_centers_HOPE_sf`  
-  Spatial (`sf`) subset of centers that performed an **HOPE (HIV D+/R+)** transplant at the given time point, by organ and year.
+  Spatial ({sf}) subset of centers that performed an **HOPE (HIV D+/R+)** transplant at the given time point, by organ and year.
 
 ### Step 1: initialize empty containers
 
@@ -56,7 +56,7 @@ We start by creating empty lists. These will be filled inside the loops:
 
 For each organ in `organ_list`:
 
-1. The dataset of all transplant centers for that organ is converted to an `sf` object.
+1. The dataset of all transplant centers for that organ is converted to an {sf} object.
 2. The coordinate reference system is transformed to **EPSG:5070 (NAD83 / Conus Albers)**.
 
 This projection is used because it is well-suited for U.S. spatial analyses and provides consistent units for distance-based calculations.
@@ -69,7 +69,7 @@ For each `year` in `year_list`, three organ-year–specific spatial datasets are
 
 #### A) Active Centers
 
-The year-specific dataset of active transplant centers is converted to `sf` and projected to EPSG:5070.
+The year-specific dataset of active transplant centers is converted to {sf} and projected to EPSG:5070.
 
 #### B) HIV R+ Centers
 
@@ -141,7 +141,7 @@ County geographic population files are joined with CDC Atlas HIV totals.
 - To `geo_id` from the CDC Atlas dataset
 - A `left_join()` ensures that all counties remain in the dataset
 
-The result is a spatial (`sf`) object containing:
+The result is a spatial ({sf}) object containing:
 
 - County geometry
 - County population

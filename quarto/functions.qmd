@@ -28,7 +28,7 @@ knitr::read_chunk("../R/functions.R")
 
 ## Drawing 60 minute isochrones around each transplant center
 
-The following function uses the [`mapboxapi` package](https://walker-data.com/mapboxapi/) to calculate 60-minute travel isochrones around each
+The following function uses the [{mapboxapi} package](https://walker-data.com/mapboxapi/) to calculate 60-minute travel isochrones around each
 transplant center.
 
 The function assumes the that you have an API token configured in R.  For details of how to do this, see the package documentation.
@@ -47,15 +47,15 @@ Its inputs are as follows:
 
 ## Converting data frame of summary results into a `gt` format table
 
-This function takes a summary results data frame and formats it into a publication-ready table using the `gt` package. The input data are assumed to contain one row per characteristic and year, with separate columns for the numerator, denominator, and percentage of the population meeting the specified access criterion.
+This function takes a summary results data frame and formats it into a publication-ready table using the [{gt}](https://gt.rstudio.com/) package. The input data are assumed to contain one row per characteristic and year, with separate columns for the numerator, denominator, and percentage of the population meeting the specified access criterion.
 
 The function first reshapes the data from long to wide format so that each study year appears as a grouped set of columns. It then converts the `Characteristic` column into a factor with a user-specified ordering and labeling, ensuring that rows appear in a meaningful and reproducible sequence rather than default alphabetical order.
 
-After restructuring the data, the function applies a consistent `gt` table layout. Columns are grouped under year-specific spanner headers, counts are displayed with thousands separators, and percentages are rounded to one decimal place. The table title is supplied as an argument, allowing the same function to be reused across multiple result tables.
+After restructuring the data, the function applies a consistent {gt} table layout. Columns are grouped under year-specific spanner headers, counts are displayed with thousands separators, and percentages are rounded to one decimal place. The table title is supplied as an argument, allowing the same function to be reused across multiple result tables.
 
 To improve readability, the function also applies subtle background shading to distinguish columns belonging to different years and adds vertical borders between year groupings. The result is a standardized comparative table that can be reused throughout the project for presenting access estimates across organs, center classifications, and distance definitions.
 
-This function also makes repeated use of `purrr::reduce()`, which is a functional programming tool for applying the same transformation cumulatively across a sequence of values. Here, the sequence is the set of study years. Each iteration takes the current `gt` table and adds another layer of formatting, such as a year-specific spanner, fill color, or border. This avoids repetitive code and makes the table-building process both more compact and more generalizable to analyses involving different numbers of years.
+This function also makes repeated use of `purrr::reduce()`, which is a functional programming tool for applying the same transformation cumulatively across a sequence of values. Here, the sequence is the set of study years. Each iteration takes the current {gt} table and adds another layer of formatting, such as a year-specific spanner, fill color, or border. This avoids repetitive code and makes the table-building process both more compact and more generalizable to analyses involving different numbers of years.
 
 ```{r}
 #| label: results-table-function
@@ -71,7 +71,7 @@ The function is designed to compare two years, by default 2017 and 2022. For eac
 
 An optional argument, `include_nonHIV`, allows the figure title to also display the corresponding results for people without HIV. This makes it possible to present HIV and non-HIV comparisons within the same figure when desired, while keeping the map itself visually simple. The function also performs basic checks to ensure that the requested years and outcome labels are valid and that the buffer object supplied is likely to match the intended analysis.
 
-Finally, the two maps are combined into a single annotated figure using `cowplot`, with a shared title and a brief explanatory note. The result is a presentation-style comparative graphic that is useful for showing changes over time in transplant center catchment areas and in the proportion of people with HIV who live within those areas.
+Finally, the two maps are combined into a single annotated figure using [{cowplot}](https://wilkelab.org/cowplot/), with a shared title and a brief explanatory note. The result is a presentation-style comparative graphic that is useful for showing changes over time in transplant center catchment areas and in the proportion of people with HIV who live within those areas.
 
 ```{r}
 #| label: paired-plot-function
@@ -81,7 +81,7 @@ Finally, the two maps are combined into a single annotated figure using `cowplot
 
 ## Plot the number of people with HIV in the catchment area of each transplant center
 
-This function uses the `ggbeeswarm` package to make GraphPad Prism-type plots comparing the number of people living with HIV in the catchment area of each transplant center in the years specified.
+This function uses the [{ggbeeswarm}](https://CRAN.R-project.org/package=ggbeeswarm) package to make GraphPad Prism-type plots comparing the number of people living with HIV in the catchment area of each transplant center in the years specified.
 
 ```{r}
 #| label: catchment-plot-function

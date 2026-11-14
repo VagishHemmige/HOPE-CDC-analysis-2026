@@ -16,7 +16,9 @@ This project evaluates geographic access to solid organ transplant centers for p
 
 Geographic accessibility was estimated using drive-time isochrones generated at standardized morning departure times. Isochrones were unioned across centers and spatially joined to county and tract-level population data to estimate the number and proportion of people living with HIV within defined travel-time thresholds.
 
-All data processing and spatial analyses were conducted in R using reproducible workflows built on sf, tigris, and custom functions documented throughout this site. No spatial smoothing or statistical modeling was applied unless explicitly stated.
+All data processing and spatial analyses were conducted in R using reproducible workflows built on [{sf}](https://r-spatial.github.io/sf/), [{tigris}](https://CRAN.R-project.org/package=tigris), and custom functions documented throughout this site. No spatial smoothing or statistical modeling was applied unless explicitly stated.
+
+[Braces](https://forum.posit.co/t/curly-braces-around-package-name-convention/122547) identify R packages throughout this site.
 
 ## Results
 

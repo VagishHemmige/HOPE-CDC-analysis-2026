@@ -30,7 +30,7 @@ knitr::read_chunk("../R/figures.R")
 
 ## Create diagram to explain calculations
 
-This chunk uses `DiagrammeR` to create a schematic of how the geographic access analysis is assembled. The figure is organized from top to bottom:
+This chunk uses [{DiagrammeR}](https://rich-iannone.github.io/DiagrammeR/) to create a schematic of how the geographic access analysis is assembled. The figure is organized from top to bottom:
 
 - **Data sources** appear in gray ovals at the top.
 - **Derived analytic layers** appear in blue boxes in the middle.
@@ -313,7 +313,7 @@ Images are saved at:
 - Width: 12 inches  
 - Height: 6 inches  
 - White background  
-- High-resolution rendering via `ragg`
+- High-resolution rendering via [{ragg}](https://ragg.r-lib.org/)
 
 ---
 
